@@ -41,7 +41,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "surfing"
       ]
@@ -71,7 +73,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "lapras",
@@ -98,7 +102,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "goodra",
@@ -124,7 +130,9 @@
         "hp": 252,
         "def": 4
       },
-      "heldItem": "assault_vest",
+      "heldItem": [
+        "assault_vest"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -154,7 +162,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     }
   ]
 }

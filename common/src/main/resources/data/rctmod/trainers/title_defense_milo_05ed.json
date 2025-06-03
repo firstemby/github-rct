@@ -27,7 +27,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "emolga",
@@ -54,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "terrain_extender"
+      "heldItem": [
+        "terrain_extender"
+      ]
     },
     {
       "species": "gallade",
@@ -81,7 +85,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "coba_berry"
+      "heldItem": [
+        "coba_berry"
+      ]
     },
     {
       "species": "clefable",
@@ -108,7 +114,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "raichu",
@@ -135,7 +143,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -165,7 +175,10 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:audinite",
+        "leftovers"
+      ]
     }
   ]
 }

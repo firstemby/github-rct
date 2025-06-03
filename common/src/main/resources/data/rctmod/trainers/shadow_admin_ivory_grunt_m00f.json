@@ -63,7 +63,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "terrain_extender"
+      "heldItem": [
+        "terrain_extender"
+      ]
     },
     {
       "species": "mismagius",

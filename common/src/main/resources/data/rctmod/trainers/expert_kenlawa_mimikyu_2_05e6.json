@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "babiri_berry"
+      "heldItem": [
+        "babiri_berry"
+      ]
     }
   ]
 }

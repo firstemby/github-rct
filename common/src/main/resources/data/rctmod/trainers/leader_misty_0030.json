@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "greninja",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "gorebyss",
@@ -96,7 +100,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     },
     {
       "species": "kingdra",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "inteleon",
@@ -150,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "gyarados",
@@ -177,7 +187,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:gyaradosite",
+        "life_orb"
+      ]
     }
   ]
 }

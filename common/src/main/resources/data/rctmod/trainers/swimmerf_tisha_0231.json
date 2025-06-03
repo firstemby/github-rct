@@ -26,7 +26,9 @@
         "def": 252,
         "spa": 8
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "golduck",
@@ -53,7 +55,10 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "psychic_gem"
+      "heldItem": [
+        "mega_showdown:psychium-z",
+        "psychic_gem"
+      ]
     },
     {
       "species": "vaporeon",
@@ -79,7 +84,9 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "jolteon",
@@ -106,7 +113,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "ice_gem"
+      "heldItem": [
+        "ice_gem"
+      ]
     },
     {
       "species": "noivern",
@@ -133,7 +142,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

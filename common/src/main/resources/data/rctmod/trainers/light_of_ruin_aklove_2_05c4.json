@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "air_balloon"
+      "heldItem": [
+        "air_balloon"
+      ]
     },
     {
       "species": "gardevoir",
@@ -53,7 +55,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:gardevoirite",
+        "leftovers"
+      ]
     },
     {
       "species": "comfey",
@@ -80,7 +85,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "babiri_berry"
+      "heldItem": [
+        "babiri_berry"
+      ]
     },
     {
       "species": "roserade",
@@ -107,7 +114,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "wide_lens"
+      "heldItem": [
+        "wide_lens"
+      ]
     },
     {
       "species": "dragonite",

@@ -42,7 +42,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "dialga",
@@ -69,7 +71,10 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:adamant_orb",
+        "life_orb"
+      ]
     },
     {
       "species": "dragonite",
@@ -96,7 +101,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "flapple",
@@ -123,7 +130,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "eject_pack"
+      "heldItem": [
+        "eject_pack"
+      ]
     },
     {
       "species": "kyurem",
@@ -150,7 +159,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "lum_berry",
+      "heldItem": [
+        "lum_berry"
+      ],
       "aspects": [
         "black"
       ]
@@ -181,7 +192,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

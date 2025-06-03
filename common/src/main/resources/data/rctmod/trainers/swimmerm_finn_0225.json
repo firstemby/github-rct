@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "custap_berry"
+      "heldItem": [
+        "custap_berry"
+      ]
     },
     {
       "species": "barraskewda",
@@ -53,7 +55,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "cloyster",
@@ -80,7 +84,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "drednaw",
@@ -107,7 +113,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

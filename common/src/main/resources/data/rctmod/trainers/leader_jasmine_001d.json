@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "magearna",
@@ -68,7 +70,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "steel_gem"
+      "heldItem": [
+        "mega_showdown:steelium-z",
+        "steel_gem"
+      ]
     },
     {
       "species": "heatran",
@@ -94,7 +99,9 @@
         "hp": 252,
         "spd": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "latios",
@@ -121,7 +128,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:latiosite",
+        "life_orb"
+      ]
     },
     {
       "species": "togekiss",
@@ -148,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "copperajah",
@@ -175,7 +187,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

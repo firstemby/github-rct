@@ -44,7 +44,9 @@
         "spd": 252,
         "spe": 252
       },
-      "heldItem": "light_ball",
+      "heldItem": [
+        "light_ball"
+      ],
       "aspects": [
         "libre"
       ]
@@ -74,7 +76,9 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "blastoise",
@@ -101,7 +105,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "charizard",
@@ -128,7 +134,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "snorlax",
@@ -155,7 +163,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "mewtwo",
@@ -182,7 +192,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:mewtwonite_x",
+        "leftovers"
+      ]
     }
   ]
 }

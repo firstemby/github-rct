@@ -40,7 +40,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "hyper_potion"
+      "heldItem": [
+        "hyper_potion"
+      ]
     },
     {
       "species": "gloom",
@@ -91,7 +93,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "ability_capsule"
+      "heldItem": [
+        "ability_capsule"
+      ]
     },
     {
       "species": "ivysaur",
@@ -117,7 +121,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "x_attack"
+      "heldItem": [
+        "x_attack"
+      ]
     },
     {
       "species": "venusaur",
@@ -143,7 +149,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "x_attack"
+      "heldItem": [
+        "x_attack"
+      ]
     }
   ]
 }

@@ -42,7 +42,9 @@
         "spd": 12,
         "spe": 12
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "sudowoodo",
@@ -69,7 +71,9 @@
         "spd": 12,
         "spe": 12
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "golem",
@@ -97,7 +101,9 @@
         "spd": 12,
         "spe": 204
       },
-      "heldItem": "soft_sand"
+      "heldItem": [
+        "soft_sand"
+      ]
     },
     {
       "species": "whiscash",
@@ -125,7 +131,9 @@
         "spa": 252,
         "spd": 12
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "hippowdon",
@@ -150,7 +158,9 @@
         "hp": 12,
         "atk": 252
       },
-      "heldItem": "chesto_berry"
+      "heldItem": [
+        "chesto_berry"
+      ]
     }
   ]
 }

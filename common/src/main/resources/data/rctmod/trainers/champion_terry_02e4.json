@@ -147,7 +147,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

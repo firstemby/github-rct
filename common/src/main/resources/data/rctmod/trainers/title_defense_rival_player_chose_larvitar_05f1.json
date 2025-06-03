@@ -27,7 +27,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "rotom",
@@ -54,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf",
+      "heldItem": [
+        "choice_scarf"
+      ],
       "aspects": [
         "mow-appliance"
       ]
@@ -84,7 +88,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "haxorus",
@@ -111,7 +117,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "metagross",
@@ -138,7 +146,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "mega_showdown:metagrossite",
+        "assault_vest"
+      ]
     },
     {
       "species": "volcanion",
@@ -165,7 +176,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

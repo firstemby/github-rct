@@ -52,7 +52,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "black_sludge",
+      "heldItem": [
+        "black_sludge"
+      ],
       "aspects": [
         "alolan"
       ]

@@ -42,7 +42,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "mental_herb"
+      "heldItem": [
+        "mental_herb"
+      ]
     },
     {
       "species": "golem",
@@ -98,7 +100,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "ampharos",
@@ -125,7 +129,10 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:ampharosite",
+        "life_orb"
+      ]
     },
     {
       "species": "escavalier",
@@ -152,7 +159,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

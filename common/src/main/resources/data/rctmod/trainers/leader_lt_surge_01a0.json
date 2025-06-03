@@ -42,7 +42,9 @@
         "spa": 100,
         "spe": 40
       },
-      "heldItem": "electric_seed"
+      "heldItem": [
+        "electric_seed"
+      ]
     },
     {
       "species": "raichu",
@@ -70,7 +72,9 @@
         "spa": 40,
         "spe": 252
       },
-      "heldItem": "twisted_spoon",
+      "heldItem": [
+        "twisted_spoon"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -100,7 +104,9 @@
         "spa": 100,
         "spe": 4
       },
-      "heldItem": "occa_berry"
+      "heldItem": [
+        "occa_berry"
+      ]
     },
     {
       "species": "manectric",
@@ -128,7 +134,10 @@
         "spa": 100,
         "spe": 40
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:manectite",
+        "expert_belt"
+      ]
     },
     {
       "species": "boltund",
@@ -155,7 +164,9 @@
         "atk": 100,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     }
   ]
 }

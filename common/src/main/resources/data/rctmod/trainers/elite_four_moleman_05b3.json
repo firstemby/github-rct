@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "flygon",
@@ -95,7 +97,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "ground_gem"
+      "heldItem": [
+        "ground_gem"
+      ]
     },
     {
       "species": "quagsire",
@@ -122,7 +126,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "gliscor",
@@ -149,7 +155,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "bright_powder"
+      "heldItem": [
+        "bright_powder"
+      ]
     },
     {
       "species": "landorus",

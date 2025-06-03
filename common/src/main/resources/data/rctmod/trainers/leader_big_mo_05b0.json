@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "heavy_duty_boots"
+      "heldItem": [
+        "heavy_duty_boots"
+      ]
     },
     {
       "species": "pangoro",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "fighting_gem"
+      "heldItem": [
+        "fighting_gem"
+      ]
     },
     {
       "species": "snorlax",
@@ -95,7 +99,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "rawst_berry"
+      "heldItem": [
+        "rawst_berry"
+      ]
     },
     {
       "species": "hariyama",
@@ -122,7 +128,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "wailord",
@@ -149,7 +157,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "heavy_duty_boots"
+      "heldItem": [
+        "heavy_duty_boots"
+      ]
     }
   ]
 }

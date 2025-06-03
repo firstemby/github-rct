@@ -27,7 +27,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "nidoking",
@@ -54,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

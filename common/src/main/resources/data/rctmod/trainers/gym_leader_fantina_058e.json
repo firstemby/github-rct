@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "banette",
@@ -69,7 +71,9 @@
         "atk": 252,
         "spe": 12
       },
-      "heldItem": "iron_ball"
+      "heldItem": [
+        "iron_ball"
+      ]
     },
     {
       "species": "dusknoir",
@@ -97,7 +101,9 @@
         "def": 4,
         "spd": 4
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "mismagius",
@@ -124,7 +130,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "froslass",
@@ -151,7 +159,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "gengar",
@@ -178,7 +188,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

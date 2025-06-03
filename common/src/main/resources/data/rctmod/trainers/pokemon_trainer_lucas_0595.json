@@ -40,7 +40,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "flareon",
@@ -66,7 +68,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "rampardos",
@@ -92,7 +96,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "rotom",
@@ -119,7 +125,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "choice_specs",
+      "heldItem": [
+        "choice_specs"
+      ],
       "aspects": [
         "wash-appliance"
       ]
@@ -149,7 +157,9 @@
         "def": 252,
         "spd": 6
       },
-      "heldItem": "kings_rock"
+      "heldItem": [
+        "kings_rock"
+      ]
     },
     {
       "species": "torterra",
@@ -175,7 +185,9 @@
         "atk": 252,
         "spd": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

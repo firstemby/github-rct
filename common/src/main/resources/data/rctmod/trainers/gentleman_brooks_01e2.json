@@ -22,7 +22,9 @@
         "spe": 30
       },
       "evs": {},
-      "heldItem": "miracle_seed"
+      "heldItem": [
+        "miracle_seed"
+      ]
     },
     {
       "species": "simisage",
@@ -45,7 +47,9 @@
         "spe": 30
       },
       "evs": {},
-      "heldItem": "miracle_seed"
+      "heldItem": [
+        "miracle_seed"
+      ]
     },
     {
       "species": "wigglytuff",
@@ -68,7 +72,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

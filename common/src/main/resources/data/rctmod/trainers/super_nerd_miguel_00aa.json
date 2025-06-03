@@ -22,7 +22,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "voltorb",
@@ -45,7 +47,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -71,7 +75,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "grassy_seed"
+      "heldItem": [
+        "grassy_seed"
+      ]
     },
     {
       "species": "sableye",
@@ -94,7 +100,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

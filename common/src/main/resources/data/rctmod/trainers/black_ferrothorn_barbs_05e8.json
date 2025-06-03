@@ -52,7 +52,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:heracronite",
+        "expert_belt"
+      ]
     },
     {
       "species": "muk",
@@ -108,7 +111,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     }
   ]
 }

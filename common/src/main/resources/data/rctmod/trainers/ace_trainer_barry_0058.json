@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "therian"
       ]
@@ -71,7 +73,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "alakazam",
@@ -98,7 +102,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "kommoo",
@@ -125,7 +131,10 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "dragon_gem"
+      "heldItem": [
+        "mega_showdown:kommonium-z",
+        "dragon_gem"
+      ]
     },
     {
       "species": "latias",
@@ -152,7 +161,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "toxtricity",
@@ -179,7 +190,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

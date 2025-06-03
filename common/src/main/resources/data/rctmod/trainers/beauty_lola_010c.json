@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "venusaur",
@@ -53,7 +55,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "florges",
@@ -80,7 +84,9 @@
         "spa": 4,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

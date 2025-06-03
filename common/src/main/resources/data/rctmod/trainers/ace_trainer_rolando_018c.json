@@ -41,7 +41,9 @@
         "atk": 4,
         "spd": 252
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "leavanny",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "mudsdale",
@@ -94,7 +98,9 @@
         "hp": 252,
         "def": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "clawitzer",
@@ -121,7 +127,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "ampharos",
@@ -148,7 +156,10 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:ampharosite",
+        "life_orb"
+      ]
     }
   ]
 }

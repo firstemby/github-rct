@@ -126,7 +126,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "persim_berry"
+      "heldItem": [
+        "persim_berry"
+      ]
     }
   ]
 }

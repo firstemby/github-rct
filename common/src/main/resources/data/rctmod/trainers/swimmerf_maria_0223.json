@@ -26,7 +26,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "dragalge",
@@ -53,7 +55,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "starmie",
@@ -80,7 +84,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "basculegion",
@@ -107,7 +113,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb",
+      "heldItem": [
+        "life_orb"
+      ],
       "aspects": [
         "f"
       ]

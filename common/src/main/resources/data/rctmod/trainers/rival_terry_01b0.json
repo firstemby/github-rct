@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "electivire",
@@ -53,7 +55,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "darmanitan",
@@ -80,7 +84,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "charcoal_stick"
+      "heldItem": [
+        "charcoal_stick"
+      ]
     },
     {
       "species": "jumpluff",
@@ -107,7 +113,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "blastoise",
@@ -134,7 +142,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:blastoisinite",
+        "leftovers"
+      ]
     }
   ]
 }

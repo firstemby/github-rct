@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "granbull",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "appletun",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "eject_pack"
+      "heldItem": [
+        "eject_pack"
+      ]
     },
     {
       "species": "cinccino",
@@ -122,7 +128,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 8,
         "spe": 252
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "ferrothorn",
@@ -68,7 +70,9 @@
         "def": 252,
         "spd": 8
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "seismitoad",
@@ -94,7 +98,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "articuno",
@@ -121,7 +127,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "weakness_policy",
+      "heldItem": [
+        "weakness_policy"
+      ],
       "aspects": [
         "galarian"
       ]
@@ -151,7 +159,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "water_gem"
+      "heldItem": [
+        "mega_showdown:waterium-z",
+        "water_gem"
+      ]
     },
     {
       "species": "raikou",
@@ -178,7 +189,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

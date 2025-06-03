@@ -20,7 +20,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "choice_band",
+      "heldItem": [
+        "choice_band"
+      ],
       "aspects": [
         "galarian"
       ]
@@ -43,7 +45,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     }
   ]
 }

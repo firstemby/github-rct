@@ -41,7 +41,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "fairy_gem"
+      "heldItem": [
+        "mega_showdown:mimikium-z",
+        "fairy_gem"
+      ]
     }
   ]
 }

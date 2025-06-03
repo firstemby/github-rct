@@ -26,7 +26,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "milotic",
@@ -53,7 +55,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "leftovers"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -83,7 +87,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

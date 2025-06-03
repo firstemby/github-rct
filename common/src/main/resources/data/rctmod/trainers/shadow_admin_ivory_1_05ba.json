@@ -79,7 +79,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "wide_lens",
+      "heldItem": [
+        "wide_lens"
+      ],
       "aspects": [
         "alolan"
       ]

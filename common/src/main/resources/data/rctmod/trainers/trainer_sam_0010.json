@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "flapple",
@@ -69,7 +71,9 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "eject_pack"
+      "heldItem": [
+        "eject_pack"
+      ]
     },
     {
       "species": "farfetchd",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "medicinal_leek"
+      ]
     }
   ]
 }

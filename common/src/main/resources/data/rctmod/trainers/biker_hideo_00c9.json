@@ -26,7 +26,9 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "dracovish",
@@ -53,7 +55,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "beedrill",
@@ -80,7 +84,10 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:beedrillite",
+        "life_orb"
+      ]
     },
     {
       "species": "rotom",
@@ -107,7 +114,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "charti_berry",
+      "heldItem": [
+        "charti_berry"
+      ],
       "aspects": [
         "heat-appliance"
       ]
@@ -137,7 +146,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

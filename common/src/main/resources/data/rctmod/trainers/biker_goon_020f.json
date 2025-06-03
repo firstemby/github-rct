@@ -26,7 +26,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "dark_gem"
+      "heldItem": [
+        "dark_gem"
+      ]
     },
     {
       "species": "dusknoir",
@@ -53,7 +55,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "reaper_cloth"
+      "heldItem": [
+        "reaper_cloth"
+      ]
     }
   ]
 }

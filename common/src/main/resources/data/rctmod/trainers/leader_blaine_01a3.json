@@ -41,7 +41,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "heat_rock"
+      "heldItem": [
+        "heat_rock"
+      ]
     },
     {
       "species": "cinderace",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "exeggutor",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "typhlosion",
@@ -121,7 +127,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "heavy_duty_boots"
+      "heldItem": [
+        "heavy_duty_boots"
+      ]
     },
     {
       "species": "sunflora",
@@ -148,7 +156,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "charizard",
@@ -175,7 +185,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:charizardite_y",
+        "expert_belt"
+      ]
     }
   ]
 }

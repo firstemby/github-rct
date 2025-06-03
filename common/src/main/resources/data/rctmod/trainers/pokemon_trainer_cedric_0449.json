@@ -43,7 +43,9 @@
         "spd": 12,
         "spe": 52
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "buizel",
@@ -71,7 +73,9 @@
         "spd": 12,
         "spe": 36
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "roselia",
@@ -100,7 +104,9 @@
         "spd": 12,
         "spe": 12
       },
-      "heldItem": "miracle_seed"
+      "heldItem": [
+        "miracle_seed"
+      ]
     },
     {
       "species": "monferno",
@@ -129,7 +135,9 @@
         "spd": 12,
         "spe": 52
       },
-      "heldItem": "shell_bell"
+      "heldItem": [
+        "shell_bell"
+      ]
     }
   ]
 }

@@ -27,7 +27,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "mental_herb"
+      "heldItem": [
+        "mental_herb"
+      ]
     },
     {
       "species": "talonflame",
@@ -54,7 +56,9 @@
         "atk": 4,
         "spe": 252
       },
-      "heldItem": "heavy_duty_boots"
+      "heldItem": [
+        "heavy_duty_boots"
+      ]
     },
     {
       "species": "serperior",
@@ -81,7 +85,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "primarina",
@@ -108,7 +114,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "dragonite",
@@ -135,7 +143,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "scizor",
@@ -162,7 +172,10 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     }
   ]
 }

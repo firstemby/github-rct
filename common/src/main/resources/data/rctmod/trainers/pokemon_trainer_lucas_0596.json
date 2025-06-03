@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "razor_claw"
+      "heldItem": [
+        "razor_claw"
+      ]
     },
     {
       "species": "kabutops",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "espeon",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "rotom",
@@ -122,7 +128,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs",
+      "heldItem": [
+        "choice_specs"
+      ],
       "aspects": [
         "mow-appliance"
       ]
@@ -152,7 +160,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "silk_scarf"
+      "heldItem": [
+        "silk_scarf"
+      ]
     },
     {
       "species": "infernape",
@@ -179,7 +189,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     }
   ]
 }

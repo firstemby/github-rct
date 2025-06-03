@@ -26,7 +26,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "archeops",
@@ -53,7 +55,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "emboar",
@@ -80,7 +84,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "charcoal_stick"
+      "heldItem": [
+        "charcoal_stick"
+      ]
     },
     {
       "species": "jolteon",
@@ -107,7 +113,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "druddigon",
@@ -134,7 +142,9 @@
         "atk": 252,
         "spd": 4
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     }
   ]
 }

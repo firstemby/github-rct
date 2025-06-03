@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "melmetal",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "duraludon",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "durant",
@@ -122,7 +128,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "aegislash",
@@ -150,7 +158,9 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "aggron",
@@ -177,7 +187,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "iron_ball"
+      "heldItem": [
+        "mega_showdown:aggronite",
+        "iron_ball"
+      ]
     }
   ]
 }

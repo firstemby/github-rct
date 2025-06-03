@@ -41,7 +41,9 @@
         "spa": 52,
         "spe": 204
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "espeon",
@@ -67,7 +69,9 @@
         "spa": 252,
         "spe": 204
       },
-      "heldItem": "mental_herb"
+      "heldItem": [
+        "mental_herb"
+      ]
     },
     {
       "species": "bronzong",
@@ -91,7 +95,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "muscle_band"
+      "heldItem": [
+        "muscle_band"
+      ]
     },
     {
       "species": "alakazam",
@@ -117,7 +123,9 @@
         "spa": 252,
         "spe": 204
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "gallade",
@@ -143,7 +151,9 @@
         "atk": 252,
         "spe": 204
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

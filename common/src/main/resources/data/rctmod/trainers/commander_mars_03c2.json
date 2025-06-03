@@ -53,7 +53,9 @@
         "spd": 15
       },
       "evs": {},
-      "heldItem": "oran_berry"
+      "heldItem": [
+        "oran_berry"
+      ]
     }
   ]
 }

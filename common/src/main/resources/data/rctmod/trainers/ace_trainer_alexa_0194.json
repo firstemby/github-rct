@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "wigglytuff",
@@ -67,7 +69,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "chansey",
@@ -93,7 +97,9 @@
         "hp": 252,
         "def": 252
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "komala",
@@ -120,7 +126,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "audino",
@@ -146,7 +154,10 @@
         "hp": 252,
         "def": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:audinite",
+        "leftovers"
+      ]
     }
   ]
 }

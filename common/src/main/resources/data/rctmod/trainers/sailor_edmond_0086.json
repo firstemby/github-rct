@@ -22,7 +22,9 @@
         "spe": 30
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "lumineon",
@@ -67,7 +69,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     }
   ]
 }

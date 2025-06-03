@@ -42,7 +42,9 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "lunatone",
@@ -70,7 +72,9 @@
         "spa": 40,
         "spe": 252
       },
-      "heldItem": "colbur_berry"
+      "heldItem": [
+        "colbur_berry"
+      ]
     },
     {
       "species": "crawdaunt",
@@ -97,7 +101,9 @@
         "spa": 8,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "grovyle",
@@ -125,7 +131,9 @@
         "spa": 16,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

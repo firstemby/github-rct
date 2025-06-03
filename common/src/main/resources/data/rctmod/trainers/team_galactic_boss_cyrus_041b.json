@@ -38,7 +38,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "crobat",
@@ -62,7 +64,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "gyarados",
@@ -86,7 +90,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "wacan_berry"
+      "heldItem": [
+        "wacan_berry"
+      ]
     },
     {
       "species": "weavile",
@@ -110,7 +116,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     }
   ]
 }

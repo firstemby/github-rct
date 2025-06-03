@@ -26,7 +26,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:alakazite",
+        "life_orb"
+      ]
     },
     {
       "species": "indeedee",
@@ -53,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "tanga_berry"
+      "heldItem": [
+        "tanga_berry"
+      ]
     },
     {
       "species": "dugtrio",
@@ -80,7 +85,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "lucario",
@@ -107,7 +114,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

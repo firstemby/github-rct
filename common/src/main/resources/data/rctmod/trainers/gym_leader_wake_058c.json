@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "kingdra",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "chesto_berry"
+      "heldItem": [
+        "chesto_berry"
+      ]
     },
     {
       "species": "ludicolo",
@@ -96,7 +100,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "huntail",
@@ -123,7 +129,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "gyarados",
@@ -150,7 +158,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "wacan_berry"
+      "heldItem": [
+        "wacan_berry"
+      ]
     },
     {
       "species": "floatzel",
@@ -177,7 +187,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

@@ -27,7 +27,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "florges",
@@ -54,7 +56,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "bright_powder"
+      "heldItem": [
+        "bright_powder"
+      ]
     },
     {
       "species": "vileplume",
@@ -81,7 +85,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "utility_umbrella"
+      "heldItem": [
+        "utility_umbrella"
+      ]
     },
     {
       "species": "comfey",
@@ -108,7 +114,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "big_root"
+      "heldItem": [
+        "big_root"
+      ]
     },
     {
       "species": "venusaur",
@@ -135,7 +143,10 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:venusaurite",
+        "leftovers"
+      ]
     },
     {
       "species": "breloom",
@@ -162,7 +173,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

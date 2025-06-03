@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "kabutops",
@@ -68,7 +70,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "pinsir",
@@ -95,7 +99,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:pinsirite",
+        "life_orb"
+      ]
     },
     {
       "species": "omastar",
@@ -122,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     }
   ]
 }

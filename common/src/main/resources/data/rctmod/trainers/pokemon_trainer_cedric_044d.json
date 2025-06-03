@@ -43,7 +43,9 @@
         "spd": 16,
         "spe": 56
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "roselia",
@@ -72,7 +74,9 @@
         "spd": 24,
         "spe": 56
       },
-      "heldItem": "big_root"
+      "heldItem": [
+        "big_root"
+      ]
     },
     {
       "species": "heracross",
@@ -129,7 +133,9 @@
         "spd": 16,
         "spe": 64
       },
-      "heldItem": "shell_bell"
+      "heldItem": [
+        "shell_bell"
+      ]
     },
     {
       "species": "prinplup",
@@ -158,7 +164,9 @@
         "spd": 24,
         "spe": 80
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     }
   ]
 }

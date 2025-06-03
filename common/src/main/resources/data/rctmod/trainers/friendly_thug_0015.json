@@ -26,7 +26,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ]
     },
     {
       "species": "toxtricity",
@@ -53,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

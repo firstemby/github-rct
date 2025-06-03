@@ -40,7 +40,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "clawitzer",
@@ -67,7 +69,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -97,7 +101,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "mega_showdown:dousedrive",
+        "expert_belt"
+      ],
       "aspects": [
         "douse"
       ]
@@ -127,7 +134,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "arceus",
@@ -154,7 +163,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "bug_gem",
+      "heldItem": [
+        "mega_showdown:buginium-z",
+        "bug_gem"
+      ],
       "aspects": [
         "bug"
       ]
@@ -183,7 +195,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:pinsirite",
+        "life_orb"
+      ]
     }
   ]
 }

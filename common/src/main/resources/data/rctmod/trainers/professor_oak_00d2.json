@@ -26,7 +26,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:pidgeotite",
+        "expert_belt"
+      ]
     },
     {
       "species": "blastoise",
@@ -53,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "flareon",
@@ -79,7 +84,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "mega_showdown:eevium-z",
+        "normal_gem"
+      ]
     },
     {
       "species": "zapdos",
@@ -106,7 +114,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "flying_gem"
+      "heldItem": [
+        "flying_gem"
+      ]
     },
     {
       "species": "machamp",
@@ -133,7 +143,9 @@
         "atk": 252,
         "spd": 4
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "nidoking",
@@ -160,7 +172,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "milotic",
@@ -69,7 +71,9 @@
         "spd": 128,
         "spe": 6
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "gallade",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "magmortar",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "clefable",
@@ -150,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "torterra",
@@ -176,7 +186,9 @@
         "atk": 252,
         "spd": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

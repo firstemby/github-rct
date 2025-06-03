@@ -23,7 +23,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "gabite",
@@ -46,7 +48,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "togedemaru",
@@ -69,7 +73,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "komala",
@@ -90,7 +96,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "silk_scarf"
+      "heldItem": [
+        "silk_scarf"
+      ]
     }
   ]
 }

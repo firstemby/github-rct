@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "dusknoir",
@@ -68,7 +70,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "reaper_cloth"
+      "heldItem": [
+        "reaper_cloth"
+      ]
     },
     {
       "species": "zoroark",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "colbur_berry",
+      "heldItem": [
+        "colbur_berry"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -125,7 +131,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "charcoal_stick",
+      "heldItem": [
+        "charcoal_stick"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -155,7 +163,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:gengarite",
+        "expert_belt"
+      ]
     },
     {
       "species": "weavile",
@@ -182,7 +193,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

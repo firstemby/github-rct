@@ -27,7 +27,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "water_gem"
+      "heldItem": [
+        "mega_showdown:waterium-z",
+        "water_gem"
+      ]
     },
     {
       "species": "toxapex",
@@ -54,7 +57,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "aguav_berry"
+      "heldItem": [
+        "aguav_berry"
+      ]
     },
     {
       "species": "seaking",
@@ -81,7 +86,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "goodra",
@@ -108,7 +115,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "swampert",
@@ -135,7 +144,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:swampertite",
+        "leftovers"
+      ]
     },
     {
       "species": "latias",
@@ -162,7 +174,9 @@
         "def": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

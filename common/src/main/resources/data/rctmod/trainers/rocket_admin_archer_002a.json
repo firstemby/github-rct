@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "heliolisk",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "latias",
@@ -95,7 +99,10 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:latiasite",
+        "leftovers"
+      ]
     },
     {
       "species": "houndoom",
@@ -122,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "mismagius",
@@ -149,7 +158,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "ghost_gem"
+      "heldItem": [
+        "mega_showdown:ghostium-z",
+        "ghost_gem"
+      ]
     },
     {
       "species": "heatran",
@@ -176,7 +188,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "air_balloon"
+      "heldItem": [
+        "air_balloon"
+      ]
     }
   ]
 }

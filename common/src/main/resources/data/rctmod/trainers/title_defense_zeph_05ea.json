@@ -27,7 +27,12 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "metal_coat"
+      "heldItem": [
+        "mega_showdown:steelmemory"
+      ],
+      "aspects": [
+        "steel-memory"
+      ]
     },
     {
       "species": "zebstrika",
@@ -54,7 +59,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "umbreon",
@@ -81,7 +88,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "exploud",
@@ -108,7 +117,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "decidueye",
@@ -135,7 +146,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "ghost_gem"
+      "heldItem": [
+        "mega_showdown:decidium-z",
+        "ghost_gem"
+      ]
     },
     {
       "species": "houndoom",
@@ -162,7 +176,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:houndoominite",
+        "expert_belt"
+      ]
     }
   ]
 }

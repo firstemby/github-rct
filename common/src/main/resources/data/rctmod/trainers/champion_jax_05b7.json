@@ -42,7 +42,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:salamencite",
+        "life_orb"
+      ]
     },
     {
       "species": "hitmontop",
@@ -69,7 +72,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "magnezone",
@@ -96,7 +101,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "air_balloon"
+      "heldItem": [
+        "air_balloon"
+      ]
     },
     {
       "species": "gastrodon",
@@ -123,7 +130,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "naganadel",
@@ -150,7 +159,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "yache_berry"
+      "heldItem": [
+        "yache_berry"
+      ]
     },
     {
       "species": "pyroar",
@@ -177,7 +188,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "fire_gem"
+      "heldItem": [
+        "fire_gem"
+      ]
     }
   ]
 }

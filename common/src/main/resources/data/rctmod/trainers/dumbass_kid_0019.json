@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "pelipper",
@@ -53,7 +55,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "scizor",
@@ -80,7 +84,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "metal_coat"
+      "heldItem": [
+        "metal_coat"
+      ]
     },
     {
       "species": "frosmoth",
@@ -107,7 +113,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "seaking",
@@ -133,7 +141,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "swampert",
@@ -160,7 +170,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:swampertite",
+        "leftovers"
+      ]
     }
   ]
 }

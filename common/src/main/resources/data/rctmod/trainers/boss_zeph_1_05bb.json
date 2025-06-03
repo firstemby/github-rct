@@ -41,7 +41,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:houndoominite",
+        "expert_belt"
+      ]
     }
   ]
 }

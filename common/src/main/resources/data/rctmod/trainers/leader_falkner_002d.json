@@ -40,7 +40,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "berry_juice"
+      "heldItem": [
+        "berry_juice"
+      ]
     },
     {
       "species": "emolga",
@@ -66,7 +68,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "berry_juice"
+      "heldItem": [
+        "berry_juice"
+      ]
     },
     {
       "species": "corvisquire",
@@ -92,7 +96,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "berry_juice"
+      "heldItem": [
+        "berry_juice"
+      ]
     }
   ]
 }

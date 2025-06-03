@@ -22,7 +22,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "spinda",
@@ -61,7 +63,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite",
+      "heldItem": [
+        "eviolite"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -84,7 +88,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

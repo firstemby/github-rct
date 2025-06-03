@@ -39,7 +39,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "psychic_seed"
+      "heldItem": [
+        "psychic_seed"
+      ]
     },
     {
       "species": "indeedee",
@@ -64,7 +66,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "terrain_extender",
+      "heldItem": [
+        "terrain_extender"
+      ],
       "aspects": [
         "f"
       ]
@@ -93,7 +97,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "porygon2",
@@ -118,7 +124,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "ursaluna",
@@ -144,7 +152,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "gardevoir",
@@ -169,7 +179,10 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:gardevoirite",
+        "leftovers"
+      ]
     }
   ]
 }

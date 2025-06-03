@@ -26,7 +26,9 @@
         "def": 252,
         "spa": 252
       },
-      "heldItem": "tanga_berry"
+      "heldItem": [
+        "tanga_berry"
+      ]
     },
     {
       "species": "gigalith",
@@ -53,7 +55,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "passho_berry"
+      "heldItem": [
+        "passho_berry"
+      ]
     },
     {
       "species": "gastrodon",
@@ -80,7 +84,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "golem",
@@ -107,7 +113,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "shuca_berry",
+      "heldItem": [
+        "shuca_berry"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -137,7 +145,10 @@
         "def": 252,
         "spa": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "mega_showdown:cameruptite",
+        "assault_vest"
+      ]
     }
   ]
 }

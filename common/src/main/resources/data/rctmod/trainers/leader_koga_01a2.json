@@ -39,7 +39,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "accelgor",
@@ -66,7 +68,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "greninja",
@@ -93,7 +97,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "drapion",
@@ -118,7 +124,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "dragapult",
@@ -145,7 +153,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "toxtricity",
@@ -172,7 +182,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

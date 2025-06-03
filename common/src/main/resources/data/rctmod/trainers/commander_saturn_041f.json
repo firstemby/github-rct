@@ -38,7 +38,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "bronzor",

@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "bellossom",
@@ -69,7 +71,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "hawlucha",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "grassy_seed"
+      "heldItem": [
+        "grassy_seed"
+      ]
     },
     {
       "species": "rillaboom",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "grassy_seed"
+      "heldItem": [
+        "grassy_seed"
+      ]
     },
     {
       "species": "serperior",
@@ -150,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "venusaur",
@@ -177,7 +187,10 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:venusaurite",
+        "leftovers"
+      ]
     }
   ]
 }

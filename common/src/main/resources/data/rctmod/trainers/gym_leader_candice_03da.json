@@ -38,7 +38,9 @@
         "atk": 124,
         "spa": 124
       },
-      "heldItem": "icy_rock"
+      "heldItem": [
+        "icy_rock"
+      ]
     },
     {
       "species": "sneasel",
@@ -63,7 +65,9 @@
         "atk": 124,
         "spe": 124
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "medicham",
@@ -87,7 +91,9 @@
         "atk": 124,
         "spe": 124
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "abomasnow",
@@ -113,7 +119,9 @@
         "atk": 60,
         "spa": 164
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

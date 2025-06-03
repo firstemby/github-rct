@@ -42,7 +42,9 @@
         "spd": 12,
         "spe": 160
       },
-      "heldItem": "shuca_berry"
+      "heldItem": [
+        "shuca_berry"
+      ]
     },
     {
       "species": "ambipom",
@@ -72,7 +74,9 @@
         "spd": 12,
         "spe": 160
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "octillery",
@@ -100,7 +104,9 @@
         "spd": 12,
         "spe": 160
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "luxray",
@@ -126,7 +132,9 @@
         "def": 28,
         "spe": 200
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

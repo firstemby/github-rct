@@ -22,7 +22,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "simisear",
@@ -45,7 +47,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "charcoal_stick"
+      "heldItem": [
+        "charcoal_stick"
+      ]
     }
   ]
 }

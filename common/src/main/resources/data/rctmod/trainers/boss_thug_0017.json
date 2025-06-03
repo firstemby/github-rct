@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "landorus",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf",
+      "heldItem": [
+        "choice_scarf"
+      ],
       "aspects": [
         "therian"
       ]
@@ -98,7 +102,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "mega_showdown:normalium-z",
+        "normal_gem"
+      ]
     },
     {
       "species": "medicham",
@@ -125,7 +132,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "mega_showdown:medichamite",
+        "choice_scarf"
+      ]
     }
   ]
 }

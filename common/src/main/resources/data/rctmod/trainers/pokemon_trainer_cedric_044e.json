@@ -43,7 +43,9 @@
         "spd": 36,
         "spe": 148
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "floatzel",
@@ -72,7 +74,9 @@
         "spd": 40,
         "spe": 160
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "heracross",
@@ -129,7 +133,9 @@
         "spd": 48,
         "spe": 172
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "snorlax",
@@ -185,7 +191,9 @@
         "spa": 52,
         "spd": 124
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

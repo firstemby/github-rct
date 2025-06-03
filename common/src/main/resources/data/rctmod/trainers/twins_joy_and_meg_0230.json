@@ -27,7 +27,9 @@
         "spa": 80,
         "spe": 252
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "granbull",
@@ -54,7 +56,9 @@
         "atk": 252,
         "spd": 4
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "volbeat",
@@ -81,7 +85,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "electric_gem"
+      "heldItem": [
+        "mega_showdown:electrium-z",
+        "electric_gem"
+      ]
     },
     {
       "species": "illumise",
@@ -108,7 +115,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "minun",
@@ -135,7 +144,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "magnet"
+      "heldItem": [
+        "magnet"
+      ]
     },
     {
       "species": "plusle",
@@ -162,7 +173,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

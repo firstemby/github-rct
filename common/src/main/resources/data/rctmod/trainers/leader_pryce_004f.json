@@ -40,7 +40,9 @@
         "atk": 8,
         "spa": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "calyrex",
@@ -66,7 +68,9 @@
         "atk": 252,
         "def": 8
       },
-      "heldItem": "mental_herb",
+      "heldItem": [
+        "mental_herb"
+      ],
       "aspects": [
         "ice"
       ]
@@ -95,7 +99,10 @@
         "def": 8,
         "spa": 252
       },
-      "heldItem": "ice_gem"
+      "heldItem": [
+        "mega_showdown:icium-z",
+        "ice_gem"
+      ]
     },
     {
       "species": "wishiwashi",
@@ -120,7 +127,9 @@
         "hp": 252,
         "spa": 252
       },
-      "heldItem": "sitrus_berry",
+      "heldItem": [
+        "sitrus_berry"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -148,7 +157,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "heracross",
@@ -173,7 +184,10 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:heracronite",
+        "expert_belt"
+      ]
     }
   ]
 }

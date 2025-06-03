@@ -42,7 +42,9 @@
         "spd": 12,
         "spe": 12
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "girafarig",
@@ -68,7 +70,9 @@
         "spa": 12,
         "spd": 12
       },
-      "heldItem": "mental_herb"
+      "heldItem": [
+        "mental_herb"
+      ]
     },
     {
       "species": "medicham",
@@ -91,7 +95,9 @@
       "evs": {
         "atk": 252
       },
-      "heldItem": "muscle_band"
+      "heldItem": [
+        "muscle_band"
+      ]
     },
     {
       "species": "alakazam",
@@ -115,7 +121,9 @@
       "evs": {
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "bronzong",
@@ -139,7 +147,9 @@
         "hp": 12,
         "atk": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

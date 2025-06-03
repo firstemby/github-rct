@@ -23,7 +23,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "black_glasses",
+      "heldItem": [
+        "black_glasses"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -49,7 +51,9 @@
         "spe": 30
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "raticate",
@@ -72,7 +76,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "silk_scarf"
+      "heldItem": [
+        "silk_scarf"
+      ]
     },
     {
       "species": "octillery",
@@ -95,7 +101,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     }
   ]
 }

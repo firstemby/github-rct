@@ -42,7 +42,9 @@
         "def": 12,
         "spd": 4
       },
-      "heldItem": "icy_rock"
+      "heldItem": [
+        "icy_rock"
+      ]
     },
     {
       "species": "jynx",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "mamoswine",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "froslass",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "glaceon",
@@ -150,7 +158,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "weavile",
@@ -177,7 +187,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

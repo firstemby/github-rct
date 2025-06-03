@@ -26,7 +26,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "air_balloon",
+      "heldItem": [
+        "air_balloon"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -53,7 +55,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "greninja",
@@ -80,7 +84,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "lapras",
@@ -106,7 +112,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

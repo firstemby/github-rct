@@ -41,7 +41,9 @@
         "atk": 40,
         "spa": 40
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "floatzel",
@@ -64,7 +66,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "starmie",
@@ -87,7 +91,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "lanturn",
@@ -110,7 +116,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "iapapa_berry"
+      "heldItem": [
+        "iapapa_berry"
+      ]
     }
   ]
 }

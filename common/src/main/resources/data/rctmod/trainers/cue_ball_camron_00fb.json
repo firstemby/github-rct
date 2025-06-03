@@ -26,7 +26,9 @@
         "atk": 4,
         "def": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "aerodactyl",
@@ -53,7 +55,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "scizor",
@@ -80,7 +84,10 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     },
     {
       "species": "garchomp",
@@ -107,7 +114,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "cacturne",
@@ -134,7 +143,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

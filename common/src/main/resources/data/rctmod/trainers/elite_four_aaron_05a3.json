@@ -40,7 +40,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "wise_glasses"
+      "heldItem": [
+        "wise_glasses"
+      ]
     },
     {
       "species": "scizor",
@@ -65,7 +67,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "occa_berry"
+      "heldItem": [
+        "occa_berry"
+      ]
     },
     {
       "species": "vespiquen",
@@ -90,7 +94,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "heracross",
@@ -115,7 +121,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "flygon",
@@ -141,7 +149,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "wise_glasses"
+      "heldItem": [
+        "wise_glasses"
+      ]
     },
     {
       "species": "drapion",
@@ -167,7 +177,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     }
   ]
 }

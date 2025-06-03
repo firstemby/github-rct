@@ -70,7 +70,9 @@
         "spd": 32,
         "spe": 104
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "roselia",
@@ -99,7 +101,9 @@
         "spd": 40,
         "spe": 96
       },
-      "heldItem": "big_root"
+      "heldItem": [
+        "big_root"
+      ]
     },
     {
       "species": "heracross",
@@ -156,7 +160,9 @@
         "spd": 16,
         "spe": 64
       },
-      "heldItem": "shell_bell"
+      "heldItem": [
+        "shell_bell"
+      ]
     },
     {
       "species": "empoleon",
@@ -185,7 +191,9 @@
         "spd": 52,
         "spe": 164
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     }
   ]
 }

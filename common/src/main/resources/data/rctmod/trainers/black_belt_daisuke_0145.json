@@ -22,7 +22,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     },
     {
       "species": "conkeldurr",
@@ -45,7 +47,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     },
     {
       "species": "passimian",
@@ -68,7 +72,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     }
   ]
 }

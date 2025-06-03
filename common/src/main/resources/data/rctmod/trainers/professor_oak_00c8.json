@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "exeggutor",
@@ -53,7 +55,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "charizard",
@@ -79,7 +83,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:charizardite_x",
+        "life_orb"
+      ]
     },
     {
       "species": "gyarados",
@@ -105,7 +112,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "water_gem"
+      "heldItem": [
+        "water_gem"
+      ]
     },
     {
       "species": "mew",
@@ -132,7 +141,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "fighting_gem"
+      "heldItem": [
+        "fighting_gem"
+      ]
     },
     {
       "species": "jolteon",
@@ -159,7 +170,10 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "mega_showdown:eevium-z",
+        "normal_gem"
+      ]
     }
   ]
 }

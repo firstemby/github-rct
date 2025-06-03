@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "rapid_strike"
       ]
@@ -71,7 +73,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "terrakion",
@@ -98,7 +102,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "conkeldurr",
@@ -124,7 +130,9 @@
         "hp": 252,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "zacian",
@@ -151,7 +159,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "mega_showdown:rusted_sword"
+      ],
       "aspects": [
         "crowned"
       ]
@@ -181,7 +191,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lucarionite",
+        "life_orb"
+      ]
     }
   ]
 }

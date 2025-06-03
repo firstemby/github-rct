@@ -26,7 +26,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "excadrill",
@@ -53,7 +55,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "cradily",
@@ -80,7 +84,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "hippowdon",
@@ -107,7 +113,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "scizor",
@@ -134,7 +142,10 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     }
   ]
 }

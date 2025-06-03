@@ -42,7 +42,9 @@
         "spd": 12,
         "spe": 204
       },
-      "heldItem": "wide_lens"
+      "heldItem": [
+        "wide_lens"
+      ]
     },
     {
       "species": "steelix",
@@ -69,7 +71,9 @@
         "spa": 12,
         "spd": 12
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "drifblim",
@@ -96,7 +100,9 @@
         "spd": 12,
         "spe": 204
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "lopunny",
@@ -120,7 +126,9 @@
       "evs": {
         "hp": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "infernape",
@@ -146,7 +154,9 @@
         "atk": 60,
         "spe": 204
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

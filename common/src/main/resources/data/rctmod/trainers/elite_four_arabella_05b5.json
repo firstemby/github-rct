@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "sylveon",
@@ -68,7 +70,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "fairy_gem"
+      "heldItem": [
+        "fairy_gem"
+      ]
     },
     {
       "species": "togekiss",
@@ -147,7 +151,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:mawilite",
+        "expert_belt"
+      ]
     },
     {
       "species": "tapufini",
@@ -174,7 +181,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

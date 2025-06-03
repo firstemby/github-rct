@@ -41,7 +41,9 @@
         "spa": 132,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "attack"
       ]
@@ -71,7 +73,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "landorus",
@@ -98,7 +102,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "zapdos",
@@ -125,7 +131,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band",
+      "heldItem": [
+        "choice_band"
+      ],
       "aspects": [
         "galarian"
       ]
@@ -155,7 +163,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     },
     {
       "species": "sceptile",
@@ -182,7 +192,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:sceptilite",
+        "expert_belt"
+      ]
     }
   ]
 }

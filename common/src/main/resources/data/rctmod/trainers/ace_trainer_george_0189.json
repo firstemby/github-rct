@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "miracle_seed",
+      "heldItem": [
+        "miracle_seed"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -71,7 +73,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "cloyster",
@@ -98,7 +102,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     },
     {
       "species": "mienshao",
@@ -125,7 +131,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "pinsir",
@@ -152,7 +160,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:pinsirite",
+        "life_orb"
+      ]
     }
   ]
 }

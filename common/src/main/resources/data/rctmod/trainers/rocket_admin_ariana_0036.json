@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "primarina",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "throat_spray"
+      "heldItem": [
+        "throat_spray"
+      ]
     },
     {
       "species": "mawile",
@@ -95,7 +99,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:mawilite",
+        "expert_belt"
+      ]
     }
   ]
 }

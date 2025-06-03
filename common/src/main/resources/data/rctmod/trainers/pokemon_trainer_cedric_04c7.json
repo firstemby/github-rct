@@ -70,7 +70,9 @@
         "spd": 32,
         "spe": 104
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "buizel",
@@ -99,7 +101,9 @@
         "spd": 40,
         "spe": 96
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "heracross",
@@ -156,7 +160,9 @@
         "spd": 16,
         "spe": 64
       },
-      "heldItem": "shell_bell"
+      "heldItem": [
+        "shell_bell"
+      ]
     },
     {
       "species": "torterra",
@@ -185,7 +191,9 @@
         "spa": 52,
         "spd": 124
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

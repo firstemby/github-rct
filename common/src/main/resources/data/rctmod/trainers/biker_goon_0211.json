@@ -26,7 +26,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -56,7 +58,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "life_orb",
+      "heldItem": [
+        "life_orb"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -86,7 +90,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:sharpedonite",
+        "life_orb"
+      ]
     }
   ]
 }

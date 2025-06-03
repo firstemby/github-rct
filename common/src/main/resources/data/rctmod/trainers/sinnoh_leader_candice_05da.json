@@ -52,7 +52,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "icy_rock"
+      "heldItem": [
+        "icy_rock"
+      ]
     },
     {
       "species": "glaceon",
@@ -105,7 +107,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

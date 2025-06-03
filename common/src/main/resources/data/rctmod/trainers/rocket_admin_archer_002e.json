@@ -40,7 +40,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "oran_berry"
+      "heldItem": [
+        "oran_berry"
+      ]
     },
     {
       "species": "houndour",
@@ -66,7 +68,9 @@
         "hp": 60,
         "spe": 40
       },
-      "heldItem": "wise_glasses"
+      "heldItem": [
+        "wise_glasses"
+      ]
     },
     {
       "species": "mightyena",
@@ -92,7 +96,9 @@
         "hp": 100,
         "spe": 40
       },
-      "heldItem": "berry_juice"
+      "heldItem": [
+        "berry_juice"
+      ]
     }
   ]
 }

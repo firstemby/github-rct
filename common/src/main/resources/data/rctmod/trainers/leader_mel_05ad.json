@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "normal_gem"
+      ]
     },
     {
       "species": "porygonz",
@@ -94,7 +96,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "lopunny",
@@ -121,7 +125,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ]
     },
     {
       "species": "heliolisk",

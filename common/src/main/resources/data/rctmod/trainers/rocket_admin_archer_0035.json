@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 4
       },
-      "heldItem": "colbur_berry"
+      "heldItem": [
+        "colbur_berry"
+      ]
     },
     {
       "species": "aegislash",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "houndoom",
@@ -95,7 +99,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:houndoominite",
+        "expert_belt"
+      ]
     }
   ]
 }

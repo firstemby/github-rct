@@ -26,7 +26,10 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "mega_showdown:abomasite",
+        "assault_vest"
+      ]
     },
     {
       "species": "froslass",
@@ -53,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "weavile",
@@ -80,7 +85,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "glaceon",
@@ -107,7 +114,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "mamoswine",
@@ -134,7 +143,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "salac_berry"
+      "heldItem": [
+        "salac_berry"
+      ]
     },
     {
       "species": "jynx",
@@ -161,7 +172,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "wide_lens"
+      "heldItem": [
+        "wide_lens"
+      ]
     }
   ]
 }

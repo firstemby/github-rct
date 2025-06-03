@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     },
     {
       "species": "lopunny",
@@ -53,7 +55,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 128,
         "spd": 128
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "leftovers"
+      ],
       "aspects": [
         "trash_cloak"
       ]
@@ -71,7 +73,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "froslass",
@@ -98,7 +102,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "milotic",
@@ -125,7 +131,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "clefable",
@@ -152,7 +160,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "torterra",
@@ -179,7 +189,9 @@
         "atk": 252,
         "def": 128
       },
-      "heldItem": "yache_berry"
+      "heldItem": [
+        "yache_berry"
+      ]
     }
   ]
 }

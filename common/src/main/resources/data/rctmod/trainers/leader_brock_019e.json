@@ -40,7 +40,9 @@
         "hp": 100,
         "spe": 40
       },
-      "heldItem": "custap_berry",
+      "heldItem": [
+        "custap_berry"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -69,7 +71,9 @@
         "hp": 60,
         "spe": 40
       },
-      "heldItem": "oran_berry"
+      "heldItem": [
+        "oran_berry"
+      ]
     },
     {
       "species": "onix",
@@ -94,7 +98,9 @@
         "hp": 100,
         "spe": 40
       },
-      "heldItem": "berry_juice"
+      "heldItem": [
+        "berry_juice"
+      ]
     },
     {
       "species": "archen",
@@ -120,7 +126,9 @@
         "hp": 100,
         "spe": 40
       },
-      "heldItem": "oran_berry"
+      "heldItem": [
+        "oran_berry"
+      ]
     }
   ]
 }

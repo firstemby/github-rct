@@ -26,7 +26,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "mirror_herb"
+      "heldItem": [
+        "mega_showdown:adrenalineorb",
+        "salac_berry"
+      ]
     },
     {
       "species": "tapulele",
@@ -53,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "red_card"
+      "heldItem": [
+        "red_card"
+      ]
     },
     {
       "species": "manaphy",
@@ -80,7 +85,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "tapukoko",
@@ -107,7 +114,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "electric_seed"
+      "heldItem": [
+        "electric_seed"
+      ]
     },
     {
       "species": "melmetal",
@@ -134,7 +143,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "diancie",
@@ -161,7 +172,10 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:diancite",
+        "leftovers"
+      ]
     }
   ]
 }

@@ -41,7 +41,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "ghost_gem"
+      "heldItem": [
+        "mega_showdown:ghostium-z",
+        "ghost_gem"
+      ]
     },
     {
       "species": "marshadow",
@@ -68,7 +71,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "silvally",
@@ -95,7 +100,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "leftovers"
+      ],
       "aspects": [
         "fairy"
       ]
@@ -125,7 +132,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "black_glasses"
+      "heldItem": [
+        "black_glasses"
+      ]
     },
     {
       "species": "gengar",
@@ -152,7 +161,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:gengarite",
+        "expert_belt"
+      ]
     },
     {
       "species": "zarude",
@@ -179,7 +191,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

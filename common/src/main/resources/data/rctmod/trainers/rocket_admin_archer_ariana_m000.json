@@ -43,7 +43,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "gothitelle",
@@ -70,7 +72,9 @@
         "spa": 252,
         "spe": 4
       },
-      "heldItem": "colbur_berry"
+      "heldItem": [
+        "colbur_berry"
+      ]
     },
     {
       "species": "primarina",
@@ -97,7 +101,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "throat_spray"
+      "heldItem": [
+        "throat_spray"
+      ]
     },
     {
       "species": "aegislash",
@@ -124,7 +130,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "mawile",
@@ -151,7 +159,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:mawilite",
+        "expert_belt"
+      ]
     },
     {
       "species": "houndoom",
@@ -178,7 +189,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     }
   ]
 }

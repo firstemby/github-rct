@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "jumpluff",
@@ -53,7 +55,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sharp_beak"
+      "heldItem": [
+        "sharp_beak"
+      ]
     },
     {
       "species": "azumarill",
@@ -80,7 +84,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "electivire",
@@ -107,7 +113,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "charizard",
@@ -134,7 +142,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:charizardite_y",
+        "expert_belt"
+      ]
     }
   ]
 }

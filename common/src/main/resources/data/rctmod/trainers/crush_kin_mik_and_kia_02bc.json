@@ -23,7 +23,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     },
     {
       "species": "primeape",
@@ -46,7 +48,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "black_belt"
+      "heldItem": [
+        "black_belt"
+      ]
     }
   ]
 }

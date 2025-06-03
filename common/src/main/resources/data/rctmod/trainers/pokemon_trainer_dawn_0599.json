@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "leftovers"
+      ],
       "aspects": [
         "sandy_cloak"
       ]
@@ -71,7 +73,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "froslass",
@@ -98,7 +102,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "tangrowth",
@@ -125,7 +131,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "clefable",
@@ -152,7 +160,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "infernape",
@@ -179,7 +189,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     }
   ]
 }

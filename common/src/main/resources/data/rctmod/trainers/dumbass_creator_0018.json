@@ -23,7 +23,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "smooth_rock"
+      "heldItem": [
+        "smooth_rock"
+      ]
     },
     {
       "species": "shedinja",
@@ -47,7 +49,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "shedinja",
@@ -71,7 +75,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "shedinja",
@@ -95,7 +101,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "shedinja",
@@ -119,7 +127,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "shedinja",
@@ -143,7 +153,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     }
   ]
 }

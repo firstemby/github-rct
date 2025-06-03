@@ -38,7 +38,9 @@
         "atk": 56,
         "spe": 40
       },
-      "heldItem": "wide_lens"
+      "heldItem": [
+        "wide_lens"
+      ]
     },
     {
       "species": "quagsire",
@@ -66,7 +68,9 @@
         "spa": 56,
         "spd": 4
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "floatzel",
@@ -90,7 +94,9 @@
         "spa": 20,
         "spe": 84
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "terrain_extender"
+      "heldItem": [
+        "terrain_extender"
+      ]
     },
     {
       "species": "dragonite",
@@ -68,7 +70,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "zebstrika",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb",
+      "heldItem": [
+        "life_orb"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -125,7 +131,9 @@
         "def": 252,
         "spa": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "samurott",
@@ -152,7 +160,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "white_herb",
+      "heldItem": [
+        "white_herb"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -182,7 +192,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "hisuian"
       ]

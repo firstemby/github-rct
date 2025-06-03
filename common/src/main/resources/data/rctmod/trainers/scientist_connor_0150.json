@@ -65,7 +65,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "metal_coat"
+      "heldItem": [
+        "metal_coat"
+      ]
     },
     {
       "species": "beheeyem",

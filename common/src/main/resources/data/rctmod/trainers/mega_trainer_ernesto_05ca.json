@@ -52,7 +52,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "vileplume",
@@ -79,7 +81,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "coba_berry"
+      "heldItem": [
+        "coba_berry"
+      ]
     },
     {
       "species": "leavanny",
@@ -106,7 +110,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "occa_berry"
+      "heldItem": [
+        "occa_berry"
+      ]
     },
     {
       "species": "medicham",
@@ -133,7 +139,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "mega_showdown:medichamite",
+        "choice_scarf"
+      ]
     }
   ]
 }

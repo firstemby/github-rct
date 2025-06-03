@@ -38,7 +38,9 @@
         "atk": 52,
         "spe": 36
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "machoke",
@@ -62,7 +64,9 @@
         "atk": 52,
         "spe": 36
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "lucario",
@@ -86,7 +90,9 @@
         "def": 68,
         "spe": 68
       },
-      "heldItem": "big_root"
+      "heldItem": [
+        "big_root"
+      ]
     }
   ]
 }

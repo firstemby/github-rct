@@ -19,7 +19,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "weezing",
@@ -103,7 +105,9 @@
         "spe": 15
       },
       "evs": {},
-      "heldItem": "prism_scale"
+      "heldItem": [
+        "prism_scale"
+      ]
     }
   ]
 }

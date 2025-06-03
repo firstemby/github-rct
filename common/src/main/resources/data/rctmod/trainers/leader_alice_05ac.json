@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "muscle_band"
+      "heldItem": [
+        "muscle_band"
+      ]
     },
     {
       "species": "gliscor",
@@ -68,7 +70,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "flying_gem"
+      "heldItem": [
+        "flying_gem"
+      ]
     },
     {
       "species": "dodrio",
@@ -121,7 +125,10 @@
         "def": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:pinsirite",
+        "life_orb"
+      ]
     },
     {
       "species": "crobat",

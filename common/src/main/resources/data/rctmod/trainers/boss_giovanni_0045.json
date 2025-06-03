@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "psychic_seed"
+      "heldItem": [
+        "psychic_seed"
+      ]
     },
     {
       "species": "tapulele",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "terrain_extender"
+      "heldItem": [
+        "terrain_extender"
+      ]
     },
     {
       "species": "excadrill",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "tyranitar",
@@ -123,7 +129,9 @@
         "atk": 4,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "celesteela",
@@ -150,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "mewtwo",
@@ -176,7 +186,11 @@
         "hp": 6,
         "spa": 252,
         "spe": 252
-      }
+      },
+      "heldItem": [
+        "mega_showdown:mewtwonite_y",
+        "expert_belt"
+      ]
     }
   ]
 }

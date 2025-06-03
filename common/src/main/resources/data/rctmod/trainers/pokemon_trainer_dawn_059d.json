@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "bellossom",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "persim_berry"
+      "heldItem": [
+        "persim_berry"
+      ]
     },
     {
       "species": "mamoswine",
@@ -95,7 +99,9 @@
         "atk": 252,
         "def": 128
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "typhlosion",
@@ -119,7 +125,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "lopunny",
@@ -146,7 +154,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "iron_ball"
+      "heldItem": [
+        "iron_ball"
+      ]
     },
     {
       "species": "empoleon",
@@ -173,7 +183,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

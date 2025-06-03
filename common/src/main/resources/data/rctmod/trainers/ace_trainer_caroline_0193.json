@@ -41,7 +41,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "parasect",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "vileplume",
@@ -96,7 +100,9 @@
         "spd": 128,
         "spe": 4
       },
-      "heldItem": "black_sludge"
+      "heldItem": [
+        "black_sludge"
+      ]
     },
     {
       "species": "amoonguss",
@@ -124,7 +130,9 @@
         "spd": 128,
         "spe": 4
       },
-      "heldItem": "black_sludge"
+      "heldItem": [
+        "black_sludge"
+      ]
     },
     {
       "species": "lopunny",
@@ -151,7 +159,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ]
     }
   ]
 }

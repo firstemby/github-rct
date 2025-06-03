@@ -23,7 +23,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "normal_gem"
+      ]
     },
     {
       "species": "electrode",
@@ -47,7 +49,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "normal_gem"
+      ]
     },
     {
       "species": "electrode",
@@ -71,7 +75,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "normal_gem"
+      "heldItem": [
+        "normal_gem"
+      ]
     }
   ]
 }

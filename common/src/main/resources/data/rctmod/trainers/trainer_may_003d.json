@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "breloom",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "manectric",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "relicanth",
@@ -122,7 +128,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "flygon",
@@ -150,7 +158,9 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "blaziken",
@@ -177,7 +187,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:blazikenite",
+        "life_orb"
+      ]
     }
   ]
 }

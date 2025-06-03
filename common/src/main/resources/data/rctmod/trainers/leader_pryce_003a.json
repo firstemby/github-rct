@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "icy_rock",
+      "heldItem": [
+        "icy_rock"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -71,7 +73,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "frosmoth",
@@ -98,7 +102,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "sandslash",
@@ -125,7 +131,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest",
+      "heldItem": [
+        "assault_vest"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -155,7 +163,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "glalie",
@@ -182,7 +192,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:glalitite",
+        "leftovers"
+      ]
     }
   ]
 }

@@ -21,7 +21,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "oran_berry",
+      "heldItem": [
+        "oran_berry"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -46,7 +48,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "soft_sand"
+      "heldItem": [
+        "soft_sand"
+      ]
     }
   ]
 }

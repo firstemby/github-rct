@@ -55,7 +55,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "magnezone",
@@ -82,7 +84,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "vikavolt",

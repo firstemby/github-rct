@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb",
+      "heldItem": [
+        "life_orb"
+      ],
       "aspects": [
         "pirouette"
       ]
@@ -56,7 +58,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "psychic_gem"
+      "heldItem": [
+        "mega_showdown:mewnium-z",
+        "psychic_gem"
+      ]
     },
     {
       "species": "kingler",
@@ -82,7 +87,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "giratina",
@@ -109,7 +116,10 @@
         "atk": 12,
         "spa": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "mega_showdown:griseous_orb",
+        "life_orb"
+      ],
       "aspects": [
         "origin"
       ]
@@ -139,7 +149,9 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "assault_vest",
+      "heldItem": [
+        "assault_vest"
+      ],
       "aspects": [
         "therian"
       ]
@@ -169,7 +181,9 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "life_orb",
+      "heldItem": [
+        "life_orb"
+      ],
       "aspects": [
         "sevii"
       ]

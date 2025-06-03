@@ -41,7 +41,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

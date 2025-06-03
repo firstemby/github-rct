@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "spectrier",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "aegislash",
@@ -96,7 +100,9 @@
         "spd": 128,
         "spe": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "silvally",
@@ -123,7 +129,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "leftovers"
+      ],
       "aspects": [
         "dark"
       ]
@@ -153,7 +161,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "gengar",
@@ -180,7 +190,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:gengarite",
+        "expert_belt"
+      ]
     }
   ]
 }

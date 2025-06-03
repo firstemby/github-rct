@@ -26,7 +26,9 @@
         "spa": 4,
         "spd": 252
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     },
     {
       "species": "venusaur",
@@ -53,7 +55,10 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:venusaurite",
+        "leftovers"
+      ]
     },
     {
       "species": "shiftry",
@@ -80,7 +85,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

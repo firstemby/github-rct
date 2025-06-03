@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "light_clay",
+      "heldItem": [
+        "light_clay"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -72,7 +74,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "rotom",
@@ -99,7 +103,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "wiki_berry",
+      "heldItem": [
+        "wiki_berry"
+      ],
       "aspects": [
         "wash-appliance"
       ]
@@ -129,7 +135,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "calyrex",
@@ -156,7 +164,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "choice_band",
+      "heldItem": [
+        "choice_band"
+      ],
       "aspects": [
         "ice"
       ]
@@ -186,7 +196,10 @@
         "spd": 4,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "mega_showdown:abomasite",
+        "assault_vest"
+      ]
     }
   ]
 }

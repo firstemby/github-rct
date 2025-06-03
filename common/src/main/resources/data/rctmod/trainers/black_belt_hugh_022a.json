@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "medicham",
@@ -52,7 +54,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "mega_showdown:medichamite",
+        "choice_scarf"
+      ]
     },
     {
       "species": "tyrantrum",
@@ -78,7 +83,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

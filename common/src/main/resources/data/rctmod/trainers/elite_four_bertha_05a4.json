@@ -40,7 +40,9 @@
         "atk": 252,
         "spa": 252
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "gliscor",
@@ -65,7 +67,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "nidoking",
@@ -91,7 +95,9 @@
         "spa": 252,
         "spd": 4
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "hippowdon",
@@ -116,7 +122,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "chesto_berry"
+      "heldItem": [
+        "chesto_berry"
+      ]
     },
     {
       "species": "mamoswine",
@@ -142,7 +150,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "never_melt_ice"
+      "heldItem": [
+        "never_melt_ice"
+      ]
     },
     {
       "species": "rhyperior",
@@ -168,7 +178,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "muscle_band"
+      "heldItem": [
+        "muscle_band"
+      ]
     }
   ]
 }

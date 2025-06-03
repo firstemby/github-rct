@@ -53,7 +53,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "sharpedo",
@@ -80,7 +82,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:sharpedonite",
+        "life_orb"
+      ]
     },
     {
       "species": "swoobat",
@@ -133,7 +138,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "black_glasses"
+      "heldItem": [
+        "black_glasses"
+      ]
     }
   ]
 }

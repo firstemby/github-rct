@@ -27,7 +27,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "rotom",
@@ -54,7 +56,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "heavy_duty_boots",
+      "heldItem": [
+        "heavy_duty_boots"
+      ],
       "aspects": [
         "fan-appliance"
       ]
@@ -84,7 +88,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "aggron",
@@ -111,7 +117,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "shuca_berry"
+      "heldItem": [
+        "shuca_berry"
+      ]
     },
     {
       "species": "garchomp",
@@ -138,7 +146,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:garchompite",
+        "life_orb"
+      ]
     },
     {
       "species": "volcanion",
@@ -165,7 +176,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

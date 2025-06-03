@@ -40,7 +40,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "heat_rock"
+      "heldItem": [
+        "heat_rock"
+      ]
     },
     {
       "species": "houndoom",
@@ -65,7 +67,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "wise_glasses"
+      "heldItem": [
+        "wise_glasses"
+      ]
     },
     {
       "species": "rapidash",
@@ -90,7 +94,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "wide_lens"
+      "heldItem": [
+        "wide_lens"
+      ]
     },
     {
       "species": "infernape",
@@ -115,7 +121,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "arcanine",
@@ -141,7 +149,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "shuca_berry"
+      "heldItem": [
+        "shuca_berry"
+      ]
     },
     {
       "species": "magmortar",
@@ -166,7 +176,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

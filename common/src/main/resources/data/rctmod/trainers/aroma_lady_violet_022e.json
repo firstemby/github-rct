@@ -25,7 +25,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "eject_pack"
+      "heldItem": [
+        "eject_pack"
+      ]
     },
     {
       "species": "arcanine",
@@ -52,7 +54,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "rock_gem",
+      "heldItem": [
+        "rock_gem"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -82,7 +86,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "chandelure",
@@ -109,7 +115,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "primarina",
@@ -136,7 +144,9 @@
         "def": 252,
         "spa": 8
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

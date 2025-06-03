@@ -41,7 +41,9 @@
         "atk": 40,
         "spe": 252
       },
-      "heldItem": "poison_barb"
+      "heldItem": [
+        "poison_barb"
+      ]
     },
     {
       "species": "ledian",
@@ -68,7 +70,9 @@
         "spa": 16,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "scyther",
@@ -95,7 +99,9 @@
         "spa": 16,
         "spe": 252
       },
-      "heldItem": "charti_berry"
+      "heldItem": [
+        "charti_berry"
+      ]
     },
     {
       "species": "scizor",
@@ -122,7 +128,9 @@
         "spa": 16,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

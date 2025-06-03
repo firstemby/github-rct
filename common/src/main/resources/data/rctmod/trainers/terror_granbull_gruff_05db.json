@@ -26,7 +26,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "granbull",
@@ -53,7 +55,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "fairy_gem"
+      "heldItem": [
+        "fairy_gem"
+      ]
     },
     {
       "species": "probopass",

@@ -42,7 +42,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "light_ball",
+      "heldItem": [
+        "light_ball"
+      ],
       "aspects": [
         "flying"
       ]
@@ -72,7 +74,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "goodra",
@@ -99,7 +103,9 @@
         "def": 252,
         "spa": 4
       },
-      "heldItem": "assault_vest",
+      "heldItem": [
+        "assault_vest"
+      ],
       "aspects": [
         "hisuian"
       ]
@@ -129,7 +135,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "water_gem"
+      "heldItem": [
+        "mega_showdown:waterium-z",
+        "water_gem"
+      ]
     },
     {
       "species": "drednaw",
@@ -156,7 +165,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "floatzel",
@@ -183,7 +194,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

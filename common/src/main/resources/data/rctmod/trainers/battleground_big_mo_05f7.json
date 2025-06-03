@@ -27,7 +27,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "wailord",
@@ -54,7 +56,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "hariyama",
@@ -81,7 +85,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "snorlax",
@@ -108,7 +114,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "aggron",
@@ -135,7 +143,10 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "iron_ball"
+      "heldItem": [
+        "mega_showdown:aggronite",
+        "iron_ball"
+      ]
     },
     {
       "species": "guzzlord",
@@ -162,7 +173,10 @@
         "def": 252,
         "spa": 252
       },
-      "heldItem": "dark_gem"
+      "heldItem": [
+        "mega_showdown:darkinium-z",
+        "dark_gem"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "scizor",
@@ -68,7 +70,10 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     },
     {
       "species": "scyther",
@@ -95,7 +100,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "heracross",
@@ -122,7 +129,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "coba_berry"
+      "heldItem": [
+        "coba_berry"
+      ]
     },
     {
       "species": "araquanid",
@@ -149,7 +158,9 @@
         "atk": 4,
         "def": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "vikavolt",
@@ -172,7 +183,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "magnet"
+      "heldItem": [
+        "magnet"
+      ]
     }
   ]
 }

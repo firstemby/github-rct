@@ -41,7 +41,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "quick_claw"
+      "heldItem": [
+        "quick_claw"
+      ]
     }
   ]
 }

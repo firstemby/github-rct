@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "breloom",
@@ -69,7 +71,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "heracross",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "infernape",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "white_herb"
+      "heldItem": [
+        "white_herb"
+      ]
     },
     {
       "species": "medicham",
@@ -150,7 +158,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "lucario",
@@ -177,7 +187,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

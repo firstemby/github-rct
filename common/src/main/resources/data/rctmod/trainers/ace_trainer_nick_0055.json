@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "light_clay",
+      "heldItem": [
+        "light_clay"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -71,7 +73,10 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:garchompite",
+        "life_orb"
+      ]
     },
     {
       "species": "dragapult",
@@ -99,7 +104,9 @@
         "spa": 4,
         "spe": 132
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "heatran",
@@ -127,7 +134,9 @@
         "spa": 96,
         "spe": 224
       },
-      "heldItem": "air_balloon"
+      "heldItem": [
+        "air_balloon"
+      ]
     },
     {
       "species": "arctozolt",
@@ -155,7 +164,9 @@
         "spa": 76,
         "spe": 232
       },
-      "heldItem": "ice_gem"
+      "heldItem": [
+        "ice_gem"
+      ]
     },
     {
       "species": "zapdos",
@@ -182,7 +193,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "flying_gem",
+      "heldItem": [
+        "mega_showdown:flyinium-z",
+        "flying_gem"
+      ],
       "aspects": [
         "galarian"
       ]

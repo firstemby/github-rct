@@ -26,7 +26,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "tangrowth",
@@ -52,7 +54,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "chansey",
@@ -79,7 +83,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "chandelure",
@@ -106,7 +112,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "altaria",
@@ -133,7 +141,10 @@
         "def": 252,
         "spa": 4
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:altarianite",
+        "life_orb"
+      ]
     }
   ]
 }

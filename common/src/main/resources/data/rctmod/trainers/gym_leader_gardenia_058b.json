@@ -44,7 +44,9 @@
         "spd": 8,
         "spe": 252
       },
-      "heldItem": "heat_rock"
+      "heldItem": [
+        "heat_rock"
+      ]
     },
     {
       "species": "sunflora",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "cherrim",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "breloom",
@@ -122,7 +128,9 @@
         "atk": 138,
         "spe": 252
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "torterra",
@@ -149,7 +157,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "roserade",
@@ -176,7 +186,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     }
   ]
 }

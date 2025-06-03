@@ -41,7 +41,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "forretress",
@@ -68,7 +70,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "drapion",
@@ -95,7 +99,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "volcarona",
@@ -122,7 +128,9 @@
         "def": 252,
         "spa": 252
       },
-      "heldItem": "bug_gem"
+      "heldItem": [
+        "bug_gem"
+      ]
     },
     {
       "species": "scizor",
@@ -149,7 +157,10 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     },
     {
       "species": "flygon",
@@ -176,7 +187,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     }
   ]
 }

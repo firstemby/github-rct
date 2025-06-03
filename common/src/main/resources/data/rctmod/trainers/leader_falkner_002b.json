@@ -37,7 +37,10 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:pidgeotite",
+        "expert_belt"
+      ]
     },
     {
       "species": "yanmega",
@@ -60,7 +63,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "shaymin",
@@ -83,7 +88,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "sky"
       ]
@@ -109,7 +116,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "flying_gem"
+      "heldItem": [
+        "flying_gem"
+      ]
     },
     {
       "species": "hooh",
@@ -131,7 +140,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "gyarados",
@@ -153,7 +164,10 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "flying_gem"
+      "heldItem": [
+        "mega_showdown:flyinium-z",
+        "flying_gem"
+      ]
     }
   ]
 }

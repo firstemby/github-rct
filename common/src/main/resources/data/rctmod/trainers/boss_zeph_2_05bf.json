@@ -67,7 +67,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:gengarite",
+        "expert_belt"
+      ]
     },
     {
       "species": "umbreon",
@@ -94,7 +97,9 @@
         "def": 128,
         "spd": 128
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "exploud",
@@ -121,7 +126,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "throat_spray"
+      "heldItem": [
+        "throat_spray"
+      ]
     },
     {
       "species": "decidueye",

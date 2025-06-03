@@ -45,7 +45,9 @@
       ],
       "ivs": {},
       "evs": {},
-      "heldItem": "miracle_seed"
+      "heldItem": [
+        "miracle_seed"
+      ]
     },
     {
       "species": "roserade",
@@ -69,7 +71,9 @@
         "spa": 36,
         "spe": 36
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

@@ -42,7 +42,9 @@
         "atk": 252,
         "def": 8
       },
-      "heldItem": "smooth_rock"
+      "heldItem": [
+        "smooth_rock"
+      ]
     },
     {
       "species": "aerodactyl",
@@ -69,7 +71,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "armaldo",
@@ -96,7 +100,9 @@
         "atk": 252,
         "def": 8
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "probopass",
@@ -123,7 +129,9 @@
         "spa": 252,
         "spe": 4
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "relicanth",
@@ -147,7 +155,9 @@
         "def": 80,
         "spd": 176
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "rampardos",
@@ -175,7 +185,9 @@
         "def": 216,
         "spd": 8
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "gliscor",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "dracozolt",
@@ -95,7 +99,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "aggron",
@@ -122,7 +128,10 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "iron_ball"
+      "heldItem": [
+        "mega_showdown:aggronite",
+        "iron_ball"
+      ]
     },
     {
       "species": "urshifu",
@@ -149,7 +158,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     },
     {
       "species": "urshifu",
@@ -176,7 +187,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band",
+      "heldItem": [
+        "choice_band"
+      ],
       "aspects": [
         "rapid_strike"
       ]

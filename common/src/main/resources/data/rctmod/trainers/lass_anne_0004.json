@@ -19,7 +19,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "clefairy",
@@ -39,7 +41,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "audino",

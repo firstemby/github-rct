@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "lum_berry"
+      "heldItem": [
+        "lum_berry"
+      ]
     },
     {
       "species": "absol",
@@ -95,7 +97,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "dark_gem"
+      "heldItem": [
+        "dark_gem"
+      ]
     },
     {
       "species": "honchkrow",

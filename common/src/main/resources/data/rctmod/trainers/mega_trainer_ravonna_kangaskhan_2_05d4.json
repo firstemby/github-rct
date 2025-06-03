@@ -26,7 +26,9 @@
         "atk": 252,
         "def": 252
       },
-      "heldItem": "aguav_berry"
+      "heldItem": [
+        "aguav_berry"
+      ]
     }
   ]
 }

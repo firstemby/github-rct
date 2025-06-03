@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "air_balloon"
+      "heldItem": [
+        "air_balloon"
+      ]
     },
     {
       "species": "hawlucha",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "magmortar",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "cursola",
@@ -122,7 +128,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "starmie",
@@ -149,7 +157,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "sandaconda",
@@ -175,7 +185,9 @@
         "hp": 252,
         "spd": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

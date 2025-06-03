@@ -42,7 +42,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "grass_gem"
+      "heldItem": [
+        "grass_gem"
+      ]
     },
     {
       "species": "gloom",
@@ -95,7 +97,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "silver_powder"
+      "heldItem": [
+        "silver_powder"
+      ]
     },
     {
       "species": "comfey",

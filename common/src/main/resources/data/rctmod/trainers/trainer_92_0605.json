@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "togedemaru",
@@ -68,7 +70,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "red_card"
+      "heldItem": [
+        "red_card"
+      ]
     },
     {
       "species": "raichu",
@@ -95,7 +99,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "electric_gem",
+      "heldItem": [
+        "mega_showdown:electrium-z",
+        "electric_gem"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -121,7 +128,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "white_herb",
+      "heldItem": [
+        "white_herb"
+      ],
       "aspects": [
         "mow-appliance"
       ]
@@ -147,7 +156,10 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:manectite",
+        "expert_belt"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "sneasler",
@@ -68,7 +70,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "breloom",
@@ -95,7 +99,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "poliwrath",
@@ -121,7 +127,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "lucario",
@@ -148,7 +156,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "shuca_berry"
+      "heldItem": [
+        "shuca_berry"
+      ]
     },
     {
       "species": "gallade",
@@ -175,7 +185,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:galladite",
+        "life_orb"
+      ]
     }
   ]
 }

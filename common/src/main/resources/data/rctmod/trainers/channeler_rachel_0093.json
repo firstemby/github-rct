@@ -25,7 +25,9 @@
         "hp": 252,
         "def": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "moltres",
@@ -52,7 +54,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry",
+      "heldItem": [
+        "sitrus_berry"
+      ],
       "aspects": [
         "galarian"
       ]
@@ -82,7 +86,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "sneasler",
@@ -109,7 +115,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "absol",
@@ -136,7 +144,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:absolite",
+        "expert_belt"
+      ]
     },
     {
       "species": "bisharp",
@@ -163,7 +174,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     }
   ]
 }

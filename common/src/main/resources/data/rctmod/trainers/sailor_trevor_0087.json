@@ -22,7 +22,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "nidoqueen",

@@ -63,7 +63,9 @@
         "def": 68,
         "spd": 68
       },
-      "heldItem": "soft_sand"
+      "heldItem": [
+        "soft_sand"
+      ]
     },
     {
       "species": "bastiodon",
@@ -87,7 +89,9 @@
         "spa": 100,
         "spd": 68
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     }
   ]
 }

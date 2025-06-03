@@ -27,7 +27,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "drapion",
@@ -54,7 +56,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "volcarona",
@@ -81,7 +85,10 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "fire_gem"
+      "heldItem": [
+        "mega_showdown:firium-z",
+        "fire_gem"
+      ]
     },
     {
       "species": "flygon",
@@ -108,7 +115,9 @@
         "spa": 128,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "scizor",
@@ -135,7 +144,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ]
     },
     {
       "species": "rhyperior",
@@ -162,7 +174,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     }
   ]
 }

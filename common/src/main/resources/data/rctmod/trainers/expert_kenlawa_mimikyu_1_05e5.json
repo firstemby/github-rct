@@ -41,7 +41,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     }
   ]
 }

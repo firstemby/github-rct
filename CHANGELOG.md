@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.16.1-beta] - 2025-06-03
+
+**Changed:**
+
+- *#303* Many trainer pokemon will now hold the appropriate *gimmick item* if mega showdown is installed
+- *#302* Update min dependency of *rctapi* to version `0.13.0-beta`: Trainers are now capable of using gimmicks like zmoves or mega evolutions (requires mega showdown)
+
+**Fixed:**
+
+- *#301* Some trainer pokemon not having the correct aspect (e.g. silvally holding a *memory* or groudon with a *red orb*)
+
 ## [0.16.0-beta] - 2025-05-13
 
 **Added:**

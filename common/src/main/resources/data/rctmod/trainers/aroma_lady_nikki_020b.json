@@ -26,7 +26,10 @@
         "def": 8,
         "spd": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:sablenite",
+        "leftovers"
+      ]
     },
     {
       "species": "tangrowth",
@@ -53,7 +56,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "blissey",
@@ -79,7 +84,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "toxapex",
@@ -106,7 +113,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "black_sludge"
+      "heldItem": [
+        "black_sludge"
+      ]
     },
     {
       "species": "reuniclus",
@@ -133,7 +142,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "drapion",
@@ -160,7 +171,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     }
   ]
 }

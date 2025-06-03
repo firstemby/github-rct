@@ -42,7 +42,9 @@
         "atk": 6,
         "spa": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "roserade",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 204
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "togekiss",
@@ -94,7 +98,9 @@
         "spa": 252,
         "spe": 204
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "lucario",
@@ -120,7 +126,9 @@
         "spa": 252,
         "spe": 204
       },
-      "heldItem": "wise_glasses"
+      "heldItem": [
+        "wise_glasses"
+      ]
     },
     {
       "species": "milotic",
@@ -146,7 +154,9 @@
         "def": 252,
         "spa": 6
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "garchomp",
@@ -172,7 +182,9 @@
         "atk": 252,
         "spe": 204
       },
-      "heldItem": "yache_berry"
+      "heldItem": [
+        "yache_berry"
+      ]
     }
   ]
 }

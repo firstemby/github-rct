@@ -27,7 +27,10 @@
         "def": 78,
         "spe": 180
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:kangaskhanite",
+        "leftovers"
+      ]
     }
   ]
 }

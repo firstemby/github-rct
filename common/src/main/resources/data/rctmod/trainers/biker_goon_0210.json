@@ -26,7 +26,9 @@
         "def": 252,
         "spe": 4
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "flygon",
@@ -53,7 +55,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "ground_gem"
+      "heldItem": [
+        "mega_showdown:groundium-z",
+        "ground_gem"
+      ]
     },
     {
       "species": "kleavor",
@@ -80,7 +85,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "rock_gem"
+      "heldItem": [
+        "rock_gem"
+      ]
     }
   ]
 }

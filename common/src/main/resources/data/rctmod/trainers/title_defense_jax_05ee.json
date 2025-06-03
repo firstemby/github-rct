@@ -27,7 +27,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "hitmontop",
@@ -54,7 +56,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "magnezone",
@@ -81,7 +85,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "gastrodon",
@@ -108,7 +114,9 @@
         "def": 4,
         "spd": 252
       },
-      "heldItem": "aguav_berry"
+      "heldItem": [
+        "aguav_berry"
+      ]
     },
     {
       "species": "salamence",
@@ -135,7 +143,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:salamencite",
+        "life_orb"
+      ]
     },
     {
       "species": "moltres",
@@ -162,7 +173,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "charti_berry"
+      "heldItem": [
+        "charti_berry"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "sceptile",
@@ -68,7 +70,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "torterra",
@@ -95,7 +99,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "yache_berry"
+      "heldItem": [
+        "yache_berry"
+      ]
     },
     {
       "species": "blaziken",
@@ -122,7 +128,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:blazikenite",
+        "life_orb"
+      ]
     },
     {
       "species": "greninja",
@@ -149,7 +158,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "inteleon",
@@ -176,7 +187,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     }
   ]
 }

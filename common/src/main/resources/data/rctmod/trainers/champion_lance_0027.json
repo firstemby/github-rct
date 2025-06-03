@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "light_clay"
+      "heldItem": [
+        "light_clay"
+      ]
     },
     {
       "species": "dialga",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "salamence",
@@ -95,7 +99,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:salamencite",
+        "life_orb"
+      ]
     }
   ]
 }

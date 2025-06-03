@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "metagross",
@@ -69,7 +71,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "mega_showdown:metagrossite",
+        "assault_vest"
+      ]
     },
     {
       "species": "groudon",
@@ -96,7 +101,12 @@
         "atk": 4,
         "spd": 252
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "mega_showdown:redorb"
+      ],
+      "aspects": [
+        "primal"
+      ]
     },
     {
       "species": "yveltal",
@@ -123,7 +133,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "eternatus",
@@ -150,7 +162,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "ditto",
@@ -174,7 +188,9 @@
         "atk": 4,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     }
   ]
 }

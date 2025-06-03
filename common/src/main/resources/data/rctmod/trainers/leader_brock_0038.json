@@ -42,7 +42,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "smooth_rock"
+      "heldItem": [
+        "smooth_rock"
+      ]
     },
     {
       "species": "omastar",
@@ -69,7 +71,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "power_herb"
+      "heldItem": [
+        "power_herb"
+      ]
     },
     {
       "species": "sandslash",
@@ -96,7 +100,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "soft_sand"
+      "heldItem": [
+        "soft_sand"
+      ]
     },
     {
       "species": "lycanroc",
@@ -123,7 +129,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "tyranitar",
@@ -150,7 +158,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "aerodactyl",
@@ -177,7 +187,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:aerodactylite",
+        "life_orb"
+      ]
     }
   ]
 }

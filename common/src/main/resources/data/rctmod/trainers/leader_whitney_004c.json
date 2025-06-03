@@ -41,7 +41,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "miltank",
@@ -68,7 +70,9 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "kasib_berry"
+      "heldItem": [
+        "kasib_berry"
+      ]
     },
     {
       "species": "exploud",
@@ -92,7 +96,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "zoroark",
@@ -119,7 +125,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -149,7 +157,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "flame_orb"
+      "heldItem": [
+        "flame_orb"
+      ]
     },
     {
       "species": "snorlax",
@@ -176,7 +186,9 @@
         "atk": 252,
         "def": 4
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     }
   ]
 }

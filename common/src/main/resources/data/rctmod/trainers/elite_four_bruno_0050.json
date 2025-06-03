@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "conkeldurr",
@@ -67,7 +69,9 @@
         "hp": 252,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "urshifu",
@@ -94,7 +98,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "kommoo",
@@ -121,7 +127,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "throat_spray"
+      "heldItem": [
+        "throat_spray"
+      ]
     },
     {
       "species": "zacian",
@@ -148,7 +156,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "leftovers",
+      "heldItem": [
+        "mega_showdown:rusted_sword"
+      ],
       "aspects": [
         "crowned"
       ]
@@ -178,7 +188,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:lucarionite",
+        "life_orb"
+      ]
     }
   ]
 }

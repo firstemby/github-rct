@@ -26,7 +26,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "damp_rock"
+      "heldItem": [
+        "damp_rock"
+      ]
     },
     {
       "species": "blissey",
@@ -53,7 +55,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "chople_berry"
+      "heldItem": [
+        "chople_berry"
+      ]
     },
     {
       "species": "braviary",
@@ -80,7 +84,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "wacan_berry"
+      "heldItem": [
+        "wacan_berry"
+      ]
     },
     {
       "species": "reuniclus",
@@ -107,7 +113,9 @@
         "spa": 252,
         "spd": 252
       },
-      "heldItem": "colbur_berry"
+      "heldItem": [
+        "colbur_berry"
+      ]
     },
     {
       "species": "ampharos",
@@ -134,7 +142,10 @@
         "def": 252,
         "spa": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:ampharosite",
+        "life_orb"
+      ]
     }
   ]
 }

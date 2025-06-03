@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "togedemaru",
@@ -68,7 +70,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "red_card"
+      "heldItem": [
+        "red_card"
+      ]
     },
     {
       "species": "raichu",
@@ -95,7 +99,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "electric_gem",
+      "heldItem": [
+        "mega_showdown:aloraichium-z",
+        "electric_gem"
+      ],
       "aspects": [
         "alolan"
       ]
@@ -125,7 +132,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "white_herb",
+      "heldItem": [
+        "white_herb"
+      ],
       "aspects": [
         "mow-appliance"
       ]
@@ -155,7 +164,10 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:manectite",
+        "expert_belt"
+      ]
     },
     {
       "species": "melmetal",
@@ -182,7 +194,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     }
   ]
 }

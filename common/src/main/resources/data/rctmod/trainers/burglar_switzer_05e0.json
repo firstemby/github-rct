@@ -26,7 +26,10 @@
         "atk": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:blazikenite",
+        "life_orb"
+      ]
     },
     {
       "species": "garbodor",
@@ -53,7 +56,9 @@
         "atk": 252,
         "spd": 252
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "salazzle",
@@ -80,7 +85,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     }
   ]
 }

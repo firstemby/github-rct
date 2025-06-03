@@ -37,7 +37,9 @@
         "def": 252,
         "spd": 4
       },
-      "heldItem": "eviolite"
+      "heldItem": [
+        "eviolite"
+      ]
     },
     {
       "species": "cacnea",

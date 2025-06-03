@@ -67,7 +67,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "fire_gem"
+      "heldItem": [
+        "fire_gem"
+      ]
     },
     {
       "species": "sealeo",
@@ -90,7 +92,9 @@
         "spe": 31
       },
       "evs": {},
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "florges",

@@ -40,7 +40,9 @@
         "atk": 252,
         "spa": 252
       },
-      "heldItem": "rindo_berry"
+      "heldItem": [
+        "rindo_berry"
+      ]
     },
     {
       "species": "gliscor",
@@ -65,7 +67,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "golem",
@@ -91,7 +95,9 @@
         "atk": 252,
         "spe": 204
       },
-      "heldItem": "soft_sand"
+      "heldItem": [
+        "soft_sand"
+      ]
     },
     {
       "species": "hippowdon",
@@ -116,7 +122,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "chesto_berry"
+      "heldItem": [
+        "chesto_berry"
+      ]
     },
     {
       "species": "rhyperior",
@@ -141,7 +149,9 @@
         "hp": 252,
         "atk": 252
       },
-      "heldItem": "muscle_band"
+      "heldItem": [
+        "muscle_band"
+      ]
     }
   ]
 }

@@ -41,7 +41,9 @@
         "def": 252,
         "spa": 4
       },
-      "heldItem": "heat_rock"
+      "heldItem": [
+        "heat_rock"
+      ]
     },
     {
       "species": "charizard",
@@ -68,7 +70,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_specs"
+      "heldItem": [
+        "choice_specs"
+      ]
     },
     {
       "species": "milotic",
@@ -95,7 +99,9 @@
         "def": 4,
         "spa": 252
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "dodrio",
@@ -122,7 +128,9 @@
         "spa": 4,
         "spe": 252
       },
-      "heldItem": "focus_sash",
+      "heldItem": [
+        "focus_sash"
+      ],
       "aspects": [
         "sevii"
       ]
@@ -152,7 +160,9 @@
         "atk": 252,
         "spa": 4
       },
-      "heldItem": "assault_vest"
+      "heldItem": [
+        "assault_vest"
+      ]
     },
     {
       "species": "garchomp",
@@ -179,7 +189,10 @@
         "def": 4,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "mega_showdown:garchompite",
+        "life_orb"
+      ]
     }
   ]
 }

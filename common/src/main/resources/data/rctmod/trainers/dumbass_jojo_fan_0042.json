@@ -26,7 +26,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "ferrothorn",
@@ -54,7 +56,9 @@
         "spd": 128,
         "spe": 4
       },
-      "heldItem": "rocky_helmet"
+      "heldItem": [
+        "rocky_helmet"
+      ]
     },
     {
       "species": "simisear",
@@ -80,7 +84,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "choice_scarf"
+      "heldItem": [
+        "choice_scarf"
+      ]
     },
     {
       "species": "celebi",
@@ -107,7 +113,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "machamp",
@@ -134,7 +142,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "expert_belt"
+      ]
     },
     {
       "species": "hoopa",
@@ -161,7 +171,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "choice_band",
+      "heldItem": [
+        "choice_band"
+      ],
       "aspects": [
         "unbound"
       ]

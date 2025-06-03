@@ -41,7 +41,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "sitrus_berry"
+      "heldItem": [
+        "sitrus_berry"
+      ]
     },
     {
       "species": "rhyperior",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "weakness_policy"
+      "heldItem": [
+        "weakness_policy"
+      ]
     },
     {
       "species": "honchkrow",
@@ -95,7 +99,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "scope_lens"
+      "heldItem": [
+        "scope_lens"
+      ]
     },
     {
       "species": "mawile",
@@ -122,7 +128,10 @@
         "atk": 252,
         "spe": 6
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:mawilite",
+        "expert_belt"
+      ]
     }
   ]
 }

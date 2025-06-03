@@ -41,7 +41,9 @@
         "def": 6,
         "spd": 252
       },
-      "heldItem": "toxic_orb"
+      "heldItem": [
+        "toxic_orb"
+      ]
     },
     {
       "species": "cradily",
@@ -68,7 +70,9 @@
         "def": 128,
         "spd": 128
       },
-      "heldItem": "big_root"
+      "heldItem": [
+        "big_root"
+      ]
     },
     {
       "species": "glaceon",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "leftovers"
+      "heldItem": [
+        "leftovers"
+      ]
     },
     {
       "species": "rotom",
@@ -122,7 +128,9 @@
         "spa": 252,
         "spe": 6
       },
-      "heldItem": "choice_specs",
+      "heldItem": [
+        "choice_specs"
+      ],
       "aspects": [
         "heat-appliance"
       ]
@@ -152,7 +160,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "life_orb"
+      "heldItem": [
+        "life_orb"
+      ]
     },
     {
       "species": "empoleon",
@@ -179,7 +189,9 @@
         "atk": 252,
         "def": 6
       },
-      "heldItem": "choice_band"
+      "heldItem": [
+        "choice_band"
+      ]
     }
   ]
 }

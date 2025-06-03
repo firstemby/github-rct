@@ -41,7 +41,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "silk_scarf"
+      "heldItem": [
+        "silk_scarf"
+      ]
     },
     {
       "species": "bruxish",
@@ -68,7 +70,9 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "mystic_water"
+      "heldItem": [
+        "mystic_water"
+      ]
     },
     {
       "species": "galvantula",
@@ -95,7 +99,9 @@
         "spa": 252,
         "spe": 252
       },
-      "heldItem": "magnet"
+      "heldItem": [
+        "magnet"
+      ]
     },
     {
       "species": "shedinja",
@@ -121,7 +127,9 @@
         "hp": 4,
         "spe": 40
       },
-      "heldItem": "focus_sash"
+      "heldItem": [
+        "focus_sash"
+      ]
     },
     {
       "species": "absol",
@@ -148,7 +156,10 @@
         "atk": 252,
         "spe": 252
       },
-      "heldItem": "expert_belt"
+      "heldItem": [
+        "mega_showdown:absolite",
+        "expert_belt"
+      ]
     }
   ]
 }
