@@ -84,6 +84,7 @@ Another great guide for **0.13** by Pocketcraft:
 
 - Loot tables for badges from *Cobblemon Pokemon Badges*: [RCT Badges - Cobblemon Pokemon Badges](https://modrinth.com/datapack/rct-badges-cobblemonpokemonbadges)
 - Loot tables for badges from *PKGBadges*: [RCT Badges - PKGBadges](https://modrinth.com/datapack/rct-badges-pkgbadges)
+- Loot tables for badges from *Elemental Effects Badges*: [RCT Badges - Elemental Effects Badges](https://modrinth.com/datapack/rct-badges-elemental-effects-badges)
 
 > Only install one of these.
 
