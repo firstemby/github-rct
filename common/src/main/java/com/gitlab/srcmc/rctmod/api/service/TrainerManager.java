@@ -20,6 +20,7 @@ package com.gitlab.srcmc.rctmod.api.service;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class TrainerManager extends DataPackManager {
     private Set<String> playerTrainerIds = new HashSet<>();
     private Set<Player> receivedUpdates = new HashSet<>();
     private Map<UUID, TrainerBattle> trainerBattles = new HashMap<>();
+    private Queue<Runnable> onLoadedHandlers = new LinkedList<>();
     private MinecraftServer server;
     private ResourceManager resourceManager;
     private boolean loading, isReloadedAsDatapack;
@@ -85,8 +87,25 @@ public class TrainerManager extends DataPackManager {
         this.seriesManager = new SeriesManager();
     }
 
+    public void runAfterLoaded(Runnable f) {
+        if(!this.isReloadRequired() || !this.isLoading()) {
+            f.run();
+        } else {
+            this.onLoadedHandlers.offer(f);
+        }
+    }
+
     public void setLoading(boolean value) {
+        var wasLoading = this.loading;
         this.loading = !this.isReloadedAsDatapack && value;
+
+        if(this.server != null && wasLoading && !this.loading) {
+            this.server.execute(() -> {
+                while(!this.onLoadedHandlers.isEmpty()) {
+                    this.onLoadedHandlers.poll().run();
+                }
+            });
+        }
     }
 
     public void setIsReloadedAsDatapack(boolean value) {

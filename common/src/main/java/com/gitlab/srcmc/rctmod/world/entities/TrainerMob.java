@@ -104,8 +104,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
     static final int AFK_CHECK_INTERVAL_TICKS = 2400;
     static final int AFK_CHECK_MAX_COUNT = 6;
     static final int AFK_PLAYER_MAX_COUNT = 3;
-    static int MAX_TRAINER_ID_CHECK_RETRY_TICK = 1024;
-    static int TRAINER_ID_CHECK_RETRY_TICK = 32;
 
     private Map<UUID, int[]> winsAndDefeats = new HashMap<>();
     private int cooldown;
@@ -120,9 +118,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private TrainerSpawnerBlockEntity homeSpawner;
     private List<PlayerTransform> nearestTransforms = new ArrayList<>();
     private int nearestAfkCheckCount;
-    private int trainerIdCheckRetryTicks;
-    private int trainerIdCheckFails;
-    private String targetTrainerid;
 
     protected TrainerMob(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -347,9 +342,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             if(!Objects.equals(currentId, trainerId)) {
                 RCTMod.getInstance().getTrainerSpawner().notifyChangeTrainerId(this, trainerId);
                 this.entityData.set(DATA_TRAINER_ID, trainerId);
-                this.targetTrainerid = trainerId;
-                this.trainerIdCheckFails = 0;
-                this.updateTrainerNPC(trainerId);
+                RCTMod.getInstance().getTrainerManager().runAfterLoaded(() -> this.updateTrainerNPC(trainerId));
             }
         }
     }
@@ -361,22 +354,10 @@ public class TrainerMob extends PathfinderMob implements Npc {
             if(trainer != null) {
                 trainer.setEntity(this);
                 this.udpateCustomName();
-                this.trainerIdCheckFails = 0;
             } else {
-                var ticks = TRAINER_ID_CHECK_RETRY_TICK << this.trainerIdCheckFails;
-
-                if(ticks <= MAX_TRAINER_ID_CHECK_RETRY_TICK) {
-                    this.trainerIdCheckRetryTicks = ticks;
-                    this.trainerIdCheckFails++;
-                    var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID_RETRY);
-                    ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition(), this.level().dimension().location().toString(), this.trainerIdCheckRetryTicks, MAX_TRAINER_ID_CHECK_RETRY_TICK).getString());
-                    ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString(), this.trainerIdCheckRetryTicks, MAX_TRAINER_ID_CHECK_RETRY_TICK);
-                } else {
-                    var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID_REMOVE);
-                    ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition(), this.level().dimension().location().toString()).getString());
-                    ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString());
-                    this.discard();
-                }
+                var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID);
+                ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString()).getString());
+                ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString());
             }
         } catch(IllegalArgumentException e) {
             ModCommon.LOG.error(String.format("Invalid trainer id '%s' (%s)", trainerId, this.getStringUUID()), e);
@@ -519,10 +500,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 } else {
                     this.setOriginPlayer(null);
                 }
-            }
-
-            if(this.trainerIdCheckFails > 0 && --this.trainerIdCheckRetryTicks < 0) {
-                this.updateTrainerNPC(this.targetTrainerid);
             }
 
             if(this.isInBattle()) {

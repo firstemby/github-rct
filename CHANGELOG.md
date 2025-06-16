@@ -4,12 +4,12 @@
 
 **Changed:**
 
-- *#306* Error handling of entities with invalid trainer ids: A warning will now be printed in chat (for ops) before removing the entity from the world (instead of shutting down the server)
+- *#306* Error handling of trainer entities with invalid trainer ids: A warning will now be printed in chat (for ops only) and the trainer will be ignored otherwise (instead of shutting down the server)
 
 **Fixed:**
 
 - *#305* Cobblemon event registration after the mod was initialized (this hopefully fixes some rarely occurring crashes on client/server startup)
-- *#304* Some random crashes related to attempts of accessig a `PlayerState` before it was initialized
+- *#304* Some random crashes related to attempts of accessing a `PlayerState` before it was initialized
 
 ## [0.16.1-beta] - 2025-06-06
 
