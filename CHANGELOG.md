@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.2-beta] - 2025-06-16
+
+**Changed:**
+
+- *#304* Error handling of entities with invalid trainer ids: A warning will now be printed in chat before removing the entity from the world (instead of shutting down the server)
+
 ## [0.16.1-beta] - 2025-06-06
 
 **Changed:**

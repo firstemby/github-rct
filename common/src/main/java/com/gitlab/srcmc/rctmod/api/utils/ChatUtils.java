@@ -32,6 +32,7 @@ import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -79,8 +80,20 @@ public final class ChatUtils {
         target.createCommandSourceStack().sendSystemMessage(text.getComponent(args));
     }
 
+    public static void broadcastMessage(MinecraftServer server, Text text, int opLevel, Object... args) {
+        server.getPlayerList().getPlayers().stream()
+            .filter(pl -> pl.hasPermissions(opLevel))
+            .forEach(pl -> sendMessage(pl, text, args));
+    }
+
     public static void sendError(Player target, Text text, Object... args) {
         target.createCommandSourceStack().sendSystemMessage(text.getComponent(args).withStyle(ChatFormatting.RED));
+    }
+
+    public static void broadcastError(MinecraftServer server, Text text, int opLevel, Object... args) {
+        server.getPlayerList().getPlayers().stream()
+            .filter(pl -> pl.hasPermissions(opLevel))
+            .forEach(pl -> sendError(pl, text, args));
     }
 
     public static void sendTitle(Player target, Text title, Text subtitle, Object... args) {

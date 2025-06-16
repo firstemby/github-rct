@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
+import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.ModRegistries;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
@@ -32,6 +33,7 @@ import com.gitlab.srcmc.rctmod.api.data.TrainerBattle;
 import com.gitlab.srcmc.rctmod.api.data.pack.SeriesMetaData;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
+import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
 import com.gitlab.srcmc.rctmod.world.entities.goals.LookAtPlayerAndWaitGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.MoveCloseToTargetGoal;
@@ -102,8 +104,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
     static final int AFK_CHECK_INTERVAL_TICKS = 2400;
     static final int AFK_CHECK_MAX_COUNT = 6;
     static final int AFK_PLAYER_MAX_COUNT = 3;
-    static int MAX_TRAINER_ID_CHECK_RETRY_TICK = 600;
-    static int TRAINER_ID_CHECK_RETRY_TICK = 20;
+    static int MAX_TRAINER_ID_CHECK_RETRY_TICK = 1024;
+    static int TRAINER_ID_CHECK_RETRY_TICK = 32;
 
     private Map<UUID, int[]> winsAndDefeats = new HashMap<>();
     private int cooldown;
@@ -361,15 +363,19 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 this.udpateCustomName();
                 this.trainerIdCheckFails = 0;
             } else {
-                var fails = this.trainerIdCheckFails + 1;
-                var ticks = fails * TRAINER_ID_CHECK_RETRY_TICK;
+                var ticks = TRAINER_ID_CHECK_RETRY_TICK << this.trainerIdCheckFails;
 
                 if(ticks <= MAX_TRAINER_ID_CHECK_RETRY_TICK) {
                     this.trainerIdCheckRetryTicks = ticks;
-                    this.trainerIdCheckFails = fails;
-                    ModCommon.LOG.error(String.format("Invalid trainer id '%s' (%s): not found (retry in %d ticks)", trainerId, this.getStringUUID(), this.trainerIdCheckRetryTicks));
+                    this.trainerIdCheckFails++;
+                    var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID_RETRY);
+                    ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition(), this.level().dimension().location().toString(), this.trainerIdCheckRetryTicks, MAX_TRAINER_ID_CHECK_RETRY_TICK).getString());
+                    ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString(), this.trainerIdCheckRetryTicks, MAX_TRAINER_ID_CHECK_RETRY_TICK);
                 } else {
-                    throw new IllegalStateException(String.format("Failed to retrieve trainer '%s'. Was it successfully registered to the trainer registry?", trainerId));
+                    var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID_REMOVE);
+                    ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition(), this.level().dimension().location().toString()).getString());
+                    ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString());
+                    this.discard();
                 }
             }
         } catch(IllegalArgumentException e) {

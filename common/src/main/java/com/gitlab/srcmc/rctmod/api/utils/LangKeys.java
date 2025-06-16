@@ -52,6 +52,8 @@ public final class LangKeys {
     public static final String COMMANDS_ERRORS_TARGET_NOT_A_PLAYER = "commands.rctmod.errors.target_not_a_player";
     public static final String COMMANDS_ERRORS_EMPTY_SERIES = "commands.rctmod.errors.empty_series";
     public static final String COMMANDS_ERRORS_UNKNOWN_SERIES = "commands.rctmod.errors.unknown_series";
+    public static final String COMMANDS_ERRORS_INVALID_TRAINER_ID_RETRY = "commands.rctmod.errors.invalid_trainer_id_retry";
+    public static final String COMMANDS_ERRORS_INVALID_TRAINER_ID_REMOVE = "commands.rctmod.errors.invalid_trainer_id_remove";
     public static final String COMMANDS_FEEDBACK_SERIES_GRAPH = "commands.rctmod.feedback.series_graph";
     public static final String COMMANDS_FEEDBACK_CLICK_LINK = "commands.rctmod.feedback.click_link";
 
