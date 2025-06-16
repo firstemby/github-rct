@@ -84,8 +84,7 @@ public class ModServer {
         LevelTick.SERVER_PRE.register(ModServer::onServerTick);
         PlayerEvent.PLAYER_JOIN.register(ModServer::onPlayerJoin);
         PlayerEvent.PLAYER_QUIT.register(ModServer::onPlayerQuit);
-        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
-        CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
+        CobblemonEvents.COBBLEMON_INITIALISED.subscribe(Priority.NORMAL, ModServer::onCobblemonInitialized);
     }
 
     public static void syncTrainerManger(ServerPlayer... players) {
@@ -179,7 +178,7 @@ public class ModServer {
             var cfg = rct.getServerConfig();
             var trs = rct.getTrainerSpawner();
 
-            level.players().forEach(player -> {
+            level.players().stream().filter(pl -> PlayerState.get(pl) != null).forEach(player -> {
                 var maxCountPl = cfg.maxTrainersPerPlayer();
                 
                 if(maxCountPl > 0) {
@@ -240,6 +239,12 @@ public class ModServer {
     }
 
     // CobblemonEvent
+
+    public static Unit onCobblemonInitialized(Unit u) {
+        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
+        CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
+        return u;
+    }
 
     public static Unit onBattleVictory(BattleVictoryEvent event) {
         if(!ModServer.removeBattleFromInitiator(event.getWinners(), true)) {
