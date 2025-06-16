@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.16.3-beta] - 2025-06-16
+
+**Changed:**
+
+- *#308* Trainer Card now displays current series (TODO: where?)
+
+**Fixed:**
+
+- *#307* Some minor adjustments to trainer manager initialization
+
 ## [0.16.2-beta] - 2025-06-16
 
 **Changed:**

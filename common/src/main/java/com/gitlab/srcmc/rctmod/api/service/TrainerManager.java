@@ -96,10 +96,9 @@ public class TrainerManager extends DataPackManager {
     }
 
     public void setLoading(boolean value) {
-        var wasLoading = this.loading;
         this.loading = !this.isReloadedAsDatapack && value;
 
-        if(this.server != null && wasLoading && !this.loading) {
+        if(this.server != null && !this.loading && !this.reloadRequired) {
             this.server.execute(() -> {
                 while(!this.onLoadedHandlers.isEmpty()) {
                     this.onLoadedHandlers.poll().run();
