@@ -1,10 +1,10 @@
 run:
   client:
-    fabric: bash gradlew fabric:runClient --console=plain
-    neoforge: bash gradlew neoforge:runClient --console=plain
+    fabric: bash gradlew clean fabric:runClient --console=plain
+    neoforge: bash gradlew clean neoforge:runClient --console=plain
   server:
-    fabric: bash gradlew fabric:runServer --console=plain
-    neoforge: bash gradlew neoforge:runServer --console=plain
+    fabric: bash gradlew clean fabric:runServer --console=plain
+    neoforge: bash gradlew clean neoforge:runServer --console=plain
 generate:
   assets: bash tools/generate/assets
   textures: bash tools/generate/textures

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
+
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
@@ -77,6 +78,7 @@ public class ModServer {
 
     static void registerEvents() {
         CommandRegistrationEvent.EVENT.register(ModServer::onCommandRegistration);
+        LifecycleEvent.SETUP.register(ModServer::onSetup);
         LifecycleEvent.SERVER_STARTING.register(ModServer::onServerStarting);
         LifecycleEvent.SERVER_STOPPED.register(ModServer::onServerStopped);
         LifecycleEvent.SERVER_LEVEL_SAVE.register(ModServer::onServerLevelSave);
@@ -115,6 +117,13 @@ public class ModServer {
     }
 
     // LifecycleEvent
+    
+    static void onSetup() {
+        // For some reason the COBBLEMON_INITIALIZED event is either not always fired or
+        // the handler is sometimes skipped in a dedicated fabric server environment. This
+        // servers as fallback.
+        onCobblemonInitialized(Unit.INSTANCE);
+    }
 
     static void onServerLevelSave(ServerLevel level) {
         if(level.getServer().overworld() == level) {
@@ -240,9 +249,15 @@ public class ModServer {
 
     // CobblemonEvent
 
+    private static boolean cobblemonEventsRegistered;
+
     public static Unit onCobblemonInitialized(Unit u) {
-        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
-        CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
+        if(!cobblemonEventsRegistered) {
+            CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
+            CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
+            cobblemonEventsRegistered = true;
+        }
+
         return u;
     }
 
