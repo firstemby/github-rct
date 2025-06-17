@@ -4,7 +4,7 @@
 
 **Fixed:**
 
-- *#308* Hotfix for event handlers sometimes not getting registered in fabric server environments, causing several features not to work
+- *#308* Hotfix for event handlers sometimes not getting registered in fabric server environments, which was the cause for several features failing to work
 - *#307* Some minor adjustments to trainer manager initialization
 
 ## [0.16.2-beta] - 2025-06-16
