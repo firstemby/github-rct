@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.4-beta] - 2025-06-20
+
+**Changed:**
+
+- *#312* Reorganized some initialization logic (this **might** fix the issues some people with larger mod packs had on neoforge) (TODO)
+- *#311* Trainer Card now display the current series in the actionbar when selecting the item (TODO)
+
+**Fixed:**
+
+- *#310* Trainer Card arrow not rendering while in offhand (TODO)
+- *#309* Trainer Card gui opening while placing blocks
+
 ## [0.16.3-beta] - 2025-06-17
 
 **Fixed:**

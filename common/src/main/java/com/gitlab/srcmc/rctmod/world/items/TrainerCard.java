@@ -35,10 +35,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.phys.HitResult;
 
 public class TrainerCard extends Item {
     public static final int SYNC_INTERVAL_TICKS = 5;
@@ -108,8 +111,14 @@ public class TrainerCard extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         if(level.isClientSide) {
             var otherHand = interactionHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+            var isPlacingBlock = false;
 
-            if(!player.isUsingItem() && !player.isBlocking() && !(player.getItemInHand(otherHand).getItem() instanceof ShieldItem)) {
+            if(player.getItemInHand(otherHand).getItem() instanceof BlockItem) {
+                var hit = Item.getPlayerPOVHitResult(level, player, Fluid.NONE);
+                isPlacingBlock = hit.getType() == HitResult.Type.BLOCK;
+            }
+
+            if(!player.isUsingItem() && !isPlacingBlock && !(player.getItemInHand(otherHand).getItem() instanceof ShieldItem)) {
                 ModClient.SCREENS.openTrainerCardScreen();
             }
         }
