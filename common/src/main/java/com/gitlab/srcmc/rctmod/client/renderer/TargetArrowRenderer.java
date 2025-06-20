@@ -62,7 +62,7 @@ public class TargetArrowRenderer {
     private static final Vector3f PYRAMID_UP = new Vector3f(0, 1, 0);
     private static final int TICKS_TO_ACTIVATE = 40;
 
-    public static double TX = -0.15, TY = 0.25, TZ = 0.03;
+    private static double[] TX = {-0.25, -0.15}, TY = {0.15, 0.25}, TZ = {0.03, 0.03};
     private static final float SX = 0.009375f, SY = 0.03f, SZ = 0.01875f;
 
     private Vector3f direction = new Vector3f(), partialDirection = new Vector3f();
@@ -112,7 +112,7 @@ public class TargetArrowRenderer {
         }
     }
 
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, boolean lefthand) {
         if(this.activationTicks > 0) {
             var mc = Minecraft.getInstance();
             var cam = mc.gameRenderer.getMainCamera();
@@ -120,12 +120,13 @@ public class TargetArrowRenderer {
             if(cam.isInitialized()) {
                 var partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
                 var t = Math.min(this.activationTicks + partialTick, TICKS_TO_ACTIVATE)/TICKS_TO_ACTIVATE;
+                var ti = lefthand ? 0 : 1;
 
                 this.partialDirection.lerp(this.direction, Math.min(0.05f, 0.2f*partialTick));
                 PYRAMID_UP.rotationTo(this.partialDirection, this.rotation);
 
                 poseStack.pushPose();
-                poseStack.translate(TX, TY, TZ);
+                poseStack.translate(TX[ti], TY[ti], TZ[ti]);
                 poseStack.mulPose(cam.rotation().difference(this.rotation));
                 poseStack.mulPose(new Quaternionf().rotateLocalY((float)Math.PI*(this.ticks + partialTick)/TICKS_TO_ACTIVATE));
                 poseStack.scale(SX * t, (float)(SY + Math.sin((this.ticks + partialTick)/10)*0.01) * t, SZ * t);
