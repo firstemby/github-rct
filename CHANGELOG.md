@@ -4,7 +4,7 @@
 
 **Changed:**
 
-- *#312* Trainer Card now displays the current series in the actionbar when selecting the item (TODO)
+- *#312* Trainer Card item now displays the current series of players with its name (only on client side)
 
 **Fixed:**
 
