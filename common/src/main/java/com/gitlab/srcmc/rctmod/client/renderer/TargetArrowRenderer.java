@@ -17,8 +17,6 @@
  */
 package com.gitlab.srcmc.rctmod.client.renderer;
 
-import java.util.function.Supplier;
-
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -77,17 +75,10 @@ public class TargetArrowRenderer {
     // public static double x = 0.4, y = -0.27, z = -0.66; // with RenderHand
     // public static double x = -0.15, y = 0.25, z = 0.03; // with ItemRenderer
 
-    private static Supplier<TargetArrowRenderer> instanceSupplier = () -> {
-        throw new IllegalStateException(TargetArrowRenderer.class.getName() + " not initialized");
-    };
-
-    public static void init() {
-        var instance = new TargetArrowRenderer();
-        instanceSupplier = () -> instance;
-    }
+    private static final TargetArrowRenderer INSTANCE = new TargetArrowRenderer();
 
     public static TargetArrowRenderer getInstance() {
-        return instanceSupplier.get();
+        return INSTANCE;
     }
 
     public void tick() {
@@ -112,6 +103,7 @@ public class TargetArrowRenderer {
         }
     }
 
+    // TODO: not sure why this gets messed up if rendered for both hands at the same time
     public void render(PoseStack poseStack, boolean lefthand) {
         if(this.activationTicks > 0) {
             var mc = Minecraft.getInstance();

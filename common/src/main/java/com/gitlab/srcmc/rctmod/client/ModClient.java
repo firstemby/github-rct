@@ -66,7 +66,6 @@ public class ModClient {
         ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, RESOURCE_MANAGER);
         EntityRendererRegistry.register(ModRegistries.Entities.TRAINER, TrainerRenderer::new);
         EntityRendererRegistry.register(ModRegistries.Entities.TRAINER_ASSOCIATION, TrainerAssociationRenderer::new);
-        TargetArrowRenderer.init();
     }
 
     public static void setup() {
