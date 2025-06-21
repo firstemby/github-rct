@@ -55,6 +55,11 @@ public class ModClient {
     public static final DataPackManager RESOURCE_MANAGER = new DataPackManager(PackType.CLIENT_RESOURCES);
     public static final IScreenManager SCREENS = new ScreenManager();
 
+    public static void registerEventHandlers() {
+        ClientTickEvent.CLIENT_LEVEL_POST.register(ModClient::onClientLevelTick);
+        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(ModClient::onClientPlayerJoin);
+    }
+
     public static void init() {
         var mc = Minecraft.getInstance();
         ModCommon.initPlayer(() -> mc.player);
@@ -68,8 +73,6 @@ public class ModClient {
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.PLAYER_STATE.TYPE, BatchedPayloads.PLAYER_STATE.CODEC, ModClient::receivePlayerState);
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC, ModClient::receiveTrainerManager);
         NetworkManager.registerReceiver(Side.S2C, TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC, ModClient::receiveTrainerTarget);
-        ClientTickEvent.CLIENT_LEVEL_POST.register(ModClient::onClientLevelTick);
-        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(ModClient::onClientPlayerJoin);
     }
 
     // ClientTickEvent

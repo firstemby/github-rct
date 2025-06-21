@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.spongepowered.include.com.google.common.base.Strings;
 
-import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
@@ -99,8 +98,6 @@ public class PlayerInfoWidget extends AbstractWidget {
     public static final int LOADING_X = TRAINER_LIST_X;
     public static final int LOADING_Y = TRAINER_LIST_Y + TRAINER_LIST_H/2 - LOADING_H/2;
 
-    private final TrainerType ALL_TRAINER_TYPES = new TrainerType(Text.translatable(LangKeys.TRAINER_TYPE_TITLE("all")));
-
     private StringWidget displayName;
     private StringWidget levelCapLabel;
     private StringWidget levelCapValue;
@@ -143,7 +140,6 @@ public class PlayerInfoWidget extends AbstractWidget {
         this.trainerList = new TrainerListWidget(x + TRAINER_LIST_X, y + TRAINER_LIST_Y, TRAINER_LIST_W, TRAINER_LIST_H, font, this.sortedTrainerIds());
         this.trainerInfo = new TrainerInfoWidget(x + TRAINER_LIST_X, y + TRAINER_LIST_Y, TRAINER_LIST_W, TRAINER_LIST_H, font);
         this.trainerTypes = new ArrayList<>();
-        this.trainerTypes.add(ALL_TRAINER_TYPES);
 
         this.showUndefeated = CycleButton.create(
             t -> Component.literal(t), CHECKBOX_VALUES, 1,
@@ -193,8 +189,6 @@ public class PlayerInfoWidget extends AbstractWidget {
 
     private void resetTrainerTypes() {
         this.trainerTypes.clear();
-        this.trainerTypes.add(ALL_TRAINER_TYPES);
-        this.trainerTypeButton.setValue(0);
     }
 
     public AbstractWidget[] getRenderableWidgets() {
@@ -319,7 +313,7 @@ public class PlayerInfoWidget extends AbstractWidget {
             var showUndefeated = this.isShowUndefeatedSelected();
             var showAllTypes = trainerTypeIndex == 0;
 
-            this.trainerList.setTrainerType(this.trainerTypeButton.getValue());
+            this.trainerList.setTrainerType(showAllTypes ? TrainerType.DEFAULT : this.trainerTypeButton.getValue());
             this.trainerList.setShowAllTypes(showAllTypes);
             this.trainerList.setShowUndefeated(showUndefeated);
             this.trainerList.tick();
@@ -340,8 +334,11 @@ public class PlayerInfoWidget extends AbstractWidget {
 
         var sm = RCTMod.getInstance().getSeriesManager();
         var tm = RCTMod.getInstance().getTrainerManager();
-        var it = sm.getGraph(sid).stream().iterator();
+        var sg = sm.getGraph(sid);
+        var it = sg.stream().iterator();
         var open = new LinkedList<>(TrainerType.values());
+
+        this.trainerTypes.add(new TrainerType(sg.getMetaData().title()));
 
         while(it.hasNext() && !open.isEmpty()) {
             var tt = tm.getData(it.next().id()).getType();
@@ -351,11 +348,13 @@ public class PlayerInfoWidget extends AbstractWidget {
                 var t = it2.next();
 
                 if(tt.equals(t)) {
-                    this.trainerTypeButton.addValue(t);
+                    this.trainerTypes.add(t);
                     it2.remove();
                 }
             }
         }
+
+        this.trainerTypeButton.setValue(0);
     }
 
     @Override

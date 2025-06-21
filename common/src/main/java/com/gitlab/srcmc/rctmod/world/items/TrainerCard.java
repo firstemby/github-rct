@@ -25,15 +25,11 @@ import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.ModRegistries.Items;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
-import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.client.ModClient;
 import com.gitlab.srcmc.rctmod.client.renderer.TargetArrowRenderer;
 import com.gitlab.srcmc.rctmod.network.TrainerTargetPayload;
 
 import dev.architectury.networking.NetworkManager;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -64,32 +60,6 @@ public class TrainerCard extends Item {
     @Override
     public boolean isFoil(ItemStack stack) {
         return super.isFoil(stack) || (ModCommon.player != null && TargetArrowRenderer.getInstance().hasTarget() && ModCommon.player.get().getInventory().contains(stack));
-    }
-
-    @Override
-    public Component getName(ItemStack stack) {
-        var localpl = ModCommon.localPlayer();
-
-        if(localpl != null) { // client
-            var serId = PlayerState.get(localpl).getCurrentSeries();
-
-            if(!SeriesManager.EMPTY_SERIES_ID.equals(serId)) {
-                var comp = RCTMod.getInstance().getSeriesManager().getGraph(serId).getMetaData().title().getComponent().withStyle(ChatFormatting.GOLD);
-                var got = super.getName(stack);
-
-                if(got.getContents() != PlainTextContents.EMPTY) {
-                    comp = Component.empty()
-                        .append(got)
-                        .append(" (")
-                        .append(comp)
-                        .append(")");
-                }
-
-                return comp;
-            }
-        }
-
-        return super.getName(stack);
     }
 
     @Override

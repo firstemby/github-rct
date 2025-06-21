@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.algorithm.IAlgorithm;
@@ -254,7 +255,7 @@ public class TrainerListWidget extends TrainerDataWidget {
     }
 
     public void setTrainerType(TrainerType trainerType) {
-        if(!this.trainerType.equals(trainerType)) {
+        if(!Objects.equals(this.trainerType, trainerType)) {
             this.trainerType = trainerType;
             this.updateEntries();
         }

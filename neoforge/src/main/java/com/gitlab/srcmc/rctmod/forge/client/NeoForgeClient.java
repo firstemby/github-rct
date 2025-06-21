@@ -34,6 +34,7 @@ import net.neoforged.fml.config.ModConfig;
 public class NeoForgeClient {
     public NeoForgeClient(ModContainer container) {
         ModClient.init();
+        ModClient.registerEventHandlers();
         container.registerConfig(ModConfig.Type.CLIENT, RCTMod.getInstance().getClientConfig().getSpec());
         LifecycleEvent.SETUP.register(this::onSetup);
     }

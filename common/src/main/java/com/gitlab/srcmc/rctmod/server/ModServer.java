@@ -76,6 +76,7 @@ public class ModServer {
         LevelTick.SERVER_PRE.register(ModServer::onServerTick);
         PlayerEvent.PLAYER_JOIN.register(ModServer::onPlayerJoin);
         PlayerEvent.PLAYER_QUIT.register(ModServer::onPlayerQuit);
+
         // cobblemon events
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);

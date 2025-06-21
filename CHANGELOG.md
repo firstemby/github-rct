@@ -1,16 +1,21 @@
 # Changelog
 
-## [0.16.4-beta] - 2025-06-20
+## [0.16.4-beta] - 2025-06-21
 
 **Changed:**
 
-- *#312* Trainer Card item now displays the current series of players in its name (only on client side)
+- *#314* Default translation (`en_us`) of empty series title (`series.rctmod.empty.title`) to "No Series"
+- *#313* Trainer Card UI now shows current series title for the "All" trainers category
 
 **Fixed:**
 
-- *#311* Reorganized some initialization logic (this **might** fix the startup issue some people with larger mod packs encountered on neoforge)
-- *#310* Trainer Card arrow not rendering while in offhand
-- *#309* Trainer Card gui opening while placing blocks
+- *#312* Reorganized some initialization logic (this **might** fix the startup issue some people with larger mod packs encountered on neoforge)
+- *#311* Trainer Card arrow not rendering while in offhand
+- *#310* Trainer Card gui opening while placing blocks
+
+**Removed:**
+
+- *#309* Language key `trainer_type.rctmod.all.title`
 
 ## [0.16.3-beta] - 2025-06-17
 
