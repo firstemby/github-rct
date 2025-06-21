@@ -4,11 +4,11 @@
 
 **Changed:**
 
-- *#312* Trainer Card item now displays the current series of players with its name (only on client side)
+- *#312* Trainer Card item now displays the current series of players in its name (only on client side)
 
 **Fixed:**
 
-- *#311* Reorganized some initialization logic (this **might** fix the startup issue some people with larger mod packs encountered on neoforge) (TODO)
+- *#311* Reorganized some initialization logic (this **might** fix the startup issue some people with larger mod packs encountered on neoforge)
 - *#310* Trainer Card arrow not rendering while in offhand
 - *#309* Trainer Card gui opening while placing blocks
 

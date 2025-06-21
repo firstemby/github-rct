@@ -65,18 +65,8 @@ public class ModServer {
     private static final Map<UUID, Queue<Map.Entry<byte[], Integer>>> PLAYER_STATE_PAYLOADS = new HashMap<>();
     private static final Queue<TrainerManagerPayloadTargets> TRAINER_MANAGER_PAYLOADS = new LinkedList<>();
 
-    public static void init() {
-        NetworkManager.registerS2CPayloadType(BatchedPayloads.PLAYER_STATE.TYPE, BatchedPayloads.PLAYER_STATE.CODEC);
-        NetworkManager.registerS2CPayloadType(BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC);
-        NetworkManager.registerS2CPayloadType(TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC);
-    }
-
-    public static void initCommon() {
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, RCTMod.getInstance().getTrainerManager());
-        registerEvents();
-    }
-
-    static void registerEvents() {
+    public static void registerEventHandlers() {
+        // architectury events
         CommandRegistrationEvent.EVENT.register(ModServer::onCommandRegistration);
         LifecycleEvent.SETUP.register(ModServer::onSetup);
         LifecycleEvent.SERVER_STARTING.register(ModServer::onServerStarting);
@@ -86,7 +76,15 @@ public class ModServer {
         LevelTick.SERVER_PRE.register(ModServer::onServerTick);
         PlayerEvent.PLAYER_JOIN.register(ModServer::onPlayerJoin);
         PlayerEvent.PLAYER_QUIT.register(ModServer::onPlayerQuit);
-        CobblemonEvents.COBBLEMON_INITIALISED.subscribe(Priority.NORMAL, ModServer::onCobblemonInitialized);
+        // cobblemon events
+        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
+        CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
+    }
+
+    public static void init() {
+        NetworkManager.registerS2CPayloadType(BatchedPayloads.PLAYER_STATE.TYPE, BatchedPayloads.PLAYER_STATE.CODEC);
+        NetworkManager.registerS2CPayloadType(BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC);
+        NetworkManager.registerS2CPayloadType(TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC);
     }
 
     public static void syncTrainerManger(ServerPlayer... players) {
@@ -117,12 +115,9 @@ public class ModServer {
     }
 
     // LifecycleEvent
-    
+
     static void onSetup() {
-        // For some reason the COBBLEMON_INITIALIZED event is either not always fired or
-        // the handler is sometimes skipped in a dedicated fabric server environment. This
-        // servers as fallback.
-        onCobblemonInitialized(Unit.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, RCTMod.getInstance().getTrainerManager());
     }
 
     static void onServerLevelSave(ServerLevel level) {
@@ -249,19 +244,7 @@ public class ModServer {
 
     // CobblemonEvent
 
-    private static boolean cobblemonEventsRegistered;
-
-    public static Unit onCobblemonInitialized(Unit u) {
-        if(!cobblemonEventsRegistered) {
-            CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, ModServer::onBattleVictory);
-            CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.HIGHEST, ModServer::onExperienceGained);
-            cobblemonEventsRegistered = true;
-        }
-
-        return u;
-    }
-
-    public static Unit onBattleVictory(BattleVictoryEvent event) {
+    static Unit onBattleVictory(BattleVictoryEvent event) {
         if(!ModServer.removeBattleFromInitiator(event.getWinners(), true)) {
             ModServer.removeBattleFromInitiator(event.getLosers(), false);
         }
@@ -269,7 +252,7 @@ public class ModServer {
         return Unit.INSTANCE;
     }
 
-    public static Unit onExperienceGained(ExperienceGainedPreEvent event) {
+    static Unit onExperienceGained(ExperienceGainedPreEvent event) {
         if(!RCTMod.getInstance().getServerConfig().allowOverLeveling()) {
             var owner = event.getPokemon().getOwnerPlayer();
 

@@ -33,6 +33,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 public class NeoForgeCommon {
     public NeoForgeCommon(ModContainer container) {
         ModRegistries.init();
+        ModCommon.init();
         container.registerConfig(ModConfig.Type.SERVER, RCTMod.getInstance().getServerConfig().getSpec());
         container.getEventBus().addListener(NeoForgeCommon::onCommonSetup);
         container.getEventBus().addListener(NeoForgeCommon::onConfigLoading);
@@ -41,7 +42,6 @@ public class NeoForgeCommon {
 
     static void onCommonSetup(FMLCommonSetupEvent event) {
         ArgumentTypeInfos.registerByClass(TokenArgumentType.class, ModRegistries.ArgumentTypes.TOKEN_ARGUMENT_TYPE.get());
-        ModCommon.init();
     }
 
     static void onConfigLoading(ModConfigEvent.Loading event) {

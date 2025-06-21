@@ -32,6 +32,7 @@ import net.neoforged.fml.config.ModConfig;
 public class FabricCommon implements ModInitializer {
     public FabricCommon() {
         ModRegistries.init(true);
+        ModCommon.init();
     }
 
     @Override
@@ -41,7 +42,6 @@ public class FabricCommon implements ModInitializer {
             TokenArgumentType.class,
             SingletonArgumentInfo.contextFree(TokenArgumentType::token));
 
-        ModCommon.init();
         NeoForgeConfigRegistry.INSTANCE.register(ModCommon.MOD_ID, ModConfig.Type.SERVER, RCTMod.getInstance().getServerConfig().getSpec());
         NeoForgeModConfigEvents.loading(ModCommon.MOD_ID).register(FabricCommon::onConfigLoadingOrReloading);
         NeoForgeModConfigEvents.reloading(ModCommon.MOD_ID).register(FabricCommon::onConfigLoadingOrReloading);

@@ -33,7 +33,7 @@ public class ModCommon {
     public static Supplier<Player> player;
 
     public static void init() {
-        ModServer.initCommon();
+        ModServer.registerEventHandlers();
     }
 
     // call on client to supply Minecraft.getInstance().player
