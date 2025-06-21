@@ -2,7 +2,7 @@
   "description": {
     "translatable": "series.rctmod.unbound.description"
   },
-  "difficulty": 9,
+  "difficulty": 8,
   "requiredSeries": [
     [
       "bdsp",

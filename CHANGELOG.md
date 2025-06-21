@@ -4,7 +4,8 @@
 
 **Changed:**
 
-- *#314* Default translation (`en_us`) of empty series title (`series.rctmod.empty.title`) to "No Series"
+- *#315* Default translation (`en_us`) of empty series title (`series.rctmod.empty.title`) to "No Series"
+- *#314* Lowered difficulty rating of `unbound` series from `9` to `8`
 - *#313* Trainer Card UI now shows current series title for the "All" trainers category
 
 **Fixed:**
