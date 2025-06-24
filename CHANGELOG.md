@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.5] - 2025-06-24
+
+**Fixed:**
+
+- *#316* Glitchy rendering of the trainer card arrow (thanks f0kx for helping to test this)
+
 ## [0.16.4-beta] - 2025-06-21
 
 **Changed:**
