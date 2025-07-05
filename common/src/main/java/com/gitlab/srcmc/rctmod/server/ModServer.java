@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
-
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
@@ -64,6 +63,7 @@ public class ModServer {
     record TrainerManagerPayloadTargets(byte[] bytes, int remainingBatches, Iterable<ServerPlayer> players) {}
     private static final Map<UUID, Queue<Map.Entry<byte[], Integer>>> PLAYER_STATE_PAYLOADS = new HashMap<>();
     private static final Queue<TrainerManagerPayloadTargets> TRAINER_MANAGER_PAYLOADS = new LinkedList<>();
+    private static final Queue<Thread> SER_THREADS = new LinkedList<>();
 
     public static void registerEventHandlers() {
         // architectury events
@@ -102,8 +102,33 @@ public class ModServer {
         }
 
         if(!list.isEmpty()) {
-            for(var pl : RCTMod.getInstance().getTrainerManager().toPayloads()) {
-                TRAINER_MANAGER_PAYLOADS.offer(new TrainerManagerPayloadTargets(pl.bytes(), pl.remainingBatches(), list));
+            var serTh = new Thread(() -> {
+                var pls = RCTMod.getInstance().getTrainerManager().toPayloads();
+
+                list.getFirst().getServer().execute(() -> {
+                    for(var pl : pls) {
+                        TRAINER_MANAGER_PAYLOADS.offer(new TrainerManagerPayloadTargets(pl.bytes(), pl.remainingBatches(), list));
+                    }
+                });
+
+                synchronized(SER_THREADS) {
+                    SER_THREADS.poll(); // self
+
+                    if(!SER_THREADS.isEmpty()) {
+                        SER_THREADS.peek().start();
+                    }
+                }
+            });
+
+            serTh.setDaemon(true);
+            serTh.setPriority(Thread.MIN_PRIORITY);
+
+            synchronized(SER_THREADS) {
+                SER_THREADS.offer(serTh);
+
+                if(SER_THREADS.size() == 1) {
+                    serTh.start();
+                }
             }
         }
     }

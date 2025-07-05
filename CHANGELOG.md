@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.6-beta] - 2025-07-05
+
+**Fixed:**
+
+- *#317* Lag spikes on player log in
+
 ## [0.16.5-beta] - 2025-06-24
 
 **Fixed:**
