@@ -98,11 +98,12 @@ The mod contains many config options and has an extensive data pack support. Ple
 - [Radical Cobblemon Trainers API](https://modrinth.com/mod/rctapi)
 - [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) (**only on fabric**)
 
-## Recommendations
+## Optional
 
+- Not happy with the textures? Check out this [Trainer Texture Pack](https://modrinth.com/resourcepack/rct-trainer-textures-plus) by forestfire.
 - [ToolTipFix](https://modrinth.com/mod/tooltipfix): Fixes issues with tooltips of the Trainer Card being to large to properly read (**only on fabric**)
 
-> Note that there is a good chance this fix will [eventually find its way into the fabric api](https://github.com/FabricMC/fabric/issues/2283), hence no further actions from my side.
+> Note that there is a good chance for the tooltip fix to [eventually find its way into the fabric api](https://github.com/FabricMC/fabric/issues/2283).
 
 ## Known Issues
 
