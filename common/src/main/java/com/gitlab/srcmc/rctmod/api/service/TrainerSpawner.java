@@ -50,12 +50,14 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Entity.RemovalReason;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.saveddata.SavedData.Factory;
+import net.minecraft.world.phys.AABB;
 
 public class TrainerSpawner {
     private static float KEY_TRAINER_SPAWN_WEIGHT_FACTOR = 64;
@@ -408,7 +410,7 @@ public class TrainerSpawner {
         if(RCTMod.getInstance().getTrainerManager().isValidId(trainerId) && (noOrigin || !this.isMarkedAt(level, pos)) && TrainerSpawner.canSpawnAt(level, pos) && this.canSpawnFor(player, noOrigin, globalChance, globalChanceMin)) {
             var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
 
-            if(tmd != null && this.isUnique(tmd.getTrainerTeam().getIdentity())) {
+            if(tmd != null && this.isUnique(tmd.getTrainerTeam().getIdentity(), level, pos)) {
                 if(guaruantee || this.computeChance(player, trainerId, tmd) >= player.getRandom().nextDouble()) {
                     return this.spawnFor(player, trainerId, pos, setHome, noOrigin);
                 }
@@ -447,8 +449,16 @@ public class TrainerSpawner {
             && level.getBlockState(blockPos.above()).isAir();
     }
 
-    private boolean isUnique(String identity) {
-        return !this.identities.containsKey(identity);
+    private boolean isUnique(String identity, Level level, BlockPos pos) {
+        var config = RCTMod.getInstance().getServerConfig();
+        var tm = RCTMod.getInstance().getTrainerManager();
+        var d = 2*config.uniqueTrainerRadius();
+
+        return d < 0
+            ? !this.identities.containsKey(identity)
+            : level.getNearbyEntities(TrainerMob.class, TargetingConditions.forNonCombat(), null, AABB.ofSize(pos.getCenter(), d, d, d))
+                .stream().map(t -> tm.getData(t))
+                .noneMatch(t -> t.getTrainerTeam().getIdentity().equals(identity));
     }
 
     private boolean canSpawnFor(Player player, boolean noOrigin, double globalChance, double globalChanceMin) {
@@ -612,7 +622,7 @@ public class TrainerSpawner {
             && (config.biomeTagWhitelist().isEmpty() || config.biomeTagWhitelist().stream().anyMatch(tags::contains))) {
 
             RCTMod.getInstance().getTrainerManager().getAllData(PlayerState.get(player).getCurrentSeries())
-                .filter(e -> this.isUnique(e.getValue().getTrainerTeam().getIdentity())
+                .filter(e -> this.isUnique(e.getValue().getTrainerTeam().getIdentity(), level, pos)
                     && e.getValue().getBiomeTagBlacklist().stream().noneMatch(tags::contains)
                     && (e.getValue().getBiomeTagWhitelist().isEmpty() || e.getValue().getBiomeTagWhitelist().stream().anyMatch(tags::contains)))
                 .forEach(e -> {

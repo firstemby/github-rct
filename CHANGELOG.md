@@ -1,10 +1,14 @@
 # Changelog
 
-## [0.16.6-beta] - 2025-07-05
+## [0.16.6-beta] - 2025-07-07
+
+**Added:**
+
+- *#318* Config option `uniqueTrainerRadius`: Specify a radius for trainers to check for the existence of other trainers with the same identity when a spawn attempt is made (default is `-1` = *whole world*)
 
 **Fixed:**
 
-- *#317* Lag spikes on player log in
+- *#317* Lag spikes on player log in (experimental, a bit difficult to test/confirm on my side)
 
 ## [0.16.5-beta] - 2025-06-24
 

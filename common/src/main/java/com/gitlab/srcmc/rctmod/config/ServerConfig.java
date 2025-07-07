@@ -32,6 +32,7 @@ public class ServerConfig implements IServerConfig {
     private final ConfigValue<Integer> maxHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> minHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> maxVerticalDistanceToPlayersValue;
+    private final ConfigValue<Integer> uniqueTrainerRadiusValue;
     private final ConfigValue<Integer> maxTrainersPerPlayerValue;
     private final ConfigValue<Integer> maxTrainersTotalValue;
     private final ConfigValue<Integer> maxLevelDiffValue;
@@ -49,6 +50,7 @@ public class ServerConfig implements IServerConfig {
     private int maxHorizontalDistanceToPlayersCached;
     private int minHorizontalDistanceToPlayersCached;
     private int maxVerticalDistanceToPlayersCached;
+    private int uniqueTrainerRadiusCached;
     private int maxTrainersPerPlayerCached;
     private int maxTrainersTotalCached;
     private int maxLevelDiffCached;
@@ -121,6 +123,14 @@ public class ServerConfig implements IServerConfig {
         this.maxVerticalDistanceToPlayersValue = builder
             .comment(SEPARATOR, "The max vertical distance a trainer can spawn from players.")
             .defineInRange("maxVerticalDistanceToPlayers", IServerConfig.super.maxVerticalDistanceToPlayers(), 1, Integer.MAX_VALUE - 1);
+
+        this.uniqueTrainerRadiusValue = builder
+            .comment(SEPARATOR,
+                "By default, this mod prevents the spawning of a trainer if another entity with the same identity",
+                "already exists anywhere in the world. However, if this is set to a positive value, the mod will check",
+                "for the existence of a trainer with the same identity within the specified radius instead. Note that a",
+                "greater radius will require more CPU resources (~ 100 to 200 should be fine for most machines).")
+            .defineInRange("uniqueTrainerRadius", IServerConfig.super.uniqueTrainerRadius(), Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1);
 
         this.maxTrainersPerPlayerValue = builder
             .comment(SEPARATOR, "Spawn cap of trainers per player.")
@@ -240,6 +250,7 @@ public class ServerConfig implements IServerConfig {
         this.maxHorizontalDistanceToPlayersCached = this.maxHorizontalDistanceToPlayersValue.get();
         this.minHorizontalDistanceToPlayersCached = this.minHorizontalDistanceToPlayersValue.get();
         this.maxVerticalDistanceToPlayersCached = this.maxVerticalDistanceToPlayersValue.get();
+        this.uniqueTrainerRadiusCached = this.uniqueTrainerRadiusValue.get();
         this.maxTrainersPerPlayerCached = this.maxTrainersPerPlayerValue.get();
         this.maxTrainersTotalCached = this.maxTrainersTotalValue.get();
         this.maxLevelDiffCached = this.maxLevelDiffValue.get();
@@ -295,6 +306,11 @@ public class ServerConfig implements IServerConfig {
     @Override
     public int maxVerticalDistanceToPlayers() {
         return this.maxVerticalDistanceToPlayersCached;
+    }
+
+    @Override
+    public int uniqueTrainerRadius() {
+        return this.uniqueTrainerRadiusCached;
     }
 
     @Override

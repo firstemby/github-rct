@@ -116,6 +116,18 @@ public interface IServerConfig extends IModConfig {
     default int maxVerticalDistanceToPlayers() { return 30; }
 
     /**
+     * By default, this mod prevents the spawning of a trainer if another entity with
+     * the same identity already exists anywhere in the world. However, if this is set
+     * to a positive value, the mod will check for the existence of a trainer with the
+     * same identity within the specified radius instead. Note that a greater radius
+     * will require more CPU resources (~ 100 to 200 should be fine for most machines).
+     * 
+     * range (-inf, inf)
+     * default -1
+     */
+    default int uniqueTrainerRadius() { return -1; }
+
+    /**
      * Spawn cap of trainers per player.
      * 
      * range [0, inf)
