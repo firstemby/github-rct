@@ -4,11 +4,13 @@
 
 **Added:**
 
-- *#318* Config option `uniqueTrainerRadius`: Specify a radius for trainers to check for the existence of other trainers with the same identity when a spawn attempt is made (default is `-1` = *whole world*)
+- *#320* Config option `uniqueTrainerRadius`: Specify a radius for trainers to check for the existence of other trainers with the same identity when a spawn attempt is made (default is `-1` = *whole world*)
 
 **Fixed:**
 
-- *#317* Lag spikes on player log in (experimental, a bit difficult to test/confirm on my side)
+- *#319* Lag spikes on player log in (experimental, a bit difficult to test/confirm on my side)
+- *#318* Trainer Repel Rod being unbrakable and not dropping its item
+- *#317* Waterlogging a Trainer Repel Rod causing a crash (TODO)
 
 ## [0.16.5-beta] - 2025-06-24
 

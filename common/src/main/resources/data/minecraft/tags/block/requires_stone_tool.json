@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rctmod:trainer_spawner"
+    "rctmod:trainer_spawner",
+    "rctmod:trainer_repel_rod"
   ]
 }
