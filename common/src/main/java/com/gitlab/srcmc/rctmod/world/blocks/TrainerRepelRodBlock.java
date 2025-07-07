@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.FluidState;
@@ -40,7 +41,7 @@ import net.minecraft.world.level.material.Fluids;
 
 public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<RodBlock> CODEC = TrainerRepelRodBlock.simpleCodec(TrainerRepelRodBlock::new);
-    public static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public TrainerRepelRodBlock() {
         this(BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHTNING_ROD));

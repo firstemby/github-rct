@@ -10,7 +10,7 @@
 
 - *#319* Lag spikes on player log in (experimental, a bit difficult to test/confirm on my side)
 - *#318* Trainer Repel Rod being unbrakable and not dropping its item
-- *#317* Waterlogging a Trainer Repel Rod causing a crash (TODO)
+- *#317* Waterlogging a Trainer Repel Rod causing a crash
 
 ## [0.16.5-beta] - 2025-06-24
 
