@@ -86,10 +86,6 @@ function get_mod_id() {
     echo "$result"
 }
 
-function as_json() {
-    echo "$1" | sed -z 's/\n/\\n/g; s/..$//' | sed 's/"/\\"/g'
-}
-
 # parse command line args
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -118,20 +114,23 @@ git pull
 trap "git reset --hard" EXIT
 
 # retrieve or set versions for publishing
-if [ -n "$target_mod_version" ]; then
-    set_version "$mod_version_key" "$target_mod_version"
-    set_version "version" "\"$target_mod_version\"" # e.g. mods.toml
-    mod_version="$target_mod_version"
-else
-    mod_version=$(get_version "$mod_version_key")
-fi
+# if [ -n "$target_mod_version" ]; then
+#     set_version "$mod_version_key" "$target_mod_version"
+#     set_version "version" "\"$target_mod_version\"" # e.g. mods.toml
+#     mod_version="$target_mod_version"
+# else
+#     mod_version=$(get_version "$mod_version_key")
+# fi
 
-if [ -n "$target_minecraft_version" ]; then
-    set_version "$minecraft_version_key" "$target_minecraft_version"
-    minecraft_version="$target_minecraft_version"
-else
-    minecraft_version=$(get_version "$minecraft_version_key")
-fi
+# if [ -n "$target_minecraft_version" ]; then
+#     set_version "$minecraft_version_key" "$target_minecraft_version"
+#     minecraft_version="$target_minecraft_version"
+# else
+#     minecraft_version=$(get_version "$minecraft_version_key")
+# fi
+
+mod_version=$(get_version "$mod_version_key")
+minecraft_version=$(get_version "$minecraft_version_key")
 
 # check if tag is unique
 version_tag="v$mod_version-$minecraft_version"
@@ -168,7 +167,7 @@ esac
 echo "- preparing to publish $release_title-release from the branch '$(git branch --show-current)'"
 echo "- minecraft version: '$minecraft_version'"
 echo "- mod version: '$mod_version'"
-echo "- mod loaders: $(echo ${mod_loaders[@]} | sed 's/ /, /g')"
+echo "- mod loaders: $(echo "${mod_loaders[@]}" | sed 's/ /, /g')"
 read -p "Press <enter> to review the changelog..."
 echo "========================"
 changelog cat -e 0
@@ -180,8 +179,8 @@ if [ "$answer" != "confirm" ]; then
 fi
 
 # create clean build
-./gradlew clean --console=plain
-./gradlew build --console=plain
+# ./gradlew clean build -Prelease --console=plain
+./gradlew clean build --console=plain
 
 # commit changes if version was updated
 if [ "$(git status --porcelain)" ]; then
@@ -230,10 +229,10 @@ for blacklisted_type in "${minecraft_version_type_backlist[@]}"; do
 done
 
 # remove unused information
-minecraft_version_ids=$(echo $minecraft_version_ids \
+minecraft_version_ids=$(echo "$minecraft_version_ids" \
   | grep -o "\{[^\}]*\"$minecraft_version_esc\"[^\}]*\}" \
   | grep -o "\"id\":[0-9]*" \
-  | tr '\n' ',' | sed s/\"id\":/''/g)
+  | tr '\n' ',' | sed "s/\"id\"://g")
 
 assert "$minecraft_version_ids" "minecraft version '$minecraft_version' not found"
 minecraft_version_ids="${minecraft_version_ids:0:-1}" # trailing comma ','
@@ -256,16 +255,14 @@ for mod_loader in "${mod_loaders[@]}"; do
             relations="\"relations\": $relations,"
         fi
 
-metadata="{
+metadata=$(echo "{
     $relations
-    \"changelog\": \"$(as_json "$(changelog cat -e 0)")\",
+    \"changelog\": $(changelog cat -e 0 | jq -s -R .),
     \"changelogType\": \"markdown\",
     \"gameVersions\": [$minecraft_version_ids],
     \"releaseType\": \"$release_type\",
     \"modLoaderType\": \"${mod_loader^}\"
-}"
-        # log
-        echo "$metadata" > "out/curseforge.$mod_loader.meta.json"
+}" | jq .)
 
         mod_archive="./$mod_loader/build/libs/$mod_id-$mod_loader-$minecraft_version-$mod_version.jar"
         response=$(assert_curl -s -F metadata="$metadata" -F file="@$mod_archive" \
@@ -292,10 +289,10 @@ for mod_loader in "${mod_loaders[@]}"; do
     done
 
     if [ "$answer" = "y" ]; then
-metadata="{
+metadata=$(echo "{
     \"name\": \"Version $mod_version\",
     \"version_number\": \"$mod_version\",
-    \"changelog\": \"$(as_json "$(changelog cat -e 0)")\",
+    \"changelog\": $(changelog cat -e 0 | jq -s -R .),
     \"dependencies\": $(cat publish/modrinth.$mod_loader.dependencies.json | tr -d "[:space:]"),
     \"game_versions\": [\"$minecraft_version\"],
     \"version_type\": \"$release_type\",
@@ -303,9 +300,7 @@ metadata="{
     \"featured\": false,
     \"project_id\": \"$MODRINTH_PROJECT_ID\",
     \"file_parts\": [\"$mod_id-$mod_loader-$minecraft_version-$mod_version.jar\"]
-}"
-        # log
-        echo "$metadata" > "out/modrinth.$mod_loader.meta.json"
+}" | jq .)
 
         mod_archive="./$mod_loader/build/libs/$mod_id-$mod_loader-$minecraft_version-$mod_version.jar"
         response=$(assert_curl -s -F data="$metadata" -F file="@$mod_archive" \
