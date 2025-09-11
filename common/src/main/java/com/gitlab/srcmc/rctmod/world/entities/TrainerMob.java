@@ -166,14 +166,20 @@ public class TrainerMob extends PathfinderMob implements Npc {
     }
 
     public void startBattleWith(Player player) {
-        if(this.canBattleAgainst(player)) {
-            if(RCTMod.getInstance().makeBattle(this, player)) {
-                this.setOpponent(player);
-                RCTMod.getInstance().getTrainerManager().addBattle(player, this);
-                ChatUtils.reply(this, player, "on_battle_start");
+        var realPlayer = player.level().getPlayerByUUID(player.getUUID());
+
+        if(player.equals(realPlayer)) {
+            if(this.canBattleAgainst(player)) {
+                if(RCTMod.getInstance().makeBattle(this, player)) {
+                    this.setOpponent(player);
+                    RCTMod.getInstance().getTrainerManager().addBattle(player, this);
+                    ChatUtils.reply(this, player, "on_battle_start");
+                }
+            } else {
+                this.replyTo(player);
             }
         } else {
-            this.replyTo(player);
+            ModCommon.LOG.warn(String.format("attempt to start battle against '%s' with proxy '%s' for '%s'", this.getDisplayName().getString(), player.getDisplayName(), realPlayer.getDisplayName().getString()));
         }
     }
 
@@ -526,7 +532,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
         var level = this.level();
 
         if(!level.isClientSide) {
-            this.startBattleWith(player);
+            var tm = RCTMod.getInstance().getTrainerManager();
+
+            if(!tm.isReloadRequired() && !tm.isLoading() && PlayerState.get(player) != null) {
+                this.startBattleWith(player);
+            }
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
