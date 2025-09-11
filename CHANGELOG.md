@@ -4,7 +4,8 @@
 
 **Fixed:**
 
-- *#321* Revised registration of persistent trainers fixing performance issues for worlds with greater number of dimensions (initial load may not benefit from this immediately)
+- *#322* Revised registration of persistent trainers fixing performance issues for worlds with greater number of dimensions (initial load may not benefit from this immediately)
+- *#321* Trainer being able to spawn in rare scenarios even when `maxTrainersTotal` was set to `0`
 
 ## [0.16.6-beta] - 2025-07-07
 
