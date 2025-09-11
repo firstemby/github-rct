@@ -179,7 +179,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 this.replyTo(player);
             }
         } else {
-            ModCommon.LOG.warn(String.format("attempt to start battle against '%s' with proxy '%s' for '%s'", this.getDisplayName().getString(), player.getDisplayName(), realPlayer.getDisplayName().getString()));
+            ModCommon.LOG.warn(String.format("attempt to start battle against '%s' with proxy '%s' for '%s'", this.getDisplayName().getString(), player.getDisplayName().getString(), realPlayer.getDisplayName().getString()));
         }
     }
 
