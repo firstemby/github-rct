@@ -18,6 +18,7 @@
 package com.gitlab.srcmc.rctmod.api.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,6 +37,7 @@ import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedBlockPosIntegerMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedDimensionBlockPosIntegerMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap;
+import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap.ChunkPosDim;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
@@ -44,8 +46,14 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ChunkLevel;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.Mob;
@@ -67,6 +75,9 @@ public class TrainerSpawner {
     private static final double TRAINER_DIRECT_SPAWN_CHANCE = 0.42;
     private static final int CHUNK_REPEL_RADIUS = 3; // 7x7
 
+    private static final TicketType<ChunkPos> PERSISTENT_TRAINER_TICKET = TicketType.create("persistent_trainer", Comparator.comparingLong(ChunkPos::toLong), 600);
+    private static final int PERSISTENT_TRAINER_TICKET_LEVEL = ChunkLevel.byStatus(FullChunkStatus.FULL) - ChunkMap.FORCED_TICKET_LEVEL; // FULL will be subtracted
+
     private class SpawnCandidate {
         public final String id;
         public final double weight;
@@ -80,7 +91,7 @@ public class TrainerSpawner {
     private Map<String, Integer> spawns = new HashMap<>();
     private Map<String, Integer> identities = new HashMap<>();
     private Map<String, Integer> playerSpawns = new HashMap<>();
-    private Map<String, ChunkPos> persistentChunks;
+    private Map<String, ChunkPosDim> persistentChunks;
     private Map<ResourceLocation, SavedBlockPosIntegerMap> trainerRepelBlocks;
     private Map<ResourceLocation, Map<ChunkPos, Integer>> markedChunks = new HashMap<>();
 
@@ -131,9 +142,27 @@ public class TrainerSpawner {
             }
         });
 
-        this.persistentChunks.values().forEach(cp -> {
-            // TODO: only force update the chunk in the level the trainer was actually in
-            server.getAllLevels().forEach(l -> l.getChunkSource().updateChunkForced(cp, true));
+        this.persistentChunks.entrySet().forEach(entry -> {
+            var cpd = entry.getValue();
+            var tid = entry.getKey();
+
+            if(cpd.dim == null) {
+                // legacy
+                ModCommon.LOG.warn(String.format("trainer dimension unknown, will have to check all dimensions (run '/rctmod trainer unregister_persistent %s' to manually unregister if this message keeps showing up)!", tid));
+
+                server.getAllLevels().forEach(l -> {
+                    l.getChunkSource().addRegionTicket(PERSISTENT_TRAINER_TICKET, cpd.pos, PERSISTENT_TRAINER_TICKET_LEVEL, cpd.pos);
+                });
+            } else {
+                var key = ResourceKey.create(Registries.DIMENSION, cpd.dim);
+                var l = server.getLevel(key);
+
+                if(l != null) {
+                    l.getChunkSource().addRegionTicket(PERSISTENT_TRAINER_TICKET, cpd.pos, PERSISTENT_TRAINER_TICKET_LEVEL, cpd.pos);
+                } else {
+                    ModCommon.LOG.warn(String.format("trainer dimension not found '%s' (run '/rctmod trainer unregister_persistent %s' to manually unregister if this message keeps showing up)!", cpd.dim, tid));
+                }
+            }
         });
 
         if(RCTMod.getInstance().getServerConfig().logSpawning()) {
@@ -243,6 +272,8 @@ public class TrainerSpawner {
 
     public void register(TrainerAssociation ta) {
         if((ta.isPersistenceRequired() ? this.persistentTas.add(ta) : this.tas.add(ta)) && RCTMod.getInstance().getServerConfig().logSpawning()) {
+            ((ServerLevel)ta.level()).getChunkSource().removeRegionTicket(PERSISTENT_TRAINER_TICKET, ta.chunkPosition(), PERSISTENT_TRAINER_TICKET_LEVEL, ta.chunkPosition());
+
             ModCommon.LOG.info(String.format("Registered '%s' (%sTrainer Association) to spawner%s, at %s (%s)",
                 ta.getDisplayName().getString(),
                 ta.isPersistenceRequired() ? "persistent " : "",
@@ -252,7 +283,7 @@ public class TrainerSpawner {
         }
 
         if(ta.isPersistenceRequired()) {
-            this.persistentChunks.put(ta.getStringUUID(), ta.chunkPosition());
+            this.persistentChunks.put(ta.getStringUUID(), ChunkPosDim.of(ta));
         }
     }
 
@@ -273,7 +304,8 @@ public class TrainerSpawner {
         var identity = RCTMod.getInstance().getTrainerManager().getData(mob).getTrainerTeam().getIdentity();
 
         if(mob.isPersistenceRequired()) {
-            this.persistentChunks.put(mob.getStringUUID(), mob.chunkPosition());
+            ((ServerLevel)mob.level()).getChunkSource().removeRegionTicket(PERSISTENT_TRAINER_TICKET, mob.chunkPosition(), PERSISTENT_TRAINER_TICKET_LEVEL, mob.chunkPosition());
+            this.persistentChunks.put(mob.getStringUUID(), ChunkPosDim.of(mob));
             this.persistentMobs.add(mob);
         }
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.7] - 2025-09-11
+
+**Fixed:**
+
+- *#321* Revised registration of persistent trainers fixing performance issues for worlds with greater number of dimensions (initial load may not benefit from this immediately)
+
 ## [0.16.6-beta] - 2025-07-07
 
 **Added:**

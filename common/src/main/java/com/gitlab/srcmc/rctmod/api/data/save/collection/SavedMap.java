@@ -34,16 +34,16 @@ public class SavedMap<K, V, U> extends SavedData implements Map<K, V> {
     private Map<K, V> map = new HashMap<>();
     private Function<K, String> keyToTag;
     private Function<String, K> tagToKey;
-    private Function<V, U> valuetoTag;
+    private Function<V, U> valueToTag;
     private Function<U, V> tagToValue;
     private Function<CompoundTag, BiConsumer<String, U>> tagConsumer;
     private Function<CompoundTag, Function<String, U>> tagSupplier;
     private SavedMap<?, ?, ?> parent;
 
-    public SavedMap(Function<K, String> keyToTag, Function<String, K> tagToKey, Function<V, U> valuetoTag, Function<U, V> tagToValue, Function<CompoundTag, BiConsumer<String, U>> tagConsumer, Function<CompoundTag, Function<String, U>> tagSupplier) {
+    public SavedMap(Function<K, String> keyToTag, Function<String, K> tagToKey, Function<V, U> valueToTag, Function<U, V> tagToValue, Function<CompoundTag, BiConsumer<String, U>> tagConsumer, Function<CompoundTag, Function<String, U>> tagSupplier) {
         this.keyToTag = keyToTag;
         this.tagToKey = tagToKey;
-        this.valuetoTag = valuetoTag;
+        this.valueToTag = valueToTag;
         this.tagToValue = tagToValue;
         this.tagConsumer = tagConsumer;
         this.tagSupplier = tagSupplier;
@@ -57,7 +57,7 @@ public class SavedMap<K, V, U> extends SavedData implements Map<K, V> {
     @Override
     public CompoundTag save(CompoundTag tag, Provider provider) {
         for(var entry : this.map.entrySet()) {
-            this.tagConsumer.apply(tag).accept(this.keyToTag.apply(entry.getKey()), this.valuetoTag.apply(entry.getValue()));
+            this.tagConsumer.apply(tag).accept(this.keyToTag.apply(entry.getKey()), this.valueToTag.apply(entry.getValue()));
         }
 
         return tag;

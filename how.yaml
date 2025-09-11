@@ -1,16 +1,16 @@
 run:
   client:
-    fabric: bash gradlew clean fabric:runClient --console=plain
-    neoforge: bash gradlew clean neoforge:runClient --console=plain
+    fabric: bash gradlew clean fabric:runClient
+    neoforge: bash gradlew clean neoforge:runClient
   server:
-    fabric: bash gradlew clean fabric:runServer --console=plain
-    neoforge: bash gradlew clean neoforge:runServer --console=plain
+    fabric: bash gradlew clean fabric:runServer
+    neoforge: bash gradlew clean neoforge:runServer
 generate:
   assets: bash tools/generate/assets
   textures: bash tools/generate/textures
   trainers: bash tools/generate/trainers
-build: bash gradlew clean build --console=plain
+build: bash gradlew clean build
 copyto:
-  fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/AppData/Roaming/ModrinthApp/profiles/RCT 1.21.1 Test (fabric)/mods"
-  neoforge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/AppData/Roaming/ModrinthApp/profiles/RCT 1.21.1 Test (neoforge)/mods"
+  fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/Radical (fabric)/mods"
+  neoforge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rctapi-neoforge-0.13.8/mods"
 publish: inenv ./tools/publish
