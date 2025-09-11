@@ -7,7 +7,7 @@
 - *#324* Auto clickers and similar tile entities serving as proxies for players (e.g. Creates Deployer) being able to start battles against trainers
 - *#323* Possibility to start battles before all trainers are fully loaded (causing a crash)
 - *#322* Revised registration of persistent trainers fixing performance issues for worlds with greater number of dimensions (initial load may not benefit from this immediately)
-- *#321* Trainer being able to spawn in rare scenarios even when `maxTrainersTotal` was set to `0`
+- *#321* Trainers being able to spawn in rare scenarios even when `maxTrainersTotal` was set to `0`
 
 ## [0.16.6-beta] - 2025-07-07
 
