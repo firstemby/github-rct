@@ -72,14 +72,14 @@ public interface IServerConfig extends IModConfig {
     default int spawnIntervalTicksMaximum() { return 2400; }
 
     /**
-     * (Non persistent) trainers will despawn after the configured amount of ticks if
-     * not seen by any player. Set to a negative value to disable this feature (trainers
-     * may only despawn if they chunks become unloaded in that case).
+     * (Non persistent) trainers will despawn if they have no line of sight to any player
+     * for the configured amount of ticks. Set to a negative value to disable this feature
+     * (trainers may only despawn if they chunk becomes unloaded in that case).
      * 
      * range (-inf, inf)
      * default: 6000
      */
-    default int despwanTicksIfUnseen() { return 6000; }
+    default int despawnTicksIfUnseen() { return 6000; }
 
     /**
      * If enabled trainers will only spawn naturally around players that have a trainer

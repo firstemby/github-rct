@@ -786,15 +786,13 @@ public class TrainerMob extends PathfinderMob implements Npc {
     // TODO: This is kinda a proof of concept (might miss players having this trainer in line-of-sight
     // -> the greater UNSEEN_CHECK_INTERVAL_TICKS the higher the chance to miss).
     private void checkDespawnIfUnseen() {
-        var maxUnseenTicks = RCTMod.getInstance().getServerConfig().despwanTicksIfUnseen();
+        var maxUnseenTicks = RCTMod.getInstance().getServerConfig().despawnTicksIfUnseen();
 
         if(maxUnseenTicks > 0 && !this.isPersistenceRequired() && this.tickCount % UNSEEN_CHECK_INTERVAL_TICKS == 0)  {
             if(this.level().players().stream().anyMatch(p -> this.hasLineOfSight(p))) {
                 this.lastTimeSeen = this.tickCount;
-                ModCommon.LOG.info("SEEN BY PLAYER: " + this.getDisplayName().getString());
             } else if((this.tickCount - this.lastTimeSeen) > maxUnseenTicks) {
                 this.discard();
-                ModCommon.LOG.info("UNSEEN BY PLAYER -> DESPAWNING: " + this.getDisplayName().getString());
             }
         }
     }

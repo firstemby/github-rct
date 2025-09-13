@@ -29,7 +29,7 @@ public class ServerConfig implements IServerConfig {
     private final ConfigValue<Double> globalSpawnChanceMinimumValue;
     private final ConfigValue<Integer> spawnIntervalTicksValue;
     private final ConfigValue<Integer> spawnIntervalTicksMaximumValue;
-    private final ConfigValue<Integer> despwanTicksIfUnseenValue;
+    private final ConfigValue<Integer> despawnTicksIfUnseenValue;
     private final ConfigValue<Integer> maxHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> minHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> maxVerticalDistanceToPlayersValue;
@@ -48,7 +48,7 @@ public class ServerConfig implements IServerConfig {
     private double globalSpawnChanceMinimumCached;
     private int spawnIntervalTicksCached;
     private int spawnIntervalTicksMaximumCached;
-    private int despwanTicksIfUnseenCached;
+    private int despawnTicksIfUnseenCached;
     private int maxHorizontalDistanceToPlayersCached;
     private int minHorizontalDistanceToPlayersCached;
     private int maxVerticalDistanceToPlayersCached;
@@ -114,11 +114,11 @@ public class ServerConfig implements IServerConfig {
                 "spawnIntervalTicks to disable (e.g. 0).")
             .defineInRange("spawnIntervalTicksMaximum", IServerConfig.super.spawnIntervalTicksMaximum(), 0, Integer.MAX_VALUE - 1);
 
-        this.despwanTicksIfUnseenValue = builder
+        this.despawnTicksIfUnseenValue = builder
             .comment(SEPARATOR,
-                "(Non persistent) trainers will despawn after the configured amount of ticks if not seen by any player.",
-                "Set to a negative value to disable this feature (trainers may only despawn if they chunks become unloaded in that case).")
-            .define("despwanTicksIfUnseen", IServerConfig.super.despwanTicksIfUnseen());
+                "(Non persistent) trainers will despawn if they have no line of sight to any player for the configured amount of ticks.",
+                "Set to a negative value to disable this feature (trainers may only despawn if they chunk becomes unloaded in that case).")
+            .define("despawnTicksIfUnseen", IServerConfig.super.despawnTicksIfUnseen());
 
         this.maxHorizontalDistanceToPlayersValue = builder
             .comment(SEPARATOR, "The max horizontal distance a trainer can spawn from players.")
@@ -254,7 +254,7 @@ public class ServerConfig implements IServerConfig {
         this.globalSpawnChanceMinimumCached = this.globalSpawnChanceMinimumValue.get();
         this.spawnIntervalTicksCached = this.spawnIntervalTicksValue.get();
         this.spawnIntervalTicksMaximumCached = this.spawnIntervalTicksMaximumValue.get();
-        this.despwanTicksIfUnseenCached = this.despwanTicksIfUnseenValue.get();
+        this.despawnTicksIfUnseenCached = this.despawnTicksIfUnseenValue.get();
         this.maxHorizontalDistanceToPlayersCached = this.maxHorizontalDistanceToPlayersValue.get();
         this.minHorizontalDistanceToPlayersCached = this.minHorizontalDistanceToPlayersValue.get();
         this.maxVerticalDistanceToPlayersCached = this.maxVerticalDistanceToPlayersValue.get();
@@ -302,8 +302,8 @@ public class ServerConfig implements IServerConfig {
     }
     
     @Override
-    public int despwanTicksIfUnseen() {
-        return this.despwanTicksIfUnseenCached;
+    public int despawnTicksIfUnseen() {
+        return this.despawnTicksIfUnseenCached;
     }
 
     @Override
