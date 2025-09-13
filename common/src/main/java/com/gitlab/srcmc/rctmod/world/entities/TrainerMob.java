@@ -81,10 +81,15 @@ import net.minecraft.world.entity.monster.Zoglin;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ClipContext.Block;
+import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class TrainerMob extends PathfinderMob implements Npc {
     private static final EntityDataAccessor<String> DATA_TRAINER_ID = SynchedEntityData.defineId(TrainerMob.class, EntityDataSerializers.STRING);
@@ -93,17 +98,20 @@ public class TrainerMob extends PathfinderMob implements Npc {
         .canSpawnFarFromPlayer()
         .sized(0.6F, 1.95F).build("trainer");
 
-    final static int TICKS_TO_DESPAWN = 600;
-    final static int TICKS_TO_DETACH = 600;
-    final static int DESPAWN_TICK_SCALE = 20;
-    final static int DESPAWN_DISTANCE = 128;
-    final static int MAX_PLAYER_TRACKING_RANGE = 128;
-    final static int TARGET_UPDATE_INTERVAL = 120;
+    static final int TICKS_TO_DESPAWN = 600;
+    static final int TICKS_TO_DETACH = 600;
+    static final int DESPAWN_TICK_SCALE = 20;
+    static final int DESPAWN_DISTANCE = 128;
+    static final int MAX_PLAYER_TRACKING_RANGE = 128;
+    static final int TARGET_UPDATE_INTERVAL = 120;
     static final int BASE_BATTLE_COOLDOWN_TICKS = 400;
 
     static final int AFK_CHECK_INTERVAL_TICKS = 2400;
     static final int AFK_CHECK_MAX_COUNT = 6;
     static final int AFK_PLAYER_MAX_COUNT = 3;
+
+    static final int UNSEEN_CHECK_INTERVAL_TICKS = 40;
+    static final int LINE_OF_SIGHT_CHECK_DISTANCE = 128;
 
     private Map<UUID, int[]> winsAndDefeats = new HashMap<>();
     private int cooldown;
@@ -118,6 +126,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private TrainerSpawnerBlockEntity homeSpawner;
     private List<PlayerTransform> nearestTransforms = new ArrayList<>();
     private int nearestAfkCheckCount;
+    private int lastTimeSeen;
 
     protected TrainerMob(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -523,7 +532,13 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 RCTMod.getInstance().getTrainerSpawner().register(this);
             }
 
-            this.checkDespawnNearAfkPlayers();
+            if(!this.isRemoved()) {
+                this.checkDespawnIfUnseen();
+            }
+
+            if(!this.isRemoved()) {
+                this.checkDespawnNearAfkPlayers();
+            }
         }
     }
 
@@ -766,6 +781,39 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 this.nearestAfkCheckCount = 0;
             }
         }
+    }
+
+    // TODO: This is kinda a proof of concept (might miss players having this trainer in line-of-sight
+    // -> the greater UNSEEN_CHECK_INTERVAL_TICKS the higher the chance to miss).
+    private void checkDespawnIfUnseen() {
+        var maxUnseenTicks = RCTMod.getInstance().getServerConfig().despwanTicksIfUnseen();
+
+        if(maxUnseenTicks > 0 && !this.isPersistenceRequired() && this.tickCount % UNSEEN_CHECK_INTERVAL_TICKS == 0)  {
+            if(this.level().players().stream().anyMatch(p -> this.hasLineOfSight(p))) {
+                this.lastTimeSeen = this.tickCount;
+                ModCommon.LOG.info("SEEN BY PLAYER: " + this.getDisplayName().getString());
+            } else if((this.tickCount - this.lastTimeSeen) > maxUnseenTicks) {
+                this.discard();
+                ModCommon.LOG.info("UNSEEN BY PLAYER -> DESPAWNING: " + this.getDisplayName().getString());
+            }
+        }
+    }
+
+    // Slightly optimized (no sqrt).
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if(entity.level() != this.level()) {
+            return false;
+        }
+
+        var vec3 = new Vec3(this.getX(), this.getEyeY(), this.getZ());
+        var vec32 = new Vec3(entity.getX(), entity.getEyeY(), entity.getZ());
+
+        if(vec32.distanceToSqr(vec3) > 16384) { // 128 * 128
+            return false;
+        }
+
+        return this.level().clip(new ClipContext(vec3, vec32, Block.COLLIDER, Fluid.NONE, this)).getType() == HitResult.Type.MISS;
     }
 
     private class PlayerTransform {

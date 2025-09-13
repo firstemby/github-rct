@@ -29,6 +29,7 @@ public class ServerConfig implements IServerConfig {
     private final ConfigValue<Double> globalSpawnChanceMinimumValue;
     private final ConfigValue<Integer> spawnIntervalTicksValue;
     private final ConfigValue<Integer> spawnIntervalTicksMaximumValue;
+    private final ConfigValue<Integer> despwanTicksIfUnseenValue;
     private final ConfigValue<Integer> maxHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> minHorizontalDistanceToPlayersValue;
     private final ConfigValue<Integer> maxVerticalDistanceToPlayersValue;
@@ -47,6 +48,7 @@ public class ServerConfig implements IServerConfig {
     private double globalSpawnChanceMinimumCached;
     private int spawnIntervalTicksCached;
     private int spawnIntervalTicksMaximumCached;
+    private int despwanTicksIfUnseenCached;
     private int maxHorizontalDistanceToPlayersCached;
     private int minHorizontalDistanceToPlayersCached;
     private int maxVerticalDistanceToPlayersCached;
@@ -112,6 +114,12 @@ public class ServerConfig implements IServerConfig {
                 "spawnIntervalTicks to disable (e.g. 0).")
             .defineInRange("spawnIntervalTicksMaximum", IServerConfig.super.spawnIntervalTicksMaximum(), 0, Integer.MAX_VALUE - 1);
 
+        this.despwanTicksIfUnseenValue = builder
+            .comment(SEPARATOR,
+                "(Non persistent) trainers will despawn after the configured amount of ticks if not seen by any player.",
+                "Set to a negative value to disable this feature (trainers may only despawn if they chunks become unloaded in that case).")
+            .define("despwanTicksIfUnseen", IServerConfig.super.despwanTicksIfUnseen());
+
         this.maxHorizontalDistanceToPlayersValue = builder
             .comment(SEPARATOR, "The max horizontal distance a trainer can spawn from players.")
             .defineInRange("maxHorizontalDistanceToPlayers", IServerConfig.super.maxHorizontalDistanceToPlayers(), 1, Integer.MAX_VALUE - 1);
@@ -127,10 +135,9 @@ public class ServerConfig implements IServerConfig {
         this.uniqueTrainerRadiusValue = builder
             .comment(SEPARATOR,
                 "By default, this mod prevents the spawning of a trainer if another entity with the same identity",
-                "already exists anywhere in the world. However, if this is set to a positive value, the mod will check",
-                "for the existence of a trainer with the same identity within the specified radius instead. Note that a",
-                "greater radius will require more CPU resources (~ 100 to 200 should be fine for most machines).")
-            .defineInRange("uniqueTrainerRadius", IServerConfig.super.uniqueTrainerRadius(), Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1);
+                "already exists anywhere in the world (in any dimension). However, if this is set to a positive value,",
+                "the mod will check for the existence of a trainer with the same identity within the specified radius instead.")
+            .define("uniqueTrainerRadius", IServerConfig.super.uniqueTrainerRadius());
 
         this.maxTrainersPerPlayerValue = builder
             .comment(SEPARATOR, "Spawn cap of trainers per player.")
@@ -247,6 +254,7 @@ public class ServerConfig implements IServerConfig {
         this.globalSpawnChanceMinimumCached = this.globalSpawnChanceMinimumValue.get();
         this.spawnIntervalTicksCached = this.spawnIntervalTicksValue.get();
         this.spawnIntervalTicksMaximumCached = this.spawnIntervalTicksMaximumValue.get();
+        this.despwanTicksIfUnseenCached = this.despwanTicksIfUnseenValue.get();
         this.maxHorizontalDistanceToPlayersCached = this.maxHorizontalDistanceToPlayersValue.get();
         this.minHorizontalDistanceToPlayersCached = this.minHorizontalDistanceToPlayersValue.get();
         this.maxVerticalDistanceToPlayersCached = this.maxVerticalDistanceToPlayersValue.get();
@@ -291,6 +299,11 @@ public class ServerConfig implements IServerConfig {
     @Override
     public int spawnIntervalTicksMaximum() {
         return this.spawnIntervalTicksMaximumCached;
+    }
+    
+    @Override
+    public int despwanTicksIfUnseen() {
+        return this.despwanTicksIfUnseenCached;
     }
 
     @Override

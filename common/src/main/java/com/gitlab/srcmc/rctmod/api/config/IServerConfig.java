@@ -72,6 +72,16 @@ public interface IServerConfig extends IModConfig {
     default int spawnIntervalTicksMaximum() { return 2400; }
 
     /**
+     * (Non persistent) trainers will despawn after the configured amount of ticks if
+     * not seen by any player. Set to a negative value to disable this feature (trainers
+     * may only despawn if they chunks become unloaded in that case).
+     * 
+     * range (-inf, inf)
+     * default: 6000
+     */
+    default int despwanTicksIfUnseen() { return 6000; }
+
+    /**
      * If enabled trainers will only spawn naturally around players that have a trainer
      * card in their inventory (does not affect trainer spawners).
      * 
@@ -117,15 +127,14 @@ public interface IServerConfig extends IModConfig {
 
     /**
      * By default, this mod prevents the spawning of a trainer if another entity with
-     * the same identity already exists anywhere in the world. However, if this is set
-     * to a positive value, the mod will check for the existence of a trainer with the
-     * same identity within the specified radius instead. Note that a greater radius
-     * will require more CPU resources (~ 100 to 200 should be fine for most machines).
+     * the same identity already exists anywhere in the world (in any dimension).
+     * However, if this is set to a positive value, the mod will check for the existence
+     * of a trainer with the same identity within the specified radius instead.
      * 
      * range (-inf, inf)
-     * default -1
+     * default 500
      */
-    default int uniqueTrainerRadius() { return -1; }
+    default int uniqueTrainerRadius() { return 500; }
 
     /**
      * Spawn cap of trainers per player.
