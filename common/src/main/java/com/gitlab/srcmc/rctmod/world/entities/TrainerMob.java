@@ -35,6 +35,7 @@ import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
+import com.gitlab.srcmc.rctmod.world.entities.goals.ForcedStrollAwayGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.LookAtPlayerAndWaitGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.MoveCloseToTargetGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.MoveToHomePosGoal;
@@ -739,13 +740,14 @@ public class TrainerMob extends PathfinderMob implements Npc {
         this.goalSelector.addGoal(2, new AvoidEntityGoal<Zoglin>(this, Zoglin.class, 10.0F, 0.5, 0.5));
         this.goalSelector.addGoal(2, new PanicGoal(this, 0.5));
         this.goalSelector.addGoal(3, new TemptGoal(this, 0.35, item -> item.is(ModRegistries.Items.TRAINER_CARD.get()), false));
-        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2.0F, 0.04F, 160, 320));
-        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4.0F, 0.004F, 80, 160));
+        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2.0F, 0.04F, 160, 600));
+        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4.0F, 0.004F, 80, 300));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8.0F));
         this.goalSelector.addGoal(5, new MoveToHomePosGoal(this));
-        this.goalSelector.addGoal(6, new MoveCloseToTargetGoal(this, 0.35, maxTrackingDistance));
-        this.goalSelector.addGoal(7, new RandomStrollThroughVillageGoal(this, 0.35f, p -> this.wasExhausted() ? p * 0.25f : p * 0.75f));
-        this.goalSelector.addGoal(8, new RandomStrollAwayGoal(this, 0.35));
+        this.goalSelector.addGoal(6, new ForcedStrollAwayGoal(this, 0.35));
+        this.goalSelector.addGoal(7, new MoveCloseToTargetGoal(this, 0.35, maxTrackingDistance));
+        this.goalSelector.addGoal(8, new RandomStrollThroughVillageGoal(this, 0.35f, p -> this.wasExhausted() ? p * 0.25f : p * 0.75f));
+        this.goalSelector.addGoal(9, new RandomStrollAwayGoal(this, 0.35));
         this.goalSelector.addGoal(12, new WaterAvoidingRandomStrollGoal(this, 0.35));
     }
 

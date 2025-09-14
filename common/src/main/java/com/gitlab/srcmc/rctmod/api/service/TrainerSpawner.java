@@ -68,15 +68,15 @@ import net.minecraft.world.level.saveddata.SavedData.Factory;
 import net.minecraft.world.phys.AABB;
 
 public class TrainerSpawner {
-    private static float KEY_TRAINER_SPAWN_WEIGHT_FACTOR = 64;
-    private static float NON_KEY_TRAINER_SPAWN_CHANCE_DIV = 4;
-    private static final int SPAWN_RETRIES = 8;
-    private static final boolean CAN_SPAWN_IN_WATER = false; // experimental
-    private static final double TRAINER_DIRECT_SPAWN_CHANCE = 0.42;
-    private static final int CHUNK_REPEL_RADIUS = 3; // 7x7
+    public static float KEY_TRAINER_SPAWN_WEIGHT_FACTOR = 64;
+    public static float NON_KEY_TRAINER_SPAWN_CHANCE_DIV = 4;
+    public static final int SPAWN_RETRIES = 8;
+    public static final boolean CAN_SPAWN_IN_WATER = false; // experimental
+    public static final double TRAINER_DIRECT_SPAWN_CHANCE = 0.42;
+    public static final int CHUNK_REPEL_RADIUS = 3; // 7x7
 
-    private static final TicketType<ChunkPos> PERSISTENT_TRAINER_TICKET = TicketType.create("persistent_trainer", Comparator.comparingLong(ChunkPos::toLong), 600);
-    private static final int PERSISTENT_TRAINER_TICKET_LEVEL = ChunkLevel.byStatus(FullChunkStatus.FULL) - ChunkMap.FORCED_TICKET_LEVEL; // FULL will be subtracted
+    public static final TicketType<ChunkPos> PERSISTENT_TRAINER_TICKET = TicketType.create("persistent_trainer", Comparator.comparingLong(ChunkPos::toLong), 600);
+    public static final int PERSISTENT_TRAINER_TICKET_LEVEL = ChunkLevel.byStatus(FullChunkStatus.FULL) - ChunkMap.FORCED_TICKET_LEVEL; // FULL will be subtracted
 
     private class SpawnCandidate {
         public final String id;
@@ -226,9 +226,13 @@ public class TrainerSpawner {
     }
 
     public boolean isMarkedAt(Level level, BlockPos pos) {
+        return this.isMarkedAt(level, level.getChunkAt(pos).getPos());
+    }
+
+    public boolean isMarkedAt(Level level, ChunkPos pos) {
         return this.markedChunks
             .getOrDefault(level.dimension().location(), Map.of())
-            .getOrDefault(level.getChunkAt(pos).getPos(), 0) > 0;
+            .getOrDefault(pos, 0) > 0;
     }
 
     public Set<TrainerMob> getSpawns() {
