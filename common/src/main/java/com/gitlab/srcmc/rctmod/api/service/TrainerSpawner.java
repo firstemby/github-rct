@@ -39,6 +39,7 @@ import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap.ChunkPosDim;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
+import com.gitlab.srcmc.rctmod.world.blocks.TrainerRepelRodBlock;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.gitlab.srcmc.rctmod.world.items.TrainerCard;
@@ -120,25 +121,19 @@ public class TrainerSpawner {
             SavedMap.filePath("spawn.chunks.repel"));
 
         var server = level.getServer();
-        var levels = server.getAllLevels();
-        var trpbs = Map.copyOf(this.trainerRepelBlocks);
-
-        this.trainerRepelBlocks.clear();
         this.markedChunks.clear();
 
-        trpbs.entrySet().forEach(e -> {
-            for(var l : levels) {
-                if(l.dimension().location().equals(e.getKey())) {
-                    e.getValue().entrySet().forEach(v -> {
-                        var bs = l.getBlockState(v.getKey());
-    
-                        if(bs.is(ModRegistries.Blocks.TRAINER_REPEL_ROD.get())) {
-                            this.markChunks(l, v.getKey(), true, CHUNK_REPEL_RADIUS);
-                        }
-                    });
+        Map.copyOf(this.trainerRepelBlocks).entrySet().forEach(e -> {
+            var lvl = server.getLevel(ResourceKey.create(Registries.DIMENSION, e.getKey()));
 
-                    break;
-                }
+            if(lvl == null) {
+                ModCommon.LOG.warn(String.format("trainer repel rods placed in unknown dimension '%s'!"));
+            } else {
+                e.getValue().entrySet().forEach(v -> {
+                    var blockState = lvl.getBlockState(v.getKey());
+                    var unpoweredRod = blockState.is(ModRegistries.Blocks.TRAINER_REPEL_ROD.get()) && !blockState.getValue(TrainerRepelRodBlock.POWERED);
+                    this.markChunks(lvl, v.getKey(), !unpoweredRod, CHUNK_REPEL_RADIUS);
+                });
             }
         });
 
@@ -171,19 +166,18 @@ public class TrainerSpawner {
     }
 
     public void markChunks(Level level, BlockPos blockPos, boolean canSpawn) {
-        if(canSpawn) {
-            this.markChunks(level, blockPos, canSpawn, CHUNK_REPEL_RADIUS);
-        } else {
-            var positions = this.trainerRepelBlocks.get(level.dimension().location());
+        var positions = this.trainerRepelBlocks.get(level.dimension().location());
 
-            if(positions != null) {
-                var r = positions.get(blockPos);
+        if(positions != null) {
+            var r = positions.get(blockPos);
 
-                if(r != null) {
-                    this.markChunks(level, blockPos, canSpawn, r);
-                }
+            if(r != null) {
+                this.markChunks(level, blockPos, canSpawn, r);
+                return;
             }
         }
+
+        this.markChunks(level, blockPos, canSpawn, CHUNK_REPEL_RADIUS);
     }
 
     protected void markChunks(Level level, BlockPos blockPos, boolean canSpawn, int radius) {
@@ -198,7 +192,7 @@ public class TrainerSpawner {
         for(int x = x1; x <= x2; x++) {
             for(int z = z1; z <= z2; z++) {
                 m.compute(new ChunkPos(x, z), (k, v) -> {
-                    if(canSpawn) {
+                    if(!canSpawn) {
                         return (v == null || v < 1) ? 1 : (v + 1);
                     }
 
@@ -211,10 +205,10 @@ public class TrainerSpawner {
             this.markedChunks.remove(l);
         }
 
-        // persist trainer repel block position
+        // persist (or remove persisted) trainer repel rod block position
         var rpl = this.trainerRepelBlocks.computeIfAbsent(l, k -> new SavedBlockPosIntegerMap());
 
-        if(canSpawn) {
+        if(!canSpawn) {
             rpl.put(blockPos, radius);
         } else {
             rpl.remove(blockPos);

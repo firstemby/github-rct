@@ -1,17 +1,21 @@
 # Changelog
 
-## [0.16.8-beta] - 2025-09-11
+## [0.16.8-beta] - 2025-09-15
 
 **Added:**
 
-- *#329* Config option `ticksToDespawnIfUnseen` (default `6000`, 5 minutes): Despawn trainers if not seen by any player for the configured number of ticks
+- *#330* Config option `ticksToDespawnIfUnseen` (default `6000`, 5 minutes): Despawn trainers if not seen by any player for the configured number of ticks
 
 **Changed:**
 
-- *#328* (Non-persistent) trainers now despawn if unseen for more than 5 minutes (configurable)
-- *#327* Default value of config option `uniqueTrainerRadius` from `-1` to `500`
-- *#326* Trainer Repel Rod can now be disabled by powering it with redstone (TODO)
-- *#325* Trainer Repel Rod now additionally alters the behaviour of trainers in its area of effect causing them to wander away from it
+- *#329* (Non-persistent) trainers now despawn if unseen for more than 5 minutes (configurable)
+- *#328* Default value of config option `uniqueTrainerRadius` from `-1` to `500`
+- *#327* Trainer Repel Rod can now be disabled by powering it with redstone
+- *#326* Trainer Repel Rod now additionally alters the behaviour of trainers in its area of effect causing them to wander away from it (now actually living up to its name)
+
+**Fixed:**
+
+- *#325* Some issues with chunk registration of Trainer Repel Rods (while previously placed repel rods should automatically be affected by this fix if you feel that for some reason a rod is not working try breaking and replacing it)
 
 ## [0.16.7-beta] - 2025-09-11
 

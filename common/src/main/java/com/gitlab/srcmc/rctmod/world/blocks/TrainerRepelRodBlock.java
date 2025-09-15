@@ -42,10 +42,14 @@ import net.minecraft.world.level.material.Fluids;
 public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<RodBlock> CODEC = TrainerRepelRodBlock.simpleCodec(TrainerRepelRodBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public TrainerRepelRodBlock() {
         this(BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHTNING_ROD));
-        this.registerDefaultState((this.stateDefinition.any()).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.stateDefinition.any()
+            .setValue(FACING, Direction.UP)
+            .setValue(WATERLOGGED, false)
+            .setValue(POWERED, false));
     }
 
     public TrainerRepelRodBlock(Properties properties) {
@@ -54,13 +58,17 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        var fluidState = blockPlaceContext.getLevel().getFluidState(blockPlaceContext.getClickedPos());
-        return this.defaultBlockState().setValue(FACING, blockPlaceContext.getClickedFace()).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+        var level = blockPlaceContext.getLevel();
+
+        return this.defaultBlockState()
+            .setValue(FACING, blockPlaceContext.getClickedFace())
+            .setValue(WATERLOGGED, level.getFluidState(blockPlaceContext.getClickedPos()).getType() == Fluids.WATER)
+            .setValue(POWERED, level.hasNeighborSignal(blockPlaceContext.getClickedPos()));
     }
 
     @Override
     protected BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        if (blockState.getValue(WATERLOGGED)) {
+        if(blockState.getValue(WATERLOGGED)) {
             levelAccessor.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
         }
 
@@ -75,11 +83,23 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{FACING, WATERLOGGED});
+        builder.add(new Property[]{FACING, WATERLOGGED, POWERED});
+    }
+
+    @Override
+    protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+        if(!level.isClientSide) {
+            this.updatePowered(level, blockState, blockPos);
+            super.neighborChanged(blockState, level, blockPos, block, blockPos2, bl);
+        }
     }
 
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
+        if(blockState.getValue(POWERED)) {
+            return;
+        }
+
         var facing = blockState.getValue(FACING);
         double x, y, z;
 
@@ -132,12 +152,26 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
     @Override
     protected void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
         super.onPlace(blockState, level, blockPos, blockState2, bl);
-        RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, true);
+
+        if(!blockState.getValue(POWERED)) {
+            RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, false);
+        }
     }
 
     @Override
     protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        if(!blockState.getValue(POWERED)) {
+            RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, true);
+        }
+
         super.onRemove(blockState, level, blockPos, blockState2, bl);
-        RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, false);
+    }
+
+    private void updatePowered(Level level, BlockState blockState, BlockPos blockPos) {
+        var powered = level.hasNeighborSignal(blockPos);
+
+        if(blockState.getValue(POWERED) != powered) {
+            level.setBlock(blockPos, blockState.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
+        }
     }
 }

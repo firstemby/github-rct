@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 public class ForcedStrollAwayGoal extends RandomStrollGoal {
     private static final float STROLL_CHANCE = 0.0015f;
     private static final int MAX_TARGET_FAILS = 16;
-    private static final int MAX_CHUNK_RADIUS = TrainerSpawner.CHUNK_REPEL_RADIUS + 1;
+    private static final int MAX_CHUNK_RADIUS = TrainerSpawner.CHUNK_REPEL_RADIUS * 2;
     private static final int MAX_KEEP_DIRECTION_TICKS = 1200;
     private static final int MIN_KEEP_DIRECTION_TICKS = 300;
 
