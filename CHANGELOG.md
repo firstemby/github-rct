@@ -4,12 +4,13 @@
 
 **Added:**
 
-- *#330* Config option `ticksToDespawnIfUnseen` (default `6000`, 5 minutes): Despawn trainers if not seen by any player for the configured number of ticks
+- *#331* Config option `ticksToDespawnIfUnseen` (default `6000`, 5 minutes): Despawn trainers if not seen by any player for the configured number of ticks
 
 **Changed:**
 
-- *#329* (Non-persistent) trainers now despawn if unseen for more than 5 minutes (configurable)
-- *#328* Default value of config option `uniqueTrainerRadius` from `-1` to `500`
+- *#330* (Non-persistent) trainers now despawn if unseen for more than 5 minutes (configurable)
+- *#329* Default value of config option `uniqueTrainerRadius` from `-1` to `500`
+- *#328* Slightly adjusted trainer npc behaviour (small chance to hang out at a location for a few seconds)
 - *#327* Trainer Repel Rod can now be disabled by powering it with redstone
 - *#326* Trainer Repel Rod now additionally alters the behaviour of trainers in its area of effect causing them to wander away from it (now actually living up to its name)
 
