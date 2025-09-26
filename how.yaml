@@ -1,15 +1,15 @@
 run:
   client:
-    fabric: bash gradlew clean fabric:runClient
-    neoforge: bash gradlew clean neoforge:runClient
+    fabric: ./gradlew clean fabric:runClient
+    neoforge: ./gradlew clean neoforge:runClient
   server:
-    fabric: bash gradlew clean fabric:runServer
-    neoforge: bash gradlew clean neoforge:runServer
+    fabric: ./gradlew clean fabric:runServer
+    neoforge: ./gradlew clean neoforge:runServer
 generate:
-  assets: bash tools/generate/assets
-  textures: bash tools/generate/textures
-  trainers: bash tools/generate/trainers
-build: bash gradlew clean build
+  assets: ./tools/generate/assets
+  textures: ./tools/generate/textures
+  trainers: ./tools/generate/trainers
+build: ./gradlew clean build
 copyto:
   fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/Radical (fabric)/mods"
   neoforge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rctapi-neoforge-0.13.8/mods"

@@ -73,7 +73,9 @@ public class TrainerCard extends Item {
 
                     if(tpd.isSeriesCompleted() || tpd.isInEmptySeries()) {
                         var closestTA = ts.getTASpawns().stream()
-                            .sorted((t1, t2) -> t1.level().dimension().location().equals(player.level().dimension().location()) ? Double.compare(t1.distanceToSqr(player), t2.distanceToSqr(player)) : 1)
+                            .sorted((t1, t2) ->  Double.compare(
+                                t1.level().dimension().location().equals(player.level().dimension().location()) ? t1.distanceToSqr(player) : Double.MAX_VALUE,
+                                t2.level().dimension().location().equals(player.level().dimension().location()) ? t2.distanceToSqr(player) : Double.MAX_VALUE))
                             .findFirst();
 
                         if(closestTA.isPresent()) {
@@ -88,7 +90,9 @@ public class TrainerCard extends Item {
                         var ps = PlayerState.get(player);
                         var keyTrainer = ts.getSpawns()
                             .stream().filter(t -> t.couldBattleAgainst(player) && ps.isKeyTrainer(t.getTrainerId()))
-                            .sorted((t1, t2) -> t1.level().dimension().location().equals(player.level().dimension().location()) ? Double.compare(t1.distanceToSqr(player), t2.distanceToSqr(player)) : 1)
+                            .sorted((t1, t2) ->  Double.compare(
+                                t1.level().dimension().location().equals(player.level().dimension().location()) ? t1.distanceToSqr(player) : Double.MAX_VALUE,
+                                t2.level().dimension().location().equals(player.level().dimension().location()) ? t2.distanceToSqr(player) : Double.MAX_VALUE))
                             .findFirst();
 
                         if(keyTrainer.isPresent()) {

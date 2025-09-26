@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.9-beta] - 2025-09-26
+
+**Fixed:**
+
+- *#332* Potential cause of crash related to trainer association and key trainer NPCs in multiple dimension while holdig a trainer card
+
 ## [0.16.8-beta] - 2025-09-15
 
 **Added:**
