@@ -129,7 +129,7 @@ public class TrainerSpawner {
             if(lvl == null) {
                 ModCommon.LOG.warn(String.format("trainer repel rods placed in unknown dimension '%s'!"));
             } else {
-                e.getValue().entrySet().forEach(v -> {
+                Set.copyOf(e.getValue().entrySet()).forEach(v -> {
                     var blockState = lvl.getBlockState(v.getKey());
                     var unpoweredRod = blockState.is(ModRegistries.Blocks.TRAINER_REPEL_ROD.get()) && !blockState.getValue(TrainerRepelRodBlock.POWERED);
                     this.markChunks(lvl, v.getKey(), !unpoweredRod, CHUNK_REPEL_RADIUS);

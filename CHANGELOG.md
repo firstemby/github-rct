@@ -8,7 +8,7 @@
 
 **Fixed:**
 
-- *#334* Potential cause of crash related to loading states from trainer repel rods (TODO)
+- *#334* Potential cause of crash related to loading states from trainer repel rods
 - *#333* Potential cause of crash related to trainer association and key trainer NPCs in multiple dimensions while holdig a trainer card
 - *#332* Rendering issues related to the trainer card arrow
   - Fixed minor issue with the geometry of the arrow
