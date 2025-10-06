@@ -4,7 +4,7 @@
 
 **Changed:**
 
-- *#335* Made trainer card arrow a bit less transparent
+- *#335* Slightly reduced transparency of trainer card arrow
 
 **Fixed:**
 
