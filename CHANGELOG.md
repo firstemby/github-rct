@@ -1,10 +1,19 @@
 # Changelog
 
-## [0.16.9-beta] - 2025-09-26
+## [0.16.9-beta] - 2025-10-06
+
+**Changed:**
+
+- *#335* Made trainer card arrow a bit less transparent
 
 **Fixed:**
 
-- *#332* Potential cause of crash related to trainer association and key trainer NPCs in multiple dimensions while holdig a trainer card
+- *#334* Potential cause of crash related to loading states from trainer repel rods (TODO)
+- *#333* Potential cause of crash related to trainer association and key trainer NPCs in multiple dimensions while holdig a trainer card
+- *#332* Rendering issues related to the trainer card arrow
+  - Fixed minor issue with the geometry of the arrow
+  - Inconsistent rendering of the arrow with a trainer card in main- and off hand at the same time
+  - Rendering of the arrow visually messing up journey map markers
 
 ## [0.16.8-beta] - 2025-09-15
 
