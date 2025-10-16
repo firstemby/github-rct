@@ -4,6 +4,7 @@
 
 **Fixed:**
 
+- *#337* Potential crash if blocks that serve as proxies for players (e.g. Deployers) interact with trainers while the player is in a different dimension
 - *#336* Potential crash related to the removal of existing dimensions containing persistent trainers
 
 ## [0.16.9-beta] - 2025-10-06
