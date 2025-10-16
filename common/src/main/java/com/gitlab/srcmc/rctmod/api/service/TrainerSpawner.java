@@ -127,7 +127,7 @@ public class TrainerSpawner {
             var lvl = server.getLevel(ResourceKey.create(Registries.DIMENSION, e.getKey()));
 
             if(lvl == null) {
-                ModCommon.LOG.warn(String.format("trainer repel rods placed in unknown dimension '%s'!"));
+                ModCommon.LOG.warn(String.format("trainer repel rods placed in unknown dimension '%s'!", e.getKey()));
             } else {
                 Set.copyOf(e.getValue().entrySet()).forEach(v -> {
                     var blockState = lvl.getBlockState(v.getKey());

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.10-beta] - 2025-10-16
+
+**Fixed:**
+
+- *#336* Potential crash related to the removal of existing dimensions containing persistent trainers
+
 ## [0.16.9-beta] - 2025-10-06
 
 **Changed:**
