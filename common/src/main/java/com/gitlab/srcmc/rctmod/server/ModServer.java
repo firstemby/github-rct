@@ -27,7 +27,7 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
-import com.cobblemon.mod.common.api.events.pokemon.ExperienceGainedPreEvent;
+import com.cobblemon.mod.common.api.events.pokemon.ExperienceGainedEvent;
 import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
@@ -50,7 +50,6 @@ import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent.LevelTick;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.ReloadListenerRegistry;
-import kotlin.Unit;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
@@ -270,15 +269,13 @@ public class ModServer {
 
     // CobblemonEvent
 
-    static Unit onBattleVictory(BattleVictoryEvent event) {
+    static void onBattleVictory(BattleVictoryEvent event) {
         if(!ModServer.removeBattleFromInitiator(event.getWinners(), true)) {
             ModServer.removeBattleFromInitiator(event.getLosers(), false);
         }
-
-        return Unit.INSTANCE;
     }
 
-    static Unit onExperienceGained(ExperienceGainedPreEvent event) {
+    static void onExperienceGained(ExperienceGainedEvent.Pre event) {
         if(!RCTMod.getInstance().getServerConfig().allowOverLeveling()) {
             var owner = event.getPokemon().getOwnerPlayer();
 
@@ -288,15 +285,13 @@ public class ModServer {
 
                 if(maxExp < event.getExperience()) {
                     ChatUtils.sendActionbar(owner, Text.translatable(LangKeys.GUI_ACTIONBAR_WARNING_LEVEL_CAP),
-                        event.getPokemon().getDisplayName(),
+                        event.getPokemon().getDisplayName(true),
                         playerTr.getLevelCap());
                 }
 
                 event.setExperience(Math.min(event.getExperience(), maxExp));
             }
         }
-
-        return Unit.INSTANCE;
     }
 
     private static boolean removeBattleFromInitiator(List<BattleActor> actors, boolean winners) {

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0-beta] - 2025-11-17
+
+**Changed:**
+
+- *#339* Update min dependency of Cobblemon to `1.7.0`
+- *#338* Update min dependency of RCTApi to `0.14.0-beta`
+
 ## [0.16.10-beta] - 2025-10-16
 
 **Fixed:**
