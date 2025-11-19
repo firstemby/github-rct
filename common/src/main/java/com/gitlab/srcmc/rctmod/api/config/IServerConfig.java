@@ -201,7 +201,8 @@ public interface IServerConfig extends IModConfig {
 
     /**
      * Initial level cap of players. Pokemon will not gain any experience if at or
-     * above the level cap.
+     * above the level cap. This value will be capped to not go below the level cap
+     * for the first trainer of a series (you may use 'relativeLevelCap' for that).
      * 
      * range [1, 100]
      * default 15
@@ -209,17 +210,14 @@ public interface IServerConfig extends IModConfig {
     default int initialLevelCap() { return 15; }
 
     /**
-     * The required level cap for trainers is based of the strongest pokemon in their
-     * team. This value will be added to the derived player level cap (including the
-     * initial level cap).
-     * 
-     * Example: A trainer with a Pikachu at level 50 has a level cap requirement of 50.
-     * If the additiveLevelCapRequirement is -10 the required level cap for that
-     * trainer becomes 40, if it is 10 the level cap requirement becomes 60.
+     * The level cap of a player is based of the strongest pokemon from the party of their next
+     * required trainer in a series. The relativeLevelCap is added to the resulting value. For
+     * instance if the next trainer for a player has a Pikachu at level 50, that players level
+     * cap will be 50 + relativeLevelCap (can be negative).
      * 
      * default: 0
      */
-    default int additiveLevelCapRequirement() { return 0; }
+    default int relativeLevelCap() { return 0; }
 
     /**
      * If enabled the level cap of a players will not prevent their pokemon from

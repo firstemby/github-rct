@@ -65,13 +65,13 @@ public class ServerConfig implements IServerConfig {
 
     // players
     private final ConfigValue<Integer> initialLevelCapValue;
-    private final ConfigValue<Integer> additiveLevelCapRequirementValue;
+    private final ConfigValue<Integer> relativeLevelCapValue;
     private final ConfigValue<String> initialSeriesValue;
     private final ConfigValue<Boolean> freeroamRequiresCompletedSeriesValue;
     private final ConfigValue<Boolean> allowOverLevelingValue;
 
     private int initialLevelCapCached;
-    private int additiveLevelCapRequirementCached;
+    private int relativeLevelCapCached;
     private String initialSeriesCached;
     private boolean freeroamRequiresCompletedSeriesCached;
     private boolean allowOverLevelingCached;
@@ -201,17 +201,19 @@ public class ServerConfig implements IServerConfig {
         builder.push("Players");
 
         this.initialLevelCapValue = builder
-            .comment(SEPARATOR, "Initial level cap of players. Pokemon will not gain any experience if at or above the level cap.")
+            .comment(SEPARATOR,
+                "Initial level cap of players. Pokemon will not gain any experience if at or",
+                "above the level cap. This value will be capped to not go below the level cap",
+                "for the first trainer of a series (you may use 'relativeLevelCap' for that).")
             .defineInRange("initialLevelCap", IServerConfig.super.initialLevelCap(), 1, 100);
 
-        this.additiveLevelCapRequirementValue = builder
+        this.relativeLevelCapValue = builder
             .comment(SEPARATOR,
-                "The required level cap for trainers is based of the strongest pokemon in their team.",
-                "This value will be added to the derived player level cap (including the initial level cap).",
-                "Example: A trainer with a Pikachu at level 50 has a level cap requirement of 50.",
-                "If the additiveLevelCapRequirement is -10 the required level cap for that trainer becomes 40,",
-                "if it is 10 the level cap requirement becomes 60.")
-            .define("additiveLevelCapRequirement", IServerConfig.super.additiveLevelCapRequirement());
+                "The level cap of a player is based of the strongest pokemon from the party of their next",
+                "required trainer in a series. The relativeLevelCap is added to the resulting value. For",
+                "instance if the next trainer for a player has a Pikachu at level 50, that players level",
+                "cap will be 50 + relativeLevelCap (can be negative).")
+            .define("relativeLevelCap", IServerConfig.super.relativeLevelCap());
 
         this.initialSeriesValue = builder
             .comment(SEPARATOR,
@@ -269,7 +271,7 @@ public class ServerConfig implements IServerConfig {
         this.biomeTagBlacklistCached = List.copyOf(this.biomeTagBlacklistValue.get());
         this.biomeTagWhitelistCached = List.copyOf(this.biomeTagWhitelistValue.get());
         this.initialLevelCapCached = this.initialLevelCapValue.get();
-        this.additiveLevelCapRequirementCached = this.additiveLevelCapRequirementValue.get();
+        this.relativeLevelCapCached = this.relativeLevelCapValue.get();
         this.initialSeriesCached = this.initialSeriesValue.get();
         this.freeroamRequiresCompletedSeriesCached = this.freeroamRequiresCompletedSeriesValue.get();
         this.allowOverLevelingCached = this.allowOverLevelingValue.get();
@@ -377,8 +379,8 @@ public class ServerConfig implements IServerConfig {
     }
 
     @Override
-    public int additiveLevelCapRequirement() {
-        return this.additiveLevelCapRequirementCached;
+    public int relativeLevelCap() {
+        return this.relativeLevelCapCached;
     }
 
     @Override

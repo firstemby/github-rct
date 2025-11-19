@@ -125,7 +125,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     public int getRequiredLevelCap() {
         var cfg = RCTMod.getInstance().getServerConfig();
-        return Math.max(1, Math.min(100, this.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + cfg.additiveLevelCapRequirement()));
+        return Math.max(1, Math.min(100, this.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + cfg.relativeLevelCap()));
     }
 
     public boolean isOfSeries(String seriesId) {

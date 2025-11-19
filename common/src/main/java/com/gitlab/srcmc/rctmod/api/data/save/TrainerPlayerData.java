@@ -43,7 +43,7 @@ public class TrainerPlayerData extends SavedData {
     private String currentSeries = "";
     private String previousSeries = "";
     private Player player;
-    private int initialLevelCap, additiveLevelCapRequirement, levelCap;
+    private int initialLevelCap, relativeLevelCap, levelCap;
     private boolean currentSeriesCompleted;
 
     public TrainerPlayerData(Player player) {
@@ -58,8 +58,8 @@ public class TrainerPlayerData extends SavedData {
     public int getLevelCap() {
         var cfg = RCTMod.getInstance().getServerConfig();
 
-        if(RCTMod.getInstance().getTrainerManager().updateRequired(this.player) || cfg.initialLevelCap() != this.initialLevelCap || cfg.additiveLevelCapRequirement() != this.additiveLevelCapRequirement) {
-            this.additiveLevelCapRequirement = cfg.additiveLevelCapRequirement();
+        if(RCTMod.getInstance().getTrainerManager().updateRequired(this.player) || cfg.initialLevelCap() != this.initialLevelCap || cfg.relativeLevelCap() != this.relativeLevelCap) {
+            this.relativeLevelCap = cfg.relativeLevelCap();
             this.initialLevelCap = cfg.initialLevelCap();
             this.updateLevelCap();
         }
@@ -72,7 +72,7 @@ public class TrainerPlayerData extends SavedData {
             this.levelCap = 100; // TODO: maybe something like 'maxSeriesLevel'?
         } else {
             var cfg = RCTMod.getInstance().getServerConfig();
-            this.levelCap = Math.max(RCTMod.getInstance().getTrainerManager().getMinRequiredLevelCap(this.getCurrentSeries()), Math.min(100, cfg.initialLevelCap() + cfg.additiveLevelCapRequirement()));
+            this.levelCap = Math.max(RCTMod.getInstance().getTrainerManager().getMinRequiredLevelCap(this.getCurrentSeries()), Math.min(100, cfg.initialLevelCap() + cfg.relativeLevelCap()));
         }
 
         PlayerState.get(this.player).setLevelCap(this.levelCap);

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.11-beta] - 2025-11-19
+
+**Changed:**
+
+- *#338* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+
 ## [0.16.10-beta] - 2025-10-16
 
 **Fixed:**
