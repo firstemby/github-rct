@@ -29,6 +29,7 @@ import java.lang.annotation.Target;
 import java.nio.charset.StandardCharsets;
 
 import com.gitlab.srcmc.rctmod.ModCommon;
+import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -39,6 +40,7 @@ import net.minecraft.server.packs.resources.IoSupplier;
 
 public final class JsonUtils<T> {
     public static final Gson GSON = ModCommon.RCT.gsonBuilder()
+        .registerTypeAdapter(Optional.class, new Optional.TypeAdapter())
         .registerTypeAdapter(TrainerType.Color.class, new TrainerType.Color.Serializer())
         .registerTypeAdapter(TrainerType.Color.class, new TrainerType.Color.Deserializer())
         .addSerializationExclusionStrategy(new AnnotationExclusionStrategy())

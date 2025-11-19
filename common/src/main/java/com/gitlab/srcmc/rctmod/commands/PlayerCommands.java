@@ -324,7 +324,7 @@ public final class PlayerCommands {
         var includeOptionals = (flags & SuggestionUtils.GF_INCLUDE_OPTIONALS) != 0;
         var includeSingles = (flags & SuggestionUtils.GF_INCLUDE_SINGLES) != 0;
         var graph = RCTMod.getInstance().getSeriesManager().getGraph(tpd.getCurrentSeries());
-        var url = PlantUML.SERVER_URL + PlantUML.encode(includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
+        var url = PlantUML.SERVER_URL + PlantUML.encode(tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
 
         context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString())
             .append(Component.literal(" "))

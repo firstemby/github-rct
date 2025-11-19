@@ -21,8 +21,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.gitlab.srcmc.rctapi.api.util.Text;
+import com.gitlab.srcmc.rctmod.api.data.Optional;
 
-public record SeriesMetaData(Text title, Text description, int difficulty, List<List<String>> requiredSeries) implements Comparable<SeriesMetaData>, Serializable {
+public record SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, List<List<String>> requiredSeries) implements Comparable<SeriesMetaData>, Serializable {
     private static final long serialVersionUID = 0L;
     public static final int MIN_DIFFICULTY = 1;
     public static final int MAX_DIFFICULTY = 10;
@@ -36,13 +37,23 @@ public record SeriesMetaData(Text title, Text description, int difficulty, List<
     }
 
     public SeriesMetaData(Text title, Text description, int difficulty) {
-        this(title, description, difficulty, List.of());
+        this(title, description, difficulty, Optional.empty());
     }
 
-    public SeriesMetaData(Text title, Text description, int difficulty, List<List<String>> requiredSeries) {
-        this.title = title;
-        this.description = description;
+    public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap) {
+        this(title, description, difficulty, initialLevelCap, Optional.empty());
+    }
+
+    public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap) {
+        this(title, description, difficulty, initialLevelCap, relativeLevelCap, List.of());
+    }
+
+    public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, List<List<String>> requiredSeries) {
+        this.title = title == null ? Text.empty() : title;
+        this.description = description == null ? Text.empty() : description;
         this.difficulty = Math.max(MIN_DIFFICULTY, Math.min(MAX_DIFFICULTY, difficulty));
+        this.initialLevelCap = initialLevelCap == null ? Optional.empty() : initialLevelCap;
+        this.relativeLevelCap = relativeLevelCap == null ? Optional.empty() : relativeLevelCap;
         this.requiredSeries = requiredSeries;
     }
 

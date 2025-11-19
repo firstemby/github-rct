@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import com.gitlab.srcmc.rctapi.api.util.Locations;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.client.screens.widgets.TrainerListWidget.EntryState;
 import com.gitlab.srcmc.rctmod.client.screens.widgets.text.MultiStyleStringWidget;
@@ -141,19 +142,23 @@ public class TrainerInfoWidget extends TrainerDataWidget {
 
     private PageContent initOverviewPage() {
         var pc = initPage(Component.translatable(LangKeys.GUI_TRAINER_CARD_OVERVIEW));
+        var curSeries = PlayerState.get(Minecraft.getInstance().player).getCurrentSeries();
         this.y = 0;
 
         pc.renderables.add(new StringWidget(8, this.y += this.h, this.w, this.h, toComponent(String.format("%s: ", Component.translatable(LangKeys.GUI_TRAINER_CARD_TYPE).getString())), this.font).alignLeft());
         pc.renderables.add(new StringWidget(8, this.y, (int)(this.w*0.9), this.h, toComponent(this.trainer.getType().name().getComponent().getString()), this.font).alignRight());
 
+        var reqCap = this.trainer.getRequiredLevelCap(curSeries);
+        var rewCap = this.trainer.getRewardLevelCap(curSeries);
+
         pc.renderables.add(new StringWidget(8, this.y += this.h, this.w, this.h, toComponent(String.format("%s: ", Component.translatable(LangKeys.GUI_TRAINER_CARD_LEVEL_CAP).getString())), this.font).alignLeft());
-        pc.renderables.add(new StringWidget(8, this.y, (int)(this.w*0.9), this.h, toComponent(String.format("%d -> %d", this.trainer.getRequiredLevelCap(), this.trainer.getRewardLevelCap())), this.font).alignRight());
+        pc.renderables.add(new StringWidget(8, this.y, (int)(this.w*0.9), this.h, toComponent(String.format("%d -> %d", reqCap, Math.max(reqCap, rewCap))), this.font).alignRight());
         
         var tm = RCTMod.getInstance().getTrainerManager();
         var first = new boolean[]{true};
 
         this.trainer.getMissingRequirements(Set.of()).map(tm::getData).sorted((tmd1, tmd2) -> {
-            var c = Integer.compare(tmd1.getRequiredLevelCap(), tmd2.getRequiredLevelCap());
+            var c = Integer.compare(tmd1.getRequiredLevelCap(curSeries), tmd2.getRequiredLevelCap(curSeries));
             return c == 0 ? tmd1.getTrainerTeam().getName().compareTo(tmd2.getTrainerTeam().getName()) : c;
         }).forEach(tmd -> {
             if(first[0]) {

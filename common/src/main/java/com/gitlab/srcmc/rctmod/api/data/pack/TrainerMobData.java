@@ -34,6 +34,8 @@ import java.util.stream.Stream;
 import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.data.Optional;
+import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.Exclude;
 import com.google.gson.reflect.TypeToken;
 
@@ -52,17 +54,18 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private int maxTrainerWins = 3;
     private int maxTrainerDefeats = 1;
     private int battleCooldownTicks = 240;
+    private Optional<Integer> relativeLevelCap = Optional.empty();
     
     private float spawnWeightFactor = 1F; // >= 0
     private Set<String> biomeTagBlacklist = new HashSet<>();
     private Set<String> biomeTagWhitelist = new HashSet<>();
-
-    @Exclude private int rewardLevelCap;
+    
     @Exclude private Set<String> followdBy = new HashSet<>();
     @Exclude private Map<String, Text[]> dialog = new HashMap<>();
     @Exclude private TrainerTeam trainerTeam;
     @Exclude private RLWrapper textureResource;
     @Exclude private RLWrapper lootTableResource;
+    @Exclude private String trainerId = "";
 
     private transient Supplier<TrainerType> lazyType;
 
@@ -76,7 +79,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     public TrainerMobData(TrainerMobData origin) {
         this.type = origin.type;
         this.signatureItem = origin.signatureItem;
-        this.rewardLevelCap = origin.rewardLevelCap;
+        this.relativeLevelCap = origin.relativeLevelCap;
         this.requiredDefeats = List.copyOf(origin.requiredDefeats);
         this.followdBy = Set.copyOf(origin.followdBy);
         this.optional = origin.optional;
@@ -89,6 +92,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.textureResource = origin.textureResource;
         this.lootTableResource = origin.lootTableResource;
         this.trainerTeam = origin.trainerTeam; // no need for deep copy since immutable
+        this.trainerId = origin.trainerId;
         this.init();
     }
 
@@ -115,17 +119,32 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         return this.lazyType.get();
     }
 
-    public void setRewardLevelCap(int levelCap) {
-        this.rewardLevelCap = Math.min(100, Math.max(1, Math.max(this.getRequiredLevelCap(), levelCap)));
+    public int getRewardLevelCap(String seriesId) {
+        var tm = RCTMod.getInstance().getTrainerManager();
+
+        return this.getFollowedBy().stream()
+            .map(tid -> tm.getData(tid))
+            .filter(tmd -> !tmd.isOptional() && tmd.isOfSeries(seriesId))
+            .map(tmd -> tmd.getRequiredLevelCap(seriesId))
+            .max(Integer::compare)
+            .orElse(LevelUtils.maxLevel());
     }
 
-    public int getRewardLevelCap() {
-        return this.rewardLevelCap;
+    public int getRequiredLevelCap(String seriesId) {
+        var tm = RCTMod.getInstance().getTrainerManager();
+        var prevCap = this.requiredDefeats.stream()
+            .flatMap(Set::stream)
+            .map(tid -> tm.getData(tid))
+            .filter(tmd -> tmd.isOfSeries(seriesId))
+            .map(tmd -> tmd.getRequiredLevelCap(seriesId)) // TODO: cache?
+            .max(Integer::compare)
+            .orElse(LevelUtils.initialLevelCap(seriesId));
+
+        return Math.max(prevCap, Math.min(LevelUtils.maxLevel(), this.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + LevelUtils.relativeLevelCap(seriesId, this.trainerId)));
     }
 
-    public int getRequiredLevelCap() {
-        var cfg = RCTMod.getInstance().getServerConfig();
-        return Math.max(1, Math.min(100, this.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + cfg.relativeLevelCap()));
+    public Optional<Integer> getRelativeLevelCap() {
+        return this.relativeLevelCap;
     }
 
     public boolean isOfSeries(String seriesId) {
@@ -254,6 +273,8 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         if(trainerTeam.isPresent()) {
             this.trainerTeam = trainerTeam.get();
         }
+
+        this.trainerId = trainerId;
     }
 
     class RLWrapper implements Serializable {

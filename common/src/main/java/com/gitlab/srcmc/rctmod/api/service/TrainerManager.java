@@ -43,6 +43,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerBattleMemory;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
+import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.PathUtils;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
@@ -160,7 +161,7 @@ public class TrainerManager extends DataPackManager {
                 .stream().toList() // copy to avoid concurrent modification
                 .forEach(bs -> bm.end(bs.getBattle().getBattleId(), true));
 
-            ModCommon.RCT.getTrainerRegistry().init(server);            // this.setReloadRequired();
+            ModCommon.RCT.getTrainerRegistry().init(server);
         }
 
         this.server = server;
@@ -383,30 +384,22 @@ public class TrainerManager extends DataPackManager {
 
         this.minRequiredLevelCaps = new HashMap<>();
         var globalMin = new int[]{Integer.MAX_VALUE};
-        var alr = RCTMod.getInstance().getServerConfig().relativeLevelCap();
 
         newTrainerMobs.values().forEach(tmd -> {
-            tmd.setRewardLevelCap(tmd
-                .getFollowedBy().stream()
-                .map(newTrainerMobs::get)
-                .filter(tm -> !tm.isOptional())
-                .map(tm -> tm.getTrainerTeam().getTeam().stream().map(p -> p.getLevel() + alr).max(Integer::compare).orElse(0))
-                .max(Integer::compare).orElse(tmd.getRequiredLevelCap())); // TODO: change to min?
-            
             if(!tmd.isOptional() && !tmd.getFollowedBy().isEmpty()) {
                 if(tmd.getSeries().findFirst().isEmpty()) {
-                    globalMin[0] = Math.min(globalMin[0], tmd.getRequiredLevelCap());
+                    globalMin[0] = Math.min(globalMin[0], tmd.getRequiredLevelCap(SeriesManager.EMPTY_SERIES_ID));
                     this.minRequiredLevelCaps.replaceAll((k, v) -> Math.min(globalMin[0], v));
                 } else {
                     tmd.getSeries().forEach(s -> this.minRequiredLevelCaps.compute(s, (k, v) -> v == null
-                        ? Math.min(globalMin[0], tmd.getRequiredLevelCap())
-                        : Math.min(globalMin[0], Math.min(v, tmd.getRequiredLevelCap()))));
+                        ? Math.min(globalMin[0], tmd.getRequiredLevelCap(s))
+                        : Math.min(globalMin[0], Math.min(v, tmd.getRequiredLevelCap(s)))));
                 }
             }
         });
 
         var cfg = RCTMod.getInstance().getServerConfig();
-        this.globalMinRequiredLevelCap = globalMin[0] == Integer.MAX_VALUE ? Math.max(1, Math.min(100, cfg.initialLevelCap() + cfg.relativeLevelCap())) : globalMin[0];
+        this.globalMinRequiredLevelCap = globalMin[0] == Integer.MAX_VALUE ? Math.max(1, Math.min(LevelUtils.maxLevel(), cfg.initialLevelCap() + cfg.relativeLevelCap())) : globalMin[0];
         this.trainerMobs = newTrainerMobs;
         this.seriesManager.onLoad(this);
         this.receivedUpdates = new HashSet<>();

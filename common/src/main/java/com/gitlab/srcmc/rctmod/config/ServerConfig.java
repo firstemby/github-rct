@@ -205,7 +205,7 @@ public class ServerConfig implements IServerConfig {
                 "Initial level cap of players. Pokemon will not gain any experience if at or",
                 "above the level cap. This value will be capped to not go below the level cap",
                 "for the first trainer of a series (you may use 'relativeLevelCap' for that).")
-            .defineInRange("initialLevelCap", IServerConfig.super.initialLevelCap(), 1, 100);
+            .defineInRange("initialLevelCap", IServerConfig.super.initialLevelCap(), 1, Integer.MAX_VALUE - 1);
 
         this.relativeLevelCapValue = builder
             .comment(SEPARATOR,

@@ -81,11 +81,15 @@ public class TrainerCommands {
                     .then(Commands.literal("reward_level_cap")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
-                            .executes(TrainerCommands::mob_get_reward_level_cap)))
+                            .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("series", StringArgumentType.string())
+                                .suggests(SuggestionUtils::get_series_suggestions)
+                                .executes(TrainerCommands::mob_get_reward_level_cap))))
                     .then(Commands.literal("required_level_cap")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
-                            .executes(TrainerCommands::mob_get_required_level_cap)))
+                            .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("series", StringArgumentType.string())
+                                .suggests(SuggestionUtils::get_series_suggestions)
+                                .executes(TrainerCommands::mob_get_required_level_cap))))
                     .then(Commands.literal("required_defeats")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
@@ -215,7 +219,7 @@ public class TrainerCommands {
     private static int mob_get_reward_level_cap(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         var reward_level_cap = RCTMod.getInstance().getTrainerManager()
             .getData(context.getArgument("trainer", String.class))
-            .getRewardLevelCap();
+            .getRewardLevelCap(context.getArgument("series", String.class));
 
         context.getSource().sendSuccess(() -> Component.literal(String.valueOf(reward_level_cap)), false);
         return reward_level_cap;
@@ -224,7 +228,7 @@ public class TrainerCommands {
     private static int mob_get_required_level_cap(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         var required_level_cap = RCTMod.getInstance().getTrainerManager()
             .getData(context.getArgument("trainer", String.class))
-            .getRequiredLevelCap();
+            .getRequiredLevelCap(context.getArgument("series", String.class));
 
         context.getSource().sendSuccess(() -> Component.literal(String.valueOf(required_level_cap)), false);
         return required_level_cap;

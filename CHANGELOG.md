@@ -2,9 +2,21 @@
 
 ## [0.16.11-beta] - 2025-11-19
 
+**Added:**
+
+- *#344* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series
+- *#343* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer
+- *#342* Server config and series property `maxTrainerLevel`: Configure max supported pokemon level for trainers and players (TODO)
+
 **Changed:**
 
-- *#338* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#341* Removed "Ancient Origin Ball" from trainer loot tables (TODO)
+- *#340* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#339* `rctmod trainer get required_level_cap` and `get reward_level_cap` commands now require a `<seriesId>` parameter
+
+**Fixed:**
+
+- *#338* Omitting (optional) `title` or `description` in series metadata causing a crash
 
 ## [0.16.10-beta] - 2025-10-16
 

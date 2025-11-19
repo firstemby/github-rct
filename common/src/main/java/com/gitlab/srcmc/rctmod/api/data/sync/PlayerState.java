@@ -278,7 +278,7 @@ public class PlayerState implements Serializable {
     public boolean canBattle(String trainerId) {
         var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
 
-        return this.getLevelCap() >= tmd.getRequiredLevelCap()
+        return this.getLevelCap() >= tmd.getRequiredLevelCap(this.getCurrentSeries())
             && tmd.getMissingRequirements(this.defeatedTrainerIds).findFirst().isEmpty();
     }
 

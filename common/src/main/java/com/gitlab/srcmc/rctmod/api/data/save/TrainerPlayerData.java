@@ -31,6 +31,7 @@ import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +44,7 @@ public class TrainerPlayerData extends SavedData {
     private String currentSeries = "";
     private String previousSeries = "";
     private Player player;
-    private int initialLevelCap, relativeLevelCap, levelCap;
+    private int levelCap;
     private boolean currentSeriesCompleted;
 
     public TrainerPlayerData(Player player) {
@@ -56,11 +57,7 @@ public class TrainerPlayerData extends SavedData {
     }
 
     public int getLevelCap() {
-        var cfg = RCTMod.getInstance().getServerConfig();
-
-        if(RCTMod.getInstance().getTrainerManager().updateRequired(this.player) || cfg.initialLevelCap() != this.initialLevelCap || cfg.relativeLevelCap() != this.relativeLevelCap) {
-            this.relativeLevelCap = cfg.relativeLevelCap();
-            this.initialLevelCap = cfg.initialLevelCap();
+        if(RCTMod.getInstance().getTrainerManager().updateRequired(this.player)) {
             this.updateLevelCap();
         }
 
@@ -69,25 +66,21 @@ public class TrainerPlayerData extends SavedData {
 
     private void updateLevelCap() {
         if(this.isSeriesCompleted()) {
-            this.levelCap = 100; // TODO: maybe something like 'maxSeriesLevel'?
+            this.levelCap = LevelUtils.maxLevel();
         } else {
-            var cfg = RCTMod.getInstance().getServerConfig();
-            this.levelCap = Math.max(RCTMod.getInstance().getTrainerManager().getMinRequiredLevelCap(this.getCurrentSeries()), Math.min(100, cfg.initialLevelCap() + cfg.relativeLevelCap()));
+            this.levelCap = Math.max(RCTMod.getInstance().getTrainerManager().getMinRequiredLevelCap(this.getCurrentSeries()), Math.min(LevelUtils.maxLevel(), LevelUtils.initialLevelCap(this.getCurrentSeries()) + LevelUtils.relativeLevelCap(this.getCurrentSeries())));
+            this.defeatedTrainerIds.forEach(this::updateLevelCap);
         }
 
         PlayerState.get(this.player).setLevelCap(this.levelCap);
-
-        if(!this.currentSeriesCompleted) {
-            this.defeatedTrainerIds.forEach(this::updateLevelCap);
-        }
     }
 
     private void updateLevelCap(String trainerId) {
         if(this.isSeriesCompleted()) {
-            this.levelCap = 100; // TODO: maybe something like 'maxSeriesLevel'?
+            this.levelCap = LevelUtils.maxLevel();
         } else {
             var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
-            this.levelCap = Math.max(this.levelCap, Math.max(1, Math.min(100, Math.max(tmd.getRequiredLevelCap(), tmd.getRewardLevelCap()))));
+            this.levelCap = Math.max(this.levelCap, Math.max(1, Math.min(LevelUtils.maxLevel(), Math.max(tmd.getRequiredLevelCap(this.currentSeries), tmd.getRewardLevelCap(this.currentSeries)))));
         }
 
         PlayerState.get(this.player).setLevelCap(this.levelCap);

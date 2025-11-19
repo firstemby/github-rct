@@ -158,7 +158,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 && !this.isInBattle()
                 && !rct.isInBattle(player)
                 && tm.getActivePokemon(player) > 0
-                && tpd.getLevelCap() >= tmd.getRequiredLevelCap()
+                && tpd.getLevelCap() >= tmd.getRequiredLevelCap(tpd.getCurrentSeries())
                 && tm.getPlayerLevel(player) <= tpd.getLevelCap()
                 && tmd.getMissingRequirements(tm.getData(player).getDefeatedTrainerIds()).findFirst().isEmpty()
                 && (tmd.isOfSeries(tpd.getCurrentSeries()) || bm.getDefeatByCount(this.getTrainerId(), player) > 0)
@@ -215,7 +215,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             ChatUtils.reply(this, player, "wrong_series");
         } else if(msr.isPresent()) {
             ChatUtils.reply(this, player, "missing_required_trainer_"  + tm.getData(msr.get()).getType().id(), "missing_required_trainer");
-        } else if(tpd.getLevelCap() < tmd.getRequiredLevelCap()) {
+        } else if(tpd.getLevelCap() < tmd.getRequiredLevelCap(tpd.getCurrentSeries())) {
             ChatUtils.reply(this, player, "low_level_cap");
         } else if(tm.getPlayerLevel(player) > tpd.getLevelCap()) {
             ChatUtils.reply(this, player, "over_level_cap");
@@ -573,19 +573,19 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private void updateTarget() {
         if(this.tickCount % TARGET_UPDATE_INTERVAL == 0) {
             var tm = RCTMod.getInstance().getTrainerManager();
-            int reqLevelCap = tm.getData(this).getRequiredLevelCap();
+            var tmd = tm.getData(this);
 
             this.setTarget(this.level()
                 .getNearbyPlayers(
                     TargetingConditions
                         .forNonCombat()
                         .ignoreLineOfSight()
-                        .selector(p -> PlayerState.get((Player)p).getLevelCap() >= reqLevelCap
+                        .selector(p -> PlayerState.get((Player)p).getLevelCap() >= tmd.getRequiredLevelCap(tm.getData((Player)p).getCurrentSeries())
                             && !this.wasDefeatedBy(p.getUUID())
                             && !this.wasVictoriousAgainst(p.getUUID())),
                     this, this.getBoundingBox().inflate(MAX_PLAYER_TRACKING_RANGE))
                 .stream()
-                    .min((p1, p2) -> Integer.compare(Math.abs(tm.getPlayerLevel(p1) - reqLevelCap), Math.abs(tm.getPlayerLevel(p2) - reqLevelCap)))
+                    .min((p1, p2) -> Integer.compare(Math.abs(tm.getPlayerLevel(p1) - tmd.getRequiredLevelCap(tm.getData((Player)p1).getCurrentSeries())), Math.abs(tm.getPlayerLevel(p2) - tmd.getRequiredLevelCap(tm.getData((Player)p2).getCurrentSeries()))))
                     .orElse(null));
         }
     }
