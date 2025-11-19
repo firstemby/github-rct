@@ -4,9 +4,8 @@
 
 **Added:**
 
-- *#346* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series
-- *#345* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer
-- *#344* Server config and series property `maxTrainerLevel`: Configure max supported pokemon level for trainers and players (TODO)
+- *#345* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
+- *#344* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
 
 **Changed:**
 

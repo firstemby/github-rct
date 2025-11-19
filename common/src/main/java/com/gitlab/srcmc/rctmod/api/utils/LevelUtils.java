@@ -43,6 +43,6 @@ public class LevelUtils {
     }
 
     public static int maxLevel() {
-        return 100;
+        return 100; // TODO: > 100 requires updated version of rctapi
     }
 }
