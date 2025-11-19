@@ -54,7 +54,7 @@ public final class PlantUML {
         + "legend top left\n"
         + "<b>Legend</b>\n"
         + "\n"
-        + "<back:#lightblue> Required </back> <back:#orange> Optional </back> <back:#lightgray> Defeated </back>\n"
+        + "<back:lightblue> Required </back> <back:orange> Optional </back> <back:lightgray> Defeated </back>\n"
         + "endlegend\n";
 
 

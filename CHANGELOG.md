@@ -4,19 +4,21 @@
 
 **Added:**
 
-- *#344* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series
-- *#343* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer
-- *#342* Server config and series property `maxTrainerLevel`: Configure max supported pokemon level for trainers and players (TODO)
+- *#346* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series
+- *#345* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer
+- *#344* Server config and series property `maxTrainerLevel`: Configure max supported pokemon level for trainers and players (TODO)
 
 **Changed:**
 
-- *#341* Removed "Ancient Origin Ball" from trainer loot tables (TODO)
-- *#340* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
-- *#339* `rctmod trainer get required_level_cap` and `get reward_level_cap` commands now require a `<seriesId>` parameter
+- *#343* Removed "Ancient Origin Ball" from trainer loot tables (TODO)
+- *#342* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#341* `rctmod trainer get required_level_cap` and `get reward_level_cap` commands now require a `<seriesId>` parameter
 
 **Fixed:**
 
-- *#338* Omitting (optional) `title` or `description` in series metadata causing a crash
+- *#340* Adjusted displayed level caps in various locations (e.g. trainer card) to better reflect the actual progression for a player
+- *#339* Omitting (optional) `title` or `description` in series metadata causing a crash
+- *#338* Visual bug in legend of generated progression graphs for series (plantuml)
 
 ## [0.16.10-beta] - 2025-10-16
 
