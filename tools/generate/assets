@@ -5,6 +5,7 @@ rm -rf "common/src/main/resources/data/rctmod/advancement"
 rm -rf "common/src/main/resources/data/rctmod/dialog"
 rm -rf "common/src/main/resources/data/rctmod/loot_table/trainers/groups"
 rm -rf "common/src/main/resources/data/rctmod/loot_table/trainers/single"
+# rm -rf "common/src/main/resources/data/rctmod/loot_table/generic" # these are not generated
 rm -rf "common/src/main/resources/data/rctmod/mobs"
 rm -rf "common/src/main/resources/data/rctmod/recipe"
 rm -rf "common/src/main/resources/data/rctmod/series"
@@ -12,6 +13,10 @@ rm -rf "common/src/main/resources/data/rctmod/trainer_types"
 
 # see https://gitlab.com/srcmc/rct/spreadsheets for more info
 curl -s -S "https://gitlab.com/srcmc/rct/spreadsheets/-/raw/master/jcy.all.yaml" | jcy -out "common/src/main/resources"
+
+# install latest versions of required tools
+# go install gitlab.com/srcmc/rct/rctltp/cmd/rctltp@latest
+# go install gitlab.com/srcgo/jcy/cmd/jcy@latest
 
 rctltp -out "common/src/main/resources/data/rctmod/loot_table" \
   -sheet_url_items "https://gitlab.com/srcmc/rct/spreadsheets/-/raw/master/spreadsheet/loot_tables.csv" \

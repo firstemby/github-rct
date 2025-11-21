@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.16.11-beta] - 2025-11-19
+## [0.16.11-beta] - 2025-11-21
 
 **Added:**
 
@@ -9,8 +9,8 @@
 
 **Changed:**
 
-- *#343* Removed "Ancient Origin Ball" from trainer loot tables (TODO)
-- *#342* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#343* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#342* Trainers (that have the appropriate loot table) may now only drop an `Ancient Origin Ball` after their first defeat and is only possible to drop from trainers with pokemon at or above level `50` (item was originally considered to be removed)
 - *#341* `rctmod trainer get required_level_cap` and `get reward_level_cap` commands now require a `<seriesId>` parameter
 
 **Fixed:**

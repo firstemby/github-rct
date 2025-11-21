@@ -8,7 +8,21 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cobblemon:ancient_origin_ball"
+          "name": "cobblemon:ancient_origin_ball",
+          "conditions": [
+            {
+              "condition": "rctmod:level_range",
+              "range": {
+                "min": 50,
+                "max": 100
+              }
+            },
+            {
+              "condition": "rctmod:defeat_count",
+              "comparator": "==",
+              "count": 1
+            }
+          ]
         },
         {
           "type": "minecraft:item",
