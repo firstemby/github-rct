@@ -6,15 +6,16 @@ Note that the latest `0.16` version only supports Cobblemon `1.6`. Version `0.17
 
 **Added:**
 
-- *#347* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
-- *#346* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
+- *#348* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
+- *#347* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
 
 **Changed:**
 
-- *#345* Commands `trainer get required/reward_level_cap` now require a player selector argument
-- *#344* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
-- *#343* Replaced some log errors with warnings
-- *#342* Trainers (that have the appropriate loot table) may now only drop an `Ancient Origin Ball` after their first defeat and is only possible to drop from trainers with pokemon at or above level `50` (item was originally considered to be removed)
+- *#346* Commands `trainer get required/reward_level_cap` now require a player selector argument
+- *#345* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#344* Replaced some log errors with warnings
+- *#343* Trainers (that have the appropriate loot table) may now only drop an `Ancient Origin Ball` after their first defeat and is only possible to drop from trainers with pokemon at or above level `50` (item was originally considered to be removed)
+- *#342* Trainers will no longer refuse battles against players with a lower level cap than the trainer level (they will still refuse for the other reasons, e.g. carrying pokemon above the level cap or missing defeats against other trainers)
 
 **Fixed:**
 
