@@ -20,7 +20,7 @@ package com.gitlab.srcmc.rctmod.api;
 import java.util.List;
 import java.util.function.Supplier;
 
-import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.battles.BattleRegistry;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerPlayer;
 import com.gitlab.srcmc.rctmod.ModCommon;
@@ -110,7 +110,7 @@ public final class RCTMod {
         var opp = (ServerPlayer)mob.getOpponent();
 
         if(opp != null) {
-            var battle = Cobblemon.INSTANCE.getBattleRegistry().getBattleByParticipatingPlayer(opp);
+            var battle = BattleRegistry.getBattleByParticipatingPlayer(opp);
 
             if(battle == null) {
                 ModCommon.LOG.warn(String.format("Player '%s' is not in a battle", opp.getDisplayName().getString()));
@@ -121,7 +121,7 @@ public final class RCTMod {
     }
 
     public boolean isInBattle(Player player) {
-        return Cobblemon.INSTANCE.getBattleRegistry().getBattleByParticipatingPlayerId(player.getUUID()) != null;
+        return BattleRegistry.getBattleByParticipatingPlayerId(player.getUUID()) != null;
     }
 
     public static RCTMod getInstance() {

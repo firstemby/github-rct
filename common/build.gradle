@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "2.0.0"
+    id "org.jetbrains.kotlin.jvm" version "2.2.20"
 }
 
 loom {
@@ -23,13 +23,13 @@ dependencies {
 
     modApi "com.cobblemon:mod:$rootProject.cobblemon_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_stdlib_version"
 
     // modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-common:${fcap_version}"
     compileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:$rootProject.fcap_version"//source: https://github.com/Fuzss/forgeconfigapiport-fabric
 
     // Radical Cobblemon Trainers API
-    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_common_version}"
-    // modImplementation files("../tmp/libs/rctapi-common-1.21.1-${rctapi_min_version}.jar") // testing
+    // modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_common_version}"
+    modImplementation files("../tmp/libs/rctapi-common-1.21.1-${rctapi_min_version}.jar") // testing
 }

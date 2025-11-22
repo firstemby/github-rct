@@ -1,6 +1,11 @@
 # Changelog
 
-Note that the latest `0.16` version only supports Cobblemon `1.6`. Version `0.17` is coming soon.
+## [0.17.0-beta] - 2025-11-17
+
+**Changed:**
+
+- *#339* Update min dependency of Cobblemon to `1.7.0`
+- *#338* Update min dependency of RCTApi to `0.14.0-beta`
 
 ## [0.16.11-beta] - 2025-11-22
 

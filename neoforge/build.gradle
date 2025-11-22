@@ -1,6 +1,6 @@
 plugins {
     id 'com.github.johnrengelman.shadow'
-    id "org.jetbrains.kotlin.jvm" version "2.0.0"
+    id "org.jetbrains.kotlin.jvm" version "2.2.20"
 }
 
 architectury {
@@ -46,14 +46,14 @@ dependencies {
 
     modImplementation "com.cobblemon:neoforge:$rootProject.cobblemon_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
     // Radical Cobblemon Trainers API
-    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_neoforge_version}"
-    // modImplementation files("../tmp/libs/rctapi-neoforge-1.21.1-${rctapi_min_version}.jar") // testing
+    // modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_neoforge_version}"
+    modImplementation files("../tmp/libs/rctapi-neoforge-1.21.1-${rctapi_min_version}.jar") // testing
 
     // Carry On (testing)
     // runtimeOnly "curse.maven:carry-on-274259:5649344"
