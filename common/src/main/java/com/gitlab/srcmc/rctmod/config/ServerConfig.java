@@ -220,20 +220,20 @@ public class ServerConfig implements IServerConfig {
         this.forceBattleMaxDistanceValue = builder
             .comment(SEPARATOR,
                 "Max distance in blocks at which trainers may start a battle on sight.")
-            .defineInRange("forceBattleMaxDistance", IServerConfig.super.forceBattleMaxDistance(), 1, 32);
+            .defineInRange("forceBattleMaxDistance", IServerConfig.super.forceBattleMaxDistance(), 0, 32);
 
         this.forceBattleLookTicksValue = builder
             .comment(SEPARATOR,
                 "Number of ticks a trainer and player need to stare at each other to initiate a battle.",
                 "Setting this to a very large number effectively disables this features but trainers",
                 "will behave slightly different.")
-            .defineInRange("forceBattleLookTicks", IServerConfig.super.forceBattleLookTicks(), 1, Integer.MAX_VALUE - 1);
+            .defineInRange("forceBattleLookTicks", IServerConfig.super.forceBattleLookTicks(), 0, Integer.MAX_VALUE - 1);
 
         this.forceBattleMaxLevelDiffValue = builder
             .comment(SEPARATOR,
                 "Maximum level difference between the strongest pokemon of a trainer and a player to",
                 "allow the trainer to force a battle.")
-            .defineInRange("forceBattleMaxLevelDiff", IServerConfig.super.forceBattleMaxLevelDiff(), 1, Integer.MAX_VALUE - 1);
+            .defineInRange("forceBattleMaxLevelDiff", IServerConfig.super.forceBattleMaxLevelDiff(), 0, Integer.MAX_VALUE - 1);
 
         builder.pop();
         builder.push("Players");

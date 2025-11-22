@@ -149,6 +149,18 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public Optional<Integer> getRelativeLevelCap() {
+        if(this.relativeLevelCap.has()) {
+            var v = this.relativeLevelCap.get();
+
+            if(v < 1) { // TODO: constants for config ranges
+                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [1, inf) got %d", this.trainerId, v));
+                this.relativeLevelCap = Optional.of(1);
+            } else if(v > 100) {
+                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [1, inf) got %d", this.trainerId, v));
+                this.relativeLevelCap = Optional.of(100);
+            }
+        }
+
         return this.relativeLevelCap;
     }
 
@@ -217,14 +229,44 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public Optional<Float> getForceBattleMaxDistance() {
+        if(this.forceBattleMaxDistance.has()) {
+            var v = this.forceBattleMaxDistance.get();
+
+            if(v < 0) { // TODO: constants for config ranges
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [0, 32] got %.2f", this.trainerId, v));
+                this.forceBattleMaxDistance = Optional.of(0f);
+            } else if(v > 32) {
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [0, 32] got %.2f", this.trainerId, v));
+                this.forceBattleMaxDistance = Optional.of(32f);
+            }
+        }
+
         return this.forceBattleMaxDistance;
     }
 
     public Optional<Integer> getForceBattleLookTicks() {
+        if(this.forceBattleLookTicks.has()) {
+            var v = this.forceBattleLookTicks.get();
+
+            if(v < 0) { // TODO: constants for config ranges
+                ModCommon.LOG.warn(String.format("invalid forceBattleLookTicks for '%s': expected range is [0, inf) got %d", this.trainerId, v));
+                this.forceBattleLookTicks = Optional.of(0);
+            }
+        }
+
         return this.forceBattleLookTicks;
     }
 
     public Optional<Integer> getForceBattleMaxLevelDiff() {
+        if(this.forceBattleMaxLevelDiff.has()) {
+            var v = this.forceBattleMaxLevelDiff.get();
+
+            if(v < 0) { // TODO: constants for config ranges
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxLevelDiff for '%s': expected range is [1, inf) got %d", this.trainerId, v));
+                this.forceBattleMaxLevelDiff = Optional.of(0);
+            }
+        }
+
         return this.forceBattleMaxLevelDiff;
     }
 

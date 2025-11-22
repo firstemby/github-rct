@@ -62,4 +62,21 @@ public record SeriesMetaData(Text title, Text description, int difficulty, Optio
         var c = Integer.compare(this.difficulty, other.difficulty);
         return c == 0 ? this.title.compareTo(other.title) : c;
     }
+
+    public Optional<Integer> initialLevelCap() {
+        if(this.initialLevelCap.has()) {
+            var v = this.initialLevelCap.get();
+
+            if(v < 0) { // TODO: constants for config ranges
+                // TODO: This might spam the log! Come up with a caching strategy (switch to class?)
+                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [1, 100] got %d", this.title, v));
+                return Optional.of(1);
+            } else if(v > 100) {
+                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [1, 100] got %d", this.title, v));
+                return Optional.of(100);
+            }
+        }
+        
+        return this.initialLevelCap;
+    }
 }

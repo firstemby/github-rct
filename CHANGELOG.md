@@ -4,17 +4,21 @@
 
 **Added:**
 
-- *#356* Config option `forceBattleLookTicks`: Number of ticks a player needs to stare at a trainer to get forced into a battle
-- *#355* Config option `forceBattleMaxDistance`: Max distance at which trainers can force players into a battle
-- *#354* Config option `forceBattleMaxLevelDiff`: Maximum level difference between a trainers and players to allow forced battles
-- *#353* Config option `forceBattleOnSight`: Determines if trainers can force players into a battle on sight
-- *#352* New properties for data pack trainer mobs `forceBattleOnSight`, `forceBattleMaxDistance`, `forceBattleLookTicks` and `forceBattleMaxLevelDiff` (these will take precedence over the global config values if set for a trainer)
+- *#357* Config option `forceBattleLookTicks`: Number of ticks a player needs to stare at a trainer to get forced into a battle
+- *#356* Config option `forceBattleMaxDistance`: Max distance at which trainers can force players into a battle
+- *#355* Config option `forceBattleMaxLevelDiff`: Maximum level difference between a trainers and players to allow forced battles
+- *#354* Config option `forceBattleOnSight`: Determines if trainers can force players into a battle on sight
+- *#353* New properties for data pack trainer mobs `forceBattleOnSight`, `forceBattleMaxDistance`, `forceBattleLookTicks` and `forceBattleMaxLevelDiff` (these will take precedence over the global config values if set for a trainer)
 
 **Changed:**
 
-- *#351* Trainers may now force players into a battle if directly looked at for a certain amount of time (see added config options)
-- *#350* Update min dependency of Cobblemon to `1.7.0`
-- *#349* Update min dependency of RCTApi to `0.14.0-beta`
+- *#352* Trainers may now force players into a battle if directly looked at for a certain amount of time (see added config options)
+- *#351* Update min dependency of Cobblemon to `1.7.0`
+- *#350* Update min dependency of RCTApi to `0.14.0-beta`
+
+**Fixed:**
+
+- *#349* Missing validation of some trainer mob properties when parsed from data pack json objects (issues are generally printed as warnings to the log)
 
 ## [0.16.11-beta] - 2025-11-22
 

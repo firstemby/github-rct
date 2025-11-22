@@ -220,7 +220,7 @@ public interface IServerConfig extends IModConfig {
      * battle. Setting this to a very large number effectively disables this features
      * but trainers will behave slightly different.
      * 
-     * range [1, inf)
+     * range [0, inf)
      * default: 60
      */
     default int forceBattleLookTicks() { return 60; }
@@ -229,7 +229,7 @@ public interface IServerConfig extends IModConfig {
      * Maximum level difference between the strongest pokemon of a trainer and a player
      * to allow the trainer to force a battle.
      * 
-     * range [1, inf)
+     * range [0, inf)
      * default: 16
      */
     default int forceBattleMaxLevelDiff() { return 16; }
