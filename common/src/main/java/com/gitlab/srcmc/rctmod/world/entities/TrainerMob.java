@@ -373,7 +373,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 this.udpateCustomName();
             } else {
                 var text = Text.translatable(LangKeys.COMMANDS_ERRORS_INVALID_TRAINER_ID);
-                ModCommon.LOG.error(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString()).getString());
+                ModCommon.LOG.warn(text.getComponent(trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString()).getString());
                 ChatUtils.broadcastError(this.getServer(), text, 2, trainerId, this.getStringUUID(), this.blockPosition().toShortString(), this.level().dimension().location().toString());
             }
         } catch(IllegalArgumentException e) {

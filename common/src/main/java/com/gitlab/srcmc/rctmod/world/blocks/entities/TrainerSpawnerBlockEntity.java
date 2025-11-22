@@ -147,7 +147,7 @@ public class TrainerSpawnerBlockEntity extends BlockEntity {
                     var rl = ResourceLocation.parse(renderItemKey);
 
                     if(!BuiltInRegistries.ITEM.containsKey(rl)) {
-                        ModCommon.LOG.error(String.format("Invalid Trainer Spawner item for '%s': %s", tid, rl.toString()));
+                        ModCommon.LOG.warn(String.format("Invalid Trainer Spawner item for '%s': %s", tid, rl.toString()));
                     } else {
                         var item = BuiltInRegistries.ITEM.get(rl);
                         this.renderItems.add(item);

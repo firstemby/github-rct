@@ -180,8 +180,7 @@ public class TrainerManager extends DataPackManager {
                     newTrainer.setEntity(oldTrainer.getEntity());
                 }
             } catch(RCTException errors) {
-                ModCommon.LOG.error("Model validation failure for '" + trainerId + "'");
-                errors.getErrors().forEach(error -> ModCommon.LOG.error(error.message));
+                ModCommon.LOG.warn("Model validation failure for '" + trainerId + "'" + errors.getErrors().stream().map(e -> e.message).reduce("", (a, b) -> a + "\n  " + b));
             } catch(Exception e) {
                 // this.trainerMobs.remove(trainerId); // not that it really matters at this point
                 ModCommon.LOG.error("Failed to register trainer '" + trainerId + "'", e);

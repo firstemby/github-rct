@@ -62,13 +62,13 @@ public final class ChatUtils {
                     target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
                     return;
                 } else {
-                    ModCommon.LOG.error(String.format("Empty dialog context '%s'", context));
+                    ModCommon.LOG.warn(String.format("Empty dialog context '%s'", context));
                     return;
                 }
             }
         }
 
-        ModCommon.LOG.error(String.format("Invalid dialog contexts '%s'", String.valueOf(contexts)));
+        ModCommon.LOG.warn(String.format("Invalid dialog contexts '%s'", String.valueOf(contexts)));
     }
 
     public static void replyRaw(LivingEntity source, Player target, Text text, Object... args) {

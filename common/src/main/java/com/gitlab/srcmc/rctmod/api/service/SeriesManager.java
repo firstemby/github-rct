@@ -89,7 +89,7 @@ public class SeriesManager implements Serializable {
             }
             
             if(seriesGraphs.put(sid, new SeriesGraph(tm.loadSeries(sid).get())) != null) {
-                ModCommon.LOG.error(String.format("duplicate series '%s'", sid));
+                ModCommon.LOG.warn(String.format("duplicate series '%s'", sid));
             }
         });
 

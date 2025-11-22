@@ -91,9 +91,9 @@ public final class RCTMod {
             var trNPC = reg.getById(mob.getTrainerId(), TrainerNPC.class);
 
             if(trPlayer == null) {
-                ModCommon.LOG.error("Failed to start battle: No trainer registered for player '" + player.getDisplayName().getString() + "'");
+                ModCommon.LOG.warn("Failed to start battle: No trainer registered for player '" + player.getDisplayName().getString() + "'");
             } else if(trNPC == null) {
-                ModCommon.LOG.error("Failed to start battle: No trainer registered for mob '" + mob.getDisplayName().getString() + "'");
+                ModCommon.LOG.warn("Failed to start battle: No trainer registered for mob '" + mob.getDisplayName().getString() + "'");
             } else {
                 var team = RCTMod.getInstance().getTrainerManager().getData(mob).getTrainerTeam();
                 trNPC.setEntity(mob); // safety measure to prevent a battle against entities in unloaded chunks
@@ -113,7 +113,7 @@ public final class RCTMod {
             var battle = Cobblemon.INSTANCE.getBattleRegistry().getBattleByParticipatingPlayer(opp);
 
             if(battle == null) {
-                ModCommon.LOG.error(String.format("Player '%s' is not in a battle", opp.getDisplayName().getString()));
+                ModCommon.LOG.warn(String.format("Player '%s' is not in a battle", opp.getDisplayName().getString()));
             } else {
                 battle.stop();
             }

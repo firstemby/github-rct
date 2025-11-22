@@ -4,13 +4,14 @@
 
 **Added:**
 
-- *#346* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
-- *#345* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
+- *#347* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
+- *#346* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
 
 **Changed:**
 
-- *#344* Commands `trainer get required/reward_level_cap` now require a player selector argument
-- *#343* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#345* Commands `trainer get required/reward_level_cap` now require a player selector argument
+- *#344* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
+- *#343* Replaced some log errors with warnings
 - *#342* Trainers (that have the appropriate loot table) may now only drop an `Ancient Origin Ball` after their first defeat and is only possible to drop from trainers with pokemon at or above level `50` (item was originally considered to be removed)
 
 **Fixed:**

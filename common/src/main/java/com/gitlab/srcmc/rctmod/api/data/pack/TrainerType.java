@@ -48,7 +48,7 @@ public class TrainerType implements Serializable {
         trainerType.id = id;
         
         if(REGISTRY.put(id, trainerType) != null) {
-            ModCommon.LOG.error("duplicate trainer types '" + trainerType.id() + "'");
+            ModCommon.LOG.warn("duplicate trainer types '" + trainerType.id() + "'");
         }
     }
 
