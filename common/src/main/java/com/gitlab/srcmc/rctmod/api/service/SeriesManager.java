@@ -115,7 +115,7 @@ public class SeriesManager implements Serializable {
             seriesIds.forEach(sid -> {
                 var sg = seriesGraphs.get(sid);
                 var st = e.getValue().getSubstitutes();
-                var rd = e.getValue().getRequiredDefeats();
+                var rd = e.getValue().getRequiredDefeats(sid);
                 var nd = sg.map.get(e.getKey());
 
                 st.forEach(tid -> {

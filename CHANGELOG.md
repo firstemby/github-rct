@@ -1,21 +1,22 @@
 # Changelog
 
-## [0.16.11-beta] - 2025-11-21
+## [0.16.11-beta] - 2025-11-22
 
 **Added:**
 
-- *#345* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
-- *#344* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
+- *#346* Data pack property `initialLevelCap` and `relativeLevelCap` to series: Overwrites the config value for that series if set
+- *#345* Data pack property `relativeLevelCap` to trainer mobs: Overwrites the config value and series property for that trainer if set
 
 **Changed:**
 
+- *#344* Commands `trainer get required/reward_level_cap` now require a player selector argument
 - *#343* Renamed server config `additiveLevelCapRequirement` -> `relativeLevelCap` (**the option will reset to its default value `0`**)
 - *#342* Trainers (that have the appropriate loot table) may now only drop an `Ancient Origin Ball` after their first defeat and is only possible to drop from trainers with pokemon at or above level `50` (item was originally considered to be removed)
-- *#341* `rctmod trainer get required_level_cap` and `get reward_level_cap` commands now require a `<seriesId>` parameter
 
 **Fixed:**
 
-- *#340* Adjusted displayed level caps in various locations (e.g. trainer card) to better reflect the actual progression for a player
+- *#341* Adjusted displayed level caps in various locations (e.g. trainer card) to better reflect the actual progression for a player
+- *#340* Inconsistencies if trainers depend on others from different series (these dependencies are now ignored and a warning is printed to the log)
 - *#339* Omitting (optional) `title` or `description` in series metadata causing a crash
 - *#338* Visual bug in legend of generated progression graphs for series (plantuml)
 

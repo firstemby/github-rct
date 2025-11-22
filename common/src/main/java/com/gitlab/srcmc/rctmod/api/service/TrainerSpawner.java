@@ -689,7 +689,7 @@ public class TrainerSpawner {
         var config = RCTMod.getInstance().getServerConfig();
         var tm = RCTMod.getInstance().getTrainerManager();
         var playerLevel = tm.getPlayerLevel(player);
-        var reqLevelCap = mobTr.getRequiredLevelCap(ps.getCurrentSeries());
+        var reqLevelCap = mobTr.getRequiredLevelCap(player);
         var levelCap = ps.getLevelCap();
         var chance = TRAINER_DIRECT_SPAWN_CHANCE;
 
@@ -711,7 +711,7 @@ public class TrainerSpawner {
         var config = RCTMod.getInstance().getServerConfig();
         var tm = RCTMod.getInstance().getTrainerManager();
         var playerLevel = tm.getPlayerLevel(player);
-        var reqLevelCap = mobTr.getRequiredLevelCap(ps.getCurrentSeries());
+        var reqLevelCap = mobTr.getRequiredLevelCap(player);
         var levelCap = ps.getLevelCap();
         var keyTrainerFactor = 1f;
         var isKey = ps.isKeyTrainer(trainerId);

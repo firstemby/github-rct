@@ -44,7 +44,6 @@ public class TrainerPlayerData extends SavedData {
     private String currentSeries = "";
     private String previousSeries = "";
     private Player player;
-    private int levelCap;
     private boolean currentSeriesCompleted;
 
     public TrainerPlayerData(Player player) {
@@ -57,33 +56,11 @@ public class TrainerPlayerData extends SavedData {
     }
 
     public int getLevelCap() {
-        if(RCTMod.getInstance().getTrainerManager().updateRequired(this.player)) {
-            this.updateLevelCap();
-        }
-
-        return this.levelCap;
+        return LevelUtils.levelCap(this.player);
     }
 
-    private void updateLevelCap() {
-        if(this.isSeriesCompleted()) {
-            this.levelCap = LevelUtils.maxLevel();
-        } else {
-            this.levelCap = Math.max(RCTMod.getInstance().getTrainerManager().getMinRequiredLevelCap(this.getCurrentSeries()), Math.min(LevelUtils.maxLevel(), LevelUtils.initialLevelCap(this.getCurrentSeries()) + LevelUtils.relativeLevelCap(this.getCurrentSeries())));
-            this.defeatedTrainerIds.forEach(this::updateLevelCap);
-        }
-
-        PlayerState.get(this.player).setLevelCap(this.levelCap);
-    }
-
-    private void updateLevelCap(String trainerId) {
-        if(this.isSeriesCompleted()) {
-            this.levelCap = LevelUtils.maxLevel();
-        } else {
-            var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
-            this.levelCap = Math.max(this.levelCap, Math.max(1, Math.min(LevelUtils.maxLevel(), Math.max(tmd.getRequiredLevelCap(this.currentSeries), tmd.getRewardLevelCap(this.currentSeries)))));
-        }
-
-        PlayerState.get(this.player).setLevelCap(this.levelCap);
+    public void updateLevelCap() {
+        PlayerState.get(this.player).setLevelCap(this.getLevelCap());
     }
 
     public Set<String> getDefeatedTrainerIds() {
@@ -120,8 +97,8 @@ public class TrainerPlayerData extends SavedData {
 
             Stream.concat(Stream.of(node), node.siblings()).filter(tn -> !tn.isAlone()).forEach(tn -> {
                 if(this.defeatedTrainerIds.add(tn.id())) {
-                    this.updateLevelCap(tn.id());
                     ps.addProgressDefeat(tn.id());
+                    this.updateLevelCap();
                     this.updateCurrentSeries();
                     this.setDirty();
                     updated[0] = true;
@@ -142,8 +119,8 @@ public class TrainerPlayerData extends SavedData {
 
             Stream.concat(Stream.of(node), node.siblings()).forEach(tn -> {
                 if(this.defeatedTrainerIds.remove(tn.id())) {
-                    this.updateLevelCap();
                     ps.removeProgressDefeat(tn.id());
+                    this.updateLevelCap();
                     this.setDirty();
                     updated[0] = true;
                 }
@@ -164,10 +141,10 @@ public class TrainerPlayerData extends SavedData {
     protected boolean removeProgressDefeats(boolean forceUpdate) {
         if(forceUpdate || this.defeatedTrainerIds.size() > 0) {
             var ps = PlayerState.get(this.player);
+            ps.removeProgressDefeats();
             this.defeatedTrainerIds.clear();
             this.currentSeriesCompleted = false;
             this.updateLevelCap();
-            ps.removeProgressDefeats();
             this.setDirty();
             return true;
         }
@@ -310,7 +287,7 @@ public class TrainerPlayerData extends SavedData {
 
     public void sync() {
         var ps = PlayerState.get(this.player);
-        ps.setLevelCap(this.levelCap);
+        ps.setLevelCap(this.getLevelCap());
         ps.setCurrentSeries(this.currentSeries);
         this.defeatedTrainerIds.forEach(ps::addProgressDefeat);
         RCTMod.getInstance().getTrainerManager().requiresUpdate(this.player);

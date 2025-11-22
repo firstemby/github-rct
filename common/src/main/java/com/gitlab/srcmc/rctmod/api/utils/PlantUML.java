@@ -29,6 +29,8 @@ import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager.SeriesGraph;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager.TrainerNode;
 
+import net.minecraft.world.entity.player.Player;
+
 public final class PlantUML {
     public static final String SERVER_URL = "https://www.plantuml.com/plantuml/svg/";
     private static final String BASE64_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
@@ -61,16 +63,16 @@ public final class PlantUML {
     private static class NodeGroup {
         public final Set<TrainerNode> set = new HashSet<>();
         public final TrainerNode origin;
-        public final String seriesId;
+        public final Player player;
 
-        public NodeGroup(TrainerNode origin, String seriesId) {
+        public NodeGroup(Player player, TrainerNode origin) {
             this.origin = origin;
-            this.seriesId = seriesId;
+            this.player = player;
         }
 
         public int maxRequiredLevelCap() {
             var tm = RCTMod.getInstance().getTrainerManager();
-            return Stream.concat(Stream.of(this.origin), set.stream()).map(tn -> tm.getData(tn.id()).getRequiredLevelCap(this.seriesId)).max(Integer::compare).orElse(LevelUtils.maxLevel());
+            return Stream.concat(Stream.of(this.origin), set.stream()).map(tn -> tm.getData(tn.id()).getRequiredLevelCap(player)).max(Integer::compare).orElse(LevelUtils.maxLevel());
         }
 
         public boolean isOptional() {
@@ -98,11 +100,11 @@ public final class PlantUML {
         // }
     }
 
-    public static String encode(String seriesId, SeriesGraph graph) {
-        return encode(seriesId, graph, Set.of());
+    public static String encode(Player player, String seriesId, SeriesGraph graph) {
+        return encode(player, seriesId, graph, Set.of());
     }
 
-    public static String encode(String seriesId, SeriesGraph graph, Set<String> defeats) {
+    public static String encode(Player player, String seriesId, SeriesGraph graph, Set<String> defeats) {
         var nodes = new HashMap<TrainerNode, NodeGroup>();
         var group = new HashMap<TrainerNode, TrainerNode>();
         var directed = new HashMap<String, Set<String>>();
@@ -116,7 +118,7 @@ public final class PlantUML {
                 node.set.add(tn);
                 group.put(tn, sib.get());
             } else {
-                nodes.put(tn, new NodeGroup(tn, seriesId));
+                nodes.put(tn, new NodeGroup(player, tn));
                 group.put(tn, tn);
             }
         });

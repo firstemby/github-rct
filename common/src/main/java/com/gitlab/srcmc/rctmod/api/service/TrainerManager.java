@@ -43,7 +43,6 @@ import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerBattleMemory;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
-import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.PathUtils;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
@@ -64,8 +63,6 @@ import net.minecraft.world.level.saveddata.SavedData.Factory;
 
 public class TrainerManager extends DataPackManager {
     private Map<String, TrainerMobData> trainerMobs = new HashMap<>();
-    private Map<String, Integer> minRequiredLevelCaps = new HashMap<>();
-    private int globalMinRequiredLevelCap;
     private SeriesManager seriesManager;
 
     private Queue<Thread> payloadUpdateThreads = new ConcurrentLinkedDeque<>();
@@ -79,7 +76,7 @@ public class TrainerManager extends DataPackManager {
     private boolean loading, isReloadedAsDatapack;
     private boolean reloadRequired;
 
-    record Payload(Map<String, TrainerMobData> trainerMobs, Map<String, Integer> minRequiredLevelCaps, int globalMinRequiredLevelCap, SeriesManager seriesManager) implements Serializable {
+    record Payload(Map<String, TrainerMobData> trainerMobs, SeriesManager seriesManager) implements Serializable {
         private static final long serialVersionUID = 0;
     }
 
@@ -121,8 +118,6 @@ public class TrainerManager extends DataPackManager {
             TrainerType.clear();
             Payload pl = BatchedPayloads.TRAINER_MANAGER.from(pls);
             this.trainerMobs = pl.trainerMobs();
-            this.minRequiredLevelCaps = pl.minRequiredLevelCaps();
-            this.globalMinRequiredLevelCap = pl.globalMinRequiredLevelCap();
             this.seriesManager.copyFrom(pl.seriesManager());
             this.payloadUpdateThreads.poll(); // self
 
@@ -144,8 +139,6 @@ public class TrainerManager extends DataPackManager {
     public BatchedPayload.Payload[] toPayloads() {
         return BatchedPayloads.TRAINER_MANAGER.payloads(new Payload(
             this.trainerMobs,
-            this.minRequiredLevelCaps,
-            this.globalMinRequiredLevelCap,
             this.seriesManager));
     }
 
@@ -338,10 +331,6 @@ public class TrainerManager extends DataPackManager {
         return this.receivedUpdates.remove(player);
     }
 
-    public int getMinRequiredLevelCap(String series) {
-        return this.minRequiredLevelCaps.getOrDefault(series, this.globalMinRequiredLevelCap);
-    }
-
     public void loadTrainers() {
         this.forceReload(this.resourceManager);
     }
@@ -377,34 +366,19 @@ public class TrainerManager extends DataPackManager {
                 var tmd2 = newTrainerMobs.get(tid);
 
                 if(tmd2 != null) {
-                    tmd2.addFollowedBy(trainerId);
+                    if(tmd.getSeries().findAny().isEmpty() || tmd.getSeries().anyMatch(tmd2::isOfSeries)) {
+                        tmd2.addFollowedBy(trainerId);
+                    } else {
+                        ModCommon.LOG.warn(String.format("trainer '%s' may not depend on '%s': different series", trainerId, tid));
+                    }
                 }
             });
         });
 
-        this.minRequiredLevelCaps = new HashMap<>();
-        var globalMin = new int[]{Integer.MAX_VALUE};
-
-        newTrainerMobs.values().forEach(tmd -> {
-            if(!tmd.isOptional() && !tmd.getFollowedBy().isEmpty()) {
-                if(tmd.getSeries().findFirst().isEmpty()) {
-                    globalMin[0] = Math.min(globalMin[0], tmd.getRequiredLevelCap(SeriesManager.EMPTY_SERIES_ID));
-                    this.minRequiredLevelCaps.replaceAll((k, v) -> Math.min(globalMin[0], v));
-                } else {
-                    tmd.getSeries().forEach(s -> this.minRequiredLevelCaps.compute(s, (k, v) -> v == null
-                        ? Math.min(globalMin[0], tmd.getRequiredLevelCap(s))
-                        : Math.min(globalMin[0], Math.min(v, tmd.getRequiredLevelCap(s)))));
-                }
-            }
-        });
-
-        var cfg = RCTMod.getInstance().getServerConfig();
-        this.globalMinRequiredLevelCap = globalMin[0] == Integer.MAX_VALUE ? Math.max(1, Math.min(LevelUtils.maxLevel(), cfg.initialLevelCap() + cfg.relativeLevelCap())) : globalMin[0];
         this.trainerMobs = newTrainerMobs;
         this.seriesManager.onLoad(this);
         this.receivedUpdates = new HashSet<>();
-        
-        players.forEach(pl -> this.getData(pl).getLevelCap()); // forces update
+        players.forEach(pl -> this.getData(pl).updateLevelCap());
         this.close();
 
         ModServer.syncTrainerManger(this.server.getPlayerList().getPlayers());

@@ -239,6 +239,10 @@ public class PlayerState implements Serializable {
         }
     }
 
+    public Set<String> getDefeatedTrainerIds() {
+        return Collections.unmodifiableSet(this.defeatedTrainerIds);
+    }
+
     public long getTypeDefeatCount(TrainerType type) {
         return this.getTypeDefeatCount(type, false);
     }
@@ -276,10 +280,11 @@ public class PlayerState implements Serializable {
     }
 
     public boolean canBattle(String trainerId) {
-        var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
+        var tm = RCTMod.getInstance().getTrainerManager();
+        var tmd = tm.getData(trainerId);
 
-        return this.getLevelCap() >= tmd.getRequiredLevelCap(this.getCurrentSeries())
-            && tmd.getMissingRequirements(this.defeatedTrainerIds).findFirst().isEmpty();
+        return this.getLevelCap() >= tmd.getRequiredLevelCap(this.player)
+            && tmd.getMissingRequirements(this.defeatedTrainerIds).filter(tid -> tm.getData(tid).isOfSeries(this.getCurrentSeries())).findFirst().isEmpty();
     }
 
     protected Map<String, Integer> getTrainerDefeatCounts() {

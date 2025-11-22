@@ -17,16 +17,19 @@
  */
 package com.gitlab.srcmc.rctmod.api.utils;
 
+import java.util.Set;
+
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
+import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
+
+import net.minecraft.world.entity.player.Player;
 
 public class LevelUtils {
     public static int initialLevelCap(String seriesId) {
         var ilc = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().initialLevelCap();
         return ilc.has() ? ilc.value() : RCTMod.getInstance().getServerConfig().initialLevelCap();
-    }
-
-    public static int relativeLevelCap(String seriesId) {
-        return relativeLevelCap(seriesId, null);
     }
 
     public static int relativeLevelCap(String seriesId, String trainerId) {
@@ -40,6 +43,35 @@ public class LevelUtils {
 
         var rlc = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().relativeLevelCap();
         return rlc.has() ? rlc.value() : RCTMod.getInstance().getServerConfig().relativeLevelCap();
+    }
+
+    public static int levelCap(Player player) {
+        var sm = RCTMod.getInstance().getSeriesManager();
+        var ps = PlayerState.get(player);
+        var sid = ps.getCurrentSeries();
+        var sg = sm.getGraph(sid).getNext(ps.getDefeatedTrainerIds());
+        var lc = sg.stream()
+            .map(tn -> trainerLevel(sid, tn.id()))
+            .min(Integer::compare)
+            .orElse(SeriesManager.EMPTY_SERIES_ID.equals(sid) ? 1 : LevelUtils.maxLevel());
+
+        return Math.max(initialLevelCap(sid), lc);
+    }
+
+    public static int levelCap(String seriesId, String trainerId) {
+        return Math.max(initialLevelCap(seriesId), trainerLevel(seriesId, trainerId));
+    }
+
+    public static int trainerLevel(String seriesId, String trainerId) {
+        return trainerLevel(seriesId, trainerId, RCTMod.getInstance().getTrainerManager().getData(trainerId));
+    }
+
+    private static int trainerLevel(String seriesId, String trainerId, TrainerMobData tmd) {
+        return Math.max(
+            Math.min(maxLevel(), Math.max(0, tmd.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + relativeLevelCap(seriesId, trainerId))),
+            tmd.getRequiredDefeats(seriesId)
+                .stream().flatMap(Set::stream)
+                .map(tid -> trainerLevel(seriesId, tid)).max(Integer::compare).orElse(0));
     }
 
     public static int maxLevel() {

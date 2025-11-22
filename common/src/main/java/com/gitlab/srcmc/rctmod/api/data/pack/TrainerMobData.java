@@ -35,11 +35,13 @@ import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.Exclude;
 import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 public class TrainerMobData implements IDataPackObject, Serializable {
     private static final long serialVersionUID = 0L;
@@ -119,28 +121,22 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         return this.lazyType.get();
     }
 
-    public int getRewardLevelCap(String seriesId) {
+    public int getRewardLevelCap(Player player) {
         var tm = RCTMod.getInstance().getTrainerManager();
+        var sid = PlayerState.get(player).getCurrentSeries();
+        var rlc = this.getRequiredLevelCap(player);
 
-        return this.getFollowedBy().stream()
-            .map(tid -> tm.getData(tid))
-            .filter(tmd -> !tmd.isOptional() && tmd.isOfSeries(seriesId))
-            .map(tmd -> tmd.getRequiredLevelCap(seriesId))
-            .max(Integer::compare)
-            .orElse(LevelUtils.maxLevel());
+        return this.getFollowedBy()
+            .stream().map(tm::getData)
+            .filter(tmd -> tmd.isOfSeries(sid))
+            .map(tmd -> tmd.getRequiredLevelCap(player))
+            .filter(lc -> lc > rlc)
+            .min(Integer::compare)
+            .orElse(rlc);
     }
 
-    public int getRequiredLevelCap(String seriesId) {
-        var tm = RCTMod.getInstance().getTrainerManager();
-        var prevCap = this.requiredDefeats.stream()
-            .flatMap(Set::stream)
-            .map(tid -> tm.getData(tid))
-            .filter(tmd -> tmd.isOfSeries(seriesId))
-            .map(tmd -> tmd.getRequiredLevelCap(seriesId)) // TODO: cache?
-            .max(Integer::compare)
-            .orElse(LevelUtils.initialLevelCap(seriesId));
-
-        return Math.max(prevCap, Math.min(LevelUtils.maxLevel(), this.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + LevelUtils.relativeLevelCap(seriesId, this.trainerId)));
+    public int getRequiredLevelCap(Player player) {
+        return LevelUtils.levelCap(PlayerState.get(player).getCurrentSeries(), this.trainerId);
     }
 
     public Optional<Integer> getRelativeLevelCap() {
@@ -155,7 +151,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         return this.series.stream();
     }
 
-    public List<Set<String>> getRequiredDefeats() {
+    public List<Set<String>> getRequiredDefeats(String seriesId) {
         return Collections.unmodifiableList(this.requiredDefeats);
     }
 
