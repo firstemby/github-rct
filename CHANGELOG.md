@@ -1,5 +1,7 @@
 # Changelog
 
+Note that the latest `0.16` version only supports Cobblemon `1.6`. Version `0.17` coming soon.
+
 ## [0.16.11-beta] - 2025-11-22
 
 **Added:**
