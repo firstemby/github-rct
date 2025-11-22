@@ -29,7 +29,7 @@ import net.minecraft.world.entity.player.Player;
 public class LevelUtils {
     public static int initialLevelCap(String seriesId) {
         var ilc = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().initialLevelCap();
-        return ilc.has() ? ilc.value() : RCTMod.getInstance().getServerConfig().initialLevelCap();
+        return ilc.has() ? ilc.get() : RCTMod.getInstance().getServerConfig().initialLevelCap();
     }
 
     public static int relativeLevelCap(String seriesId, String trainerId) {
@@ -37,12 +37,12 @@ public class LevelUtils {
             var rlc = RCTMod.getInstance().getTrainerManager().getData(trainerId).getRelativeLevelCap();
 
             if(rlc.has()) {
-                return rlc.value();
+                return rlc.get();
             }
         }
 
         var rlc = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().relativeLevelCap();
-        return rlc.has() ? rlc.value() : RCTMod.getInstance().getServerConfig().relativeLevelCap();
+        return rlc.has() ? rlc.get() : RCTMod.getInstance().getServerConfig().relativeLevelCap();
     }
 
     public static int levelCap(Player player) {

@@ -20,6 +20,7 @@ package com.gitlab.srcmc.rctmod.api.data;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.function.Supplier;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -28,7 +29,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class Optional<T> implements Serializable {
+public class Optional<T> implements Supplier<T>, Serializable {
     private static final long serialVersionUID = 0;
 
     private final T value;
@@ -41,7 +42,7 @@ public class Optional<T> implements Serializable {
         return this.value != null;
     }
 
-    public T value() {
+    public T get() {
         return this.value;
     }
 
@@ -66,7 +67,7 @@ public class Optional<T> implements Serializable {
 
         @Override
         public JsonElement serialize(Optional<?> src, Type typeOfSrc, JsonSerializationContext context) {
-            return context.serialize(src.value());
+            return context.serialize(src.get());
         }
     }
 }
