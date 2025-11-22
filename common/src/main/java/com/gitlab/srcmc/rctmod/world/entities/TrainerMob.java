@@ -35,6 +35,7 @@ import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
+import com.gitlab.srcmc.rctmod.world.entities.goals.ForceIntoBattleGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.ForcedStrollAwayGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.LookAtPlayerAndWaitGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.MoveCloseToTargetGoal;
@@ -192,6 +193,22 @@ public class TrainerMob extends PathfinderMob implements Npc {
         } else {
             ModCommon.LOG.warn(String.format("attempt to start battle against '%s' with proxy '%s' for '%s'", this.getDisplayName().getString(), player.getDisplayName().getString(), realPlayer != null ? realPlayer.getDisplayName().getString() : player.getStringUUID()));
         }
+    }
+
+    public int getForceBattleLookTicks() {
+        return RCTMod.getInstance().getServerConfig().forceBattleLookTicks(); // TODO: trainer property may overwrite
+    }
+
+    public float getForceBattleChance() {
+        return RCTMod.getInstance().getServerConfig().forceBattleOnSight() ? 1f : 0f; // TODO: trainer property may overwrite
+    }
+
+    public float getForceBattleMaxDistance() {
+        return RCTMod.getInstance().getServerConfig().forceBattleMaxDistance(); // TODO: trainer property may overwrite
+    }
+
+    public int getForceBattleMaxLevelDiff() {
+        return RCTMod.getInstance().getServerConfig().forceBattleMaxLevelDiff(); // TODO: trainer property may overwrite
     }
 
     protected void replyTo(Player player) {
@@ -728,29 +745,31 @@ public class TrainerMob extends PathfinderMob implements Npc {
     @Override
     protected void registerGoals() {
         var maxTrackingDistance = 2*RCTMod.getInstance().getServerConfig().maxHorizontalDistanceToPlayers();
+        var i = 0;
 
         this.getNavigation().setCanFloat(true);
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(0, new PokemonBattleGoal(this));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Zombie>(this, Zombie.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Evoker>(this, Evoker.class, 12.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Vindicator>(this, Vindicator.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Vex>(this, Vex.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Pillager>(this, Pillager.class, 15.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Illusioner>(this, Illusioner.class, 12.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<Zoglin>(this, Zoglin.class, 10.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(2, new PanicGoal(this, 0.5));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 0.35, item -> item.is(ModRegistries.Items.TRAINER_CARD.get()), false));
-        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2.0F, 0.04F, 160, 600));
-        this.goalSelector.addGoal(4, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4.0F, 0.004F, 80, 300));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8.0F));
-        this.goalSelector.addGoal(5, new MoveToHomePosGoal(this));
-        this.goalSelector.addGoal(6, new ForcedStrollAwayGoal(this, 0.35));
-        this.goalSelector.addGoal(7, new RandomWaitGoal(this));
-        this.goalSelector.addGoal(8, new MoveCloseToTargetGoal(this, 0.35, maxTrackingDistance));
-        this.goalSelector.addGoal(9, new RandomStrollThroughVillageGoal(this, 0.35f, p -> this.wasExhausted() ? p * 0.25f : p * 0.75f));
-        this.goalSelector.addGoal(10, new RandomStrollAwayGoal(this, 0.35));
-        this.goalSelector.addGoal(12, new WaterAvoidingRandomStrollGoal(this, 0.35));
+        this.goalSelector.addGoal(i, new FloatGoal(this));
+        this.goalSelector.addGoal(i++, new PokemonBattleGoal(this));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zombie>(this, Zombie.class, 8.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Evoker>(this, Evoker.class, 12.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vindicator>(this, Vindicator.class, 8.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vex>(this, Vex.class, 8.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Pillager>(this, Pillager.class, 15.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Illusioner>(this, Illusioner.class, 12.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zoglin>(this, Zoglin.class, 10.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i++, new PanicGoal(this, 0.5));
+        this.goalSelector.addGoal(i++, new ForceIntoBattleGoal(this, Player.class));
+        this.goalSelector.addGoal(i++, new TemptGoal(this, 0.35, item -> item.is(ModRegistries.Items.TRAINER_CARD.get()), false));
+        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2.0F, 0.04F, 160, 600));
+        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4.0F, 0.004F, 80, 300));
+        this.goalSelector.addGoal(i++, new LookAtPlayerGoal(this, LivingEntity.class, 8.0F));
+        this.goalSelector.addGoal(i++, new MoveToHomePosGoal(this));
+        this.goalSelector.addGoal(i++, new ForcedStrollAwayGoal(this, 0.35));
+        this.goalSelector.addGoal(i++, new RandomWaitGoal(this));
+        this.goalSelector.addGoal(i++, new MoveCloseToTargetGoal(this, 0.35, maxTrackingDistance));
+        this.goalSelector.addGoal(i++, new RandomStrollThroughVillageGoal(this, 0.35f, p -> this.wasExhausted() ? p * 0.25f : p * 0.75f));
+        this.goalSelector.addGoal(i++, new RandomStrollAwayGoal(this, 0.35));
+        this.goalSelector.addGoal(i++, new WaterAvoidingRandomStrollGoal(this, 0.35));
     }
 
     public boolean isRequiredBy(LivingEntity entity) {

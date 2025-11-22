@@ -105,7 +105,7 @@ public interface IServerConfig extends IModConfig {
      * The min horizontal distance a trainer can spawn from players.
      * 
      * range [1, inf)
-     * default 25
+     * default: 25
      */
     default int minHorizontalDistanceToPlayers() { return 25; }
 
@@ -113,7 +113,7 @@ public interface IServerConfig extends IModConfig {
      * The max horizontal distance a trainer can spawn from players.
      * 
      * range [1, inf)
-     * default 70
+     * default: 70
      */
     default int maxHorizontalDistanceToPlayers() { return 70; }
 
@@ -121,7 +121,7 @@ public interface IServerConfig extends IModConfig {
      * The max vertical distance a trainer can spawn from players.
      * 
      * range [1, inf)
-     * default 30
+     * default: 30
      */
     default int maxVerticalDistanceToPlayers() { return 30; }
 
@@ -132,7 +132,7 @@ public interface IServerConfig extends IModConfig {
      * of a trainer with the same identity within the specified radius instead.
      * 
      * range (-inf, inf)
-     * default 500
+     * default: 500
      */
     default int uniqueTrainerRadius() { return 500; }
 
@@ -140,7 +140,7 @@ public interface IServerConfig extends IModConfig {
      * Spawn cap of trainers per player.
      * 
      * range [0, inf)
-     * default 12
+     * default: 12
      */
     default int maxTrainersPerPlayer() { return 12; }
 
@@ -149,7 +149,7 @@ public interface IServerConfig extends IModConfig {
      * expected player numbers (> 4), for example (|players| + 1)*maxTrainersPerPlayer.
      * 
      * range [0, inf)
-     * default 60
+     * default: 60
      */
     default int maxTrainersTotal() { return 60; }
 
@@ -160,7 +160,7 @@ public interface IServerConfig extends IModConfig {
      * pokemon above the level cap of a player are excluded.
      * 
      * range [0, 100]
-     * default 25
+     * default: 25
      */
     default int maxLevelDiff() { return 25; }
 
@@ -198,6 +198,41 @@ public interface IServerConfig extends IModConfig {
      * default: []
      */
     default List<? extends String> biomeTagWhitelist() { return List.of(); }
+
+    /**
+     * Determines if trainers may force players into a battle if they look at each
+     * other for a certain amount if time.
+     * 
+     * default: true
+     */
+    default boolean forceBattleOnSight() { return true; }
+
+    /**
+     * Max distance in blocks at which trainers may start a battle on sight.
+     * 
+     * range [0, 32]
+     * default: 6
+     */
+    default float forceBattleMaxDistance() { return 8f; }
+
+    /**
+     * Number of ticks a trainer and player need to stare at each other to initiate a
+     * battle. Setting this to a very large number effectively disables this features
+     * but trainers will behave slightly different.
+     * 
+     * range [1, inf)
+     * default: 70
+     */
+    default int forceBattleLookTicks() { return 70; }
+
+    /**
+     * Maximum level difference between the strongest pokemon of a trainer and a player
+     * to allow the trainer to force a battle.
+     * 
+     * range [1, inf)
+     * default: 16
+     */
+    default int forceBattleMaxLevelDiff() { return 16; }
 
     /**
      * Initial level cap of players. Pokemon will not gain any experience if at or

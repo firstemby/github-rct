@@ -1,11 +1,19 @@
 # Changelog
 
-## [0.17.0-beta] - 2025-11-17
+## [0.17.0-beta] - 2025-11-22
+
+**Added:**
+
+- *#355* Config option `forceBattleLookTicks`: Number of ticks a player needs to stare at a trainer to get forced into a battle
+- *#354* Config option `forceBattleMaxDistance`: Max distance at which trainers can force players into a battle
+- *#353* Config option `forceBattleMaxLevelDiff`: Maximum level difference between a trainers and players to allow forced battles
+- *#352* Config option `forceBattleOnSight`: Determines if trainers can force players into a battle on sight
 
 **Changed:**
 
-- *#339* Update min dependency of Cobblemon to `1.7.0`
-- *#338* Update min dependency of RCTApi to `0.14.0-beta`
+- *#351* Trainers may now force players into a battle if directly looked at for a certain amount of time (see added config options)
+- *#350* Update min dependency of Cobblemon to `1.7.0`
+- *#349* Update min dependency of RCTApi to `0.14.0-beta`
 
 ## [0.16.11-beta] - 2025-11-22
 

@@ -63,6 +63,17 @@ public class ServerConfig implements IServerConfig {
     private List<? extends String> biomeTagBlacklistCached;
     private List<? extends String> biomeTagWhitelistCached;
 
+    // trainers
+    private final ConfigValue<Boolean> forceBattleOnSightValue;
+    private final ConfigValue<Double> forceBattleMaxDistanceValue;
+    private final ConfigValue<Integer> forceBattleLookTicksValue;
+    private final ConfigValue<Integer> forceBattleMaxLevelDiffValue;
+
+    private boolean forceBattleOnSightCached;
+    private float forceBattleMaxDistanceCached;
+    private int forceBattleLookTicksCached;
+    private int forceBattleMaxLevelDiffCached;
+
     // players
     private final ConfigValue<Integer> initialLevelCapValue;
     private final ConfigValue<Integer> relativeLevelCapValue;
@@ -198,6 +209,33 @@ public class ServerConfig implements IServerConfig {
             .defineList("biomeTagWhitelist", IServerConfig.super.biomeTagWhitelist(), String::new, element -> true);
 
         builder.pop();
+        builder.push("Trainers");
+
+        this.forceBattleOnSightValue = builder
+            .comment(SEPARATOR,
+                "Determines if trainers may force players into a battle if they look at each other for",
+                "a certain amount if time.")
+            .define("forceBattleOnSight", IServerConfig.super.forceBattleOnSight());
+
+        this.forceBattleMaxDistanceValue = builder
+            .comment(SEPARATOR,
+                "Max distance in blocks at which trainers may start a battle on sight.")
+            .defineInRange("forceBattleMaxDistance", IServerConfig.super.forceBattleMaxDistance(), 1, 32);
+
+        this.forceBattleLookTicksValue = builder
+            .comment(SEPARATOR,
+                "Number of ticks a trainer and player need to stare at each other to initiate a battle.",
+                "Setting this to a very large number effectively disables this features but trainers",
+                "will behave slightly different.")
+            .defineInRange("forceBattleLookTicks", IServerConfig.super.forceBattleLookTicks(), 1, Integer.MAX_VALUE - 1);
+
+        this.forceBattleMaxLevelDiffValue = builder
+            .comment(SEPARATOR,
+                "Maximum level difference between the strongest pokemon of a trainer and a player to",
+                "allow the trainer to force a battle.")
+            .defineInRange("forceBattleMaxLevelDiff", IServerConfig.super.forceBattleMaxLevelDiff(), 1, Integer.MAX_VALUE - 1);
+
+        builder.pop();
         builder.push("Players");
 
         this.initialLevelCapValue = builder
@@ -230,10 +268,11 @@ public class ServerConfig implements IServerConfig {
                 "access to the trade at the trainer association.")
             .define("freeroamRequiresCompletedSeries", IServerConfig.super.freeroamRequiresCompletedSeries());
 
+        // TODO: option is kinda obsolete/confusing
         this.allowOverLevelingValue = builder
             .comment(SEPARATOR,
-                "If enabled the level cap of a players will not prevent their pokemon from gaining experience and leveling up.",
-                "Trainers will still refuse to battle players that carry pokemon above their level cap!")
+                "If enabled the level cap of a players will not prevent their pokemon from gaining experience and leveling up.")
+                /*"Trainers will still refuse to battle players that carry pokemon above their level cap!")*/ // deprecated
             .define("allowOverLeveling", IServerConfig.super.allowOverLeveling());
 
         builder.pop();
@@ -270,6 +309,10 @@ public class ServerConfig implements IServerConfig {
         this.dimensionWhitelistCached = List.copyOf(this.dimensionWhitelistValue.get());
         this.biomeTagBlacklistCached = List.copyOf(this.biomeTagBlacklistValue.get());
         this.biomeTagWhitelistCached = List.copyOf(this.biomeTagWhitelistValue.get());
+        this.forceBattleOnSightCached = this.forceBattleOnSightValue.get();
+        this.forceBattleMaxDistanceCached = this.forceBattleMaxDistanceValue.get().floatValue();
+        this.forceBattleLookTicksCached = this.forceBattleLookTicksValue.get();
+        this.forceBattleMaxLevelDiffCached = this.forceBattleMaxLevelDiffValue.get();
         this.initialLevelCapCached = this.initialLevelCapValue.get();
         this.relativeLevelCapCached = this.relativeLevelCapValue.get();
         this.initialSeriesCached = this.initialSeriesValue.get();
@@ -371,6 +414,26 @@ public class ServerConfig implements IServerConfig {
     @Override
     public List<? extends String> biomeTagWhitelist() {
         return this.biomeTagWhitelistCached;
+    }
+
+    @Override
+    public boolean forceBattleOnSight() {
+        return this.forceBattleOnSightCached;
+    }
+
+    @Override
+    public float forceBattleMaxDistance() {
+        return this.forceBattleMaxDistanceCached;
+    }
+
+    @Override
+    public int forceBattleLookTicks() {
+        return this.forceBattleLookTicksCached;
+    }
+
+    @Override
+    public int forceBattleMaxLevelDiff() {
+        return this.forceBattleMaxLevelDiffCached;
     }
 
     @Override
