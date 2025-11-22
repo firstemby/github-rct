@@ -221,9 +221,9 @@ public interface IServerConfig extends IModConfig {
      * but trainers will behave slightly different.
      * 
      * range [1, inf)
-     * default: 70
+     * default: 60
      */
-    default int forceBattleLookTicks() { return 70; }
+    default int forceBattleLookTicks() { return 60; }
 
     /**
      * Maximum level difference between the strongest pokemon of a trainer and a player

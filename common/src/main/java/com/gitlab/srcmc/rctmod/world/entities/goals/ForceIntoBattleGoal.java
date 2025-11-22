@@ -23,38 +23,65 @@ import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.service.TrainerManager;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.AABB;
 
-public class ForceIntoBattleGoal extends LookAtPlayerGoal {
+public class ForceIntoBattleGoal extends Goal {
     private static final int TIMEOUT_TICKS = 50;
     private static final float CANCEL_PROBABILITY = 0.05f;
+    private static final double BB_HEIGHT = 3;
 
     private int tickOfLastAttempt, tickOfLookAt;
     private TrainerManager tm;
     private TrainerMob mob;
 
+    private final Class<? extends LivingEntity> lookAtType;
+    private Entity lookAt;
+
     public ForceIntoBattleGoal(TrainerMob mob, Class<? extends LivingEntity> clazz) {
-        super(mob, clazz, mob.getForceBattleMaxDistance(), mob.getForceBattleChance());
-        this.tm = RCTMod.getInstance().getTrainerManager();
         this.setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE));
+        this.tm = RCTMod.getInstance().getTrainerManager();
         this.mob = mob;
+        this.lookAtType = clazz;
     }
 
     @Override
     public void start() {
         this.tickOfLookAt = this.mob.tickCount;
         this.mob.getNavigation().stop();
-        super.start();
     }
 
     @Override
     public boolean canUse() {
-        if(!this.mob.isInBattle() && this.mob.getCooldown() == 0 && (this.mob.tickCount - this.tickOfLastAttempt) > TIMEOUT_TICKS) {
-            return super.canUse();
+        if(this.mob.getRandom().nextFloat() < mob.getForceBattleChance()
+        && !this.mob.isInBattle()
+        && this.mob.getCooldown() == 0
+        && (this.mob.tickCount - this.tickOfLastAttempt) > TIMEOUT_TICKS) {
+            var lookAtContext = this.initContext();
+
+            if(lookAtContext != null) {
+                if(this.mob.getTarget() != null) {
+                    this.lookAt = this.mob.getTarget();
+                }
+
+                if(this.lookAtType == Player.class) {
+                    this.lookAt = this.mob.level().getNearestPlayer(lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+                } else {
+                    double d = this.mob.getForceBattleMaxDistance();
+
+                    this.lookAt = this.mob.level().getNearestEntity(
+                        this.mob.level().getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(d, BB_HEIGHT, d), le -> true),
+                        lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+                }
+
+                return this.lookAt != null;
+            }
         }
 
         return false;
@@ -62,9 +89,11 @@ public class ForceIntoBattleGoal extends LookAtPlayerGoal {
 
     @Override
     public boolean canContinueToUse() {
+        double d = this.mob.getForceBattleMaxDistance();
+
         if(this.lookAt != null
         && this.lookAt.isAlive() && !this.mob.isInBattle() && this.mob.getCooldown() == 0
-        && this.mob.distanceToSqr(this.lookAt) < (double)(this.lookDistance * this.lookDistance)) {
+        && this.mob.distanceToSqr(this.lookAt) < d * d) {
             return true;
         }
 
@@ -83,7 +112,7 @@ public class ForceIntoBattleGoal extends LookAtPlayerGoal {
             // test if target is looking at this mob
             var from = this.lookAt.getEyePosition();
             var to = from.add(this.lookAt.getForward().scale(this.mob.getForceBattleMaxDistance()));
-            var hit = ProjectileUtil.getEntityHitResult(this.mob.level(), this.lookAt, from, to, AABB.ofSize(from, 0.25, 0.25, 0.25).expandTowards(to.subtract(from)), e -> true);
+            var hit = ProjectileUtil.getEntityHitResult(this.mob.level(), this.lookAt, from, to, AABB.ofSize(from, 0.15, 0.15, 0.15).expandTowards(to.subtract(from)), e -> true);
 
             if(hit == null || hit.getEntity() != this.mob) {
                 if(this.mob.getRandom().nextFloat() < CANCEL_PROBABILITY) {
@@ -108,6 +137,15 @@ public class ForceIntoBattleGoal extends LookAtPlayerGoal {
         }
 
         this.tickOfLastAttempt = this.mob.tickCount;
+    }
+
+    private TargetingConditions initContext() {
+        return this.lookAtType == Player.class
+            ? TargetingConditions.forNonCombat()
+                .range((double)this.mob.getForceBattleMaxDistance())
+                .selector(le -> EntitySelector.notRiding(mob).test(le))
+            : TargetingConditions.forNonCombat()
+                .range((double)this.mob.getForceBattleMaxDistance());
     }
 
     private boolean isInLevelRange(Player player) {

@@ -62,6 +62,11 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private Set<String> biomeTagBlacklist = new HashSet<>();
     private Set<String> biomeTagWhitelist = new HashSet<>();
     
+    private Optional<Boolean> forceBattleOnSight = Optional.empty();
+    private Optional<Float> forceBattleMaxDistance = Optional.empty();
+    private Optional<Integer> forceBattleLookTicks = Optional.empty();
+    private Optional<Integer> forceBattleMaxLevelDiff = Optional.empty();
+
     @Exclude private Set<String> followdBy = new HashSet<>();
     @Exclude private Map<String, Text[]> dialog = new HashMap<>();
     @Exclude private TrainerTeam trainerTeam;
@@ -90,6 +95,10 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.battleCooldownTicks = origin.battleCooldownTicks;
         this.biomeTagBlacklist = Set.copyOf(origin.biomeTagBlacklist);
         this.biomeTagWhitelist = Set.copyOf(origin.biomeTagWhitelist);
+        this.forceBattleOnSight = origin.forceBattleOnSight;
+        this.forceBattleMaxDistance = origin.forceBattleMaxDistance;
+        this.forceBattleLookTicks = origin.forceBattleLookTicks;
+        this.forceBattleMaxLevelDiff = origin.forceBattleMaxLevelDiff;
         this.dialog = Map.copyOf(origin.dialog);
         this.textureResource = origin.textureResource;
         this.lootTableResource = origin.lootTableResource;
@@ -201,6 +210,22 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     public Set<String> getBiomeTagWhitelist() {
         return Collections.unmodifiableSet(this.biomeTagWhitelist);
+    }
+
+    public Optional<Boolean> getForceBattleOnSight() {
+        return this.forceBattleOnSight;
+    }
+
+    public Optional<Float> getForceBattleMaxDistance() {
+        return this.forceBattleMaxDistance;
+    }
+
+    public Optional<Integer> getForceBattleLookTicks() {
+        return this.forceBattleLookTicks;
+    }
+
+    public Optional<Integer> getForceBattleMaxLevelDiff() {
+        return this.forceBattleMaxLevelDiff;
     }
 
     public Set<String> getFollowedBy() {

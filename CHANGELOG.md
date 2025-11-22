@@ -4,10 +4,11 @@
 
 **Added:**
 
-- *#355* Config option `forceBattleLookTicks`: Number of ticks a player needs to stare at a trainer to get forced into a battle
-- *#354* Config option `forceBattleMaxDistance`: Max distance at which trainers can force players into a battle
-- *#353* Config option `forceBattleMaxLevelDiff`: Maximum level difference between a trainers and players to allow forced battles
-- *#352* Config option `forceBattleOnSight`: Determines if trainers can force players into a battle on sight
+- *#356* Config option `forceBattleLookTicks`: Number of ticks a player needs to stare at a trainer to get forced into a battle
+- *#355* Config option `forceBattleMaxDistance`: Max distance at which trainers can force players into a battle
+- *#354* Config option `forceBattleMaxLevelDiff`: Maximum level difference between a trainers and players to allow forced battles
+- *#353* Config option `forceBattleOnSight`: Determines if trainers can force players into a battle on sight
+- *#352* New properties for data pack trainer mobs `forceBattleOnSight`, `forceBattleMaxDistance`, `forceBattleLookTicks` and `forceBattleMaxLevelDiff` (these will take precedence over the global config values if set for a trainer)
 
 **Changed:**
 

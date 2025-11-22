@@ -196,19 +196,35 @@ public class TrainerMob extends PathfinderMob implements Npc {
     }
 
     public int getForceBattleLookTicks() {
-        return RCTMod.getInstance().getServerConfig().forceBattleLookTicks(); // TODO: trainer property may overwrite
+        var tmd = RCTMod.getInstance().getTrainerManager().getData(this);
+
+        return tmd.getForceBattleLookTicks().has()
+            ? tmd.getForceBattleLookTicks().get()
+            : RCTMod.getInstance().getServerConfig().forceBattleLookTicks();
     }
 
     public float getForceBattleChance() {
-        return RCTMod.getInstance().getServerConfig().forceBattleOnSight() ? 1f : 0f; // TODO: trainer property may overwrite
+        var tmd = RCTMod.getInstance().getTrainerManager().getData(this);
+        
+        return tmd.getForceBattleOnSight().has()
+            ? (tmd.getForceBattleOnSight().get() ? 1f : 0f)
+            : (RCTMod.getInstance().getServerConfig().forceBattleOnSight() ? 1f : 0f);
     }
 
     public float getForceBattleMaxDistance() {
-        return RCTMod.getInstance().getServerConfig().forceBattleMaxDistance(); // TODO: trainer property may overwrite
+        var tmd = RCTMod.getInstance().getTrainerManager().getData(this);
+
+        return tmd.getForceBattleMaxDistance().has()
+            ? tmd.getForceBattleMaxDistance().get()
+            : RCTMod.getInstance().getServerConfig().forceBattleMaxDistance();
     }
 
     public int getForceBattleMaxLevelDiff() {
-        return RCTMod.getInstance().getServerConfig().forceBattleMaxLevelDiff(); // TODO: trainer property may overwrite
+        var tmd = RCTMod.getInstance().getTrainerManager().getData(this);
+
+        return tmd.getForceBattleMaxLevelDiff().has()
+            ? tmd.getForceBattleMaxLevelDiff().get()
+            : RCTMod.getInstance().getServerConfig().forceBattleMaxLevelDiff();
     }
 
     protected void replyTo(Player player) {
