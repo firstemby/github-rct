@@ -25,7 +25,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.AABB;
 
 public class TrainerCardTemptGoal extends TemptGoal {
-    private static final double DEFAULT_MOVE_SPEED = 0.35;
+    private static final double DEFAULT_MOVE_SPEED = 0.45;
 
     private TrainerMob trainer;
 

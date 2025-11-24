@@ -4,7 +4,8 @@
 
 **Changed:**
 
-- *#364* Removed (spammy) log message for change of trainer ids
+- *#365* Removed (spammy) log message for change of trainer ids
+- *#364* Slightly increased speed of trainers that are following a player with a trainer card
 - *#363* Slightly tweaked trainer entity behaviour when in battle
 
 **Fixed:**
