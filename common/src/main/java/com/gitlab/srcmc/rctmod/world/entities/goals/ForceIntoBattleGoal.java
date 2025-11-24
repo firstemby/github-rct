@@ -59,10 +59,8 @@ public class ForceIntoBattleGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if(this.mob.getRandom().nextFloat() < mob.getForceBattleChance()
-        && !this.mob.isInBattle()
-        && this.mob.getCooldown() == 0
-        && (this.mob.tickCount - this.tickOfLastAttempt) > TIMEOUT_TICKS) {
+        if(this.mob.getRandom().nextFloat() < this.mob.getForceBattleChance()
+        && this.mob.tickCount - this.tickOfLastAttempt > TIMEOUT_TICKS) {
             var lookAtContext = this.initContext();
 
             if(lookAtContext != null) {
@@ -80,7 +78,9 @@ public class ForceIntoBattleGoal extends Goal {
                         lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
                 }
 
-                return this.lookAt != null;
+                if(this.lookAt != null) {
+                    return this.isInLevelRange(this.lookAt) && this.mob.canBattleAgainst(this.lookAt);
+                }
             }
         }
 
@@ -132,7 +132,7 @@ public class ForceIntoBattleGoal extends Goal {
     }
 
     private void tryStartBattle() {
-        if(this.lookAt instanceof Player player && this.mob.canBattleAgainst(player) && this.isInLevelRange(player)) {
+        if(this.lookAt instanceof Player player && this.isInLevelRange(player)) {
             this.mob.startBattleWith(player);
         }
 
@@ -148,7 +148,9 @@ public class ForceIntoBattleGoal extends Goal {
                 .range((double)this.mob.getForceBattleMaxDistance());
     }
 
-    private boolean isInLevelRange(Player player) {
-        return Math.abs(this.tm.getPlayerLevel(player) - this.tm.getData(this.mob).getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0)) <= this.mob.getForceBattleMaxLevelDiff();
+    private boolean isInLevelRange(Entity entity) {
+        return entity instanceof Player player
+            ? Math.abs(this.tm.getPlayerLevel(player) - this.tm.getData(this.mob).getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0)) <= this.mob.getForceBattleMaxLevelDiff()
+            : false;
     }
 }

@@ -4,13 +4,14 @@
 
 **Changed:**
 
-- *#361* Removed (spammy) log message for change of trainer ids
+- *#362* Removed (spammy) log message for change of trainer ids
 
 **Fixed:**
 
-- *#360* Outdated item ids for some mega showdown items
-- *#359* Some trainers having the double battle format while only carrying 1 pokemon (also adjusted display names of such trainers)
-- *#358* Trainers displaying wrong reward level caps if the are followed by (stronger) optional trainers
+- *#361* Outdated item ids for some mega showdown items
+- *#360* Some trainers having the double battle format while only carrying 1 pokemon (also adjusted display names of such trainers)
+- *#359* Trainers displaying wrong reward level caps if the are followed by (stronger) optional trainers
+- *#358* Trainers staring at players that cannot battle against them
 
 ## [0.17.0-beta] - 2025-11-22
 
