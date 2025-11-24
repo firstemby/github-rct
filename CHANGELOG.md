@@ -4,14 +4,15 @@
 
 **Changed:**
 
-- *#363* Removed (spammy) log message for change of trainer ids
-- *#362* Slightly tweaked trainer entity behaviour when in battle
+- *#364* Removed (spammy) log message for change of trainer ids
+- *#363* Slightly tweaked trainer entity behaviour when in battle
 
 **Fixed:**
 
-- *#361* Outdated item ids for some mega showdown items
-- *#360* Some trainers having the double battle format while only carrying 1 pokemon (also adjusted display names of such trainers)
-- *#359* Trainers displaying wrong reward level caps if they are followed by (stronger) optional trainers
+- *#362* Outdated item ids for some mega showdown items
+- *#361* Some trainers having the double battle format while only carrying 1 pokemon (also adjusted display names of such trainers)
+- *#360* Trainers displaying wrong reward level caps if they are followed by (stronger) optional trainers
+- *#359* Trainers not following players that are holding a trainer card if they could battle against them (they will stop following if directly being looked at to still allow them to force battles)
 - *#358* Trainers staring at players that cannot battle against them
 
 ## [0.17.0-beta] - 2025-11-22
