@@ -247,8 +247,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
             ChatUtils.reply(this, player, "wrong_series");
         } else if(msr.isPresent()) {
             ChatUtils.reply(this, player, "missing_required_trainer_"  + tm.getData(msr.get()).getType().id(), "missing_required_trainer");
-        } else if(tpd.getLevelCap() < tmd.getRequiredLevelCap(player)) {
-            ChatUtils.reply(this, player, "low_level_cap");
+        // } else if(tpd.getLevelCap() < tmd.getRequiredLevelCap(player)) { // deprecated
+        //     ChatUtils.reply(this, player, "low_level_cap");
         } else if(tm.getPlayerLevel(player) > tpd.getLevelCap()) {
             ChatUtils.reply(this, player, "over_level_cap");
         } else if(tm.getActivePokemon(player) == 0) {
