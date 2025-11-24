@@ -33,8 +33,8 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.AABB;
 
 public class ForceIntoBattleGoal extends Goal {
-    private static final int TIMEOUT_TICKS = 50;
-    private static final float CANCEL_PROBABILITY = 0.05f;
+    private static final int TIMEOUT_TICKS = 60;
+    private static final float CANCEL_PROBABILITY = 0.005f;
     private static final double BB_HEIGHT = 3;
 
     private int tickOfLastAttempt, tickOfLookAt;
@@ -55,6 +55,11 @@ public class ForceIntoBattleGoal extends Goal {
     public void start() {
         this.tickOfLookAt = this.mob.tickCount;
         this.mob.getNavigation().stop();
+    }
+
+    @Override
+    public void stop() {
+        this.lookAt = null;
     }
 
     @Override

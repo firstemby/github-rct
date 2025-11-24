@@ -4,7 +4,8 @@
 
 **Changed:**
 
-- *#362* Removed (spammy) log message for change of trainer ids
+- *#363* Removed (spammy) log message for change of trainer ids
+- *#362* Slightly tweaked trainer entity behaviour when in battle
 
 **Fixed:**
 
