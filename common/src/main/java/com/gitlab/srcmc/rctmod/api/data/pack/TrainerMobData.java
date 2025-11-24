@@ -137,6 +137,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
         return this.getFollowedBy()
             .stream().map(tm::getData)
+            .filter(tmd -> !tmd.isOptional())
             .filter(tmd -> tmd.isOfSeries(sid))
             .map(tmd -> tmd.getRequiredLevelCap(player))
             .filter(lc -> lc > rlc)

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.1-beta] - 2025-11-24
+
+**Fixed:**
+
+- *#358* Trainers displaying wrong reward level caps if the are followed by (stronger) optional trainers
+
 ## [0.17.0-beta] - 2025-11-22
 
 **Added:**
