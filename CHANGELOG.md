@@ -2,6 +2,10 @@
 
 ## [0.17.1-beta] - 2025-11-24
 
+**Changed:**
+
+- *#361* Removed (spammy) log message for change of trainer ids
+
 **Fixed:**
 
 - *#360* Outdated item ids for some mega showdown items

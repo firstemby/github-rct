@@ -375,7 +375,7 @@ public class TrainerSpawner {
 
     public void notifyChangeTrainerId(TrainerMob mob, String newTrainerId) {
         if(this.spawns.containsKey(mob.getStringUUID())) {
-            ModCommon.LOG.info(String.format("Changing trainer id '%s' -> '%s' (%s)", mob.getTrainerId(), newTrainerId, mob.getStringUUID()));
+            // ModCommon.LOG.info(String.format("Changing trainer id '%s' -> '%s' (%s)", mob.getTrainerId(), newTrainerId, mob.getStringUUID()));
             var identity = RCTMod.getInstance().getTrainerManager().getData(mob).getTrainerTeam().getIdentity();
             var newIdentity = RCTMod.getInstance().getTrainerManager().getData(newTrainerId).getTrainerTeam().getIdentity();
             this.identities.compute(identity, (key, value) -> value == null || value <= 1 ? null : value - 1);
