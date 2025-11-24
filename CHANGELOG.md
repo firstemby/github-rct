@@ -17,7 +17,7 @@
 
 **Removed:**
 
-- *#359* Log message for change of trainer ids
+- *#359* Log message when trainer id of an entitiy changes
 - *#358* Trainer response for player level cap being too low (as this may not be a reason for refusing battles anymore)
 
 ## [0.17.0-beta] - 2025-11-22
