@@ -39,6 +39,7 @@ import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap;
 import com.gitlab.srcmc.rctmod.api.data.save.collection.SavedStringChunkPosMap.ChunkPosDim;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
+import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.world.blocks.TrainerRepelRodBlock;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
@@ -527,12 +528,15 @@ public class TrainerSpawner {
         }
 
         if(config.logSpawning()) {
-            var trainer = RCTMod.getInstance().getTrainerManager().getData(trainerId).getTrainerTeam().getName().getComponent().getString();
+            var tmd = RCTMod.getInstance().getTrainerManager().getData(trainerId);
+            var trainerName = tmd.getTrainerTeam().getName().getComponent().getString();
             var biome = level.getBiome(mob.blockPosition());
             var dim = level.dimension();
 
-            ModCommon.LOG.info(String.format("Spawned trainer '%s' (%s) at (%d, %d, %d), %s:%s",
-                trainer, mob.getTrainerId(),
+            ModCommon.LOG.info(String.format("Spawned trainer '%s' (%s:%d) at (%d, %d, %d), %s:%s",
+                trainerName,
+                mob.getTrainerId(),
+                LevelUtils.trainerLevel(tmd),
                 mob.blockPosition().getX(),
                 mob.blockPosition().getY(),
                 mob.blockPosition().getZ(),
@@ -648,8 +652,8 @@ public class TrainerSpawner {
         var dimensionWhitelisted = config.dimensionWhitelist().isEmpty() || config.dimensionWhitelist().contains(level.dimension().location().toString());
 
         if(!dimensionBlacklisted && dimensionWhitelisted
-            && config.biomeTagBlacklist().stream().noneMatch(tags::contains)
-            && (config.biomeTagWhitelist().isEmpty() || config.biomeTagWhitelist().stream().anyMatch(tags::contains))) {
+        && config.biomeTagBlacklist().stream().noneMatch(tags::contains)
+        && (config.biomeTagWhitelist().isEmpty() || config.biomeTagWhitelist().stream().anyMatch(tags::contains))) {
 
             RCTMod.getInstance().getTrainerManager().getAllData(PlayerState.get(player).getCurrentSeries())
                 .filter(e -> this.isUnique(e.getValue().getTrainerTeam().getIdentity(), level, pos)
@@ -688,16 +692,15 @@ public class TrainerSpawner {
         var ps = PlayerState.get(player);
         var config = RCTMod.getInstance().getServerConfig();
         var tm = RCTMod.getInstance().getTrainerManager();
-        var playerLevel = tm.getPlayerLevel(player);
-        var reqLevelCap = mobTr.getRequiredLevelCap(player);
-        var levelCap = ps.getLevelCap();
+        var playerLevel = Math.min(ps.getLevelCap(), tm.getPlayerLevel(player));
+        var trainerLevel = LevelUtils.trainerLevel(mobTr);
         var chance = TRAINER_DIRECT_SPAWN_CHANCE;
 
         if(!ps.isKeyTrainer(trainerId)) {
             chance /= NON_KEY_TRAINER_SPAWN_CHANCE_DIV;
         }
 
-        var e = (1.0  - Math.min(config.maxLevelDiff(), Math.abs(Math.min(playerLevel, levelCap) - reqLevelCap))/(double)config.maxLevelDiff());
+        var e = (1.0  - Math.min(config.maxLevelDiff(), Math.abs(playerLevel - trainerLevel))/(double)config.maxLevelDiff());
         return chance * e * e;
     }
 
@@ -710,19 +713,18 @@ public class TrainerSpawner {
 
         var config = RCTMod.getInstance().getServerConfig();
         var tm = RCTMod.getInstance().getTrainerManager();
-        var playerLevel = tm.getPlayerLevel(player);
-        var reqLevelCap = mobTr.getRequiredLevelCap(player);
-        var levelCap = ps.getLevelCap();
+        var playerLevel = Math.min(ps.getLevelCap(), tm.getPlayerLevel(player));
+        var trainerLevel = LevelUtils.trainerLevel(mobTr);
         var keyTrainerFactor = 1f;
         var isKey = ps.isKeyTrainer(trainerId);
 
         if(isKey) {
-            var a = (10 - Math.min(9, levelCap/10))/2f;
-            var b = Math.max(0, reqLevelCap - playerLevel)*a + 1;
+            var a = (10 - Math.min(9, playerLevel/10))/2f;
+            var b = Math.max(0, trainerLevel - playerLevel)*a + 1;
             keyTrainerFactor = KEY_TRAINER_SPAWN_WEIGHT_FACTOR/b;
         }
 
-        int diff = Math.abs(Math.min(playerLevel, levelCap) - reqLevelCap); // TODO: Math.min(mobLevel, reqLevelCap)
+        int diff = Math.abs(playerLevel - trainerLevel);
         return diff > config.maxLevelDiff() ? 0 : ((config.maxLevelDiff() + 1) - diff)*mobTr.getSpawnWeightFactor()*keyTrainerFactor;
     }
 }

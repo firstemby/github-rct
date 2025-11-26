@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.2-beta] - 2025-11-26
+
+**Fixed:**
+
+- *#367* Spawn chances for trainers not getting properly reduced with larger level difference to a player
+
 ## [0.17.1-beta] - 2025-11-24
 
 **Changed:**

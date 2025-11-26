@@ -66,9 +66,13 @@ public class LevelUtils {
         return trainerLevel(seriesId, trainerId, RCTMod.getInstance().getTrainerManager().getData(trainerId));
     }
 
+    public static int trainerLevel(TrainerMobData tmd) {
+        return tmd.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0);
+    }
+
     private static int trainerLevel(String seriesId, String trainerId, TrainerMobData tmd) {
         return Math.max(
-            Math.min(maxLevel(), Math.max(0, tmd.getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0) + relativeLevelCap(seriesId, trainerId))),
+            Math.min(maxLevel(), Math.max(0, trainerLevel(tmd) + relativeLevelCap(seriesId, trainerId))),
             tmd.getRequiredDefeats(seriesId)
                 .stream().flatMap(Set::stream)
                 .map(tid -> trainerLevel(seriesId, tid)).max(Integer::compare).orElse(0));
