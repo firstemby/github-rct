@@ -162,9 +162,19 @@ public class ServerConfig implements IServerConfig {
 
         this.maxLevelDiffValue = builder
             .comment(SEPARATOR,
-                "The maximum level difference between the strongest pokemon in the team of a player and the strongest",
-                "pokemon in the team of a trainer to spawn for that player. The spawn weight decreases with a higher",
-                "level difference. Trainers with pokemon above the level cap of a player are excluded.")
+                "The maximum level difference between the strongest pokemon in the team of a",
+                "player (at or below that players level cap) and the strongest pokemon in the",
+                "team of a trainer to allow that trainer to spawn for the player.",
+                "",
+                "This value will scale linearly with a players level relative to 100 but will",
+                "not go below 4 (unless explicitely set to a lower value). An exception to this",
+                "are key trainers, who may always spawn with a level difference up to the",
+                "configured value.",
+                "",
+                "For example with player Level = 20 and maxLevelDiff = 25:",
+                "result = max(4, (20/100) * 25) = max(4, 5) = 5",
+                "",
+                "The spawn weight decreases with a higher level difference.")
             .defineInRange("maxLevelDiff", IServerConfig.super.maxLevelDiff(), 0, 100);
 
         this.spawningRequiresTrainerCardValue = builder

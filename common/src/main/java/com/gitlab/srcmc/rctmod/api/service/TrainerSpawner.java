@@ -76,6 +76,7 @@ public class TrainerSpawner {
     public static final boolean CAN_SPAWN_IN_WATER = false; // experimental
     public static final double TRAINER_DIRECT_SPAWN_CHANCE = 0.42;
     public static final int CHUNK_REPEL_RADIUS = 3; // 7x7
+    public static final int MIN_LEVEL_DIFF = 4;
 
     public static final TicketType<ChunkPos> PERSISTENT_TRAINER_TICKET = TicketType.create("persistent_trainer", Comparator.comparingLong(ChunkPos::toLong), 600);
     public static final int PERSISTENT_TRAINER_TICKET_LEVEL = ChunkLevel.byStatus(FullChunkStatus.FULL) - ChunkMap.FORCED_TICKET_LEVEL; // FULL will be subtracted
@@ -695,12 +696,16 @@ public class TrainerSpawner {
         var playerLevel = Math.min(ps.getLevelCap(), tm.getPlayerLevel(player));
         var trainerLevel = LevelUtils.trainerLevel(mobTr);
         var chance = TRAINER_DIRECT_SPAWN_CHANCE;
+        int maxDiff;
 
         if(!ps.isKeyTrainer(trainerId)) {
+            maxDiff = Math.min(config.maxLevelDiff(), Math.max(MIN_LEVEL_DIFF, (int)(config.maxLevelDiff() * playerLevel/(double)LevelUtils.maxLevel())));
             chance /= NON_KEY_TRAINER_SPAWN_CHANCE_DIV;
+        } else {
+            maxDiff = config.maxLevelDiff();
         }
 
-        var e = (1.0  - Math.min(config.maxLevelDiff(), Math.abs(playerLevel - trainerLevel))/(double)config.maxLevelDiff());
+        var e = (1.0 - Math.min(maxDiff, Math.abs(playerLevel - trainerLevel))/(double)maxDiff);
         return chance * e * e;
     }
 
@@ -717,14 +722,18 @@ public class TrainerSpawner {
         var trainerLevel = LevelUtils.trainerLevel(mobTr);
         var keyTrainerFactor = 1f;
         var isKey = ps.isKeyTrainer(trainerId);
+        int maxDiff;
 
         if(isKey) {
             var a = (10 - Math.min(9, playerLevel/10))/2f;
             var b = Math.max(0, trainerLevel - playerLevel)*a + 1;
             keyTrainerFactor = KEY_TRAINER_SPAWN_WEIGHT_FACTOR/b;
+            maxDiff = config.maxLevelDiff();
+        } else {
+            maxDiff = Math.min(config.maxLevelDiff(), Math.max(MIN_LEVEL_DIFF, (int)(config.maxLevelDiff() * playerLevel/(double)LevelUtils.maxLevel())));
         }
 
-        int diff = Math.abs(playerLevel - trainerLevel);
-        return diff > config.maxLevelDiff() ? 0 : ((config.maxLevelDiff() + 1) - diff)*mobTr.getSpawnWeightFactor()*keyTrainerFactor;
+        var diff = Math.abs(playerLevel - trainerLevel);
+        return diff > maxDiff ? 0 : ((maxDiff + 1) - diff)*mobTr.getSpawnWeightFactor()*keyTrainerFactor;
     }
 }
