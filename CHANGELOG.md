@@ -4,7 +4,7 @@
 
 **Changed:**
 
-- *#368* The `maxLevelDiff` to spawn trainers will now scale linearly with a *players level* relative to `100`. It will never go below `4` (unless explicitely set to a lower value). An exception to this are *key trainers*, who always may spawn with a level difference up to `maxLevelDiff` (basically as it worked before with all trainers).
+- *#368* The `maxLevelDiff` to spawn trainers will now scale linearly with a *players level* relative to `100`. It will never go below `4` (unless explicitly set to a lower value). An exception to this are *key trainers*, who always may spawn with a level difference up to `maxLevelDiff` (basically as it worked before with all trainers).
 
 **Fixed:**
 
