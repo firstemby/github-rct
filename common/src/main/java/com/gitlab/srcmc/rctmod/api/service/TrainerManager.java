@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
@@ -34,7 +33,6 @@ import com.cobblemon.mod.common.Cobblemon;
 import com.gitlab.srcmc.rctapi.api.errors.RCTException;
 import com.gitlab.srcmc.rctapi.api.trainer.Trainer;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
-import com.gitlab.srcmc.rctapi.api.trainer.TrainerPlayer;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.TrainerBattle;
@@ -341,7 +339,6 @@ public class TrainerManager extends DataPackManager {
         var oldTrainers = new HashMap<String, Trainer>();
         var newTrainerMobs = new HashMap<String, TrainerMobData>();
         var reg = ModCommon.RCT.getTrainerRegistry();
-        List<ServerPlayer> players = null;
 
         reg.getIds().stream()
             .map(tid -> Map.<String, Trainer>entry(tid, reg.getById(tid)))
@@ -349,7 +346,6 @@ public class TrainerManager extends DataPackManager {
             .forEach(entry -> oldTrainers.put(entry.getKey(), entry.getValue()));
 
         reg.clearNPCs();
-        players = reg.getIds().stream().map(id -> reg.getById(id, TrainerPlayer.class).getPlayer()).toList();
 
         this.listTrainerTeams((rl, io) -> {
             var trainerId = PathUtils.filename(rl.getPath());
@@ -377,7 +373,6 @@ public class TrainerManager extends DataPackManager {
         this.trainerMobs = newTrainerMobs;
         this.seriesManager.onLoad(this);
         this.receivedUpdates = new HashSet<>();
-        players.forEach(pl -> this.getData(pl).updateLevelCap());
         this.close();
 
         ModServer.syncTrainerManger(this.server.getPlayerList().getPlayers());

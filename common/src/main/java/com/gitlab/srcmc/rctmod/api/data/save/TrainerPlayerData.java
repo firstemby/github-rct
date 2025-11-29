@@ -59,10 +59,6 @@ public class TrainerPlayerData extends SavedData {
         return LevelUtils.levelCap(this.player);
     }
 
-    public void updateLevelCap() {
-        PlayerState.get(this.player).setLevelCap(this.getLevelCap());
-    }
-
     public Set<String> getDefeatedTrainerIds() {
         return Collections.unmodifiableSet(this.defeatedTrainerIds);
     }
@@ -98,7 +94,6 @@ public class TrainerPlayerData extends SavedData {
             Stream.concat(Stream.of(node), node.siblings()).filter(tn -> !tn.isAlone()).forEach(tn -> {
                 if(this.defeatedTrainerIds.add(tn.id())) {
                     ps.addProgressDefeat(tn.id());
-                    this.updateLevelCap();
                     this.updateCurrentSeries();
                     this.setDirty();
                     updated[0] = true;
@@ -120,7 +115,6 @@ public class TrainerPlayerData extends SavedData {
             Stream.concat(Stream.of(node), node.siblings()).forEach(tn -> {
                 if(this.defeatedTrainerIds.remove(tn.id())) {
                     ps.removeProgressDefeat(tn.id());
-                    this.updateLevelCap();
                     this.setDirty();
                     updated[0] = true;
                 }
@@ -144,7 +138,6 @@ public class TrainerPlayerData extends SavedData {
             ps.removeProgressDefeats();
             this.defeatedTrainerIds.clear();
             this.currentSeriesCompleted = false;
-            this.updateLevelCap();
             this.setDirty();
             return true;
         }
@@ -193,7 +186,6 @@ public class TrainerPlayerData extends SavedData {
     private void updateCurrentSeries() {
         if(this.testSeriesCompleted()) {
             this.addSeriesCompletion(this.getCurrentSeries());
-            this.updateLevelCap();
 
             ChatUtils.sendTitle(this.player,
                 Text.translatable(LangKeys.GUI_TITLE_SERIES_COMPLETED),
@@ -243,8 +235,6 @@ public class TrainerPlayerData extends SavedData {
                 this.currentSeriesCompleted = false;
                 this.setDirty();
             }
-        } else {
-            this.updateLevelCap();
         }
     }
 
@@ -287,7 +277,6 @@ public class TrainerPlayerData extends SavedData {
 
     public void sync() {
         var ps = PlayerState.get(this.player);
-        ps.setLevelCap(this.getLevelCap());
         ps.setCurrentSeries(this.currentSeries);
         this.defeatedTrainerIds.forEach(ps::addProgressDefeat);
         RCTMod.getInstance().getTrainerManager().requiresUpdate(this.player);
@@ -331,7 +320,6 @@ public class TrainerPlayerData extends SavedData {
         public TrainerPlayerData create() {
             var tpd = new TrainerPlayerData(this.player);
             tpd.setCurrentSeries(RCTMod.getInstance().getServerConfig().initialSeries());
-            tpd.updateLevelCap();
             return tpd;
         }
 
@@ -374,8 +362,7 @@ public class TrainerPlayerData extends SavedData {
                         .forEach(tid -> tpd.addProgressDefeat(tid, true));
                 }
             }
-
-            tpd.updateLevelCap();
+            
             return tpd;
         }
     }

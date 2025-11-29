@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.3-beta] - 2025-11-29
+
+**Fixed:**
+
+- *#369* Desync issue with displayed player level cap in a trainer card
+
 ## [0.17.2-beta] - 2025-11-27
 
 **Changed:**

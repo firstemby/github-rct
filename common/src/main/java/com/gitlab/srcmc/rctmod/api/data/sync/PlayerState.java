@@ -36,6 +36,7 @@ import org.spongepowered.include.com.google.common.base.Objects;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager.SeriesGraph;
+import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -53,7 +54,6 @@ public class PlayerState implements Serializable {
     private Set<String> defeatedTrainerIds = new HashSet<>();
     private Set<String> removedDefeatedTrainerIds = new HashSet<>();
     private String currentSeries = "";
-    private int levelCap;
 
     private transient Player player;
     private transient PlayerState updated;
@@ -129,16 +129,8 @@ public class PlayerState implements Serializable {
         }
     }
 
-    public void setLevelCap(int levelCap) {
-        if(this.levelCap != levelCap) {
-            this.levelCap = levelCap;
-            this.updated.levelCap = levelCap;
-            this.hasChanges = true;
-        }
-    }
-
     public int getLevelCap() {
-        return this.levelCap;
+        return LevelUtils.levelCap(this.player);
     }
 
     public void setCurrentSeries(String seriesId) {
@@ -305,7 +297,6 @@ public class PlayerState implements Serializable {
     }
 
     private PlayerState(PlayerState template) {
-        this.levelCap = template.levelCap;
         this.currentSeries = template.currentSeries;
     }
 
@@ -336,7 +327,6 @@ public class PlayerState implements Serializable {
 
         updated.defeatedTrainerIds.forEach(this.defeatedTrainerIds::add);
         updated.removedDefeatedTrainerIds.forEach(this.defeatedTrainerIds::remove);
-        this.levelCap = updated.levelCap;
         this.currentSeries = updated.currentSeries;
         this.keyTrainerMap.clear();
         this.nextGraph = null;
