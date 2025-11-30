@@ -524,11 +524,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
     }
 
     @Override
-    public boolean canBeSeenAsEnemy() {
-        return false;
-    }
-
-    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_TRAINER_ID, "");
@@ -668,6 +663,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
     @Override
     public boolean canChangeDimensions(Level level1, Level level2) {
+        return false;
+    }
+
+    @Override
+    public boolean canBeSeenAsEnemy() {
         return false;
     }
 

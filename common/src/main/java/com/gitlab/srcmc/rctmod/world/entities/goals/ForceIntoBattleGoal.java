@@ -42,7 +42,7 @@ public class ForceIntoBattleGoal extends Goal {
     private TrainerMob mob;
 
     private final Class<? extends LivingEntity> lookAtType;
-    private Entity lookAt;
+    private Player lookAt;
 
     public ForceIntoBattleGoal(TrainerMob mob, Class<? extends LivingEntity> clazz) {
         this.setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE));
@@ -67,24 +67,26 @@ public class ForceIntoBattleGoal extends Goal {
         if(this.mob.getRandom().nextFloat() < this.mob.getForceBattleChance()
         && this.mob.tickCount - this.tickOfLastAttempt > TIMEOUT_TICKS) {
             var lookAtContext = this.initContext();
+            Entity lookAt = null;
 
             if(lookAtContext != null) {
                 if(this.mob.getTarget() != null) {
-                    this.lookAt = this.mob.getTarget();
+                    lookAt = this.mob.getTarget();
                 }
 
                 if(this.lookAtType == Player.class) {
-                    this.lookAt = this.mob.level().getNearestPlayer(lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+                    lookAt = this.mob.level().getNearestPlayer(lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
                 } else {
                     double d = this.mob.getForceBattleMaxDistance();
 
-                    this.lookAt = this.mob.level().getNearestEntity(
+                    lookAt = this.mob.level().getNearestEntity(
                         this.mob.level().getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(d, BB_HEIGHT, d), le -> true),
                         lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
                 }
 
-                if(this.lookAt != null) {
-                    return this.isInLevelRange(this.lookAt) && this.mob.canBattleAgainst(this.lookAt);
+                if(lookAt instanceof Player player) {
+                    this.lookAt = player;
+                    return hasNoMenuOpen(player) && this.isInLevelRange(player) && this.mob.canBattleAgainst(player);
                 }
             }
         }
@@ -96,7 +98,7 @@ public class ForceIntoBattleGoal extends Goal {
     public boolean canContinueToUse() {
         double d = this.mob.getForceBattleMaxDistance();
 
-        if(this.lookAt != null
+        if(this.lookAt != null && hasNoMenuOpen(this.lookAt)
         && this.lookAt.isAlive() && !this.mob.isInBattle() && this.mob.getCooldown() == 0
         && this.mob.distanceToSqr(this.lookAt) < d * d) {
             return true;
@@ -153,9 +155,13 @@ public class ForceIntoBattleGoal extends Goal {
                 .range((double)this.mob.getForceBattleMaxDistance());
     }
 
-    private boolean isInLevelRange(Entity entity) {
-        return entity instanceof Player player
-            ? Math.abs(this.tm.getPlayerLevel(player) - this.tm.getData(this.mob).getTrainerTeam().getTeam().stream().map(p -> p.getLevel()).max(Integer::compare).orElse(0)) <= this.mob.getForceBattleMaxLevelDiff()
-            : false;
+    private boolean isInLevelRange(Player player) {
+        return Math.abs(this.tm.getPlayerLevel(player) - this.tm.getData(this.mob).getTrainerTeam()
+            .getTeam().stream().map(p -> p.getLevel())
+            .max(Integer::compare).orElse(0)) <= this.mob.getForceBattleMaxLevelDiff();
+    }
+
+    private static boolean hasNoMenuOpen(Player player) {
+        return !player.hasContainerOpen(); // TODO: builtin way to check for open (inventory) screen on server side?
     }
 }

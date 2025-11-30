@@ -2,6 +2,10 @@
 
 ## [0.17.4-beta] - 2025-11-30
 
+**Changed:**
+
+- *#371* Trainers will no longer force players that are actively looking into a container into a battle (player inventory does not count)
+
 **Fixed:**
 
 - *#370* Pokemon from players attacking trainers when being looked at (trainers can no longer be seen as *enemies* by anything)
