@@ -8,7 +8,7 @@
 
 **Fixed:**
 
-- *#371* Pokemon from players attacking trainers when being looked at
+- *#371* Pokemon from players attacking trainers that are targeting/looking at their owners
 
 **Removed:**
 
