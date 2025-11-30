@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.4-beta] - 2025-11-30
+
+**Fixed:**
+
+- *#370* Pokemon from players attacking trainers when being looked at (trainers can no longer be seen as *enemies* by anything)
+
 ## [0.17.3-beta] - 2025-11-29
 
 **Fixed:**
