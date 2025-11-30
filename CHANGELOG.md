@@ -4,11 +4,15 @@
 
 **Changed:**
 
-- *#371* Trainers will no longer force players that are actively looking into a container into a battle (player inventory does not count)
+- *#372* Trainers will no longer force players that are actively looking into a container into a battle (player inventory does not count)
 
 **Fixed:**
 
-- *#370* Pokemon from players attacking trainers when being looked at (trainers can no longer be seen as *enemies* by anything)
+- *#371* Pokemon from players attacking trainers when being looked at
+
+**Removed:**
+
+- *#370* Possibility to summon trainer entites with `/summon` (use `/rctmod trainer summon` instead)
 
 ## [0.17.3-beta] - 2025-11-29
 

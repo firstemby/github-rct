@@ -97,6 +97,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private static final EntityDataAccessor<String> DATA_TRAINER_ID = SynchedEntityData.defineId(TrainerMob.class, EntityDataSerializers.STRING);
     private static final EntityType<TrainerMob> TYPE = EntityType.Builder
         .of(TrainerMob::new, MobCategory.MISC)
+        .noSummon()
         .canSpawnFarFromPlayer()
         .sized(0.6F, 1.95F).build("trainer");
 
@@ -663,11 +664,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
     @Override
     public boolean canChangeDimensions(Level level1, Level level2) {
-        return false;
-    }
-
-    @Override
-    public boolean canBeSeenAsEnemy() {
         return false;
     }
 
