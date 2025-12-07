@@ -80,12 +80,14 @@ public class ServerConfig implements IServerConfig {
     private final ConfigValue<String> initialSeriesValue;
     private final ConfigValue<Boolean> freeroamRequiresCompletedSeriesValue;
     private final ConfigValue<Boolean> allowOverLevelingValue;
+    private final ConfigValue<Boolean> flattenToLevelCapValue;
 
     private int initialLevelCapCached;
     private int relativeLevelCapCached;
     private String initialSeriesCached;
     private boolean freeroamRequiresCompletedSeriesCached;
     private boolean allowOverLevelingCached;
+    private boolean flattenToLevelCapCached;
 
     // debug
     private final ConfigValue<Boolean> logSpawningValue;
@@ -285,6 +287,11 @@ public class ServerConfig implements IServerConfig {
                 /*"Trainers will still refuse to battle players that carry pokemon above their level cap!")*/ // deprecated
             .define("allowOverLeveling", IServerConfig.super.allowOverLeveling());
 
+        this.flattenToLevelCapValue = builder
+            .comment(SEPARATOR,
+                "If enabled, all the pokemon will have their levels set to the levelCap during a fight with a trainer.")
+            .define("flattenToLevelCapValue", IServerConfig.super.flattenToLevelCap());
+
         builder.pop();
         builder.push("Debug");
 
@@ -328,6 +335,7 @@ public class ServerConfig implements IServerConfig {
         this.initialSeriesCached = this.initialSeriesValue.get();
         this.freeroamRequiresCompletedSeriesCached = this.freeroamRequiresCompletedSeriesValue.get();
         this.allowOverLevelingCached = this.allowOverLevelingValue.get();
+        this.flattenToLevelCapCached = this.flattenToLevelCapValue.get();
         this.logSpawningCached = this.logSpawningValue.get();
     }
 
@@ -470,6 +478,9 @@ public class ServerConfig implements IServerConfig {
     public boolean allowOverLeveling() {
         return this.allowOverLevelingCached;
     }
+
+    @Override
+    public boolean flattenToLevelCap() { return this.flattenToLevelCapCached; }
 
     @Override
     public boolean logSpawning() {

@@ -273,6 +273,14 @@ public interface IServerConfig extends IModConfig {
     default boolean allowOverLeveling() { return false; }
 
     /**
+     * If enabled, all the pokemon will have their levels set to the
+     * player's current level cap during a fight with a trainer.
+     *
+     * default: false
+     */
+    default boolean flattenToLevelCap() { return false; }
+
+    /**
      * The initial series players are placed in when entering a world for the first
      * time. Apart from any series id this value may also be set to one of the special
      * series ids "empty" (i.e. no series) or "freeroam".
