@@ -87,7 +87,8 @@ public final class RCTMod {
         var reg = ModCommon.RCT.getTrainerRegistry();
 
         try {
-            var trPlayer = reg.getById(RCTMod.getInstance().getTrainerManager().getTrainerId(player), TrainerPlayer.class);
+            var trainerManager = RCTMod.getInstance().getTrainerManager();
+            var trPlayer = reg.getById(trainerManager.getTrainerId(player), TrainerPlayer.class);
             var trNPC = reg.getById(mob.getTrainerId(), TrainerNPC.class);
 
             if(trPlayer == null) {
@@ -96,8 +97,17 @@ public final class RCTMod {
                 ModCommon.LOG.warn("Failed to start battle: No trainer registered for mob '" + mob.getDisplayName().getString() + "'");
             } else {
                 var team = RCTMod.getInstance().getTrainerManager().getData(mob).getTrainerTeam();
+                var battleFormat = team.getBattleFormat();
+                var trainerPlayerData = trainerManager.getData(player);
+
+                if (serverConfig.flattenToLevelCap()) {
+                    var playerLevelCap = trainerPlayerData.getLevelCap();
+                    var cobblemonBattleFormat = battleFormat.getCobblemonBattleFormat();
+                    cobblemonBattleFormat.setAdjustLevel(playerLevelCap);
+                }
+
                 trNPC.setEntity(mob); // safety measure to prevent a battle against entities in unloaded chunks
-                return ModCommon.RCT.getBattleManager().startBattle(List.of(trPlayer), List.of(trNPC), team.getBattleFormat(), team.getBattleRules()) != null;
+                return ModCommon.RCT.getBattleManager().startBattle(List.of(trPlayer), List.of(trNPC), battleFormat, team.getBattleRules()) != null;
             }
         } catch(IllegalArgumentException e) {
             ModCommon.LOG.error("Failed to start battle", e);
