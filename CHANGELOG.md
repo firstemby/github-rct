@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.5-beta] - 2026-01-14
+
+**Added:**
+
+- *#373* Portuguese language support (big thanks to PrincessStellar!)
+
 ## [0.17.4-beta] - 2025-11-30
 
 **Changed:**
