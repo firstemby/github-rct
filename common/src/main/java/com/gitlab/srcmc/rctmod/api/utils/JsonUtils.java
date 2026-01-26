@@ -34,6 +34,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -49,27 +50,27 @@ public final class JsonUtils<T> {
         .disableHtmlEscaping()
         .setLenient().create();
 
-    public static <T> T loadFromOrThrow(String json, Class<T> type) {
+    public static <T> T loadFromOrThrow(String json, Class<T> type) throws JsonLoadException {
         try(var rd = new BufferedReader(new StringReader(json))) {
             return GSON.fromJson(rd, type);
-        } catch(IOException e) {
-            throw new IllegalStateException(e);
+        } catch(IOException | JsonParseException e) {
+            throw new JsonLoadException(e);
         }
     }
 
-    public static <T> T loadFromOrThrow(IoSupplier<InputStream> io, Class<T> type) {
+    public static <T> T loadFromOrThrow(IoSupplier<InputStream> io, Class<T> type) throws JsonLoadException {
         try(var rd = new BufferedReader(new InputStreamReader(io.get(), StandardCharsets.UTF_8))) {
             return GSON.fromJson(rd, type);
-        } catch(IOException e) {
-            throw new IllegalStateException(e);
+        } catch(IOException | JsonParseException e) {
+            throw new JsonLoadException(e);
         }
     }
 
-    public static <T> T loadFromOrThrow(IoSupplier<InputStream> io, TypeToken<T> type) {
+    public static <T> T loadFromOrThrow(IoSupplier<InputStream> io, TypeToken<T> type) throws JsonLoadException {
         try(var rd = new BufferedReader(new InputStreamReader(io.get(), StandardCharsets.UTF_8))) {
             return GSON.fromJson(rd, type);
-        } catch(IOException e) {
-            throw new RuntimeException(e);
+        } catch(IOException | JsonParseException e) {
+            throw new JsonLoadException(e);
         }
     }
 
@@ -78,6 +79,19 @@ public final class JsonUtils<T> {
     }
     
     private JsonUtils() {
+    }
+
+    public static class JsonLoadException extends Exception {
+        public JsonLoadException() {
+        }
+
+        public JsonLoadException(Throwable cause) {
+            super(cause);
+        }
+
+        public JsonLoadException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
     // see: https://www.baeldung.com/gson-exclude-fields-serialization#3-with-a-custom-annotation

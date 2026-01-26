@@ -4,10 +4,11 @@
 
 **Added:**
 
-- *#374* Portuguese (brazil) language support (big thanks to PrincessStellar!)
+- *#375* Portuguese (brazil) language support (big thanks to PrincessStellar!)
 
 **Fixed:**
 
+- *#374* Json parser for data packs crashing the game/server when loading invalid json (errors are now logged but otherwise ignored)
 - *#373* Relative level cap of trainer mobs and series getting capped between `[1, 100]` instead of `[-100, 100]`
 
 ## [0.17.4-beta] - 2025-11-30

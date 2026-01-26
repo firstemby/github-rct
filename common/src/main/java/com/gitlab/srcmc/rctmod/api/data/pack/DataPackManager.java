@@ -28,6 +28,7 @@ import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.api.utils.PathUtils;
+import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonLoadException;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
@@ -169,25 +170,29 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
 
     public Optional<TrainerTeam> loadTrainerTeam(String trainerId) {
         var teamResource = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, PATH_TRAINERS + "/" + trainerId + ".json");
-        
-        if(this.trainerTeams.containsKey(teamResource)) {
-            var tt = JsonUtils.loadFromOrThrow(this.trainerTeams.get(teamResource).getResource(this.packType, teamResource), TrainerTeam.class);
 
-            if(tt.getName().getTranslatable() == null) {
-                tt.getName().setTranslatable(LangKeys.TRAINER_NAME(trainerId));
-            }
+        try {
+            if(this.trainerTeams.containsKey(teamResource)) {
+                var tt = JsonUtils.loadFromOrThrow(this.trainerTeams.get(teamResource).getResource(this.packType, teamResource), TrainerTeam.class);
 
-            int i = 0;
-
-            for(var pk : tt.getTeam()) {
-                if(pk.getNickname().getTranslatable() == null) {
-                    pk.getNickname().setTranslatable(LangKeys.POKEMON_NICKNAME(trainerId, i));
+                if(tt.getName().getTranslatable() == null) {
+                    tt.getName().setTranslatable(LangKeys.TRAINER_NAME(trainerId));
                 }
 
-                i++;
-            }
+                int i = 0;
 
-            return Optional.of(tt);
+                for(var pk : tt.getTeam()) {
+                    if(pk.getNickname().getTranslatable() == null) {
+                        pk.getNickname().setTranslatable(LangKeys.POKEMON_NICKNAME(trainerId, i));
+                    }
+
+                    i++;
+                }
+
+                return Optional.of(tt);
+            }
+        } catch(JsonLoadException e) {
+            ModCommon.LOG.error(e.getMessage(), e);
         }
 
         return Optional.empty();
@@ -196,14 +201,18 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
     public Optional<TrainerType> loadTrainerType(String typeId) {
         var typeResource = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, PATH_TRAINER_TYPES + "/" + typeId + ".json");
         
-        if(this.trainerTypes.containsKey(typeResource)) {
-            var tt = JsonUtils.loadFromOrThrow(this.trainerTypes.get(typeResource).getResource(this.packType, typeResource), TrainerType.class);
+        try {
+            if(this.trainerTypes.containsKey(typeResource)) {
+                var tt = JsonUtils.loadFromOrThrow(this.trainerTypes.get(typeResource).getResource(this.packType, typeResource), TrainerType.class);
 
-            if(tt.name().getTranslatable() == null) {
-                tt.name().setTranslatable(LangKeys.TRAINER_TYPE_TITLE(typeId));
+                if(tt.name().getTranslatable() == null) {
+                    tt.name().setTranslatable(LangKeys.TRAINER_TYPE_TITLE(typeId));
+                }
+
+                return Optional.of(tt);
             }
-
-            return Optional.of(tt);
+        } catch(JsonLoadException e) {
+            ModCommon.LOG.error(e.getMessage(), e);
         }
 
         return Optional.empty();
@@ -212,18 +221,22 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
     public Optional<SeriesMetaData> loadSeries(String seriesId) {
         var seriesResource = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, PATH_SERIES + "/" + seriesId + ".json");
         
-        if(this.series.containsKey(seriesResource)) {
-            var smd = JsonUtils.loadFromOrThrow(this.series.get(seriesResource).getResource(this.packType, seriesResource), SeriesMetaData.class);
+        try {
+            if(this.series.containsKey(seriesResource)) {
+                var smd = JsonUtils.loadFromOrThrow(this.series.get(seriesResource).getResource(this.packType, seriesResource), SeriesMetaData.class);
 
-            if(smd.title().getTranslatable() == null) {
-                smd.title().setTranslatable(LangKeys.SERIES_TITLE(seriesId));
+                if(smd.title().getTranslatable() == null) {
+                    smd.title().setTranslatable(LangKeys.SERIES_TITLE(seriesId));
+                }
+
+                if(smd.description().getTranslatable() == null) {
+                    smd.description().setTranslatable(LangKeys.SERIES_DESCRIPTION(seriesId));
+                }
+
+                return Optional.of(smd);
             }
-
-            if(smd.description().getTranslatable() == null) {
-                smd.description().setTranslatable(LangKeys.SERIES_DESCRIPTION(seriesId));
-            }
-
-            return Optional.of(smd);
+        } catch(JsonLoadException e) {
+            ModCommon.LOG.error(e.getMessage(), e);
         }
 
         return Optional.empty();
@@ -239,23 +252,27 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
         var singlePath = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, context + "/" + PATH_SINGLE + "/" + trainerId + dl.fileSuffix);
         T obj;
 
-        if(dl.singleData.containsKey(singlePath)) {
-            obj = JsonUtils.loadFromOrThrow(dl.singleData.get(singlePath).getResource(dl.packType, singlePath), type);
-        } else {
-            var groupsPath = findGroupsKey(trainerId, dl.groupData);
-
-            if(groupsPath != null) {
-                obj = JsonUtils.loadFromOrThrow(dl.groupData.get(groupsPath).getResource(dl.packType, groupsPath), type);
+        try {
+            if(dl.singleData.containsKey(singlePath)) {
+                obj = JsonUtils.loadFromOrThrow(dl.singleData.get(singlePath).getResource(dl.packType, singlePath), type);
             } else {
-                obj = JsonUtils.loadFromOrThrow(dl.defaultData.getValue().getResource(dl.packType, dl.defaultData.getKey()), type);
+                var groupsPath = findGroupsKey(trainerId, dl.groupData);
+
+                if(groupsPath != null) {
+                    obj = JsonUtils.loadFromOrThrow(dl.groupData.get(groupsPath).getResource(dl.packType, groupsPath), type);
+                } else {
+                    obj = JsonUtils.loadFromOrThrow(dl.defaultData.getValue().getResource(dl.packType, dl.defaultData.getKey()), type);
+                }
             }
-        }
 
-        if(obj instanceof IDataPackObject dpo) {
-            dpo.onLoad(this, trainerId, context);
-        }
+            if(obj instanceof IDataPackObject dpo) {
+                dpo.onLoad(this, trainerId, context);
+            }
 
-        consumer.accept(obj);
+            consumer.accept(obj);
+        } catch(JsonLoadException e) {
+            ModCommon.LOG.error(e.getMessage(), e);
+        }
     }
     
     private void gather(PackResources dataPack) {
