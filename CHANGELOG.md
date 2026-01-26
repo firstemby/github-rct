@@ -1,14 +1,15 @@
 # Changelog
 
-## [0.17.5-beta] - 2026-01-26
+## [0.17.5-beta] - 2026-01-27
 
 **Added:**
 
-- *#375* Portuguese (brazil) language support (big thanks to PrincessStellar!)
+- *#376* Portuguese (brazil) language support (big thanks to PrincessStellar!)
 
 **Fixed:**
 
-- *#374* Json parser for data packs crashing the game/server when loading invalid json (errors are now logged but otherwise ignored)
+- *#375* Json parser for data packs crashing the game/server when loading invalid json (errors are now logged but otherwise ignored)
+- *#374* NPE when running datagen with this mod in a dev environment (probably)
 - *#373* Relative level cap of trainer mobs and series getting capped between `[1, 100]` instead of `[-100, 100]`
 
 ## [0.17.4-beta] - 2025-11-30

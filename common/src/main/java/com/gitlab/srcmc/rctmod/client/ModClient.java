@@ -62,7 +62,13 @@ public class ModClient {
 
     public static void init() {
         var mc = Minecraft.getInstance();
-        ModCommon.initPlayer(() -> mc.player);
+
+        if(mc != null) {
+            ModCommon.initPlayer(() -> mc.player);
+        } else {
+            ModCommon.LOG.warn("Local player could not be initialized. Minecraft instance is null.");
+        }
+        
         ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, RESOURCE_MANAGER);
         EntityRendererRegistry.register(ModRegistries.Entities.TRAINER, TrainerRenderer::new);
         EntityRendererRegistry.register(ModRegistries.Entities.TRAINER_ASSOCIATION, TrainerAssociationRenderer::new);
