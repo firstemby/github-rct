@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
@@ -45,12 +46,6 @@ import net.minecraft.world.entity.player.Player;
 
 public class TrainerMobData implements IDataPackObject, Serializable {
     private static final long serialVersionUID = 0L;
-    private static final int MIN_RELATIVE_LEVEL_CAP = -100;
-    private static final int MAX_RELATIVE_LEVEL_CAP = 100;
-    private static final float MIN_FORCE_BATTLE_MAX_DISTANCE = 0f;
-    private static final float MAX_FORCE_BATTLE_MAX_DISTANCE = 32f;
-    private static final int MIN_FORCE_BATTLE_LOOK_TICKS = 0;
-    private static final int MIN_FORCE_BATTLE_MAX_LEVEL_DIFF = 0;
 
     private String type = "normal";
     private String signatureItem = "";
@@ -159,12 +154,12 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         if(this.relativeLevelCap.has()) {
             var v = this.relativeLevelCap.get();
 
-            if(v < MIN_RELATIVE_LEVEL_CAP) {
-                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, MIN_RELATIVE_LEVEL_CAP, MAX_RELATIVE_LEVEL_CAP, v));
-                this.relativeLevelCap = Optional.of(MIN_RELATIVE_LEVEL_CAP);
-            } else if(v > MAX_RELATIVE_LEVEL_CAP) {
-                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, MIN_RELATIVE_LEVEL_CAP, MAX_RELATIVE_LEVEL_CAP, v));
-                this.relativeLevelCap = Optional.of(MAX_RELATIVE_LEVEL_CAP);
+            if(v < IServerConfig.MIN_RELATIVE_LEVEL_CAP) {
+                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, IServerConfig.MIN_RELATIVE_LEVEL_CAP, IServerConfig.MAX_RELATIVE_LEVEL_CAP, v));
+                this.relativeLevelCap = Optional.of(IServerConfig.MIN_RELATIVE_LEVEL_CAP);
+            } else if(v > IServerConfig.MAX_RELATIVE_LEVEL_CAP) {
+                ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, IServerConfig.MIN_RELATIVE_LEVEL_CAP, IServerConfig.MAX_RELATIVE_LEVEL_CAP, v));
+                this.relativeLevelCap = Optional.of(IServerConfig.MAX_RELATIVE_LEVEL_CAP);
             }
         }
 
@@ -239,12 +234,12 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         if(this.forceBattleMaxDistance.has()) {
             var v = this.forceBattleMaxDistance.get();
 
-            if(v < MIN_FORCE_BATTLE_MAX_DISTANCE) {
-                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, MIN_FORCE_BATTLE_MAX_DISTANCE, MAX_FORCE_BATTLE_MAX_DISTANCE, v));
-                this.forceBattleMaxDistance = Optional.of(MIN_FORCE_BATTLE_MAX_DISTANCE);
+            if(v < IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE) {
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE, IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE, v));
+                this.forceBattleMaxDistance = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE);
             } else if(v > 32) {
-                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, MIN_FORCE_BATTLE_MAX_DISTANCE, MAX_FORCE_BATTLE_MAX_DISTANCE, v));
-                this.forceBattleMaxDistance = Optional.of(MAX_FORCE_BATTLE_MAX_DISTANCE);
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE, IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE, v));
+                this.forceBattleMaxDistance = Optional.of(IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE);
             }
         }
 
@@ -255,9 +250,9 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         if(this.forceBattleLookTicks.has()) {
             var v = this.forceBattleLookTicks.get();
 
-            if(v < MIN_FORCE_BATTLE_LOOK_TICKS) {
-                ModCommon.LOG.warn(String.format("invalid forceBattleLookTicks for '%s': expected range is [%d, inf) got %d", this.trainerId, MIN_FORCE_BATTLE_LOOK_TICKS, v));
-                this.forceBattleLookTicks = Optional.of(MIN_FORCE_BATTLE_LOOK_TICKS);
+            if(v < IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS) {
+                ModCommon.LOG.warn(String.format("invalid forceBattleLookTicks for '%s': expected range is [%d, inf) got %d", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS, v));
+                this.forceBattleLookTicks = Optional.of(IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS);
             }
         }
 
@@ -268,9 +263,9 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         if(this.forceBattleMaxLevelDiff.has()) {
             var v = this.forceBattleMaxLevelDiff.get();
 
-            if(v < MIN_FORCE_BATTLE_MAX_LEVEL_DIFF) {
-                ModCommon.LOG.warn(String.format("invalid forceBattleMaxLevelDiff for '%s': expected range is [%d, inf) got %d", this.trainerId, MIN_FORCE_BATTLE_MAX_LEVEL_DIFF, v));
-                this.forceBattleMaxLevelDiff = Optional.of(MIN_FORCE_BATTLE_MAX_LEVEL_DIFF);
+            if(v < IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF) {
+                ModCommon.LOG.warn(String.format("invalid forceBattleMaxLevelDiff for '%s': expected range is [%d, inf) got %d", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF, v));
+                this.forceBattleMaxLevelDiff = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF);
             }
         }
 

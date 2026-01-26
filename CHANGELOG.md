@@ -4,11 +4,11 @@
 
 **Added:**
 
-- *#374* Portuguese language support (big thanks to PrincessStellar!)
+- *#374* Portuguese (brazil) language support (big thanks to PrincessStellar!)
 
 **Fixed:**
 
-- *#373* Relative level cap of trainer mobs getting capped between `[1, 100]` instead of `[-100, 100]`
+- *#373* Relative level cap of trainer mobs and series getting capped between `[1, 100]` instead of `[-100, 100]`
 
 ## [0.17.4-beta] - 2025-11-30
 

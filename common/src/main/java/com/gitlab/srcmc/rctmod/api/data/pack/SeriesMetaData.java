@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.gitlab.srcmc.rctapi.api.util.Text;
+import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
 
 public record SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, List<List<String>> requiredSeries) implements Comparable<SeriesMetaData>, Serializable {
@@ -67,13 +68,13 @@ public record SeriesMetaData(Text title, Text description, int difficulty, Optio
         if(this.initialLevelCap.has()) {
             var v = this.initialLevelCap.get();
 
-            if(v < 0) { // TODO: constants for config ranges
+            if(v < IServerConfig.MIN_RELATIVE_LEVEL_CAP) {
                 // TODO: This might spam the log! Come up with a caching strategy (switch to class?)
-                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [1, 100] got %d", this.title, v));
-                return Optional.of(1);
-            } else if(v > 100) {
-                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [1, 100] got %d", this.title, v));
-                return Optional.of(100);
+                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [%d, %d] got %d", this.title, MIN_RELATIVE_LEVEL_CAP, MAX_RELATIVE_LEVEL_CAP, v));
+                return Optional.of(IServerConfig.MIN_RELATIVE_LEVEL_CAP);
+            } else if(v > IServerConfig.MAX_RELATIVE_LEVEL_CAP) {
+                // ModCommon.LOG.warn(String.format("invalid initialLevelCap for '%s': expected range is [%d, %d] got %d", this.title, MIN_RELATIVE_LEVEL_CAP, MAX_RELATIVE_LEVEL_CAP, v));
+                return Optional.of(IServerConfig.MAX_RELATIVE_LEVEL_CAP);
             }
         }
         

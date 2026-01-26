@@ -301,4 +301,15 @@ public interface IServerConfig extends IModConfig {
      * default false
      */
     default boolean logSpawning() { return false; }
+
+    ///////////////
+    // CONSTANTS //
+    ///////////////
+
+    public static final int MIN_RELATIVE_LEVEL_CAP = -100;
+    public static final int MAX_RELATIVE_LEVEL_CAP = 100;
+    public static final float MIN_FORCE_BATTLE_MAX_DISTANCE = 0f;
+    public static final float MAX_FORCE_BATTLE_MAX_DISTANCE = 32f;
+    public static final int MIN_FORCE_BATTLE_LOOK_TICKS = 0;
+    public static final int MIN_FORCE_BATTLE_MAX_LEVEL_DIFF = 0;
 }
