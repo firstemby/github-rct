@@ -30,10 +30,15 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.CompoundTagArgument;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.commands.SummonCommand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 public class TrainerCommands {
     private TrainerCommands() {}
@@ -56,15 +61,23 @@ public class TrainerCommands {
                     .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                         .suggests(SuggestionUtils::get_trainer_suggestions)
                         .executes(TrainerCommands::mob_summon_trainer)
+                        .then(Commands.argument("nbt", CompoundTagArgument.compoundTag())
+                            .executes(TrainerCommands::mob_summon_trainer))
                         .then(Commands.argument("at", BlockPosArgument.blockPos())
-                            .executes(TrainerCommands::mob_summon_trainer_at))))
+                            .executes(TrainerCommands::mob_summon_trainer_at)
+                            .then(Commands.argument("nbt", CompoundTagArgument.compoundTag())
+                                .executes(TrainerCommands::mob_summon_trainer_at)))))
                 .then(Commands.literal("summon_persistent")
                     .requires(css -> css.hasPermission(2))
                     .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                         .suggests(SuggestionUtils::get_trainer_suggestions)
                         .executes(TrainerCommands::mob_summon_persistent_trainer)
+                        .then(Commands.argument("nbt", CompoundTagArgument.compoundTag())
+                            .executes(TrainerCommands::mob_summon_persistent_trainer))
                         .then(Commands.argument("at", BlockPosArgument.blockPos())
-                            .executes(TrainerCommands::mob_summon_persistent_trainer_at))))
+                            .executes(TrainerCommands::mob_summon_persistent_trainer_at)
+                            .then(Commands.argument("nbt", CompoundTagArgument.compoundTag())
+                                .executes(TrainerCommands::mob_summon_persistent_trainer_at)))))
                 .then(Commands.literal("get")
                     .then(Commands.literal("type")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
@@ -95,15 +108,25 @@ public class TrainerCommands {
         )));
     }
 
+    private static TrainerMob summonTrainer(CommandSourceStack css, String id, Vec3 pos, CompoundTag nbt) throws CommandSyntaxException {
+        if(nbt == null) {
+            nbt = new CompoundTag();
+        } else {
+            nbt.remove("TrainerId"); // should not be set this way
+        }
+
+        var reg = BuiltInRegistries.ENTITY_TYPE;
+        var ref = reg.getHolderOrThrow(reg.getResourceKey(TrainerMob.getEntityType()).orElseThrow());
+        var mob = (TrainerMob)SummonCommand.createEntity(css, ref, pos, nbt, false);
+        mob.setTrainerId(id);
+
+        return mob;
+    }
+
     private static int mob_summon_trainer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if(context.getSource().getEntity() instanceof Player player) {
             try {
-                var level = player.level();
-                var mob = TrainerMob.getEntityType().create(level);
-                mob.setPos(player.blockPosition().above().getCenter().add(0, -0.5, 0));
-                mob.setTrainerId(context.getArgument("trainer", String.class));
-                level.addFreshEntity(mob);
-                RCTMod.getInstance().getTrainerSpawner().register(mob);
+                RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class)));
             } catch(Exception e) {
                 ModCommon.LOG.error(e.getMessage(), e);
             }
@@ -116,24 +139,15 @@ public class TrainerCommands {
     }
 
     private static int mob_summon_trainer_at(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        var level = context.getSource().getLevel();
-        var mob = TrainerMob.getEntityType().create(level);
-        mob.setPos(BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0));
-        mob.setTrainerId(context.getArgument("trainer", String.class));
-        level.addFreshEntity(mob);
-        RCTMod.getInstance().getTrainerSpawner().register(mob);
+        RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class)));
         return 0;
     }
 
     private static int mob_summon_persistent_trainer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if(context.getSource().getEntity() instanceof Player player) {
             try {
-                var level = player.level();
-                var mob = TrainerMob.getEntityType().create(level);
-                mob.setPos(player.blockPosition().above().getCenter().add(0, -0.5, 0));
-                mob.setTrainerId(context.getArgument("trainer", String.class));
+                var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class));
                 mob.setPersistent(true);
-                level.addFreshEntity(mob);
                 RCTMod.getInstance().getTrainerSpawner().register(mob);
             } catch(Exception e) {
                 ModCommon.LOG.error(e.getMessage(), e);
@@ -147,12 +161,8 @@ public class TrainerCommands {
     }
 
     private static int mob_summon_persistent_trainer_at(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        var level = context.getSource().getLevel();
-        var mob = TrainerMob.getEntityType().create(level);
-        mob.setPos(BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0));
-        mob.setTrainerId(context.getArgument("trainer", String.class));
+        var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class));
         mob.setPersistent(true);
-        level.addFreshEntity(mob);
         RCTMod.getInstance().getTrainerSpawner().register(mob);
         return 0;
     }

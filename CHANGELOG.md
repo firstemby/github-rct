@@ -4,11 +4,12 @@
 
 **Added:**
 
-- *#381* Portuguese (Brazil) language support (big thanks to PrincessStellar!). Note: The level cap entry in the trainer card may have some letters overlap due to space restriction, this will be fixed with an upcoming update.
+- *#382* Portuguese (Brazil) language support (big thanks to PrincessStellar!). Note: The level cap entry in the trainer card may have some letters overlap due to space restriction, this will be fixed with an upcoming update.
 
 **Changed:**
 
-- *#380* The command `rctmod player get progress graph` now accepts the flags `defeated=<boolean>`, `optionals=<boolean>` and `singles=<boolean>` with `defeated` and `optionals` defaulting to `true` while `singles` defaults to `false` (activating this flag will let the graph hit the limits of PlantUML but it may have its uses in the future)
+- *#381* The command `rctmod player get progress graph` now accepts the flags `defeated=<boolean>`, `optionals=<boolean>` and `singles=<boolean>` with `defeated` and `optionals` defaulting to `true` while `singles` defaults to `false` (activating this flag will let the graph hit the limits of PlantUML but it may have its uses in the future)
+- *#380* The commands `rctmod trainer summon` and `summon_persistent` now optionally accept an nbt tag as last argument (like vanilla `summon`)
 - *#379* The properties `requiredDefeats` and `requiredSeries` of trainer mobs and series respectively are now more lenient towards the format of data they accept (`<example input>` => `<how it will be interpreted>`):
   - a. single values: `"example"` => `[["example"]]`
   - b. array of single values: `["example1", "example2"]` => `[["example1"], ["example2"]]`
@@ -24,7 +25,7 @@
 
 **Deprecated:**
 
-- *#373* Command flags `include_defeated`, `include_optionals` and `include_singles` (these will for now attempt to set the corresponding new flag to `true` but with a lower priority, see also *#380*). They are scheduled to be removed completely with `0.18.0-beta`.
+- *#373* Command flags `include_defeated`, `include_optionals` and `include_singles` (these will for now attempt to set the corresponding new flag to `true` but with a lower priority, see also *#381*). They are scheduled to be removed completely with `0.18.0-beta`.
 
 ## [0.17.4-beta] - 2025-11-30
 
