@@ -73,7 +73,7 @@ for project in ${sub_projects}; do
         -e s/"MOD_ID\s*=\s*\".*\"\s*;"/"MOD_ID = \"$new_mod_id\";"/ "$old_package_path_project/ModCommon.java" 2> /dev/null
 
     echo "- updating/adding license headers in source files of project '$project'"
-    "$TOOLS_PATH"/licensify RESERVED "$new_mod_name" "$new_mod_author" $old_source_files_project
+    "$TOOLS_PATH"/licensify LGPL3 "$new_mod_name" "$new_mod_author" $old_source_files_project
     
     mv "$project/src/main/resources/$old_mod_id.mixins.json" "$project/src/main/resources/$new_mod_id.mixins.json" 2> /dev/null
     mv "$project/src/main/resources/$old_mod_id.mixins.refmap.json" "$project/src/main/resources/$new_mod_id.mixins.refmap.json" 2> /dev/null
