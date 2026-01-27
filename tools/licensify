@@ -6,6 +6,7 @@
 # usage: licensify <license> <title> <author> <files>...
 
 MIT_HEADER=''
+RESERVED_HEADER=''
 LGPL3_HEADER="/*
  * This file is part of <title>.
  * Copyright (c) $(date +%Y), <author>, All rights reserved.
@@ -29,6 +30,8 @@ case "$1" in
         header="$MIT_HEADER" ;;
     LGPL3)
         header="$LGPL3_HEADER" ;;
+    RESERVED)
+        header="$RESERVED_HEADER" ;;
     *)
         echo "error: invalid license '$1'"
         exit 1 ;;
