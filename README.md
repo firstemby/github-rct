@@ -133,4 +133,4 @@ You can find a [Discord Channel](https://discord.com/channels/934267676354834442
 
 ## License
 
-All rights reserved.
+The **source code** of this project is licensed under [GNU-LGPL](LICENSE.md).
