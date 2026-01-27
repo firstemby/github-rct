@@ -40,7 +40,7 @@ public class TrainerSpawnerBlockEntityRenderer implements BlockEntityRenderer<Tr
         double m = be.getRenderItems().size();
         int n = 0;
 
-        var t = (be.getLevel().getGameTime() + f)/(TrainerSpawnerBlock.isPowered(be.getBlockState()) ? 20.0 : 60.0);
+        var t = (be.getLevel().getGameTime() + f)/(TrainerSpawnerBlock.isBoosted(be.getBlockState()) ? 20.0 : 60.0);
         var d = (int)t;
 
         be.renderState.targetP = ((d%2) + (t - d)) * org.joml.Math.PI;

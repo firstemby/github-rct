@@ -58,6 +58,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class TrainerSpawnerBlock extends BaseEntityBlock {
     public static final MapCodec<TrainerSpawnerBlock> CODEC = TrainerSpawnerBlock.simpleCodec(TrainerSpawnerBlock::new);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final BooleanProperty INVERTED = BlockStateProperties.INVERTED;
     public static final BooleanProperty LOOTABLE = BooleanProperty.create("lootable");
     public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
 
@@ -67,6 +68,18 @@ public class TrainerSpawnerBlock extends BaseEntityBlock {
 
     static BlockState setPowered(BlockState blockState, boolean value) {
         return blockState.setValue(POWERED, value);
+    }
+
+    public static boolean isInverted(BlockState blockState) {
+        return blockState.getValue(INVERTED);
+    }
+
+    static BlockState setInverted(BlockState blockState, boolean value) {
+        return blockState.setValue(INVERTED, value);
+    }
+
+    public static boolean isBoosted(BlockState blockState) {
+        return isInverted(blockState) ? !isPowered(blockState) : isPowered(blockState);
     }
 
     public static boolean isLootable(BlockState blockState) {
@@ -102,6 +115,7 @@ public class TrainerSpawnerBlock extends BaseEntityBlock {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
             .setValue(POWERED, false)
+            .setValue(INVERTED, false)
             .setValue(LOOTABLE, true)
             .setValue(LOCKED, false));
     }
@@ -161,7 +175,7 @@ public class TrainerSpawnerBlock extends BaseEntityBlock {
 
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
-        if(isPowered(blockState)) {
+        if(isBoosted(blockState)) {
             double d = (double)blockPos.getX() + 0.5 + (randomSource.nextDouble() - 0.5) * 0.2;
             double e = (double)blockPos.getY() + 0.7 + (randomSource.nextDouble() - 0.5) * 0.2;
             double f = (double)blockPos.getZ() + 0.5 + (randomSource.nextDouble() - 0.5) * 0.2;
@@ -171,7 +185,7 @@ public class TrainerSpawnerBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{POWERED, LOOTABLE, LOCKED});
+        builder.add(new Property[]{POWERED, INVERTED, LOOTABLE, LOCKED});
     }
 
     @Override

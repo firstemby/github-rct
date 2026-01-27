@@ -4,15 +4,16 @@
 
 **Added:**
 
-- *#380* Portuguese (Brazil) language support (big thanks to PrincessStellar!). Note: The level cap entry in the trainer card may have some letters overlap due to space restriction, this will be fixed with an upcoming update.
+- *#381* Portuguese (Brazil) language support (big thanks to PrincessStellar!). Note: The level cap entry in the trainer card may have some letters overlap due to space restriction, this will be fixed with an upcoming update.
 
 **Changed:**
 
-- *#379* The command `rctmod player get progress graph` now accepts the flags `defeated=<boolean>`, `optionals=<boolean>` and `singles=<boolean>` with `defeated` and `optionals` defaulting to `true` while `singles` defaults to `false` (activating this flag will let the graph hit the limits of PlantUML but it may have its uses in the future)
-- *#378* The properties `requiredDefeats` and `requiredSeries` of trainer mobs and series respectively are now more lenient with the format of data they accept:
+- *#380* The command `rctmod player get progress graph` now accepts the flags `defeated=<boolean>`, `optionals=<boolean>` and `singles=<boolean>` with `defeated` and `optionals` defaulting to `true` while `singles` defaults to `false` (activating this flag will let the graph hit the limits of PlantUML but it may have its uses in the future)
+- *#379* The properties `requiredDefeats` and `requiredSeries` of trainer mobs and series respectively are now more lenient towards the format of data they accept (`<example input>` => `<how it will be interpreted>`):
   - a. single values: `"example"` => `[["example"]]`
-  - b. arrays of single values: `["example1", "example2"]` => `[["example1", "example2"]]`
-  - c. arrays of arrays with values: `[["example1", "example2"], "example3"]` => `[["example1", "example2"], ["example3"]]`
+  - b. array of single values: `["example1", "example2"]` => `[["example1"], ["example2"]]`
+  - c. array of arrays with values: `[["example1", "example2"], "example3"]` => `[["example1", "example2"], ["example3"]]`
+- *#378* Trainer Spawner block now has an additional block state `inverted`: Inverts how the block reacts to redstone (i.e. it will be boosted if not powered). The value is set to `false` by default, use `setblock` to create a spawner with custom block states (e.g. `rctmod:trainer_spawner[inverted=true]`).
 
 **Fixed:**
 
@@ -23,7 +24,7 @@
 
 **Deprecated:**
 
-- *#373* Command flags `include_defeated`, `include_optionals` and `include_singles` (these will for now attempt to set the corresponding new flag to `true` but with a lower priority, see also *#379*). They are scheduled to be removed completely with `0.18.0-beta`.
+- *#373* Command flags `include_defeated`, `include_optionals` and `include_singles` (these will for now attempt to set the corresponding new flag to `true` but with a lower priority, see also *#380*). They are scheduled to be removed completely with `0.18.0-beta`.
 
 ## [0.17.4-beta] - 2025-11-30
 

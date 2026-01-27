@@ -273,7 +273,7 @@ public class TrainerSpawnerBlockEntity extends BlockEntity {
             return;
         }
 
-        var guaruantee = TrainerSpawnerBlock.isPowered(blockState); /* && RCTMod.getInstance().getServerConfig().enableTrainerSpawnerRedstone() */
+        var guaruantee = TrainerSpawnerBlock.isBoosted(blockState); /* && RCTMod.getInstance().getServerConfig().enableTrainerSpawnerRedstone() */
         var spawner = RCTMod.getInstance().getTrainerSpawner();
         var trainerIds = new ArrayList<>(this.getTrainerIds());
         Collections.shuffle(trainerIds);
