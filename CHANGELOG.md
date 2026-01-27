@@ -4,7 +4,14 @@
 
 **Added:**
 
-- *#376* Portuguese (brazil) language support (big thanks to PrincessStellar!)
+- *#377* Portuguese (brazil) language support (big thanks to PrincessStellar!)
+
+**Changed:**
+
+- *#376* The properties `requiredDefeats` and `requiredSeries` of trainer mobs and series respectively are now more lenient in what format they accept data:
+  - a. single values: `"example"` => `[["example"]]`
+  - b. arrays of single values: `["example1", "example2"]` => `[["example1", "example2"]]`
+  - c. arrays of arrays with values: `[["example1", "example2"], "example3"]` => `[["example1", "example2"], ["example3"]]`
 
 **Fixed:**
 

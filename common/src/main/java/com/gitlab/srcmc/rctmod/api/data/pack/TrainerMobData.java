@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,6 +38,7 @@ import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.Exclude;
+import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
 import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.resources.ResourceLocation;
@@ -49,7 +49,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     private String type = "normal";
     private String signatureItem = "";
-    private List<Set<String>> requiredDefeats = new ArrayList<>();
+    private StringSetList requiredDefeats = new StringSetList();
     private Set<String> series = new HashSet<>();
     private Set<String> substitutes = new HashSet<>();
     private boolean optional;
@@ -88,7 +88,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.type = origin.type;
         this.signatureItem = origin.signatureItem;
         this.relativeLevelCap = origin.relativeLevelCap;
-        this.requiredDefeats = List.copyOf(origin.requiredDefeats);
+        this.requiredDefeats = new StringSetList(origin.requiredDefeats);
         this.followdBy = Set.copyOf(origin.followdBy);
         this.optional = origin.optional;
         this.maxTrainerWins = origin.maxTrainerWins;
@@ -112,7 +112,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.lazyType = () -> {
             var type = TrainerType.valueOf(this.type.toLowerCase());
             this.lazyType = () -> type;
-            return this.lazyType.get();
+            return type;
         };
     }
 
