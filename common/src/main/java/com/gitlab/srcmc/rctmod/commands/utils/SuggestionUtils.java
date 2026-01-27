@@ -173,10 +173,17 @@ public final class SuggestionUtils {
         return builder.buildFuture();
     }
 
-    private static String[] GRAPH_FLAGS = {"include_defeated", "include_optionals", "include_singles"};
-    public static final int GF_INCLUDE_DEFEATED = 1<<(GRAPH_FLAGS.length - 1);
-    public static final int GF_INCLUDE_OPTIONALS = 1<<(GRAPH_FLAGS.length - 2);
-    public static final int GF_INCLUDE_SINGLES = 1<<(GRAPH_FLAGS.length - 3);
+    private static String[] GRAPH_FLAGS = {"defeated=false", "defeated=true", "optionals=false", "optionals=true", "singles=false", "singles=true", "include_defeated", "include_optionals", "include_singles"};
+    public static final int GF_DEFEATED_FALSE = 1<<(GRAPH_FLAGS.length - 1);
+    public static final int GF_DEFEATED_TRUE = 1<<(GRAPH_FLAGS.length - 2);
+    public static final int GF_OPTIONALS_FALSE = 1<<(GRAPH_FLAGS.length - 3);
+    public static final int GF_OPTIONALS_TRUE = 1<<(GRAPH_FLAGS.length - 4);
+    public static final int GF_SINGLES_FALSE = 1<<(GRAPH_FLAGS.length - 5);
+    public static final int GF_SINGLES_TRUE = 1<<(GRAPH_FLAGS.length - 6);
+    // TODO include_* flags are deprecated (scheduled for removal with 0.18.0-beta)
+    public static final int GF_INCLUDE_DEFEATED = 1<<(GRAPH_FLAGS.length - 7);
+    public static final int GF_INCLUDE_OPTIONALS = 1<<(GRAPH_FLAGS.length - 8);
+    public static final int GF_INCLUDE_SINGLES = 1<<(GRAPH_FLAGS.length - 9);
 
     public static int getGraphFlags(String in) throws IllegalArgumentException {
         var inFlags = in.toLowerCase().split("\s+");

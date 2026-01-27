@@ -320,9 +320,10 @@ public final class PlayerCommands {
             flags = SuggestionUtils.getGraphFlags(flagStr);
         }
         
-        var includeDefeated = (flags & SuggestionUtils.GF_INCLUDE_DEFEATED) != 0;
-        var includeOptionals = (flags & SuggestionUtils.GF_INCLUDE_OPTIONALS) != 0;
-        var includeSingles = (flags & SuggestionUtils.GF_INCLUDE_SINGLES) != 0;
+        var includeDefeated = (flags & SuggestionUtils.GF_DEFEATED_FALSE) == 0;// && ((flags & SuggestionUtils.GF_DEFEATED_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_DEFEATED) != 0);
+        var includeOptionals = (flags & SuggestionUtils.GF_OPTIONALS_FALSE) == 0;// && ((flags & SuggestionUtils.GF_OPTIONALS_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_OPTIONALS) != 0);
+        var includeSingles = (flags & SuggestionUtils.GF_SINGLES_FALSE) == 0 && ((flags & SuggestionUtils.GF_SINGLES_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_SINGLES) != 0);
+
         var graph = RCTMod.getInstance().getSeriesManager().getGraph(tpd.getCurrentSeries());
         var url = PlantUML.SERVER_URL + PlantUML.encode(player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
 
