@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.6-beta] - 2026-01-29
+
+**Fixed:**
+
+- *#383* New `nbt` argument in `trainer summon` commands not being optional as supposed to
+
 ## [0.17.5-beta] - 2026-01-27
 
 **Added:**

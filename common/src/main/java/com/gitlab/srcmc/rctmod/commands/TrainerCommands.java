@@ -108,6 +108,14 @@ public class TrainerCommands {
         )));
     }
 
+    private static <T> T getOrNull(CommandContext<CommandSourceStack> context, String key, Class<T> clazz) {
+        try {
+            return context.getArgument(key, clazz);
+        } catch(IllegalArgumentException e) {
+            return null;
+        }
+    }
+
     private static TrainerMob summonTrainer(CommandSourceStack css, String id, Vec3 pos, CompoundTag nbt) throws CommandSyntaxException {
         if(nbt == null) {
             nbt = new CompoundTag();
@@ -126,7 +134,7 @@ public class TrainerCommands {
     private static int mob_summon_trainer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if(context.getSource().getEntity() instanceof Player player) {
             try {
-                RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class)));
+                RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), getOrNull(context, "nbt", CompoundTag.class)));
             } catch(Exception e) {
                 ModCommon.LOG.error(e.getMessage(), e);
             }
@@ -139,14 +147,14 @@ public class TrainerCommands {
     }
 
     private static int mob_summon_trainer_at(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class)));
+        RCTMod.getInstance().getTrainerSpawner().register(summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), getOrNull(context, "nbt", CompoundTag.class)));
         return 0;
     }
 
     private static int mob_summon_persistent_trainer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if(context.getSource().getEntity() instanceof Player player) {
             try {
-                var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class));
+                var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), player.blockPosition().above().getCenter().add(0, -0.5, 0), getOrNull(context, "nbt", CompoundTag.class));
                 mob.setPersistent(true);
                 RCTMod.getInstance().getTrainerSpawner().register(mob);
             } catch(Exception e) {
@@ -161,7 +169,7 @@ public class TrainerCommands {
     }
 
     private static int mob_summon_persistent_trainer_at(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), context.getArgument("nbt", CompoundTag.class));
+        var mob = summonTrainer(context.getSource(), context.getArgument("trainer", String.class), BlockPosArgument.getSpawnablePos(context, "at").getCenter().add(0, -0.5, 0), getOrNull(context, "nbt", CompoundTag.class));
         mob.setPersistent(true);
         RCTMod.getInstance().getTrainerSpawner().register(mob);
         return 0;
