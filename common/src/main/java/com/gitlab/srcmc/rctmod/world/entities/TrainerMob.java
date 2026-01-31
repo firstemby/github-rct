@@ -160,7 +160,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 && !rct.isInBattle(player)
                 && tm.getActivePokemon(player) > 0
                 // && tpd.getLevelCap() >= tmd.getRequiredLevelCap(player) // deprecated
-                && tm.getPlayerLevel(player) <= tpd.getLevelCap()
+                && ((tm.getPlayerLevel(player) <= tpd.getLevelCap()) || RCTMod.getInstance().getServerConfig().flattenToLevelCap())
                 && tmd.getMissingRequirements(tm.getData(player).getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty()
                 && (tmd.isOfSeries(tpd.getCurrentSeries()) || bm.getDefeatByCount(this.getTrainerId(), player) > 0)
                 && this.couldBattleAgainst(e);
