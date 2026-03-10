@@ -161,7 +161,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 && tm.getActivePokemon(player) > 0
                 // && tpd.getLevelCap() >= tmd.getRequiredLevelCap(player) // deprecated
                 && tm.getPlayerLevel(player) <= tpd.getLevelCap()
-                && tmd.getMissingRequirements(tm.getData(player).getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty()
+                && tmd.getMissingRequirements(tm.getData(player).getDefeatedTrainerIds(), tpd.getCurrentSeries()).findFirst().isEmpty()
                 && (tmd.isOfSeries(tpd.getCurrentSeries()) || bm.getDefeatByCount(this.getTrainerId(), player) > 0)
                 && this.couldBattleAgainst(e);
         }
@@ -231,7 +231,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         var tm = RCTMod.getInstance().getTrainerManager();
         var tmd = tm.getData(this);
         var tpd = tm.getData(player);
-        var msr = tmd.getMissingRequirements(tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst();
+        var msr = tmd.getMissingRequirements(tpd.getDefeatedTrainerIds(), tpd.getCurrentSeries()).findFirst();
         var bm = tm.getBattleMemory(this);
 
         if(this.isInBattle()) {
@@ -795,7 +795,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             var tpd = tm.getData(player);
 
             return !tpd.getDefeatedTrainerIds().contains(this.getTrainerId())
-                && tmd.getMissingRequirements(tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty();
+                && tmd.getMissingRequirements(tpd.getDefeatedTrainerIds(), tpd.getCurrentSeries()).findFirst().isEmpty();
         }
 
         return false;
