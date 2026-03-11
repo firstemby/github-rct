@@ -476,7 +476,8 @@ public class TrainerSpawner {
     }
 
     private static boolean canSpawnAt(Level level, BlockPos blockPos) {
-        return !level.getBlockState(blockPos.below()).isAir()
+        return level.isLoaded(blockPos)
+            && !level.getBlockState(blockPos.below()).isAir()
             && level.getBlockState(blockPos).isAir()
             && level.getBlockState(blockPos.above()).isAir();
     }
