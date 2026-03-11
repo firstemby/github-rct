@@ -1,10 +1,11 @@
 # Changelog
 
-## [0.17.6-beta] - 2026-01-29
+## [0.17.6-beta] - 2026-03-11
 
 **Fixed:**
 
-- *#383* New `nbt` argument in `trainer summon` commands not being optional as supposed to
+- *#384* New `nbt` argument in `trainer summon` commands not being optional as supposed to
+- *#383* Possibility for trainers to spawn outside a players simulation distance (causing chunks to load and performance issues)
 
 ## [0.17.5-beta] - 2026-01-27
 

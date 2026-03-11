@@ -571,6 +571,11 @@ public class TrainerSpawner {
         
         for(int i = dy; i != yEnd; i += yAdd) {
             var pos = new BlockPos(x, y + i, z);
+
+            if(!level.isLoaded(pos)) {
+                continue;
+            }
+            
             var bs = level.getBlockState(pos);
 
             if(bs.is(Blocks.SNOW)) {
