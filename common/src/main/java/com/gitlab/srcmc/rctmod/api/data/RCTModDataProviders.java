@@ -17,38 +17,32 @@
  */
 package com.gitlab.srcmc.rctmod.api.data;
 
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.concurrent.CompletableFuture;
-
-import com.gitlab.srcmc.rctmod.ModCommon;
-import com.google.common.hash.HashCode;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 
 public enum RCTModDataProviders {
-    EXAMPLE(new CustomDataProvider() {
-        @Override
-        public String getName() {
-            return "Example";
-        }
+    // EXAMPLE(new CustomDataProvider() {
+    //     @Override
+    //     public String getName() {
+    //         return "Example";
+    //     }
 
-        @Override
-        public CompletableFuture<?> run(CachedOutput out) {
-            return CompletableFuture.runAsync(() -> {
-                try {
-                    var packOut = this.packOutput();
-                    var path = Paths.get(packOut != null ? packOut.getOutputFolder().toString() : "", String.format("assets/%s/example.json", ModCommon.MOD_ID));
-                    var data = "{}";
-                    out.writeIfNeeded(path, data.getBytes(), HashCode.fromInt(data.hashCode()));
-                } catch (IOException e) {
-                    ModCommon.LOG.error(e.getMessage(), e);
-                }
-            });
-        }
-    });
+    //     @Override
+    //     public CompletableFuture<?> run(CachedOutput out) {
+    //         return CompletableFuture.runAsync(() -> {
+    //             try {
+    //                 var packOut = this.packOutput();
+    //                 var path = Paths.get(packOut != null ? packOut.getOutputFolder().toString() : "", String.format("assets/%s/example.json", ModCommon.MOD_ID));
+    //                 var data = "{}";
+    //                 out.writeIfNeeded(path, data.getBytes(), HashCode.fromInt(data.hashCode()));
+    //             } catch (IOException e) {
+    //                 ModCommon.LOG.error(e.getMessage(), e);
+    //             }
+    //         });
+    //     }
+    // })
+    ;
 
     private final CustomDataProvider provider;
     private final RegistrySetBuilder registryBuilder;
