@@ -21,6 +21,7 @@ import com.gitlab.srcmc.rctmod.advancements.criteria.DefeatCountTrigger;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.world.blocks.TrainerRepelRodBlock;
 import com.gitlab.srcmc.rctmod.world.blocks.TrainerSpawnerBlock;
+import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerRepelRodBlockEntity;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
@@ -93,9 +94,11 @@ public final class ModRegistries {
     public class BlockEntityTypes {
         public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(ModCommon.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
         public static final RegistrySupplier<BlockEntityType<TrainerSpawnerBlockEntity>> TRAINER_SPAWNER;
+        public static final RegistrySupplier<BlockEntityType<TrainerRepelRodBlockEntity>> TRAINER_REPEL_ROD;
 
         static {
             TRAINER_SPAWNER = REGISTRY.register(location("trainer_spawner"), () -> BlockEntityType.Builder.of(TrainerSpawnerBlockEntity::new, Blocks.TRAINER_SPAWNER.get()).build(null));
+            TRAINER_REPEL_ROD = REGISTRY.register(location("trainer_repel_rod"), () -> BlockEntityType.Builder.of(TrainerRepelRodBlockEntity::new, Blocks.TRAINER_REPEL_ROD.get()).build(null));
         }
     }
     

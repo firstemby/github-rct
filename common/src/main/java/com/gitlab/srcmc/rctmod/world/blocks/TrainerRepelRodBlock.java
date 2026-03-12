@@ -17,32 +17,46 @@
  */
 package com.gitlab.srcmc.rctmod.world.blocks;
 
-import com.gitlab.srcmc.rctmod.api.RCTMod;
+import org.jetbrains.annotations.Nullable;
+
+import com.gitlab.srcmc.rctmod.ModRegistries;
+import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerRepelRodBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RodBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<RodBlock> CODEC = TrainerRepelRodBlock.simpleCodec(TrainerRepelRodBlock::new);
+public class TrainerRepelRodBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<TrainerRepelRodBlock> CODEC = TrainerRepelRodBlock.simpleCodec(TrainerRepelRodBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public TrainerRepelRodBlock() {
         this(BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHTNING_ROD));
@@ -54,6 +68,11 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
 
     public TrainerRepelRodBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new TrainerRepelRodBlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -90,8 +109,9 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
     protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
         if(!level.isClientSide) {
             this.updatePowered(level, blockState, blockPos);
-            super.neighborChanged(blockState, level, blockPos, block, blockPos2, bl);
         }
+        
+        super.neighborChanged(blockState, level, blockPos, block, blockPos2, bl);
     }
 
     @Override
@@ -138,33 +158,20 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
                 x = y = z = 0.5;
         }
 
-        double d = (double)blockPos.getX() + x + (randomSource.nextDouble() - 0.5) * 0.2;
-        double e = (double)blockPos.getY() + y + (randomSource.nextDouble() - 0.5) * 0.2;
-        double f = (double)blockPos.getZ() + z + (randomSource.nextDouble() - 0.5) * 0.2;
+        var d = blockPos.getX() + x + (randomSource.nextDouble() - 0.5) * 0.2;
+        var e = blockPos.getY() + y + (randomSource.nextDouble() - 0.5) * 0.2;
+        var f = blockPos.getZ() + z + (randomSource.nextDouble() - 0.5) * 0.2;
         level.addParticle(DustParticleOptions.REDSTONE, d, e, f, 0.0, 0.0, 0.0);
     }
 
     @Override
-    public MapCodec<? extends RodBlock> codec() {
+    public MapCodec<? extends BaseEntityBlock> codec() {
         return TrainerRepelRodBlock.CODEC;
     }
 
-    @Override
-    protected void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        super.onPlace(blockState, level, blockPos, blockState2, bl);
-
-        if(!blockState.getValue(POWERED)) {
-            RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, false);
-        }
-    }
-
-    @Override
-    protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        if(!blockState.getValue(POWERED)) {
-            RCTMod.getInstance().getTrainerSpawner().markChunks(level, blockPos, true);
-        }
-
-        super.onRemove(blockState, level, blockPos, blockState2, bl);
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return TrainerRepelRodBlock.createTickerHelper(blockEntityType, ModRegistries.BlockEntityTypes.TRAINER_REPEL_ROD.get(), level.isClientSide ? TrainerRepelRodBlockEntity::clientTick : TrainerRepelRodBlockEntity::serverTick);
     }
 
     private void updatePowered(Level level, BlockState blockState, BlockPos blockPos) {
@@ -172,6 +179,42 @@ public class TrainerRepelRodBlock extends RodBlock implements SimpleWaterloggedB
 
         if(blockState.getValue(POWERED) != powered) {
             level.setBlock(blockPos, blockState.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
+            level.getBlockEntity(blockPos, ModRegistries.BlockEntityTypes.TRAINER_REPEL_ROD.get()).ifPresent(be -> be.setCanSpawn(!powered));
         }
+    }
+
+    // RodBlock
+    protected static final float AABB_MIN = 6.0F;
+    protected static final float AABB_MAX = 10.0F;
+    protected static final VoxelShape Y_AXIS_AABB = Block.box((double)6.0F, (double)0.0F, (double)6.0F, (double)10.0F, (double)16.0F, (double)10.0F);
+    protected static final VoxelShape Z_AXIS_AABB = Block.box((double)6.0F, (double)6.0F, (double)0.0F, (double)10.0F, (double)10.0F, (double)16.0F);
+    protected static final VoxelShape X_AXIS_AABB = Block.box((double)0.0F, (double)6.0F, (double)6.0F, (double)16.0F, (double)10.0F, (double)10.0F);
+
+    @Override
+    protected VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        switch(Direction.Axis.VALUES[blockState.getValue(FACING).getAxis().ordinal()]) {
+            case X:
+            default:
+                return X_AXIS_AABB;
+            case Z:
+                return Z_AXIS_AABB;
+            case Y:
+                return Y_AXIS_AABB;
+        }
+    }
+
+    @Override
+    protected BlockState rotate(BlockState blockState, Rotation rotation) {
+        return blockState.setValue(FACING, rotation.rotate((Direction)blockState.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockState mirror(BlockState blockState, Mirror mirror) {
+        return blockState.setValue(FACING, mirror.mirror((Direction)blockState.getValue(FACING)));
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
+        return false;
     }
 }
