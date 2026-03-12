@@ -27,3 +27,4 @@ run/
 .env
 libs
 *.log
+*/**/.cache/*

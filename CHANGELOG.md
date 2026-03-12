@@ -4,14 +4,15 @@
 
 **Changed:**
 
-- *#385* Reworked Trainer Repel Rod to a block entity
+- *#386* Reworked Trainer Repel Rod to a block entity
   - Repel rod positions are no longer persisted independently (in `data/rctmod.spawn.chunks.repel.map.dat`)
   - The block entity now registers itself once it receives its first tick (i.e. its chunk is loaded)
   - This change possibly fixes previously reported issues of repel rods randomly stopping to work and should overall be a more stable solution (while the actual bug was never confirmed/reproduced this is still fair to assume due to the complete rework)
-  - Unfortunately exisintg repel rods require a **block update** to get registered as block entities
+  - Unfortunately existing repel rods require a **block update** to get registered as block entities
 
 **Fixed:**
 
+- *#385* NPE when attempting to access minecraft instance in datagen task
 - *#384* Possibility for trainers to spawn outside a players simulation distance (causing chunks to load and performance issues)
 
 ## [0.17.6-beta] - 2026-03-11
