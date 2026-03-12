@@ -8,6 +8,10 @@ architectury {
     minecraft = project.minecraft_version
 }
 
+ext {
+    generatedResources = file("common/src/generated/resources")
+}
+
 allprojects {
     group = rootProject.maven_group
     version = rootProject.mod_version

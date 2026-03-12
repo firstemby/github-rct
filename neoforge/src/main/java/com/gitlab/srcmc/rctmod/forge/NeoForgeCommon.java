@@ -20,14 +20,18 @@ package com.gitlab.srcmc.rctmod.forge;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.ModRegistries;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.data.RCTModDataProviders;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.DataProvider.Factory;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(ModCommon.MOD_ID)
 public class NeoForgeCommon {
@@ -38,6 +42,7 @@ public class NeoForgeCommon {
         container.getEventBus().addListener(NeoForgeCommon::onCommonSetup);
         container.getEventBus().addListener(NeoForgeCommon::onConfigLoading);
         container.getEventBus().addListener(NeoForgeCommon::onConfigReloading);
+        container.getEventBus().addListener(NeoForgeCommon::onGatherData);
     }
 
     static void onCommonSetup(FMLCommonSetupEvent event) {
@@ -63,6 +68,15 @@ public class NeoForgeCommon {
                 break;
             default:
                 break;
+        }
+    }
+
+    // TOOD: datagen task (./gradlew runData) gets stuck in IDLE after completions making it impossible to
+    // use in automated setups (see https://discord.com/channels/792699517631594506/1480000109893652481)
+    static void onGatherData(GatherDataEvent event) {
+        for(var dp : RCTModDataProviders.values()) {
+            event.createDatapackRegistryObjects(dp.registryBuilder());
+            event.getGenerator().addProvider(true, (Factory<DataProvider>)dp.provider()::withOutput);
         }
     }
 }

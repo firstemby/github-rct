@@ -8,6 +8,16 @@ architectury {
     neoForge()
 }
 
+// based of https://docs.architectury.dev/loom/datagen
+loom {
+    runs {
+        data {
+            data()
+            programArgs "--all", "--mod", "$mod_id", "--output", generatedResources.absolutePath
+        }
+    }
+}
+
 configurations {
     common {
         canBeResolved = true
