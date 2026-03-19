@@ -12,6 +12,6 @@ generate:
   datagen: ./gradlew runData
 build: ./gradlew clean build
 copyto:
-  fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/cbl-1.7.2-test/mods"
+  fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-fabric-1.7/mods"
   neoforge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rctapi-neoforge-0.13.8/mods"
 publish: inenv ./tools/publish
