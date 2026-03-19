@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -92,6 +93,11 @@ public class TrainerRepelRodBlock extends BaseEntityBlock implements SimpleWater
         }
 
         return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState blockState) {
+        return RenderShape.MODEL;
     }
 
     @Override
