@@ -13,7 +13,8 @@
 #   to the README to see how project properties affect the structure of the project.
 
 TOOLS_PATH="${TOOLS_PATH:-tools}"
-sub_projects="common fabric forge neoforge"
+sub_projects="common fabric neoforge"
+license_key="lgpl3"
 
 # keys of fields in gradle.properties
 mod_name_key="mod_name="
@@ -40,6 +41,7 @@ read -e -i "$old_mod_version"     -p "  Version     : " new_mod_version
 read -e -i "$old_mod_description" -p "  Description : " new_mod_description
 read -e -i "$old_mod_group"       -p "  Maven Group : " new_mod_group
 read -e -i "$sub_projects"        -p "  Sub Projects: " sub_projects
+read -e -i "$license_key"         -p "  License     : " license_key
 
 # sanity check
 echo "This script might modify several files and the struture of the project"
@@ -53,12 +55,12 @@ fi
 
 # update the project
 echo "- updating fields in 'gradle.properties'"
-sed -i -e s/"$mod_name_key.*"/"$mod_name_key$new_mod_name"/ \
-    -e s/"$mod_id_key.*"/"$mod_id_key$new_mod_id"/ \
-    -e s/"$mod_author_key.*"/"$mod_author_key$new_mod_author"/ \
-    -e s/"$mod_version_key.*"/"$mod_version_key$new_mod_version"/ \
-    -e s/"$mod_description_key.*"/"$mod_description_key$new_mod_description"/ \
-    -e s/"$mod_group_key.*"/"$mod_group_key$new_mod_group"/ gradle.properties
+sed -i -e s~"$mod_name_key.*"~"$mod_name_key$new_mod_name"~ \
+    -e s~"$mod_id_key.*"~"$mod_id_key$new_mod_id"~ \
+    -e s~"$mod_author_key.*"~"$mod_author_key$new_mod_author"~ \
+    -e s~"$mod_version_key.*"~"$mod_version_key$new_mod_version"~ \
+    -e s~"$mod_description_key.*"~"$mod_description_key$new_mod_description"~ \
+    -e s~"$mod_group_key.*"~"$mod_group_key$new_mod_group"~ gradle.properties
 
 old_package_path="${old_mod_group//./\/}/$old_mod_id"
 new_package_path="${new_mod_group//./\/}/$new_mod_id"
@@ -69,18 +71,18 @@ for project in ${sub_projects}; do
     old_source_files_project="$(find $old_package_path_project -name *.java)"
 
     echo "- updating MOD_NAME and MOD_ID fields in 'ModCommon' of project '$project'"
-    sed -i -e s/"MOD_NAME\s*=\s*\".*\"\s*;"/"MOD_NAME = \"$new_mod_name\";"/ \
-        -e s/"MOD_ID\s*=\s*\".*\"\s*;"/"MOD_ID = \"$new_mod_id\";"/ "$old_package_path_project/ModCommon.java" 2> /dev/null
+    sed -i -e s~"MOD_NAME\s*=\s*\".*\"\s*;"~"MOD_NAME = \"$new_mod_name\";"~ \
+        -e s~"MOD_ID\s*=\s*\".*\"\s*;"~"MOD_ID = \"$new_mod_id\";"~ "$old_package_path_project/ModCommon.java" 2> /dev/null
 
     echo "- updating/adding license headers in source files of project '$project'"
-    "$TOOLS_PATH"/licensify LGPL3 "$new_mod_name" "$new_mod_author" $old_source_files_project
+    "$TOOLS_PATH"/licensify "$license_key" "$new_mod_name" "$new_mod_author" $old_source_files_project
     
     mv "$project/src/main/resources/$old_mod_id.mixins.json" "$project/src/main/resources/$new_mod_id.mixins.json" 2> /dev/null
     mv "$project/src/main/resources/$old_mod_id.mixins.refmap.json" "$project/src/main/resources/$new_mod_id.mixins.refmap.json" 2> /dev/null
 
     if [ "$new_mod_group" != "$old_mod_group" -o "$new_mod_id" != "$old_mod_id" ]; then
         echo "- reorganizing package structure of project '$project'"
-        sed -i s/"$old_mod_group.$old_mod_id"/"$new_mod_group.$new_mod_id"/g $old_source_files_project
+        sed -i s~"$old_mod_group.$old_mod_id"~"$new_mod_group.$new_mod_id"~g $old_source_files_project
 
         if [ "$project" == "common" ]; then
             mkdir -p "$project/src/main/tmp~/$(dirname $new_package_path)" && mv "$old_package_path_project" "$project/src/main/tmp~/$new_package_path" && rm -r $project/src/main/java && mv $project/src/main/tmp~ $project/src/main/java
@@ -89,6 +91,9 @@ for project in ${sub_projects}; do
         fi
     fi
 done
+
+# full text license
+LICENSE_FILE=LICENSE.md LICENSE_FILES_OLD="LICENSE.txt LICENSE.md" "$TOOLS_PATH"/licensify "$license_key" "$new_mod_name" "$new_mod_author"
 
 # final feedback
 echo "---------------------------------------------------------------"
