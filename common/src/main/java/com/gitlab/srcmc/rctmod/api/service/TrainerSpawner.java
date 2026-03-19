@@ -148,7 +148,7 @@ public class TrainerSpawner {
             return; // otherwise endless loop on chunk access (watch out for this!)
         }
 
-        var c = level.getChunkAt(blockPos).getPos();
+        var c = new ChunkPos(blockPos);
         var l = level.dimension().location();
         var m = this.markedChunks.computeIfAbsent(l, k -> new HashMap<>());
         var x1 = c.x - CHUNK_REPEL_RADIUS;
