@@ -80,14 +80,6 @@ Another great guide for **0.13** by Pocketcraft:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/a9Ztr9dUOMo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Data Packs
-
-- Loot tables for badges from *Cobblemon Pokemon Badges*: [RCT Badges - Cobblemon Pokemon Badges](https://modrinth.com/datapack/rct-badges-cobblemonpokemonbadges)
-- Loot tables for badges from *PKGBadges*: [RCT Badges - PKGBadges](https://modrinth.com/datapack/rct-badges-pkgbadges)
-- Loot tables for badges from *Elemental Effects Badges*: [RCT Badges - Elemental Effects Badges](https://modrinth.com/datapack/rct-badges-elemental-effects-badges)
-
-> Only install one of these.
-
 ## Configuration/Documentation
 
 The mod contains many config options and has an extensive data pack support. Please refer to the [documentation](https://srcmc.gitlab.io/rct/docs) for more information, guides and the FAQ.
@@ -98,12 +90,25 @@ The mod contains many config options and has an extensive data pack support. Ple
 - [Radical Cobblemon Trainers API](https://modrinth.com/mod/rctapi)
 - [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) (**only on fabric**)
 
-## Optional
+## Data Packs (official)
 
-- Not happy with the textures? Check out this [Trainer Texture Pack](https://modrinth.com/resourcepack/rct-trainer-textures-plus) by forestfire.
-- [ToolTipFix](https://modrinth.com/mod/tooltipfix): Fixes issues with tooltips of the Trainer Card being to large to properly read (**only on fabric**)
+- Loot tables for badges from *Cobblemon Pokemon Badges*: [RCT Badges - Cobblemon Pokemon Badges](https://modrinth.com/datapack/rct-badges-cobblemonpokemonbadges)
+- Loot tables for badges from *PKGBadges*: [RCT Badges - PKGBadges](https://modrinth.com/datapack/rct-badges-pkgbadges)
+- Loot tables for badges from *Elemental Effects Badges*: [RCT Badges - Elemental Effects Badges](https://modrinth.com/datapack/rct-badges-elemental-effects-badges)
 
-> Note that there is a good chance for the tooltip fix to [eventually find its way into the fabric api](https://github.com/FabricMC/fabric/issues/2283).
+> Only install one of these.
+
+## Other Addons
+
+- [Radical Gyms & Structures](https://modrinth.com/datapack/radical-gyms-cobblemon) adds structures for gym leaders that will generate in your world.
+- [Run and Bun](https://modrinth.com/mod/cobblemon-recobbled-(advanced-trainer-ai)) is an advanced trainer battle AI and provides an alternative option to configure your trainers with.
+- [More Radical Trainers](https://modrinth.com/datapack/more-radical-trainers) will add many themed shorter series for you to conquer.
+- [Failrun](https://modrinth.com/datapack/failrun) is another series data pack with custom trainers and a long progression-focused series.
+- The mod is to easy for you? Check out [Cobblemon: Mega Showdown](https://modrinth.com/mod/cobblemon-mega-showdown), while it will enable you to use gimmicks like mega evolutions, so will it also enable these features for trainers from the core series of this mod.
+- Not happy with the textures? [Trainer Texture Pack](https://modrinth.com/resourcepack/rct-trainer-textures-plus) provides many pokemon franchise inspired skins for trainers.
+- [ToolTipFix](https://modrinth.com/mod/tooltipfix) fixes issues with tooltips of the Trainer Card being to large to properly read (**only on fabric**).
+
+> These are just some suggestions. There are most likely many more exciting addons out there.
 
 ## Known Issues
 
