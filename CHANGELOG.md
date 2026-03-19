@@ -12,7 +12,7 @@
   - Repel rod positions are no longer persisted independently (in `data/rctmod.spawn.chunks.repel.map.dat`)
   - The block entity now registers itself once it receives its first tick (i.e. its chunk is loaded)
   - This change possibly fixes previously reported issues of repel rods randomly stopping to work and should overall be a more stable solution (while the actual bug was never confirmed/reproduced this is still fair to assume due to the complete rework)
-  - Unfortunately existing repel rods require a **block update** to get registered as block entities
+  - Unfortunately **existing repel rods will have to be replaced** (or pulsed with redstone) to get registered as block entities
 - *#386* Trainer repel rod now connects to redstone dust
 
 **Fixed:**
