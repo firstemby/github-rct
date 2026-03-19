@@ -101,6 +101,11 @@ public class TrainerRepelRodBlock extends BaseEntityBlock implements SimpleWater
     }
 
     @Override
+    protected boolean isSignalSource(BlockState blockState) {
+        return true;
+    }
+
+    @Override
     protected FluidState getFluidState(BlockState blockState) {
         return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
     }
