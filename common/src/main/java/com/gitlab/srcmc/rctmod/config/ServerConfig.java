@@ -89,7 +89,9 @@ public class ServerConfig implements IServerConfig {
 
     // debug
     private final ConfigValue<Boolean> logSpawningValue;
+    private final ConfigValue<Boolean> logRepelRods;
     private boolean logSpawningCached;
+    private boolean logRepelRodsCached;
 
     private final ModConfigSpec spec;
 
@@ -292,6 +294,10 @@ public class ServerConfig implements IServerConfig {
             .comment(SEPARATOR, "If enabled additional information are printed to the log whenever a trainer spawns or despawns.")
             .define("logSpawning", IServerConfig.super.logSpawning());
 
+        this.logRepelRods = builder
+            .comment(SEPARATOR, "If enabled additional information are printed to the log whenever a trainer repel rod is registered or unregistered.")
+            .define("logRepelRods", IServerConfig.super.logRepelRods());
+
         this.spec = builder.build();
     }
 
@@ -329,6 +335,7 @@ public class ServerConfig implements IServerConfig {
         this.freeroamRequiresCompletedSeriesCached = this.freeroamRequiresCompletedSeriesValue.get();
         this.allowOverLevelingCached = this.allowOverLevelingValue.get();
         this.logSpawningCached = this.logSpawningValue.get();
+        this.logRepelRodsCached = this.logRepelRods.get();
     }
 
     @Override
@@ -474,5 +481,10 @@ public class ServerConfig implements IServerConfig {
     @Override
     public boolean logSpawning() {
         return this.logSpawningCached;
+    }
+
+    @Override
+    public boolean logRepelRods() {
+        return this.logRepelRodsCached;
     }
 }

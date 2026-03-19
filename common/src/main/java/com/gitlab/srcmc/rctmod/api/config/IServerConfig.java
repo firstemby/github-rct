@@ -301,6 +301,14 @@ public interface IServerConfig extends IModConfig {
      * default false
      */
     default boolean logSpawning() { return false; }
+    
+    /**
+     * If enabled additional information are printed to the log whenever a trainer
+     * repel rod is registered or unregistered.
+     * 
+     * default false
+     */
+    default boolean logRepelRods() { return false; }
 
     ///////////////
     // CONSTANTS //

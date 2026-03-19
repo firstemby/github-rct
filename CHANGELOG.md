@@ -1,6 +1,10 @@
 # Changelog
 
-## [0.17.7-beta] - 2026-03-12
+## [0.17.7-beta] - 2026-03-19
+
+**Added:**
+
+- *#387* Debug config option `logRepelRods`: Enables logging for additional information about trainer repel rods
 
 **Changed:**
 

@@ -171,6 +171,10 @@ public class TrainerSpawner {
         if(m.isEmpty()) {
             this.markedChunks.remove(l);
         }
+
+        if(RCTMod.getInstance().getServerConfig().logRepelRods()) {
+            ModCommon.LOG.info(String.format("Trainer repel rod %sregistered at (%s) %s, marked chunks: [%s]", canSpawn ? "" : "un", blockPos.toShortString(), l, this.markedChunks.getOrDefault(l, Map.of()).entrySet().stream().map(e -> String.format("%s:%d", e.getKey(), e.getValue())).reduce((a, b) -> a + ", " + b).orElse("")));
+        }
     }
 
     public boolean isMarkedAt(Level level, BlockPos pos) {
