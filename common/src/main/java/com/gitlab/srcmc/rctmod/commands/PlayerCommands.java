@@ -494,7 +494,7 @@ public final class PlayerCommands {
                 var tpd = tm.getData(player);
                 tpd.removeProgressDefeats();
                 var visited = new HashSet<String>();
-                tmd.getMissingRequirements(Set.of()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
+                tmd.getMissingRequirements(Set.of(), tpd.getCurrentSeries()).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
             }
 
             return 0;
@@ -513,7 +513,7 @@ public final class PlayerCommands {
             if(tmd != null) {
                 var tpd = tm.getData(player);
                 var visited = new HashSet<String>();
-                tmd.getMissingRequirements(Set.of()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
+                tmd.getMissingRequirements(Set.of(), tpd.getCurrentSeries()).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
             }
 
             return 0;
@@ -572,7 +572,7 @@ public final class PlayerCommands {
                 var tpd = tm.getData(player);
                 tpd.removeProgressDefeats();
                 var visited = new HashSet<String>();
-                tmd.getMissingRequirements(Set.of()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
+                tmd.getMissingRequirements(Set.of(), tpd.getCurrentSeries()).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
             }
         }
         
@@ -590,7 +590,7 @@ public final class PlayerCommands {
             if(tmd != null) {
                 var tpd = tm.getData(player);
                 var visited = new HashSet<String>();
-                tmd.getMissingRequirements(Set.of()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
+                tmd.getMissingRequirements(Set.of(), tpd.getCurrentSeries()).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
             }
         }
         
@@ -691,7 +691,7 @@ public final class PlayerCommands {
 
             var tm = RCTMod.getInstance().getTrainerManager();
             var tmd = tm.getData(trainerId);
-            tmd.getMissingRequirements(Set.of()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
+            tmd.getMissingRequirements(Set.of(), tpd.getCurrentSeries()).forEach(tid -> PlayerCommands.add_progress(tpd, tid, visited));
             tpd.addProgressDefeat(trainerId);
         }
     }

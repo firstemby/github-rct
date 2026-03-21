@@ -198,6 +198,20 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         });
     }
 
+    /**
+     * Same as {@link #getMissingRequirements(Set)} but only includes requirements that count for the given player series.
+     * If this trainer has no series ({@code series.isEmpty()}), all requiredDefeats count (any trainer can be required).
+     * If this trainer has series, only required defeats that are in the player's current series are considered.
+     */
+    public Stream<String> getMissingRequirements(Set<String> defeatedTrainerIds, String playerCurrentSeries) {
+        var missing = getMissingRequirements(defeatedTrainerIds);
+        if(this.series.isEmpty()) {
+            return missing;
+        }
+        var tm = RCTMod.getInstance().getTrainerManager();
+        return missing.filter(tid -> tm.getData(tid).isOfSeries(playerCurrentSeries));
+    }
+
     public boolean isOptional() {
         return this.optional;
     }
