@@ -372,6 +372,15 @@ public class TrainerManager extends DataPackManager {
 
         this.trainerMobs = newTrainerMobs;
         this.seriesManager.onLoad(this);
+
+        newTrainerMobs.forEach((trainerId, tmd) -> {
+            tmd.getRequiredSeries().forEach(set -> set.forEach(sid -> {
+                if(this.seriesManager.getGraph(sid) == this.seriesManager.UNKNOWN_SERIES) {
+                    ModCommon.LOG.warn(String.format("[rctmod] trainer '%s' has requiredSeries with unknown series '%s' - this requirement will never be satisfied", trainerId, sid));
+                }
+            }));
+        });
+
         this.receivedUpdates = new HashSet<>();
         this.close();
 

@@ -17,6 +17,7 @@
  */
 package com.gitlab.srcmc.rctmod.commands;
 
+import java.util.Collections;
 import java.util.Set;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
@@ -105,6 +106,10 @@ public class TrainerCommands {
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
                             .executes(TrainerCommands::mob_get_required_defeats)))
+                    .then(Commands.literal("required_series")
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
+                            .suggests(SuggestionUtils::get_trainer_suggestions)
+                            .executes(TrainerCommands::mob_get_required_series)))
         )));
     }
 
@@ -265,6 +270,24 @@ public class TrainerCommands {
 
         sb.append(']');
         context.getSource().sendSuccess(() -> Component.literal(String.valueOf(sb.toString())), false);
+        return 0;
+    }
+
+    private static int mob_get_required_series(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        var it = RCTMod.getInstance().getTrainerManager().getData(context.getArgument("trainer", String.class)).getMissingSeriesRequirements(Collections.emptyMap()).iterator();
+        var sb = new StringBuilder();
+        sb.append('[');
+
+        if(it.hasNext()) {
+            sb.append(it.next());
+        }
+
+        while(it.hasNext()) {
+            sb.append(", ").append(it.next());
+        }
+
+        sb.append(']');
+        context.getSource().sendSuccess(() -> Component.literal(sb.toString()), false);
         return 0;
     }
 
