@@ -149,6 +149,24 @@
       "translatable": "dialogs.rctmod.default.missing_required_trainer.15"
     }
   ],
+  "missing_required_series": [
+    { "translatable": "dialogs.rctmod.default.missing_required_series.0" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.1" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.2" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.3" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.4" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.5" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.6" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.7" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.8" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.9" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.10" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.11" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.12" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.13" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.14" },
+    { "translatable": "dialogs.rctmod.default.missing_required_series.15" }
+  ],
   "missing_required_trainer_champ": [
     {
       "translatable": "dialogs.rctmod.default.missing_required_trainer.champ.0"
