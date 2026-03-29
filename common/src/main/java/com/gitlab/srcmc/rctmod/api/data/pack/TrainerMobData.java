@@ -50,6 +50,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private String type = "normal";
     private String signatureItem = "";
     private StringSetList requiredDefeats = new StringSetList();
+    private StringSetList requiredSeries = new StringSetList();
     private Set<String> series = new HashSet<>();
     private Set<String> substitutes = new HashSet<>();
     private boolean optional;
@@ -89,6 +90,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.signatureItem = origin.signatureItem;
         this.relativeLevelCap = origin.relativeLevelCap;
         this.requiredDefeats = new StringSetList(origin.requiredDefeats);
+        this.requiredSeries = new StringSetList(origin.requiredSeries);
         this.followdBy = Set.copyOf(origin.followdBy);
         this.optional = origin.optional;
         this.maxTrainerWins = origin.maxTrainerWins;
@@ -176,6 +178,27 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     public List<Set<String>> getRequiredDefeats(String seriesId) {
         return Collections.unmodifiableList(this.requiredDefeats);
+    }
+
+    public List<Set<String>> getRequiredSeries() {
+        return Collections.unmodifiableList(this.requiredSeries);
+    }
+
+    public Stream<String> getMissingSeriesRequirements(Map<String, Integer> completedSeries) {
+        return this.getMissingSeriesRequirements(completedSeries, false);
+    }
+
+    public Stream<String> getMissingSeriesRequirements(Map<String, Integer> completedSeries, boolean includeAlternatives) {
+        return this.requiredSeries.stream().mapMulti((set, cons) -> {
+            var satisfied = set.stream().anyMatch(sid -> completedSeries.getOrDefault(sid, 0) >= 1);
+            if(!satisfied && !set.isEmpty()) {
+                if(includeAlternatives) {
+                    set.forEach(cons);
+                } else {
+                    cons.accept(set.stream().findFirst().get());
+                }
+            }
+        });
     }
 
     public Set<String> getSubstitutes() {
