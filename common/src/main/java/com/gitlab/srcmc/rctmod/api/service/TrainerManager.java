@@ -364,7 +364,7 @@ public class TrainerManager extends DataPackManager {
                     if(tmd.getSeries().findAny().isEmpty() || tmd.getSeries().anyMatch(tmd2::isOfSeries)) {
                         tmd2.addFollowedBy(trainerId);
                     } else {
-                        ModCommon.LOG.warn(String.format("trainer '%s' may not depend on '%s': different series", trainerId, tid));
+                        ModCommon.LOG.warn(String.format("Trainer '%s' may not depend on '%s': different series", trainerId, tid));
                     }
                 }
             });
@@ -376,7 +376,7 @@ public class TrainerManager extends DataPackManager {
         newTrainerMobs.forEach((trainerId, tmd) -> {
             tmd.getRequiredSeries().forEach(set -> set.forEach(sid -> {
                 if(this.seriesManager.getGraph(sid) == this.seriesManager.UNKNOWN_SERIES) {
-                    ModCommon.LOG.warn(String.format("[rctmod] trainer '%s' has requiredSeries with unknown series '%s' - this requirement will never be satisfied", trainerId, sid));
+                    ModCommon.LOG.warn(String.format("Trainer '%s' has requiredSeries with unknown series '%s' - this requirement will never be satisfied", trainerId, sid));
                 }
             }));
         });
