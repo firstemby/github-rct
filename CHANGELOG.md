@@ -1,9 +1,10 @@
 # Changelog
 
-## [0.18.0-beta] - 2026-04-01
+## [0.18.0-beta] - 2026-04-02
 
 **Added:**
 
+- *#391* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
 - *#390* Trainer mobs now support TBCS win commands
   - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
   - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)

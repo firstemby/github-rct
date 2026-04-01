@@ -32,6 +32,7 @@ public final class LangKeys {
     public static final String GUI_TRAINER_CARD_IDENTITY = "gui.rctmod.trainer_card.identity";
     public static final String GUI_TRAINER_CARD_SIGNATURE_ITEM = "gui.rctmod.trainer_card.signature_item";
     public static final String GUI_TRAINER_CARD_REQUIRED_TRAINERS = "gui.rctmod.trainer_card.required_trainers";
+    public static final String GUI_TRAINER_CARD_REQUIRED_SERIES = "gui.rctmod.trainer_card.required_series";
     public static final String GUI_TRAINER_CARD_BIOMES = "gui.rctmod.trainer_card.biomes";
     public static final String GUI_TRAINER_CARD_OVERVIEW = "gui.rctmod.trainer_card.overview";
     public static final String GUI_TRAINER_CARD_SPAWNING = "gui.rctmod.trainer_card.spawning";

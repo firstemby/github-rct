@@ -18,6 +18,7 @@
 package com.gitlab.srcmc.rctmod.client.screens.widgets;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -168,6 +169,17 @@ public class TrainerInfoWidget extends TrainerDataWidget {
             }
 
             pc.renderables.add(new StringWidget(16, this.y += this.h , this.w, this.h, toComponent(String.format("%s", tmd.getTrainerTeam().getName())), this.font).alignLeft());
+        });
+
+        var firstSeries = new boolean[]{true};
+        var sm = RCTMod.getInstance().getSeriesManager();
+        this.trainer.getMissingSeriesRequirements(Collections.emptyMap()).forEach(sid -> {
+            if(firstSeries[0]) {
+                pc.renderables.add(new StringWidget(8, this.y += this.h, this.w, this.h, toComponent(Component.translatable(LangKeys.GUI_TRAINER_CARD_REQUIRED_SERIES).getString()), this.font).alignLeft());
+                firstSeries[0] = false;
+            }
+            var title = sm.getGraph(sid).getMetaData().title();
+            pc.renderables.add(new StringWidget(16, this.y += this.h, this.w, this.h, toComponent(title.getComponent().getString()), this.font).alignLeft());
         });
 
         pc.height = this.y + this.h;

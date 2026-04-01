@@ -275,6 +275,10 @@ public class PlayerState implements Serializable {
         var tm = RCTMod.getInstance().getTrainerManager();
         var tmd = tm.getData(trainerId);
 
+        if(!tmd.getMissingSeriesRequirements(this.player != null ? tm.getData(this.player).getCompletedSeries() : Map.of()).findFirst().isEmpty()) {
+            return false;
+        }
+        
         // this.getLevelCap() >= tmd.getRequiredLevelCap(this.player) && // deprecated
         return tmd.getMissingRequirements(this.defeatedTrainerIds).filter(tid -> tm.getData(tid).isOfSeries(this.getCurrentSeries())).findFirst().isEmpty();
     }
