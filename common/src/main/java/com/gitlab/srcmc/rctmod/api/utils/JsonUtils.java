@@ -26,6 +26,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
@@ -102,17 +103,17 @@ public final class JsonUtils<T> {
     // see: https://www.baeldung.com/gson-exclude-fields-serialization#3-with-a-custom-annotation
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
-    public static @interface Exclude {}
+    public static @interface JsonExclude {}
 
     static class AnnotationExclusionStrategy implements ExclusionStrategy {
         @Override
         public boolean shouldSkipClass(Class<?> clazz) {
             return false;
         }
-    
+
         @Override
         public boolean shouldSkipField(FieldAttributes field) {
-            return field.getAnnotation(Exclude.class) != null;
+            return field.getAnnotation(JsonExclude.class) != null || field.hasModifier(Modifier.TRANSIENT);
         }
     }
 }

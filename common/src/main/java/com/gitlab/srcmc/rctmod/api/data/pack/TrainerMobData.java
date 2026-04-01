@@ -37,8 +37,10 @@ import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
-import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.Exclude;
+import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonExclude;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
+import com.gitlab.srcmc.rctmod.compat.TBCSCompat.WinCommandsDeserializer;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.resources.ResourceLocation;
@@ -53,7 +55,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private Set<String> series = new HashSet<>();
     private Set<String> substitutes = new HashSet<>();
     private boolean optional;
-    
+
     private int maxTrainerWins = 3;
     private int maxTrainerDefeats = 1;
     private int battleCooldownTicks = 240;
@@ -68,12 +70,15 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private Optional<Integer> forceBattleLookTicks = Optional.empty();
     private Optional<Integer> forceBattleMaxLevelDiff = Optional.empty();
 
-    @Exclude private Set<String> followdBy = new HashSet<>();
-    @Exclude private Map<String, Text[]> dialog = new HashMap<>();
-    @Exclude private TrainerTeam trainerTeam;
-    @Exclude private RLWrapper textureResource;
-    @Exclude private RLWrapper lootTableResource;
-    @Exclude private String trainerId = "";
+    @JsonAdapter(WinCommandsDeserializer.class)
+    private Map<Integer, ?> winCommands;
+
+    @JsonExclude private Set<String> followdBy = new HashSet<>();
+    @JsonExclude private Map<String, Text[]> dialog = new HashMap<>();
+    @JsonExclude private TrainerTeam trainerTeam;
+    @JsonExclude private RLWrapper textureResource;
+    @JsonExclude private RLWrapper lootTableResource;
+    @JsonExclude private String trainerId = "";
 
     private transient Supplier<TrainerType> lazyType;
 
@@ -87,20 +92,21 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     public TrainerMobData(TrainerMobData origin) {
         this.type = origin.type;
         this.signatureItem = origin.signatureItem;
+        this.winCommands = origin.winCommands != null ? Map.copyOf(origin.winCommands) : null;
         this.relativeLevelCap = origin.relativeLevelCap;
-        this.requiredDefeats = new StringSetList(origin.requiredDefeats);
-        this.followdBy = Set.copyOf(origin.followdBy);
+        this.requiredDefeats = origin.requiredDefeats != null ? new StringSetList(origin.requiredDefeats) : null;
+        this.followdBy = origin.followdBy != null ? Set.copyOf(origin.followdBy) : null;
         this.optional = origin.optional;
         this.maxTrainerWins = origin.maxTrainerWins;
         this.maxTrainerDefeats = origin.maxTrainerDefeats;
         this.battleCooldownTicks = origin.battleCooldownTicks;
-        this.biomeTagBlacklist = Set.copyOf(origin.biomeTagBlacklist);
-        this.biomeTagWhitelist = Set.copyOf(origin.biomeTagWhitelist);
+        this.biomeTagBlacklist = origin.biomeTagBlacklist != null ? Set.copyOf(origin.biomeTagBlacklist) : null;
+        this.biomeTagWhitelist = origin.biomeTagWhitelist != null ? Set.copyOf(origin.biomeTagWhitelist) : null;
         this.forceBattleOnSight = origin.forceBattleOnSight;
         this.forceBattleMaxDistance = origin.forceBattleMaxDistance;
         this.forceBattleLookTicks = origin.forceBattleLookTicks;
         this.forceBattleMaxLevelDiff = origin.forceBattleMaxLevelDiff;
-        this.dialog = Map.copyOf(origin.dialog);
+        this.dialog = origin.dialog != null ? Map.copyOf(origin.dialog) : null;
         this.textureResource = origin.textureResource;
         this.lootTableResource = origin.lootTableResource;
         this.trainerTeam = origin.trainerTeam; // no need for deep copy since immutable
@@ -117,7 +123,13 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
+        // Since the type of win commands depends on a different library it
+        // is unsafe to include these during serialization (transient will
+        // prevent GSON from parsing the property, hence this workaround).
+        var winCommands = this.winCommands;
+        this.winCommands = null;
         oos.defaultWriteObject();
+        this.winCommands = winCommands;
         oos.writeObject(this.getType());
     }
 
@@ -306,6 +318,10 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     public String getSignatureItem() {
         return this.signatureItem;
+    }
+
+    public Map<Integer, ?> getWinCommands() {
+        return this.winCommands;
     }
 
     @Override

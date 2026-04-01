@@ -45,7 +45,9 @@ dependencies {
 
     // Radical Cobblemon Trainers API
     modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
-    // modImplementation files("../tmp/libs/rctapi-fabric-1.21.1-${rctapi_min_version}.jar") // testing
+    
+    // Trainer Battle Commands (test, optional in production)
+    modRuntimeOnly "curse.maven:tbcs-1172731:${tbcs_fabric_version}"
 
     // modRuntimeOnly "curse.maven:simpletms-tms-and-trs-for-cobblemon-959184:${simpletms_fabric_version}"
     // modRuntimeOnly "curse.maven:pkgbadges-889895:${pkgbadges_fabric_version}"

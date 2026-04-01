@@ -27,7 +27,7 @@ import java.util.Set;
 import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
-import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.Exclude;
+import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonExclude;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -84,10 +84,10 @@ public class TrainerType implements Serializable {
     private final String symbol;
     private final Color color;
 
-    @Exclude
+    @JsonExclude
     private String id = "unknown";
 
-    @Exclude
+    @JsonExclude
     private int numericId = -1;
 
     public TrainerType() {

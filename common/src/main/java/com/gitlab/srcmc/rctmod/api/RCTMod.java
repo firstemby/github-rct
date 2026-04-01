@@ -18,9 +18,11 @@
 package com.gitlab.srcmc.rctmod.api;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import com.cobblemon.mod.common.battles.BattleRegistry;
+import com.gitlab.srcmc.rctapi.api.battle.BattleFormatProvider;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerPlayer;
 import com.gitlab.srcmc.rctmod.ModCommon;
@@ -29,6 +31,7 @@ import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.service.TrainerManager;
 import com.gitlab.srcmc.rctmod.api.service.TrainerSpawner;
+import com.gitlab.srcmc.rctmod.compat.TBCSCompat;
 import com.gitlab.srcmc.rctmod.config.ClientConfig;
 import com.gitlab.srcmc.rctmod.config.ServerConfig;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
@@ -95,9 +98,17 @@ public final class RCTMod {
             } else if(trNPC == null) {
                 ModCommon.LOG.warn("Failed to start battle: No trainer registered for mob '" + mob.getDisplayName().getString() + "'");
             } else {
-                var team = RCTMod.getInstance().getTrainerManager().getData(mob).getTrainerTeam();
+                var trMob = RCTMod.getInstance().getTrainerManager().getData(mob);
+                var team = trMob.getTrainerTeam();
                 trNPC.setEntity(mob); // safety measure to prevent a battle against entities in unloaded chunks
-                return ModCommon.RCT.getBattleManager().startBattle(List.of(trPlayer), List.of(trNPC), team.getBattleFormat(), team.getBattleRules()) != null;
+                var battleId = ModCommon.RCT.getBattleManager().startBattle(List.of(trPlayer), List.of(trNPC), (BattleFormatProvider)team.getBattleFormat(), team.getBattleRules());
+
+                if(battleId != null) {
+                    TBCSCompat.registerWinCommands(trMob.getWinCommands(), player.getServer(), Map.of(trPlayer, player, trNPC, mob), battleId);
+                    return true;
+                }
+
+                return false;
             }
         } catch(IllegalArgumentException e) {
             ModCommon.LOG.error("Failed to start battle", e);

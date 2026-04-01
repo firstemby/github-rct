@@ -1,6 +1,19 @@
 # Changelog
 
-## [0.17.7-beta] - 2026-03-19
+## [0.18.0-beta] - 2026-04-01
+
+**Added:**
+
+- *#390* Trainer mobs now support TBCS win commands
+  - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
+  - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)
+  - The [Pack Builder tool](https://srcmc.gitlab.io/rct/docs/latest/tools/pack_builder/about/) has been updated with form fields for the new "Win Commands" property (see "Mobs")
+
+**Changed:**
+
+- *#389* Update min required version of `rctapi` to `0.15.0-beta`
+
+## [0.17.7-beta] - 2026-04-01
 
 **Added:**
 
