@@ -14,7 +14,7 @@
 
 TOOLS_PATH="${TOOLS_PATH:-tools}"
 sub_projects="common fabric neoforge"
-license_key="lgpl3"
+license_key="mcoml"
 
 # keys of fields in gradle.properties
 mod_name_key="mod_name="
@@ -93,7 +93,7 @@ for project in ${sub_projects}; do
 done
 
 # full text license
-LICENSE_FILE=LICENSE.md LICENSE_FILES_OLD="LICENSE.txt LICENSE.md" "$TOOLS_PATH"/licensify "$license_key" "$new_mod_name" "$new_mod_author"
+LICENSE_FILE=LICENSE.txt LICENSE_FILES_OLD="LICENSE.txt LICENSE.md" "$TOOLS_PATH"/licensify "$license_key" "$new_mod_name" "$new_mod_author"
 
 # final feedback
 echo "---------------------------------------------------------------"

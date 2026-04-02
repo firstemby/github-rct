@@ -138,4 +138,4 @@ You can find a [Discord Channel](https://discord.com/channels/934267676354834442
 
 ## License
 
-Copyright (c) 2026 HDainester. See [LICENSE.md](https://gitlab.com/srcmc/rct/mod/-/raw/HEAD/LICENSE.md) for details.
+Copyright (c) 2026 HDainester. See [LICENSE.txt](https://gitlab.com/srcmc/rct/mod/-/raw/HEAD/LICENSE.txt) for details.

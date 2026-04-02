@@ -203,8 +203,7 @@ LGPL3_HEADER="/*
 
 # MOD COMMUNITY LICENSE (https://gitlab.com/srcmc/mcoml/-/blob/main/v1/license.txt)
 MCOML_FULL="                            MOD COMMUNITY LICENSE
-          A modified version of \"The Lambda License\" by LambdAurora.
-                          Version 1, 03 March 2026 
+                           Version 1, 21 March 2026
 
 Copyright (c) $(date +%Y) <author>
 
@@ -224,7 +223,7 @@ work stays under this license, and if you have modified the code, you must:
 
 When sharing binaries, you must adhere to a few more rules. Either:
 
-  (a) your derivative work differs by at least 40% from the original or
+  (a) your derivative work differs sufficiently from the original or
   (b) you have received written permission from all Project Owners
 
 If you are running a modified version of this software on your servers and
@@ -294,13 +293,13 @@ of Binaries, or license the right to do so, under the following conditions:
   3.1. Any derivative work must differ sufficiently from the original. The
        following criteria must be satisfied:
 
-    3.1.1. At least 40% of the derivative work must consist of code or
+    3.1.1. At least 50% of the derivative work must consist of code or
            functionality that significantly alters and/or adds to the original
            work in a meaningful way.
 
     3.1.2. Mere additions, such as empty classes, comments, or trivial changes
-           that do not substantially enhance functionality, do not meet this
-           criterion.
+           that do not enhance functionality in a reasonable way, do not meet
+           this criterion.
 
     3.1.3. An explicit written permission by all Project Owners can serve as a
            replacement for any conditions mentioned under 3.1.
@@ -351,7 +350,7 @@ MCOML_HEADER="/*
  * 
  * When sharing binaries, you must adhere to a few more rules. Either:
  * 
- *   (a) your derivative work differs by at least 40% from the original or
+ *   (a) your derivative work differs sufficiently from the original or
  *   (b) you have received written permission from all Project Owners
  * 
  * <title> is distributed in the hope that it will be useful, but WITHOUT
