@@ -114,25 +114,23 @@ public final class PlantUML {
     }
 
     public static String encode(Player player, String seriesId, SeriesGraph graph, Set<String> defeats) {
-        var nodes = new HashMap<TrainerNode, NodeGroup>();
-        var group = new HashMap<TrainerNode, TrainerNode>();
+        var groups = new HashMap<TrainerNode, NodeGroup>();
+        var origins = new HashMap<TrainerNode, TrainerNode>();
         var directed = new HashMap<String, Set<String>>();
         var sb = new StringBuilder(String.format(PlantUML.SERIES_GRAPH_HEADER, graph.getMetaData().title()));
 
         graph.stream().forEach(tn -> {
-            var sib = tn.siblings().filter(s -> nodes.containsKey(group.getOrDefault(s, s))).findFirst();
+            var sib = tn.siblings().filter(s -> groups.containsKey(origins.getOrDefault(s, s))).findFirst();
 
             if(sib.isPresent()) {
-                var node = nodes.get(sib.get());
-                node.set.add(tn);
-                group.put(tn, sib.get());
+                groups.get(origins.get(sib.get())).set.add(tn);
             } else {
-                nodes.put(tn, new NodeGroup(player, tn));
-                group.put(tn, tn);
+                groups.put(tn, new NodeGroup(player, tn));
+                origins.put(tn, tn);
             }
         });
 
-        nodes.entrySet().forEach(e -> {
+        groups.entrySet().forEach(e -> {
             var optional_defeated = new boolean[]{e.getKey().isOptional(), e.getKey().isDefeated(defeats)};
             var id = new StringBuilder(String.format("<b>%d</b>\\n%s", e.getValue().maxRequiredLevelCap(), e.getKey().id()));
 
@@ -145,12 +143,12 @@ public final class PlantUML {
             sb.append(String.format("object \"%s\" as %s%s\n", id.toString(), e.getKey().id(), optional_defeated[1] ? "<<defeated>>" : optional_defeated[0] ? "<<optional>>" : ""));
         });
 
-        nodes.values().forEach(ng -> {
+        groups.values().forEach(ng -> {
             var edges = directed.computeIfAbsent(ng.origin.id(), k -> new HashSet<>());
             var arr = ng.isOptional() ? "u" : "l";
 
             ng.successors().forEach(suc -> {
-                var sgp = group.get(suc);
+                var sgp = origins.get(suc);
 
                 if(sgp != null && !edges.contains(sgp.id())) {
                     sb.append(String.format("%s -%s-> %s\n", ng.origin.id(), arr, sgp.id()));

@@ -2,19 +2,25 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.18.0-beta] - 2026-04-02
+## [0.18.0-beta] - 2026-04-04
 
 **Added:**
 
-- *#391* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
-- *#390* Trainer mobs now support TBCS win commands
+- *#394* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
+- *#393* Trainer mobs now support TBCS win commands
   - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
   - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)
   - The [Pack Builder tool](https://srcmc.gitlab.io/rct/docs/latest/tools/pack_builder/about/) has been updated with form fields for the new "Win Commands" property (see "Mobs")
 
 **Changed:**
 
-- *#389* Update min required version of `rctapi` to `0.15.0-beta`
+- *#392* Update min required version of `rctapi` to `0.15.0-beta`
+
+**Fixed:**
+
+- *#391* Client side lag when in the Trainer Card menu while attending to larger series
+- *#390* Command `get progress graph` sometimes unexpectedly failing for certain series
+- *#389* Various performance issues related to level cap and trainer level calculations
 
 ## [0.17.7-beta] - 2026-04-01
 
