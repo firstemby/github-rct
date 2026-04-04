@@ -209,12 +209,11 @@ public class PlayerInfoWidget extends AbstractWidget {
     }
 
     public void setDisplay(Display display) {
-        switch (display) {
+        switch(display) {
             case TRAINER_LIST:
                 if(this.currentDisplay == Display.LOADING) {
-                    this.resetTrainerTypes();
-                    this.updateTrainerTypes(this.sid);
-                    this.trainerList.setTrainerIds(this.sortedTrainerIds());
+                    this.initPlayerInfo();
+                    this.initTrainerList();
                 }
 
                 this.trainerInfo.visible = this.trainerInfo.active = false;
@@ -288,14 +287,6 @@ public class PlayerInfoWidget extends AbstractWidget {
         var mc = Minecraft.getInstance();
         var ps = PlayerState.get(mc.player);
         var tm = RCTMod.getInstance().getTrainerManager();
-        var levelCap = this.currentDisplay == Display.LOADING ? 0 : ps.getLevelCap();
-
-        this.sid = ps.getCurrentSeries();
-        this.skinLocation = mc.player.getSkin().texture();
-        this.displayName.setMessage(Component.literal(mc.player.getDisplayName().getString()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.WHITE));
-        this.levelCapValue.setMessage(levelCap <= 100
-            ? Component.literal(String.valueOf(levelCap)).withStyle(ChatFormatting.WHITE)
-            : Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
 
         if(tm.isLoading() || ps.isLoading()) {
             if(this.currentDisplay != Display.LOADING) {
@@ -336,6 +327,25 @@ public class PlayerInfoWidget extends AbstractWidget {
             this.prevPageButton.active = this.trainerInfo.getPage() > 0;
             this.trainerInfo.tick();
         }
+    }
+
+    private void initPlayerInfo() {
+        var mc = Minecraft.getInstance();
+        var ps = PlayerState.get(mc.player);
+        this.sid = ps.getCurrentSeries();
+
+        var levelCap = ps.getLevelCap();
+        this.skinLocation = mc.player.getSkin().texture();
+        this.displayName.setMessage(Component.literal(mc.player.getDisplayName().getString()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.WHITE));
+        this.levelCapValue.setMessage((levelCap >= 0 && levelCap <= 100)
+            ? Component.literal(String.valueOf(levelCap)).withStyle(ChatFormatting.WHITE)
+            : Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
+    }
+
+    private void initTrainerList() {
+        this.resetTrainerTypes();
+        this.updateTrainerTypes(this.sid);
+        this.trainerList.setTrainerIds(this.sortedTrainerIds());
     }
 
     private void updateTrainerTypes(String sid) {
