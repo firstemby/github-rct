@@ -294,6 +294,8 @@ public class SeriesManager implements Serializable {
                         batch.add(next);
                         it.remove();
                     }
+
+                    next.seal();
                 }
 
                 batch.sort((tn1, tn2) -> tn1.trainerId.compareTo(tn2.trainerId));
@@ -332,6 +334,10 @@ public class SeriesManager implements Serializable {
         private String trainerId;
         private boolean optional;
 
+        private boolean sealedAlone;
+        private boolean sealedOptional;
+        private boolean sealed;
+
         public TrainerNode(String trainerId, boolean optional) {
             this.trainerId = trainerId;
             this.optional = optional;
@@ -366,6 +372,10 @@ public class SeriesManager implements Serializable {
         }
 
         private boolean isAlone(Set<TrainerNode> visited) {
+            if(this.sealed) {
+                return this.sealedAlone;
+            }
+
             visited.add(this);
 
             return this.ancestors.isEmpty() && this.successors.isEmpty() && this.siblings.stream()
@@ -374,6 +384,10 @@ public class SeriesManager implements Serializable {
         }
 
         private boolean isOptional(Set<TrainerNode> visited) {
+            if(this.sealed) {
+                return this.sealedOptional;
+            }
+
             return visited.add(this) && (this.optional
                 || this.siblings.stream().anyMatch(sib -> sib.isOptional(visited))
                 || this.successors.stream().anyMatch(suc -> suc.isOptional(visited)));
@@ -383,6 +397,12 @@ public class SeriesManager implements Serializable {
             return visited.add(this) && (trainerIds.contains(this.trainerId)
                 || this.siblings.stream().anyMatch(sib -> sib.isDefeated(trainerIds, visited))
                 || this.ancestors.stream().anyMatch(anc -> anc.isDefeated(trainerIds, visited)));
+        }
+
+        private void seal() {
+            this.sealedAlone = this.isAlone();
+            this.sealedOptional = this.isOptional();
+            this.sealed = true;
         }
     }
 }
