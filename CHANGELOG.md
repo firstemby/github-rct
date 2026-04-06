@@ -2,18 +2,24 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.18.0-beta] - 2026-04-04
+## [0.18.0-beta] - 2026-04-07
 
 **Added:**
 
-- *#394* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
-- *#393* Trainer mobs now support TBCS win commands
+- *#397* The trainer card now offers the option to view the *progress graph* of the current series ingame
+- *#396* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
+- *#395* Trainer mobs now support TBCS win commands
   - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
   - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)
   - The [Pack Builder tool](https://srcmc.gitlab.io/rct/docs/latest/tools/pack_builder/about/) has been updated with form fields for the new "Win Commands" property (see "Mobs")
 
 **Changed:**
 
+- *#394* Added new `format=<format>` argument to the `get progress graph` command. Possible values are:
+  - `png`: Generate an image file, saved on the client
+  - `svg`: Generate a vector graphic file, saved on the client
+  - `uml`: Generate a *PlantUML* graph, can be viewed online, old behaviour, default
+- *#393* Series progress graph generation is now powered by *JGraphT*, which offers a variety of advanced features that are designed for the visualization of (mathematical) graphs (*PlantUML* graphs can still be generated, see also *#394*)
 - *#392* Update min required version of `rctapi` to `0.15.0-beta`
 
 **Fixed:**

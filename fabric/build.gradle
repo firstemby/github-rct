@@ -41,6 +41,12 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
+    // JGraphT
+    implementation "org.jgrapht:jgrapht-core:$jgrapht_version"
+    implementation "org.jgrapht:jgrapht-ext:$jgrapht_version"
+    include "org.jgrapht:jgrapht-core:$rootProject.jgrapht_version"
+    include "org.jgrapht:jgrapht-ext:$rootProject.jgrapht_version"
+
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcap_version}"
 
     // Radical Cobblemon Trainers API

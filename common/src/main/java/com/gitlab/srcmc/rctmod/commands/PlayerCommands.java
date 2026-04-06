@@ -26,6 +26,7 @@
  */
 package com.gitlab.srcmc.rctmod.commands;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import com.gitlab.srcmc.rctmod.ModCommon;
@@ -34,6 +35,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.SeriesMetaData;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
+import com.gitlab.srcmc.rctmod.api.utils.GraphUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.api.utils.PlantUML;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
@@ -54,6 +56,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public final class PlayerCommands {
@@ -334,14 +337,23 @@ public final class PlayerCommands {
         var includeSingles = (flags & SuggestionUtils.GF_SINGLES_FALSE) == 0 && ((flags & SuggestionUtils.GF_SINGLES_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_SINGLES) != 0);
 
         var graph = RCTMod.getInstance().getSeriesManager().getGraph(tpd.getCurrentSeries());
-        var url = PlantUML.SERVER_URL + PlantUML.encode(player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
 
-        context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString())
-            .append(Component.literal(" "))
-            .append(Component.literal(url).setStyle(Style.EMPTY
-                .applyFormats(ChatFormatting.UNDERLINE, ChatFormatting.GREEN)
-                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(LangKeys.COMMANDS_FEEDBACK_CLICK_LINK)))
-                .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)))), false);
+        try {
+            var uri = GraphUtils.generate((ServerPlayer)player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles));
+            context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString()).append(" ").append(Component.literal(uri.getPath())), false);
+        } catch (Exception e) {
+            ModCommon.LOG.error(e.getMessage(), e);
+            context.getSource().sendFailure(Component.literal(e.getMessage()));
+        }
+
+        // var url = PlantUML.SERVER_URL + PlantUML.encode(player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
+
+        // context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString())
+        //     .append(Component.literal(" "))
+        //     .append(Component.literal(url).setStyle(Style.EMPTY
+        //         .applyFormats(ChatFormatting.UNDERLINE, ChatFormatting.GREEN)
+        //         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(LangKeys.COMMANDS_FEEDBACK_CLICK_LINK)))
+        //         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)))), false);
     }
 
     private static int player_get_level_cap(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
