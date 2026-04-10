@@ -74,7 +74,7 @@ public class GraphUtils {
     private static final String GRAPH_OUTPUT_FMT_PATH = String.format("%s.%%s.graph.%%s", ModCommon.MOD_ID);
     private static final String GRAPH_OUTPUT_IMAGE_FORMAT = "PNG";
     private static final String GRAPH_OUTPUT_VECTOR_FORMAT = "SVG";
-    private static final Color GRAPH_OUTPUT_BG_COLOR = new Color(35, 0, 0, 100);
+    private static final Color GRAPH_OUTPUT_BG_COLOR = null; // new Color(35, 0, 0, 100); // TODO: background image (border)?
     private static final float GRAPH_OUTPUT_SCALE = 1;
     private static final String HIDDEN_TRAINER_NAME = "?????";
     private static final boolean ANTI_ALIAS = true;

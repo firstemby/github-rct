@@ -52,11 +52,12 @@ import net.minecraft.network.chat.MutableComponent;
 import java.awt.image.BufferedImage;
 
 public class ProgressGraphScreen extends Screen {
+    private static final ResourceLocation GRAPH_TEXTURE_PATH = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, "dynamic/progress_graph");
     private static final float MIN_ZOOM = 0.1f;
     private static final float MAX_ZOOM = 100f;
     private static final float ZOOM_STEP = 0.05f;
     private static final int PADDING = 8;
-    private static final int MAX_GRAPH_THREADS = 4;
+    private static final int MAX_GRAPH_THREADS = 8;
 
     private static final int KEY_RESET = InputConstants.KEY_R;
     private static final int KEY_TOGGLE_IDS = InputConstants.KEY_T;
@@ -68,7 +69,6 @@ public class ProgressGraphScreen extends Screen {
     private mxGraph graph;
 
     private DynamicTexture graphTexture;
-    private ResourceLocation graphTexturePath;
     private Thread graphThread, graphInitThread;
     private int currentThreads;
     private int maxThreads = MAX_GRAPH_THREADS;
@@ -77,8 +77,6 @@ public class ProgressGraphScreen extends Screen {
     private float zoom = 1.0f;
     private int offsetX = 0;
     private int offsetY = 0;
-    private int graphWidth;
-    private int graphHeight;
     private boolean dragging = false;
     private int dragStartX, dragStartY;
     private boolean showTrainerIds;
@@ -170,8 +168,6 @@ public class ProgressGraphScreen extends Screen {
             this.graphInitThread.interrupt();
             this.graphInitThread = null;
         }
-
-        this.graphTexturePath = null;
     }
 
     private void updateImage() {
@@ -184,35 +180,31 @@ public class ProgressGraphScreen extends Screen {
         var prevThread = this.graphThread;
 
         this.graphThread = new Thread(() -> {
+            this.currentThreads++;
+            
             try {
                 if(prevThread != null) {
                     prevThread.join();
                 }
-
+                
                 var zoom = this.zoom;
                 var offX = this.offsetX;
                 var offY = this.offsetY;
-                var guiScale = this.mc.getWindow().getGuiScale();
-                var buffered = GraphUtils.generateImage(graph, -offX * guiScale, -offY * guiScale, this.width * guiScale, this.height * guiScale, zoom);
-                var image = toNativeImage(buffered);
-                
-                if(!Thread.currentThread().isInterrupted()) {
-                    this.mc.execute(() -> {
-                        if(!this.closed) {
-                            this.widgetMessage.visible = false;
-                            this.graphWidth = buffered.getWidth();
-                            this.graphHeight = buffered.getHeight();
+                var tScale = (1.0 / this.currentThreads);
+                var scale = this.mc.getWindow().getGuiScale() * tScale;
+                var buffered = GraphUtils.generateImage(graph, -offX * scale, -offY * scale, this.width * scale, this.height * scale, zoom * tScale);
 
-                            if(this.graphTexture == null) {
-                                this.graphTexturePath = new ResourceLocation(ModCommon.MOD_ID, "dynamic/progress_graph");
-                                this.graphTexture = new DynamicTexture(image);
-                                this.mc.getTextureManager().register(this.graphTexturePath, this.graphTexture);
-                            } else {
-                                this.graphTexture.setPixels(image);
-                                this.graphTexture.upload();
+                if(buffered != null) {
+                    var image = toNativeImage(buffered);
+
+                    if(!Thread.currentThread().isInterrupted()) {
+                        this.mc.execute(() -> {
+                            if(!this.closed) {
+                                this.widgetMessage.visible = false;
+                                this.mc.getTextureManager().register(GRAPH_TEXTURE_PATH, (this.graphTexture = new DynamicTexture(image)));
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             } catch(InterruptedException _e) {
                 if(prevThread != null) {
@@ -235,12 +227,6 @@ public class ProgressGraphScreen extends Screen {
 
             this.currentThreads--;
         });
-
-        if(++this.currentThreads >= this.maxThreads) {
-            this.maxThreads = Math.max(1, this.maxThreads / 2);
-        } else if(this.maxThreads < MAX_GRAPH_THREADS) {
-            this.maxThreads++;
-        }
 
         this.graphThread.start();
     }
@@ -336,10 +322,12 @@ public class ProgressGraphScreen extends Screen {
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         super.renderBackground(guiGraphics, mouseX, mouseY, delta);
 
-        if(this.graphTexturePath != null) {
+        if(this.graphTexture != null) {
             RenderSystem.enableBlend();
             RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            guiGraphics.blit(this.graphTexturePath, 0, 0, this.width, this.height, 0, 0, this.graphWidth, this.graphHeight, this.graphWidth, this.graphHeight);
+            var w = this.graphTexture.getPixels().getWidth();
+            var h = this.graphTexture.getPixels().getHeight();
+            guiGraphics.blit(GRAPH_TEXTURE_PATH, 0, 0, this.width, this.height, 0, 0, w, h, w, h);
             RenderSystem.disableBlend();
             RenderSystem.defaultBlendFunc();
         }
