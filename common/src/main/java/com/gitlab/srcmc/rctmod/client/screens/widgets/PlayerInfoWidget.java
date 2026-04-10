@@ -90,13 +90,13 @@ public class PlayerInfoWidget extends AbstractWidget {
     public static final int TRAINER_LIST_W = 112;
     public static final int TRAINER_LIST_H = 72;
 
-    public static final int PROGRESS_GRAPH_X = 186;
+    public static final int PROGRESS_GRAPH_X = 96;
     public static final int PROGRESS_GRAPH_Y = 8;
     public static final int PROGRESS_GRAPH_W = 10;
     public static final int PROGRESS_GRAPH_H = 16;
     public static final Component PROGRESS_GRAPH_SYMBOL = Component.literal("»»").withStyle(ChatFormatting.BOLD);
 
-    public static final int TYPE_BUTTON_X = 96;
+    public static final int TYPE_BUTTON_X = 106;
     public static final int TYPE_BUTTON_Y = 8;
     public static final int TYPE_BUTTON_W = 90;
     public static final int TYPE_BUTTON_H = 16;
@@ -151,9 +151,9 @@ public class PlayerInfoWidget extends AbstractWidget {
         this.active = false;
         this.font = font;
         this.displayName = new AutoScaledStringWidget(x + DISPLAY_NAME_X, y + DISPLAY_NAME_Y, DISPLAY_NAME_W, DISPLAY_NAME_H, Component.empty(), this.font).alignCenter().fitting(true);
-        this.levelCapLabel = new StringWidget(x + LEVEL_CAP_X + LEVEL_CAP_PADDING, y + LEVEL_CAP_Y + LEVEL_CAP_H/8, LEVEL_CAP_W, LEVEL_CAP_H, Component.translatable(LangKeys.GUI_TRAINER_CARD_LEVEL_CAP).withStyle(ChatFormatting.WHITE), this.font).alignLeft();
+        this.levelCapLabel = new AutoScaledStringWidget(x + LEVEL_CAP_X + LEVEL_CAP_PADDING, y + LEVEL_CAP_Y + LEVEL_CAP_H/8, LEVEL_CAP_W - LEVEL_CAP_PADDING - this.font.width("9999"), LEVEL_CAP_H, Component.translatable(LangKeys.GUI_TRAINER_CARD_LEVEL_CAP).withStyle(ChatFormatting.WHITE), this.font).alignLeft().fitting(true);
         this.levelCapValue = new StringWidget(x + LEVEL_CAP_X, y + LEVEL_CAP_Y + LEVEL_CAP_H/8, LEVEL_CAP_W - LEVEL_CAP_PADDING, LEVEL_CAP_H, Component.empty(), this.font).alignRight();
-        this.totalDefeatsLabel = new StringWidget(x + TOTAL_DEFEATS_X + TOTAL_DEFEATS_PADDING, y + TOTAL_DEFEATS_Y + TOTAL_DEFEATS_H/8, TOTAL_DEFEATS_W, TOTAL_DEFEATS_H, Component.translatable(LangKeys.GUI_TRAINER_CARD_TOTAL).withStyle(ChatFormatting.WHITE), this.font).alignLeft();
+        this.totalDefeatsLabel = new AutoScaledStringWidget(x + TOTAL_DEFEATS_X + TOTAL_DEFEATS_PADDING, y + TOTAL_DEFEATS_Y + TOTAL_DEFEATS_H/8, TOTAL_DEFEATS_W - TOTAL_DEFEATS_PADDING - this.font.width("99999"), TOTAL_DEFEATS_H, Component.translatable(LangKeys.GUI_TRAINER_CARD_TOTAL).withStyle(ChatFormatting.WHITE), this.font).alignLeft().fitting(true);
         this.totalDefeatsValue = new StringWidget(x + TOTAL_DEFEATS_X, y + TOTAL_DEFEATS_Y + TOTAL_DEFEATS_H/8, TOTAL_DEFEATS_W - TOTAL_DEFEATS_PADDING, TOTAL_DEFEATS_H, Component.empty(), this.font).alignRight();
         this.loadingLabel = new AutoScaledStringWidget(x + LOADING_X, y + LOADING_Y, LOADING_W, LOADING_H, Component.empty(), this.font).alignCenter().scaled(0.65f);
         this.trainerList = new TrainerListWidget(x + TRAINER_LIST_X, y + TRAINER_LIST_Y, TRAINER_LIST_W, TRAINER_LIST_H, font, this.sortedTrainerIds());
@@ -243,7 +243,8 @@ public class PlayerInfoWidget extends AbstractWidget {
                 this.trainerList.visible = this.trainerList.active = true;
                 this.showUndefeated.active = true;
                 this.trainerTypeButton.active = true;
-                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : TYPE_BUTTON_W + PROGRESS_GRAPH_W);
+                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : (TYPE_BUTTON_W + PROGRESS_GRAPH_W));
+                this.trainerTypeButton.setX(this.getX() + (this.openProgressGraph.active ? TYPE_BUTTON_X : (TYPE_BUTTON_X - PROGRESS_GRAPH_W)));
                 this.loadingLabel.setMessage(Component.empty());
 
                 if(this.trainerListShowUndefeated != null) {
@@ -281,7 +282,8 @@ public class PlayerInfoWidget extends AbstractWidget {
                 this.nextPageButton.active = false;
                 this.showUndefeated.active = false;
                 this.trainerTypeButton.active = false;
-                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : TYPE_BUTTON_W + PROGRESS_GRAPH_W);
+                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : (TYPE_BUTTON_W + PROGRESS_GRAPH_W));
+                this.trainerTypeButton.setX(this.getX() + (this.openProgressGraph.active ? TYPE_BUTTON_X : (TYPE_BUTTON_X - PROGRESS_GRAPH_W)));
                 this.trainerTypeButton.setMessage(this.trainerInfo.getPageContent(this.trainerInfo.getPage()).title);
                 this.loadingLabel.setMessage(Component.empty());
 
@@ -299,6 +301,7 @@ public class PlayerInfoWidget extends AbstractWidget {
                 this.showUndefeated.active = false;
                 this.trainerTypeButton.active = false;
                 this.trainerTypeButton.setWidth(TYPE_BUTTON_W + PROGRESS_GRAPH_W);
+                this.trainerTypeButton.setX(this.getX() + TYPE_BUTTON_X - PROGRESS_GRAPH_W);
                 this.trainerList.setTrainerIds(List.of());
                 this.trainerList.setPage(0);
                 this.resetTrainerTypes();

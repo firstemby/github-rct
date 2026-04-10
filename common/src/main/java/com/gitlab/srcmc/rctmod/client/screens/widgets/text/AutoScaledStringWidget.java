@@ -46,6 +46,7 @@ public class AutoScaledStringWidget extends StringWidget {
 
     public AutoScaledStringWidget(int i, int j, int k, int l, Component component, Font font) {
         super(i, j, k, l, component, font);
+        this.setMessage(component);
     }
 
     @Override

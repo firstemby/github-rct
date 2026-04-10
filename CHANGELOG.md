@@ -6,22 +6,23 @@ As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistribute
 
 **Added:**
 
-- *#399* New `format=<format>` argument for the `get progress graph` command. Possible values are:
+- *#400* New `format=<format>` argument for the `get progress graph` command. Possible values are:
   - `png`: Generate an image file, saved on the client
   - `svg`: Generate a vector graphic file, saved on the client
   - `uml`: Generate a *PlantUML* graph, can be viewed online, old behaviour, default
-- *#398* Series property `hideTrainerIdentities`: Determines if trainer names/is are hidden in the progress graph (see *#397*) unless they are required or have been beaten before
-- *#397* The trainer card now offers the option to view the *series progress graph* ingame as vector graphic
-  - Series progress graph visualization is powered by *JGraphT* (*PlantUML* graphs can still be generated, see also *#399*)
-- *#396* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
-- *#395* Trainer mobs now support TBCS win commands
+- *#399* Series property `hideTrainerIdentities`: Determines if trainer names/is are hidden in the progress graph (see *#398*) unless they are required or have been beaten before
+- *#398* The trainer card now offers the option to view the *series progress graph* ingame as vector graphic
+  - Series progress graph visualization is powered by *JGraphT* (*PlantUML* graphs can still be generated, see also *#400*)
+- *#397* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
+- *#396* Trainer mobs now support TBCS win commands
   - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
   - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)
   - The [Pack Builder tool](https://srcmc.gitlab.io/rct/docs/latest/tools/pack_builder/about/) has been updated with form fields for the new "Win Commands" property (see "Mobs")
 
 **Changed:**
 
-- *#394* Adjusted `get progress graph` command to generate graphs in dedicated threads, which reduces overall load on the server during the process
+- *#395* Adjusted `get progress graph` command to generate graphs in dedicated threads, which reduces overall load on the server during the process
+- *#394* Some labels in the trainer card will now scale down automatically (to ensure they better fit for different languages)
 - *#393* Update min required version of `rctapi` to `0.15.0-beta`
 
 **Fixed:**
