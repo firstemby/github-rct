@@ -26,10 +26,13 @@
  */
 package com.gitlab.srcmc.rctmod.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
+
+import org.spongepowered.include.com.google.common.io.Files;
 
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.ModRegistries;
@@ -37,6 +40,7 @@ import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.DataPackManager;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ArrUtils;
+import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.client.renderer.TargetArrowRenderer;
 import com.gitlab.srcmc.rctmod.client.renderer.TrainerAssociationRenderer;
 import com.gitlab.srcmc.rctmod.client.renderer.TrainerRenderer;
@@ -46,6 +50,7 @@ import com.gitlab.srcmc.rctmod.network.BatchedPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
 import com.gitlab.srcmc.rctmod.network.TrainerTargetPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload.Payload;
+import com.gitlab.srcmc.rctmod.network.utils.FileData;
 
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
@@ -54,8 +59,13 @@ import dev.architectury.networking.NetworkManager.PacketContext;
 import dev.architectury.networking.NetworkManager.Side;
 import dev.architectury.registry.ReloadListenerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -86,6 +96,7 @@ public class ModClient {
     public static void setup() {
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.PLAYER_STATE.TYPE, BatchedPayloads.PLAYER_STATE.CODEC, ModClient::receivePlayerState);
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC, ModClient::receiveTrainerManager);
+        NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.FILE_DOWNLOAD.TYPE, BatchedPayloads.FILE_DOWNLOAD.CODEC, ModClient::receiveFileDownload);
         NetworkManager.registerReceiver(Side.S2C, TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC, ModClient::receiveTrainerTarget);
     }
 
@@ -102,7 +113,33 @@ public class ModClient {
             PlayerState.get(ModCommon.localPlayer()).deserializeUpdate(ModClient.playerStateUpdates.poll());
         }
 
+        if(!ModClient.fileDownloadUpdates.isEmpty()) {
+            saveFile(BatchedPayload.<FileData>from(ModClient.fileDownloadUpdates.poll()));
+        }
+
         TargetArrowRenderer.getInstance().tick();
+    }
+
+    static void saveFile(FileData fileData) {
+        var mc = Minecraft.getInstance();
+
+        try {
+            var filePath = mc.gameDirectory.toPath().resolve(fileData.filename());
+            filePath.getParent().toFile().mkdirs();
+
+            var file = filePath.toFile();
+            Files.write(fileData.data(), file);
+
+            mc.player.sendSystemMessage(Component.translatable(LangKeys.COMMANDS_FEEDBACK_FILE_SAVED)
+                .append(" ")
+                .append(Component.literal(file.getAbsolutePath()).setStyle(Style.EMPTY
+                    .applyFormats(ChatFormatting.UNDERLINE, ChatFormatting.GREEN)
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(LangKeys.COMMANDS_FEEDBACK_CLICK_FILE)))
+                    .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())))));
+        } catch (IOException e) {
+            ModCommon.LOG.error(e.getMessage(), e);
+            mc.player.sendSystemMessage(Component.translatable(LangKeys.COMMANDS_ERRORS_FILE_SAVE).append(": " + e.getMessage()).withStyle(ChatFormatting.RED));
+        }
     }
 
     // ClientPlayerEvent
@@ -110,6 +147,7 @@ public class ModClient {
     static void onClientPlayerJoin(LocalPlayer player) {
         PLAYER_STATE_PAYLOADS.clear();
         TRAINER_MANAGER_PAYLOADS.clear();
+        FILE_DOWNLOAD_PAYLOADS.clear();
         RCTMod.getInstance().getTrainerManager().setLoading(true);
         PlayerState.initFor(player);
     }
@@ -118,9 +156,11 @@ public class ModClient {
 
     private static final Queue<byte[]> playerStateUpdates = new ConcurrentLinkedDeque<>();
     private static final Queue<Payload[]> trainerManagerUpdates = new ConcurrentLinkedDeque<>();
+    private static final Queue<Payload[]> fileDownloadUpdates = new ConcurrentLinkedDeque<>();
 
     static List<byte[]> PLAYER_STATE_PAYLOADS = new ArrayList<>();
     static List<Payload> TRAINER_MANAGER_PAYLOADS = new ArrayList<>();
+    static List<Payload> FILE_DOWNLOAD_PAYLOADS = new ArrayList<>();
     
     static void receivePlayerState(BatchedPayload.Payload pl, PacketContext context) {
         PlayerState.get(ModCommon.localPlayer()).setLoading();
@@ -145,6 +185,17 @@ public class ModClient {
             }
 
             TRAINER_MANAGER_PAYLOADS.clear();
+        }
+    }
+    static void receiveFileDownload(BatchedPayload.Payload pl, PacketContext context) {
+        FILE_DOWNLOAD_PAYLOADS.add(pl);
+
+        if(pl.remainingBatches() == 0) {
+            if(!ModClient.fileDownloadUpdates.offer(FILE_DOWNLOAD_PAYLOADS.toArray(new Payload[FILE_DOWNLOAD_PAYLOADS.size()]))) {
+                ModCommon.LOG.error("Failed to store file download updates");
+            }
+
+            FILE_DOWNLOAD_PAYLOADS.clear();
         }
     }
 

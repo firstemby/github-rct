@@ -80,8 +80,13 @@ public final class LangKeys {
     public static final String COMMANDS_ERRORS_INVALID_TRAINER_ID = "commands.rctmod.errors.invalid_trainer_id";
     public static final String COMMANDS_ERRORS_INVALID_TRAINER_ID_RETRY = "commands.rctmod.errors.invalid_trainer_id_retry";
     public static final String COMMANDS_ERRORS_INVALID_TRAINER_ID_REMOVE = "commands.rctmod.errors.invalid_trainer_id_remove";
+    public static final String COMMANDS_ERRORS_FILE_SAVE = "commands.rctmod.errors.file_save";
+    public static final String COMMANDS_ERRORS_DOWNLOAD_INTERRUPTED = "commands.rctmod.errors.download_interrupted";
     public static final String COMMANDS_FEEDBACK_SERIES_GRAPH = "commands.rctmod.feedback.series_graph";
     public static final String COMMANDS_FEEDBACK_CLICK_LINK = "commands.rctmod.feedback.click_link";
+    public static final String COMMANDS_FEEDBACK_CLICK_FILE = "commands.rctmod.feedback.click_file";
+    public static final String COMMANDS_FEEDBACK_FILE_SAVED = "commands.rctmod.feedback.file_saved";
+    public static final String COMMANDS_FEEDBACK_GENERATING_GRAPH = "commands.rctmod.feedback.generating_graph";
 
     public static String SERIES_TITLE(String seriesId) { return String.format("series.rctmod.%s.title", seriesId); }
     public static String SERIES_DESCRIPTION(String seriesId) { return String.format("series.rctmod.%s.description", seriesId); }

@@ -31,6 +31,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,16 +91,16 @@ public class GraphUtils {
     private static final Path EMPTY_PATH = Path.of("");
     private static final Set<String> EMPTY_SET = Set.of();
 
-    public static URI generate(Player player, SeriesGraph graph, boolean displayIds) throws IOException {
+    public static URI generate(Player player, SeriesGraph graph, boolean displayIds) throws IOException, URISyntaxException {
         return generate(player, graph, Format.SVG, displayIds);
     }
 
-    public static URI generate(Player player, SeriesGraph graph, Format format, boolean displayIds) throws IOException {
+    public static URI generate(Player player, SeriesGraph graph, Format format, boolean displayIds) throws IOException, URISyntaxException {
         var ps = PlayerState.get(player);
         var seriesId = ps.getCurrentSeries();
 
         if(format == Format.UML) {
-            return URI.create(PlantUML.encode(player, seriesId, graph));
+            return new URI(PlantUML.SERVER_URL + PlantUML.encode(player, seriesId, graph));
         }
 
         return saveToFile(player, toJGraph(ps, graph, seriesId, displayIds), format).toUri();
@@ -145,14 +146,14 @@ public class GraphUtils {
         return (canvas != null) ? canvas.destroy() : null;
     }
 
-    public static Graph<Node, Edge> toJGraph(PlayerState playerState, SeriesGraph graph, String seriesId, boolean dispalyIds) {
+    public static Graph<Node, Edge> toJGraph(PlayerState playerState, SeriesGraph graph, String seriesId, boolean displayIds) {
         var jGraph = new DirectedMultigraph<Node, Edge>(Edge.class);
         var nodeMap = new HashMap<TrainerNode, Node>();
         var closed = new HashSet<Node>();
 
         graph.stream().forEach(trainerNode -> {
             if(!nodeMap.containsKey(trainerNode)) {
-                jGraph.addVertex(initNode(playerState, seriesId, trainerNode, nodeMap, dispalyIds));
+                jGraph.addVertex(initNode(playerState, seriesId, trainerNode, nodeMap, displayIds));
             }
         });
 
@@ -186,7 +187,7 @@ public class GraphUtils {
     }
 
     public static JGraphXAdapter<Node, Edge> toJXGraph(PlayerState playerState, SeriesGraph graph, String seriesId, boolean displayIds) {
-        return toJXGraph(playerState, graph, seriesId, EMPTY_SET, displayIds);
+        return toJXGraph(playerState, graph, seriesId, playerState.getDefeatedTrainerIds(), displayIds);
     }
 
     public static JGraphXAdapter<Node, Edge> toJXGraph(PlayerState playerState, SeriesGraph graph, String seriesId, Set<String> defeatedTrainers, boolean displayIds) {
@@ -226,6 +227,7 @@ public class GraphUtils {
         return jxGraph;
     }
 
+    // deprecated (not really in use)
     private static Path saveToFile(Player player, Graph<Node, Edge> graph, Format format) throws IOException {
         var seriesId = PlayerState.get(player).getCurrentSeries();
         var jxGraph = toJXGraph(graph, seriesId);

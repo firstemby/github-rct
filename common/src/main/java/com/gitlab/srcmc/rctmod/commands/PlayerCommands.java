@@ -26,34 +26,58 @@
  */
 package com.gitlab.srcmc.rctmod.commands;
 
+import java.io.ByteArrayOutputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Stream;
+
+import javax.imageio.ImageIO;
+
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.SeriesMetaData;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.utils.GraphUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.api.utils.GraphUtils.Format;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
+import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
+import com.gitlab.srcmc.rctmod.network.utils.FileData;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mxgraph.util.mxXmlUtils;
 
+import dev.architectury.networking.NetworkManager;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public final class PlayerCommands {
+    static Map<UUID, Thread> graphGenThreads = new HashMap<>(); // TODO: this will not reset until a server restart (in practice not really a concern)
+
     private PlayerCommands() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -326,28 +350,92 @@ public final class PlayerCommands {
             flags = SuggestionUtils.getGraphFlags(flagStr);
         }
         
-        var includeDefeated = (flags & SuggestionUtils.GF_DEFEATED_FALSE) == 0;// && ((flags & SuggestionUtils.GF_DEFEATED_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_DEFEATED) != 0);
-        var includeOptionals = (flags & SuggestionUtils.GF_OPTIONALS_FALSE) == 0;// && ((flags & SuggestionUtils.GF_OPTIONALS_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_OPTIONALS) != 0);
-        var includeSingles = (flags & SuggestionUtils.GF_SINGLES_FALSE) == 0 && ((flags & SuggestionUtils.GF_SINGLES_TRUE) != 0 || (flags & SuggestionUtils.GF_INCLUDE_SINGLES) != 0);
-
+        var includeDefeated = (flags & SuggestionUtils.GF_DEFEATED_FALSE) == 0;
+        var includeOptionals = (flags & SuggestionUtils.GF_OPTIONALS_FALSE) == 0;
+        var includeSingles = (flags & SuggestionUtils.GF_SINGLES_FALSE) == 0 && (flags & SuggestionUtils.GF_SINGLES_TRUE) != 0;
+        var format = (flags & SuggestionUtils.GF_FORMAT_PNG) != 0 ? Format.PNG : ((flags & SuggestionUtils.GF_FORMAT_SVG) != 0 ? Format.SVG : Format.UML);
         var graph = RCTMod.getInstance().getSeriesManager().getGraph(tpd.getCurrentSeries());
+        var prevThread = graphGenThreads.get(player.getUUID());
+        var nextThread = new Thread(() -> {
+            try {
+                if(prevThread != null) {
+                    prevThread.interrupt();
+                    prevThread.join();
+                }
+                
+                player.getServer().execute(() -> context.getSource().sendSystemMessage(Component.translatable(LangKeys.COMMANDS_FEEDBACK_GENERATING_GRAPH)));
 
-        try {
-            var uri = GraphUtils.generate((ServerPlayer)player, includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), true);
-            context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString()).append(" ").append(Component.literal(uri.getPath())), false);
-        } catch (Exception e) {
-            ModCommon.LOG.error(e.getMessage(), e);
-            context.getSource().sendFailure(Component.literal(e.getMessage()));
-        }
+                var subGraph = includeDefeated
+                    ? graph.getRemaining(includeOptionals, includeSingles)
+                    : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles);                
 
-        // var url = PlantUML.SERVER_URL + PlantUML.encode(player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), tpd.getDefeatedTrainerIds());
+                switch (format) {
+                    case PNG:
+                        var img = GraphUtils.generateImage(PlayerState.get(player), subGraph, tpd.getCurrentSeries(), true);
+                        var buf = new ByteArrayOutputStream();
+                        ImageIO.write(img, "png", buf);
+                        var pngBytes = buf.toByteArray();
+                        var pngPls = BatchedPayloads.FILE_DOWNLOAD.payloads(new FileData(getPath(player, tpd, "png"), pngBytes));
+                        player.getServer().execute(() -> Stream.of(pngPls).forEach(p -> NetworkManager.sendToPlayer((ServerPlayer)player, p)));
+                        break;
+                    case SVG:
+                        var docs = GraphUtils.generateSVG(PlayerState.get(player), subGraph, tpd.getCurrentSeries(), true);
+                        var svgBytes = mxXmlUtils.getXml(docs).getBytes();
+                        var svgPls = BatchedPayloads.FILE_DOWNLOAD.payloads(new FileData(getPath(player, tpd, "svg"), svgBytes));
+                        player.getServer().execute(() -> Stream.of(svgPls).forEach(p -> NetworkManager.sendToPlayer((ServerPlayer)player, p)));
+                        break;
+                    default: // UML
+                        try  {
+                            var uri = GraphUtils.generate((ServerPlayer)player, subGraph, Format.UML, true);
+            
+                            player.getServer().execute(() -> {
+                                try {
+                                    var url = uri.toURL();
 
-        // context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString())
-        //     .append(Component.literal(" "))
-        //     .append(Component.literal(url).setStyle(Style.EMPTY
-        //         .applyFormats(ChatFormatting.UNDERLINE, ChatFormatting.GREEN)
-        //         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(LangKeys.COMMANDS_FEEDBACK_CLICK_LINK)))
-        //         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)))), false);
+                                    context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString())
+                                        .append(Component.literal(" "))
+                                        .append(Component.literal(uri.getPath()).setStyle(Style.EMPTY
+                                            .applyFormats(ChatFormatting.UNDERLINE, ChatFormatting.GREEN)
+                                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(LangKeys.COMMANDS_FEEDBACK_CLICK_LINK)))
+                                            .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url.toString())))), false);
+                                } catch(MalformedURLException | IllegalArgumentException e) {
+                                    ModCommon.LOG.error(e.getMessage(), e);
+                                    context.getSource().sendFailure(Component.literal(e.getMessage()));
+                                }
+                            });
+                        } catch(URISyntaxException e) {
+                            ModCommon.LOG.error(e.getMessage(), e);
+                            context.getSource().sendFailure(Component.literal(e.getMessage()));
+                        }
+
+                        break;
+                }
+            } catch(InterruptedException e) {
+                if(prevThread != null) {
+                    prevThread.interrupt();
+
+                    try {
+                        prevThread.join();
+                    } catch (InterruptedException _e) {
+                        // no op
+                    }
+                }
+
+                player.getServer().execute(() -> context.getSource().sendFailure(Component.translatable(LangKeys.COMMANDS_ERRORS_DOWNLOAD_INTERRUPTED)));
+            } catch(Exception e) {
+                player.getServer().execute(() -> {
+                    ModCommon.LOG.error(e.getMessage(), e);
+                    context.getSource().sendFailure(Component.literal(e.getMessage()));
+                });
+            }
+        });
+
+        graphGenThreads.put(player.getUUID(), nextThread);
+        nextThread.start();
+    }
+    
+    private static String getPath(Player player, TrainerPlayerData tpd, String suffix) {
+        return String.format("%s-graphs/%s-%s-%s.%s", ModCommon.MOD_ID, player.getName().getString().toLowerCase().replace(" ", "_"), tpd.getCurrentSeries(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")), suffix);
     }
 
     private static int player_get_level_cap(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {

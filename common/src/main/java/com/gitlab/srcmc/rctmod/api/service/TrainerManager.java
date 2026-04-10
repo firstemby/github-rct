@@ -123,7 +123,7 @@ public class TrainerManager extends DataPackManager {
     public void fromPayloads(BatchedPayload.Payload[] pls) {
         var t = new Thread(() -> {
             TrainerType.clear();
-            Payload pl = BatchedPayloads.TRAINER_MANAGER.from(pls);
+            Payload pl = BatchedPayload.<Payload>from(pls);
             this.trainerMobs = pl.trainerMobs();
             this.seriesManager.copyFrom(pl.seriesManager());
             this.payloadUpdateThreads.poll(); // self

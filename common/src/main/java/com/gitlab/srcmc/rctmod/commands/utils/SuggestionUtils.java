@@ -182,17 +182,23 @@ public final class SuggestionUtils {
         return builder.buildFuture();
     }
 
-    private static String[] GRAPH_FLAGS = {"defeated=false", "defeated=true", "optionals=false", "optionals=true", "singles=false", "singles=true", "include_defeated", "include_optionals", "include_singles"};
+    private static String[] GRAPH_FLAGS = {"defeated=false", "defeated=true", "optionals=false", "optionals=true", "singles=false", "singles=true", "format=uml", "format=svg", "format=png"};
+    private static final Map<String, String[]> GRAPH_FLAG_OPTIONS = Map.of(
+        "defeated", new String[]{"true", "false"},
+        "optionals", new String[]{"true", "false"},
+        "singles", new String[]{"true", "false"},
+        "format", new String[]{"uml", "svg", "png"}
+    );
+
     public static final int GF_DEFEATED_FALSE = 1<<(GRAPH_FLAGS.length - 1);
     public static final int GF_DEFEATED_TRUE = 1<<(GRAPH_FLAGS.length - 2);
     public static final int GF_OPTIONALS_FALSE = 1<<(GRAPH_FLAGS.length - 3);
     public static final int GF_OPTIONALS_TRUE = 1<<(GRAPH_FLAGS.length - 4);
     public static final int GF_SINGLES_FALSE = 1<<(GRAPH_FLAGS.length - 5);
     public static final int GF_SINGLES_TRUE = 1<<(GRAPH_FLAGS.length - 6);
-    // TODO include_* flags are deprecated (scheduled for removal with 0.18.0-beta)
-    public static final int GF_INCLUDE_DEFEATED = 1<<(GRAPH_FLAGS.length - 7);
-    public static final int GF_INCLUDE_OPTIONALS = 1<<(GRAPH_FLAGS.length - 8);
-    public static final int GF_INCLUDE_SINGLES = 1<<(GRAPH_FLAGS.length - 9);
+    public static final int GF_FORMAT_UML = 1<<(GRAPH_FLAGS.length - 7);
+    public static final int GF_FORMAT_SVG = 1<<(GRAPH_FLAGS.length - 8);
+    public static final int GF_FORMAT_PNG = 1<<(GRAPH_FLAGS.length - 9);
 
     public static int getGraphFlags(String in) throws IllegalArgumentException {
         var inFlags = in.toLowerCase().split("\s+");
@@ -229,10 +235,16 @@ public final class SuggestionUtils {
         var pre = sb.toString();
 
         Stream.of(GRAPH_FLAGS)
-            .filter(flag -> Stream.of(remaining).noneMatch(f -> flag.equals(f)) && (newFlag || Stream.of(remaining).anyMatch(f -> flag.startsWith(f))))
-            .forEach(f -> builder.suggest(pre + f));
+            .filter(flag -> Stream.of(remaining).noneMatch(rem -> hasFlag(rem, flag)))
+            .filter(flag -> newFlag || Stream.of(remaining).anyMatch(rem -> flag.startsWith(rem)))
+            .forEach(flag -> builder.suggest(pre + flag));
 
         return builder.buildFuture();
+    }
+
+    private static boolean hasFlag(String input, String flag) {
+        var key = flag.subSequence(0, flag.indexOf("="));
+        return Stream.of(GRAPH_FLAG_OPTIONS.getOrDefault(key, new String[0])).anyMatch(opt -> (key + "=" + opt).equals(input));
     }
 
     private SuggestionUtils() {

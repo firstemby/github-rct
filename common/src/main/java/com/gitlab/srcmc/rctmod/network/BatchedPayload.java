@@ -130,7 +130,7 @@ public class BatchedPayload {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Serializable> T from(Payload[] payloads) {
+    public static <T extends Serializable> T from(Payload[] payloads) {
         var bytes = new ByteArrayInputStream(ArrUtils.combine(Stream.of(payloads).map(pl -> pl.bytes).toList()));
 
         try(var ois = new ObjectInputStream(bytes)) {

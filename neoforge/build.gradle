@@ -64,10 +64,18 @@ dependencies {
     // JGraphT
     implementation "org.jgrapht:jgrapht-core:$rootProject.jgrapht_version"
     implementation "org.jgrapht:jgrapht-ext:$rootProject.jgrapht_version"
+    forgeRuntimeLibrary "org.jgrapht:jgrapht-core:$rootProject.jgrapht_version"
+    forgeRuntimeLibrary "org.jgrapht:jgrapht-ext:$rootProject.jgrapht_version"
     include "org.jgrapht:jgrapht-core:$rootProject.jgrapht_version"
     include "org.jgrapht:jgrapht-ext:$rootProject.jgrapht_version"
 
     // need to be bundled with the mod (neoforge only)
+    implementation "com.github.vlsi.mxgraph:jgraphx:$rootProject.jgraphx_version"
+    implementation "org.apfloat:apfloat:$rootProject.apfloat_version"
+    implementation "org.jheaps:jheaps:$rootProject.jheaps_version"
+    forgeRuntimeLibrary "com.github.vlsi.mxgraph:jgraphx:$rootProject.jgraphx_version"
+    forgeRuntimeLibrary "org.apfloat:apfloat:$rootProject.apfloat_version"
+    forgeRuntimeLibrary "org.jheaps:jheaps:$rootProject.jheaps_version"
     include "com.github.vlsi.mxgraph:jgraphx:$rootProject.jgraphx_version"
     include "org.apfloat:apfloat:$rootProject.apfloat_version"
     include "org.jheaps:jheaps:$rootProject.jheaps_version"
