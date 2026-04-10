@@ -275,6 +275,8 @@
   "advancements.rctmod.defeat_trainer_red.title": "Lenda de Kanto",
   "advancements.rctmod.kill_any.description": "'Derrote' qualquer Treinador",
   "advancements.rctmod.kill_any.title": "Forma errada de batalhar",
+  "advancements.rctmod.zoom_graph.description": "Amplie 10000% em qualquer Gráfico de Progresso",
+  "advancements.rctmod.zoom_graph.title": "Espero que você não tenha perdido nada",
   "block.rctmod.trainer_repel_rod": "Bastão Repelente de Treinador",
   "block.rctmod.trainer_spawner": "Gerador de Treinador",
   "commands.rctmod.errors.caller_not_a_player": "O autor da chamada não é um jogador",

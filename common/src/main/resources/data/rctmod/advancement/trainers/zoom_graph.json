@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "full_zoom": {
+      "conditions": {
+        "count": null,
+        "entity": {
+          "type": null
+        },
+        "trainer_ids": [],
+        "trainer_type": null
+      },
+      "trigger": "rctmod:custom"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": null,
+    "description": {
+      "translate": "advancements.rctmod.zoom_graph.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "id": "cobblemon:zoom_lens"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.rctmod.zoom_graph.title"
+    }
+  },
+  "parent": "rctmod:trainers/defeat_any",
+  "requirements": [
+    [
+      "full_zoom"
+    ]
+  ]
+}

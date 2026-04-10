@@ -31,7 +31,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gitlab.srcmc.rctapi.api.RCTApi;
+import com.gitlab.srcmc.rctmod.network.ClientActionPayload;
 import com.gitlab.srcmc.rctmod.server.ModServer;
+
+import dev.architectury.networking.NetworkManager;
+import dev.architectury.networking.NetworkManager.PacketContext;
+import dev.architectury.networking.NetworkManager.Side;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class ModCommon {
@@ -43,6 +49,7 @@ public class ModCommon {
 
     public static void init() {
         ModServer.registerEventHandlers();
+        NetworkManager.registerReceiver(Side.C2S, ClientActionPayload.TYPE, ClientActionPayload.CODEC, ModCommon::handleClientAction);
     }
 
     // call on client to supply Minecraft.getInstance().player
@@ -56,5 +63,19 @@ public class ModCommon {
         }
 
         return ModCommon.player.get();
+    }
+
+    static void handleClientAction(ClientActionPayload payload, PacketContext context) {
+        switch (payload.action()) {
+            case ZOOM_GRAPH_FULL:
+                if(context.getPlayer() instanceof ServerPlayer player) {
+                    ModRegistries.CriteriaTriggers.CUSTOM.get().trigger(player);
+                }
+
+                break;
+            default:
+                // no op
+                break;
+        }
     }
 }

@@ -31,12 +31,15 @@ import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.GraphUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.network.ClientActionPayload;
+import com.gitlab.srcmc.rctmod.network.ClientActionPayload.Action;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mxgraph.view.mxGraph;
 
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -79,6 +82,7 @@ public class ProgressGraphScreen extends Screen {
     private boolean dragging = false;
     private int dragStartX, dragStartY;
     private boolean showTrainerIds;
+    private boolean wasMaxZoom;
 
     private StringWidget widgetMessage;
     private StringWidget widgetSeriesState;
@@ -343,8 +347,7 @@ public class ProgressGraphScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        var oldZoom = this.zoom;
-        this.zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, this.zoom + (float)scrollY * ZOOM_STEP));
+        var oldZoom = this.updateZoom((float)scrollY * ZOOM_STEP);
         this.offsetX = (int)(mouseX - (mouseX - this.offsetX) * ((oldZoom != 0 ? this.zoom / oldZoom : 1.0)));
         this.offsetY = (int)(mouseY - (mouseY - this.offsetY) * ((oldZoom != 0 ? this.zoom / oldZoom : 1.0)));
         this.updateInfoBar();
@@ -355,14 +358,14 @@ public class ProgressGraphScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if(keyCode == KEY_ZOOM_IN) {
-            this.zoom = Math.min(MAX_ZOOM, this.zoom + ZOOM_STEP);
+            this.updateZoom(ZOOM_STEP);
             this.updateInfoBar();
             this.updateImage();
             return true;
         }
 
         if(keyCode == KEY_ZOOM_OUT) {
-            this.zoom = Math.max(MIN_ZOOM, this.zoom - ZOOM_STEP);
+            this.updateZoom(-ZOOM_STEP);
             this.updateInfoBar();
             this.updateImage();
             return true;
@@ -420,6 +423,18 @@ public class ProgressGraphScreen extends Screen {
         }
 
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
+
+    private float updateZoom(float add) {
+        var oldZoom = this.zoom;
+        this.zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, this.zoom + add));
+
+        if(!this.wasMaxZoom && this.zoom >= MAX_ZOOM) {
+            NetworkManager.sendToServer(new ClientActionPayload(Action.ZOOM_GRAPH_FULL));
+            this.wasMaxZoom = true;
+        }
+
+        return oldZoom;
     }
 
     private boolean updateOffset(double mouseX, double mouseY) {

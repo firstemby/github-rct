@@ -26,6 +26,7 @@
  */
 package com.gitlab.srcmc.rctmod;
 
+import com.gitlab.srcmc.rctmod.advancements.criteria.CustomCriterionTrigger;
 import com.gitlab.srcmc.rctmod.advancements.criteria.DefeatCountTrigger;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.world.blocks.TrainerRepelRodBlock;
@@ -124,9 +125,11 @@ public final class ModRegistries {
 
     public class CriteriaTriggers {
         public static final DeferredRegister<CriterionTrigger<?>> REGISTRY = DeferredRegister.create(ModCommon.MOD_ID, Registries.TRIGGER_TYPE);
+        public static final RegistrySupplier<CustomCriterionTrigger> CUSTOM;
         public static final RegistrySupplier<DefeatCountTrigger> DEFEAT_COUNT;
 
         static {
+            CUSTOM = REGISTRY.register(location("custom"), CustomCriterionTrigger::new);
             DEFEAT_COUNT = REGISTRY.register(location("defeat_count"), DefeatCountTrigger::new);
         }
     }
