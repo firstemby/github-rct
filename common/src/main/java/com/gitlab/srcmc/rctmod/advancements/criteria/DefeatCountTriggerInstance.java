@@ -28,9 +28,7 @@ package com.gitlab.srcmc.rctmod.advancements.criteria;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.gitlab.srcmc.rctmod.api.RCTMod;
-import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -42,20 +40,39 @@ import net.minecraft.server.level.ServerPlayer;
 
 public record DefeatCountTriggerInstance(List<String> trainerIds, String trainerType, int count) implements SimpleInstance {
     public boolean matches(ServerPlayer player, TrainerMob mob) {
-        var battleMem = RCTMod.getInstance().getTrainerManager().getBattleMemory(mob);
-        var mobTr = RCTMod.getInstance().getTrainerManager().getData(mob);
-        var playerState = PlayerState.get(player);
+        var tm = RCTMod.getInstance().getTrainerManager();
+        var battleMem = tm.getBattleMemory(mob);
+        var mobTr = tm.getData(mob);
 
         if(!this.trainerIds.isEmpty() && this.trainerIds.contains(mob.getTrainerId())) {
             return battleMem.getDefeatByCount(mob.getTrainerId(), player) >= this.count;
         }
 
-        if(!this.trainerType.isEmpty() && this.trainerType.equals(mobTr.getType().name())) {
-            return this.count >= 0
-                ? playerState.getTypeDefeatCount(mobTr.getType(), true) >= this.count
-                : playerState.getTypeDefeatCount(mobTr.getType(), true) >= RCTMod.getInstance().getTrainerManager()
-                    .getAllData().map(entry -> entry.getValue())
-                    .filter(tmd -> tmd.getType().equals(mobTr.getType())).count();
+        if(!this.trainerType.isEmpty() && this.trainerType.equals(mobTr.getType().id())) {
+            var trainers = tm.getAllData().filter(e -> e.getValue().getType().id().equals(this.trainerType));
+            var level = player.getServer().overworld();
+
+            if(this.count >= 0) {
+                var it = trainers.iterator();
+                var c = this.count;
+
+                while(it.hasNext()) {
+                    var e = it.next();
+                    var mem = tm.getBattleMemory(level, e.getKey());
+
+                    if(mem.getDefeatByCount(e.getKey(), player) > 0) {
+                        if(--c <= 0) {
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                return trainers // TODO: this might need optimization (potential many lookups after each battles for certain trainer types)
+                    .allMatch(e -> tm.getBattleMemory(level, e.getKey())
+                    .getDefeatByCount(e.getKey(), player) > 0);
+            }
+
+            return false;
         }
 
         return this.trainerIds.isEmpty() && this.trainerType.isEmpty()
