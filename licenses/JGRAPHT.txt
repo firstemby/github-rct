@@ -1,0 +1,5 @@
+This mod includes JGraphT.
+
+- Version: 1.5.2
+- License: LGPL 2.1 or later, https://github.com/jgrapht/jgrapht/blob/jgrapht-1.5.2/license-LGPL.txt
+- Source Code: https://github.com/jgrapht/jgrapht/tree/jgrapht-1.5.2

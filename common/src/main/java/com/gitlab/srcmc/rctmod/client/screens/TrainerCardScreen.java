@@ -29,8 +29,6 @@ package com.gitlab.srcmc.rctmod.client.screens;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.client.screens.widgets.PlayerInfoWidget;
-import com.mojang.blaze3d.platform.InputConstants;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -72,12 +70,6 @@ public class TrainerCardScreen extends Screen {
 
         if(mc.options.keyInventory.matches(key, scancode)) {
             mc.setScreen(null);
-            return true;
-        }
-
-        // TODO: test feature
-        if(key == InputConstants.KEY_G) {
-            mc.setScreen(new ProgressGraphScreen());
             return true;
         }
 

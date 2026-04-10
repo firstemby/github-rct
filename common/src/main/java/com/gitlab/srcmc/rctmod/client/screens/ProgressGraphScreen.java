@@ -30,9 +30,14 @@ import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.GraphUtils;
+import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mxgraph.view.mxGraph;
+
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StringWidget;
@@ -40,27 +45,31 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-
+import net.minecraft.network.chat.MutableComponent;
 import java.awt.image.BufferedImage;
 
 public class ProgressGraphScreen extends Screen {
-    private static final float MIN_ZOOM = 0.25f;
-    private static final float MAX_ZOOM = 10f;
-    private static final float ZOOM_STEP = 0.1f;
+    private static final float MIN_ZOOM = 0.1f;
+    private static final float MAX_ZOOM = 100f;
+    private static final float ZOOM_STEP = 0.05f;
     private static final int PADDING = 8;
-    // private static final int UPDATE_DELAY = 20; // deprecated
+    private static final int MAX_GRAPH_THREADS = 4;
 
     private static final int KEY_RESET = InputConstants.KEY_R;
+    private static final int KEY_TOGGLE_IDS = InputConstants.KEY_T;
     private static final int KEY_ZOOM_IN = InputConstants.KEY_PAGEUP;
     private static final int KEY_ZOOM_OUT = InputConstants.KEY_PAGEDOWN;
-    // private static final int KEY_PAN = InputConstants.MOUSE_BUTTON_LEFT; // no (localized) name?
 
     private final Minecraft mc;
-    private final mxGraph graph;
+    private final TrainerCardScreen trainerCardScreen;
+    private mxGraph graph;
 
     private DynamicTexture graphTexture;
     private ResourceLocation graphTexturePath;
-    private Thread graphThread;
+    private Thread graphThread, graphInitThread;
+    private int currentThreads;
+    private int maxThreads = MAX_GRAPH_THREADS;
+    private boolean closed;
 
     private float zoom = 1.0f;
     private int offsetX = 0;
@@ -69,8 +78,10 @@ public class ProgressGraphScreen extends Screen {
     private int graphHeight;
     private boolean dragging = false;
     private int dragStartX, dragStartY;
+    private boolean showTrainerIds;
 
     private StringWidget widgetMessage;
+    private StringWidget widgetSeriesState;
     private StringWidget widgetOffsetX;
     private StringWidget widgetOffsetY;
     private StringWidget widgetZoom;
@@ -78,70 +89,137 @@ public class ProgressGraphScreen extends Screen {
     private StringWidget widgetKeyZoomIn;
     private StringWidget widgetKeyZoomOut;
     private StringWidget widgetKeyPan;
+    private StringWidget widgetKeyToggleIds;
+    private StringWidget widgetKeyReturn;
 
-    public ProgressGraphScreen() {
-        super(Component.literal("Progression Graph"));
+    public ProgressGraphScreen(TrainerCardScreen trainerCardScreen) {
+        super(Component.literal("Progression Graph")); // TODO: lang (currently not displayed anywhere)
+        this.trainerCardScreen = trainerCardScreen;
         this.mc = Minecraft.getInstance();
-        var rct = RCTMod.getInstance();
-        var ps = PlayerState.get(this.mc.player);
-        var sg = rct.getSeriesManager().getGraph(ps.getCurrentSeries()).getRemaining(true);
-        this.graph = GraphUtils.toJXGraph(sg);
     }
 
     @Override
     protected void init() {
         super.init();
+        this.initImage();
         this.initMessage();
         this.initInfoBar();
         this.updateInfoBar();
-        this.updateImage();
+        this.initGraph();
+    }
+
+    private void initGraph() {
+        var rct = RCTMod.getInstance();
+        var ps = PlayerState.get(this.mc.player);
+        var sg = rct.getSeriesManager().getGraph(ps.getCurrentSeries()).getRemaining(true);
+        var seriesId = ps.getCurrentSeries();
+        var defeatedTrainers = ps.getDefeatedTrainerIds();
+        var prevThread = this.graphInitThread;
+
+        this.graphInitThread = new Thread(() -> {
+            try {
+                if(prevThread != null) {
+                    prevThread.interrupt();
+                    prevThread.join();
+                }
+
+                this.graph = GraphUtils.toJXGraph(sg, seriesId, defeatedTrainers, this.showTrainerIds);
+
+                if(!Thread.currentThread().isInterrupted()) {
+                    this.mc.execute(this::updateImage);
+                }
+            } catch(InterruptedException e) {
+                if(prevThread != null) {
+                    prevThread.interrupt();
+
+                    try {
+                        prevThread.join();
+                    } catch(InterruptedException _e) {
+                        // no op
+                    }
+                }
+            }
+        });
+
+        this.graphInitThread.start();
     }
 
     private void initMessage() {
-        this.widgetMessage = new StringWidget(Component.literal("Loading..."), this.font).alignCenter(); // TODO: lang
+        this.widgetMessage = new StringWidget(Component.translatable(LangKeys.GUI_TRAINER_CARD_LOADING).append("..."), this.font).alignCenter();
         this.widgetMessage.setWidth(this.width);
         this.widgetMessage.setHeight(this.height);
         this.addRenderableOnly(this.widgetMessage);
     }
 
+    private void initImage() {
+        if(this.graphTexture != null) {
+            this.graphTexture.close();
+            this.graphTexture = null;
+        }
+
+        if(this.graphThread != null) {
+            this.graphThread.interrupt();
+            this.graphThread = null;
+        }
+
+        if(this.graphInitThread != null) {
+            this.graphInitThread.interrupt();
+            this.graphInitThread = null;
+        }
+
+        this.graphTexturePath = null;
+    }
+
     private void updateImage() {
-        var zoom = this.zoom;
-        var offX = this.offsetX;
-        var offY = this.offsetY;
+        var graph = this.graph;
+
+        if(graph == null || this.currentThreads >= this.maxThreads) {
+            return;
+        }
+
         var prevThread = this.graphThread;
 
         this.graphThread = new Thread(() -> {
             try {
                 if(prevThread != null) {
-                    // prevThread.interrupt();
                     prevThread.join();
                 }
 
-                // prevents rapid image (re)generation after fast subsequent updates (next thread interrupts -> looks clumpsy -> alternative idea: max thread count and interrupt oldest thread if exceeded thread)
-                // Thread.sleep(UPDATE_DELAY);
-
+                var zoom = this.zoom;
+                var offX = this.offsetX;
+                var offY = this.offsetY;
                 var guiScale = this.mc.getWindow().getGuiScale();
-                var buffered = GraphUtils.generateImage(this.graph, -offX * guiScale, -offY * guiScale, this.width * guiScale, this.height * guiScale, zoom);
+                var buffered = GraphUtils.generateImage(graph, -offX * guiScale, -offY * guiScale, this.width * guiScale, this.height * guiScale, zoom);
                 var image = toNativeImage(buffered);
                 
                 if(!Thread.currentThread().isInterrupted()) {
                     this.mc.execute(() -> {
-                        this.widgetMessage.visible = false;
-                        this.graphWidth = buffered.getWidth();
-                        this.graphHeight = buffered.getHeight();
+                        if(!this.closed) {
+                            this.widgetMessage.visible = false;
+                            this.graphWidth = buffered.getWidth();
+                            this.graphHeight = buffered.getHeight();
 
-                        if(this.graphTexture == null) {
-                            this.graphTexturePath = new ResourceLocation(ModCommon.MOD_ID, "dynamic/progress_graph");
-                            this.graphTexture = new DynamicTexture(image);
-                            this.mc.getTextureManager().register(this.graphTexturePath, this.graphTexture);
-                        } else {
-                            this.graphTexture.setPixels(image);
-                            this.graphTexture.upload();
+                            if(this.graphTexture == null) {
+                                this.graphTexturePath = new ResourceLocation(ModCommon.MOD_ID, "dynamic/progress_graph");
+                                this.graphTexture = new DynamicTexture(image);
+                                this.mc.getTextureManager().register(this.graphTexturePath, this.graphTexture);
+                            } else {
+                                this.graphTexture.setPixels(image);
+                                this.graphTexture.upload();
+                            }
                         }
                     });
                 }
             } catch(InterruptedException _e) {
-                // no op
+                if(prevThread != null) {
+                    prevThread.interrupt();
+
+                    try {
+                        prevThread.join();
+                    } catch (InterruptedException __e) {
+                        // no op
+                    }
+                }
             } catch(Exception e) {
                 ModCommon.LOG.error(e.getMessage(), e);
 
@@ -150,13 +228,21 @@ public class ProgressGraphScreen extends Screen {
                     this.widgetMessage.visible = true;
                 });
             }
+
+            this.currentThreads--;
         });
-        
-        this.graphThread.setPriority(Thread.NORM_PRIORITY / 2);
+
+        if(++this.currentThreads >= this.maxThreads) {
+            this.maxThreads = Math.max(1, this.maxThreads / 2);
+        } else if(this.maxThreads < MAX_GRAPH_THREADS) {
+            this.maxThreads++;
+        }
+
         this.graphThread.start();
     }
 
     private void initInfoBar() {
+        this.removeWidget(this.widgetSeriesState);
         this.removeWidget(this.widgetOffsetX);
         this.removeWidget(this.widgetOffsetY);
         this.removeWidget(this.widgetZoom);
@@ -164,7 +250,10 @@ public class ProgressGraphScreen extends Screen {
         this.removeWidget(this.widgetKeyZoomIn);
         this.removeWidget(this.widgetKeyZoomOut);
         this.removeWidget(this.widgetKeyPan);
+        this.removeWidget(this.widgetKeyToggleIds);
+        this.removeWidget(this.widgetKeyReturn);
 
+        this.widgetSeriesState = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
         this.widgetOffsetX = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
         this.widgetOffsetY = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
         this.widgetZoom = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
@@ -172,7 +261,10 @@ public class ProgressGraphScreen extends Screen {
         this.widgetKeyZoomIn = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
         this.widgetKeyZoomOut = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
         this.widgetKeyPan = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
+        this.widgetKeyToggleIds = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
+        this.widgetKeyReturn = new StringWidget(0, 0, this.width, this.font.lineHeight, Component.empty(), this.font).alignLeft();
 
+        this.addRenderableOnly(this.widgetSeriesState);
         this.addRenderableOnly(this.widgetOffsetX);
         this.addRenderableOnly(this.widgetOffsetY);
         this.addRenderableOnly(this.widgetZoom);
@@ -180,36 +272,48 @@ public class ProgressGraphScreen extends Screen {
         this.addRenderableOnly(this.widgetKeyZoomIn);
         this.addRenderableOnly(this.widgetKeyZoomOut);
         this.addRenderableOnly(this.widgetKeyPan);
+        this.addRenderableOnly(this.widgetKeyToggleIds);
+        this.addRenderableOnly(this.widgetKeyReturn);
 
-        // static messages (top left)
-        this.widgetKeyReset.setMessage(Component.literal(String.format("<%s>: Reset View", InputConstants.getKey(KEY_RESET, 0).getDisplayName().getString())));
-        this.widgetKeyZoomIn.setMessage(Component.literal(String.format("<%s / Scroll Up>: Zoom In", InputConstants.getKey(KEY_ZOOM_IN, 0).getDisplayName().getString())));
-        this.widgetKeyZoomOut.setMessage(Component.literal(String.format("<%s / Scroll Down>: Zoom Out", InputConstants.getKey(KEY_ZOOM_OUT, 0).getDisplayName().getString())));
-        this.widgetKeyPan.setMessage(Component.literal(String.format("<%s + Move>: Pan View", "Click")));
-
-        this.widgetKeyReset.setColor(0xBB676767);
-        this.widgetKeyZoomIn.setColor(0xBB676767);
-        this.widgetKeyZoomOut.setColor(0xBB676767);
-        this.widgetKeyPan.setColor(0xBB676767);
+        // static messages (bottom left)
+        this.widgetKeyReset.setMessage(Component.literal("<").append(styleKeyName(InputConstants.getKey(KEY_RESET, 0).getDisplayName().copy())).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_RESET_VIEW)));
+        this.widgetKeyReturn.setMessage(Component.literal("<").append(styleKeyName(this.mc.options.keyInventory.getTranslatedKeyMessage().copy())).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_RETURN)));
+        this.widgetKeyPan.setMessage(Component.literal("<").append(Component.translatable(LangKeys.GUI_TRAINER_CARD_HOLD)).append(" ").append(styleKeyName(Component.translatable(LangKeys.GUI_MOUSE_LEFT))).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_PAN_VIEW)));
+        this.widgetKeyToggleIds.setMessage(Component.literal("<").append(styleKeyName(InputConstants.getKey(KEY_TOGGLE_IDS, 0).getDisplayName().copy())).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_TOGGLE_IDS)));
+        this.widgetKeyZoomIn.setMessage(Component.literal("<").append(styleKeyName(InputConstants.getKey(KEY_ZOOM_IN, 0).getDisplayName().copy())).append("/").append(styleKeyName(Component.translatable(LangKeys.GUI_MOUSE_WHEEL))).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_ZOOM_IN)));
+        this.widgetKeyZoomOut.setMessage(Component.literal("<").append(styleKeyName(InputConstants.getKey(KEY_ZOOM_OUT, 0).getDisplayName().copy())).append("/").append(styleKeyName(Component.translatable(LangKeys.GUI_MOUSE_WHEEL))).append(">: ").append(Component.translatable(LangKeys.GUI_DESCRIPTION_PROGRESS_GRAPH_ZOOM_OUT)));
 
         var x = PADDING;
-        var y = PADDING;
+        var y = this.height - 6 * this.font.lineHeight - PADDING;
 
         this.widgetKeyReset.setPosition(x, y);
-        this.widgetKeyZoomIn.setPosition(x, y + 1 * this.font.lineHeight);
-        this.widgetKeyZoomOut.setPosition(x, y + 2 * this.font.lineHeight);
+        this.widgetKeyReturn.setPosition(x, y + 1 * this.font.lineHeight);
+        this.widgetKeyToggleIds.setPosition(x, y + 2 * this.font.lineHeight);
         this.widgetKeyPan.setPosition(x, y + 3 * this.font.lineHeight);
+        this.widgetKeyZoomIn.setPosition(x, y + 4 * this.font.lineHeight);
+        this.widgetKeyZoomOut.setPosition(x, y + 5 * this.font.lineHeight);
+    }
+
+    private static Component styleKeyName(MutableComponent name) {
+        return name.withStyle(ChatFormatting.AQUA);
     }
 
     private void updateInfoBar() {
-        // dynamic messages (top right)
-        this.widgetZoom.setMessage(Component.literal(String.format("Zoom: %d%%", (int)(this.zoom * 100))));
-        this.widgetOffsetX.setMessage(Component.literal(String.format("X: %d", this.offsetX)));
-        this.widgetOffsetY.setMessage(Component.literal(String.format("Y: %d", this.offsetY)));
+        var ps = PlayerState.get(this.mc.player);
+        var sg = RCTMod.getInstance().getSeriesManager().getGraph(ps.getCurrentSeries());
+        var required = sg.getRemaining(ps.getDefeatedTrainerIds(), false, false, true).size();
 
-        this.widgetZoom.setColor(0xBB676767);
-        this.widgetOffsetX.setColor(0xBB676767);
-        this.widgetOffsetY.setColor(0xBB676767);
+        // dynamic messages (top left)
+        this.widgetSeriesState.setMessage(Component.empty().append(RCTMod.getInstance().getSeriesManager().getGraph(ps.getCurrentSeries()).getMetaData().title().getComponent().withStyle(ChatFormatting.ITALIC)).append(": ").append(required > 0
+            ? Component.translatable(LangKeys.GUI_TRAINER_CARD_MISSING_TRAINERS).append(" ").append(String.valueOf(required))
+            : Component.translatable(LangKeys.GUI_TRAINER_CARD_COMPLETED)));
+
+        this.widgetSeriesState.setPosition(PADDING, PADDING);
+
+        // dynamic messages (top right)
+        this.widgetZoom.setMessage(Component.translatable(LangKeys.GUI_TRAINER_CARD_ZOOM).append(": ").append(String.valueOf((int)(this.zoom * 100))).append("%"));
+        this.widgetOffsetX.setMessage(Component.translatable(LangKeys.GUI_TRAINER_CARD_X).append(": ").append(String.valueOf(-this.offsetX)));
+        this.widgetOffsetY.setMessage(Component.translatable(LangKeys.GUI_TRAINER_CARD_Y).append(": ").append(String.valueOf(-this.offsetY)));
 
         var maxWidth = Math.max(this.font.width(this.widgetZoom.getMessage()), Math.max(this.font.width(this.widgetOffsetX.getMessage()), this.font.width(this.widgetOffsetY.getMessage())));
         var x = this.width - maxWidth - PADDING;
@@ -225,11 +329,15 @@ public class ProgressGraphScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        super.render(guiGraphics, mouseX, mouseY, delta);
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, delta);
 
         if(this.graphTexturePath != null) {
+            RenderSystem.enableBlend();
+            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             guiGraphics.blit(this.graphTexturePath, 0, 0, this.width, this.height, 0, 0, this.graphWidth, this.graphHeight, this.graphWidth, this.graphHeight);
+            RenderSystem.disableBlend();
+            RenderSystem.defaultBlendFunc();
         }
     }
 
@@ -266,6 +374,17 @@ public class ProgressGraphScreen extends Screen {
             this.offsetY = 0;
             this.updateInfoBar();
             this.updateImage();
+            return true;
+        }
+
+        if(keyCode == KEY_TOGGLE_IDS) {
+            this.showTrainerIds = !this.showTrainerIds;
+            this.initGraph();
+            return true;
+        }
+
+        if(this.mc.options.keyInventory.matches(keyCode, scanCode)) {
+            this.mc.setScreen(this.trainerCardScreen);
             return true;
         }
 
@@ -317,6 +436,12 @@ public class ProgressGraphScreen extends Screen {
 
     @Override
     public void onClose() {
+        this.closed = true;
+
+        if(this.graphThread != null) {
+            this.graphThread.interrupt();
+        }
+
         if(this.graphTexture != null) {
             this.graphTexture.close();
         }
@@ -331,11 +456,12 @@ public class ProgressGraphScreen extends Screen {
 
     public static NativeImage toNativeImage(BufferedImage buffered) {
         var nativeImage = new NativeImage(buffered.getWidth(), buffered.getHeight(), false);
-        
-        for(int x, y = 0; y < buffered.getHeight(); y++) {
-            for(x = 0; x < buffered.getWidth(); x++) {
-                nativeImage.setPixelRGBA(x, y, buffered.getRGB(x, y));
-            }
+        var pixels = buffered.getRGB(0, 0, buffered.getWidth(), buffered.getHeight(), null, 0, buffered.getWidth());
+
+        for(int i = 0; i < pixels.length; i++) {
+            var argb = pixels[i];
+            var abgr = (argb & 0xFF00FF00) | ((argb & 0x00FF0000) >> 16) | ((argb & 0x000000FF) << 16);
+            nativeImage.setPixelRGBA(i % buffered.getWidth(), i / buffered.getWidth(), abgr);
         }
         
         return nativeImage;

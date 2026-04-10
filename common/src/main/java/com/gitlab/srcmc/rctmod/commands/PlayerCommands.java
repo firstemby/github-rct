@@ -26,7 +26,6 @@
  */
 package com.gitlab.srcmc.rctmod.commands;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import com.gitlab.srcmc.rctmod.ModCommon;
@@ -37,7 +36,6 @@ import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.utils.GraphUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
-import com.gitlab.srcmc.rctmod.api.utils.PlantUML;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
 import com.mojang.brigadier.CommandDispatcher;
@@ -47,14 +45,10 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -339,7 +333,7 @@ public final class PlayerCommands {
         var graph = RCTMod.getInstance().getSeriesManager().getGraph(tpd.getCurrentSeries());
 
         try {
-            var uri = GraphUtils.generate((ServerPlayer)player, tpd.getCurrentSeries(), includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles));
+            var uri = GraphUtils.generate((ServerPlayer)player, includeDefeated ? graph.getRemaining(includeOptionals, includeSingles) : graph.getRemaining(tpd.getDefeatedTrainerIds(), includeOptionals, includeSingles), true);
             context.getSource().sendSuccess(() -> Component.translatable(LangKeys.COMMANDS_FEEDBACK_SERIES_GRAPH, player.getDisplayName().getString(), graph.getMetaData().title().getComponent().getString()).append(" ").append(Component.literal(uri.getPath())), false);
         } catch (Exception e) {
             ModCommon.LOG.error(e.getMessage(), e);

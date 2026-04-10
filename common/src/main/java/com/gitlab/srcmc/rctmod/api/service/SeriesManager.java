@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -249,14 +250,20 @@ public class SeriesManager implements Serializable {
         }
 
         public SeriesGraph getRemaining(Set<String> defeats, boolean includeOptionals, boolean includeSingles) {
+            return this.getRemaining(defeats, includeOptionals, includeSingles, false);
+        }
+
+        public SeriesGraph getRemaining(Set<String> defeats, boolean includeOptionals, boolean includeSingles, boolean excludeSiblings) {
             var copy = new SeriesGraph(this);
 
             this.list.stream()
                 .filter(tn -> (includeSingles || !tn.isAlone())
                     && (includeOptionals || !tn.isOptional()) && !tn.isDefeated(defeats))
                 .forEach(tn -> {
-                    copy.list.add(tn);
-                    copy.map.put(tn.trainerId, tn);
+                    if(!excludeSiblings || tn.siblings().map(sib -> sib.id()).noneMatch(copy.map.keySet()::contains)) {
+                        copy.list.add(tn);
+                        copy.map.put(tn.trainerId, tn);
+                    }
                 });
 
             return copy;
@@ -328,9 +335,9 @@ public class SeriesManager implements Serializable {
     public class TrainerNode implements Serializable {
         private static final long serialVersionUID = 0L;
         
-        private List<TrainerNode> ancestors = new ArrayList<>();
-        private List<TrainerNode> successors = new ArrayList<>();
-        private List<TrainerNode> siblings = new ArrayList<>();
+        private Set<TrainerNode> ancestors = new LinkedHashSet<>();
+        private Set<TrainerNode> successors = new LinkedHashSet<>();
+        private Set<TrainerNode> siblings = new LinkedHashSet<>();
         private String trainerId;
         private boolean optional;
 
@@ -403,6 +410,11 @@ public class SeriesManager implements Serializable {
             this.sealedAlone = this.isAlone();
             this.sealedOptional = this.isOptional();
             this.sealed = true;
+        }
+
+        @Override
+        public String toString() {
+            return this.id();
         }
     }
 }

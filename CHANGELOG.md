@@ -2,7 +2,7 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.18.0-beta] - 2026-04-07
+## [0.18.0-beta] - 2026-04-09
 
 **Added:**
 
@@ -15,12 +15,13 @@ As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistribute
 
 **Changed:**
 
-- *#394* Added new `format=<format>` argument to the `get progress graph` command. Possible values are:
+- *#394* Added new `format=<format>` argument to the `get progress graph` command. Possible values are: (TODO)
   - `png`: Generate an image file, saved on the client
   - `svg`: Generate a vector graphic file, saved on the client
   - `uml`: Generate a *PlantUML* graph, can be viewed online, old behaviour, default
-- *#393* Series progress graph generation is now powered by *JGraphT*, which offers a variety of advanced features that are designed for the visualization of (mathematical) graphs (*PlantUML* graphs can still be generated, see also *#394*)
-- *#392* Update min required version of `rctapi` to `0.15.0-beta`
+- *#393* Update min required version of `rctapi` to `0.15.0-beta`
+- *#392* Updated Trainer Card UI with option to view current series progress graph as vector graphic ingame (added button next to checkmark)
+  - Series progress graph visualization is powered by *JGraphT* (*PlantUML* graphs can still be generated, see also *#394*)
 
 **Fixed:**
 

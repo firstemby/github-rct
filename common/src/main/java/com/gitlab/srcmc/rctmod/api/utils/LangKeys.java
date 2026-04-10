@@ -46,7 +46,15 @@ public final class LangKeys {
     public static final String GUI_TRAINER_CARD_OVERVIEW = "gui.rctmod.trainer_card.overview";
     public static final String GUI_TRAINER_CARD_SPAWNING = "gui.rctmod.trainer_card.spawning";
     public static final String GUI_TRAINER_CARD_TEAM = "gui.rctmod.trainer_card.team";
-
+    public static final String GUI_TRAINER_CARD_ZOOM = "gui.rctmod.trainer_card.zoom";
+    public static final String GUI_TRAINER_CARD_X = "gui.rctmod.trainer_card.x";
+    public static final String GUI_TRAINER_CARD_Y = "gui.rctmod.trainer_card.y";
+    public static final String GUI_TRAINER_CARD_HOLD = "gui.rctmod.trainer_card.hold";
+    public static final String GUI_TRAINER_CARD_COMPLETED = "gui.rctmod.trainer_card.completed";
+    public static final String GUI_TRAINER_CARD_MISSING_TRAINERS = "gui.rctmod.trainer_card.missing_trainers";
+    
+    public static final String GUI_MOUSE_LEFT = "gui.rctmod.mouse.left";
+    public static final String GUI_MOUSE_WHEEL = "gui.rctmod.mouse.wheel";
     public static final String GUI_TITLE_SERIES_STARTED = "gui.rctmod.title.series_started";
     public static final String GUI_TITLE_SERIES_PAUSED = "gui.rctmod.title.series_paused";
     public static final String GUI_TITLE_SERIES_CONTINUED = "gui.rctmod.title.series_continued";
@@ -57,6 +65,13 @@ public final class LangKeys {
     public static final String GUI_TRAINER_ASSOCIATION_COMPLETED = "gui.rctmod.trainer_association.completed";
     public static final String GUI_TRAINER_ASSOCIATION_SERIES_RESET = "gui.rctmod.trainer_association.series_reset";
     public static final String GUI_TRAINER_ASSOCIATION_SERIES_CONTINUE = "gui.rctmod.trainer_association.series_continue";
+
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_RESET_VIEW = "gui.rctmod.description.progress_graph.reset_view";
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_ZOOM_IN = "gui.rctmod.description.progress_graph.zoom_in";
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_ZOOM_OUT = "gui.rctmod.description.progress_graph.zoom_out";
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_TOGGLE_IDS = "gui.rctmod.description.progress_graph.toggle_ids";
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_PAN_VIEW = "gui.rctmod.description.progress_graph.pan_view";
+    public static final String GUI_DESCRIPTION_PROGRESS_GRAPH_RETURN = "gui.rctmod.description.progress_graph.return";
 
     public static final String COMMANDS_ERRORS_CALLER_NOT_A_PLAYER = "commands.rctmod.errors.caller_not_a_player";
     public static final String COMMANDS_ERRORS_TARGET_NOT_A_PLAYER = "commands.rctmod.errors.target_not_a_player";

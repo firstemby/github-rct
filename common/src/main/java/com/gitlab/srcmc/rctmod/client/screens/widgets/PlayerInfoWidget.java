@@ -36,7 +36,10 @@ import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
+import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.client.screens.ProgressGraphScreen;
+import com.gitlab.srcmc.rctmod.client.screens.TrainerCardScreen;
 import com.gitlab.srcmc.rctmod.client.screens.widgets.controls.CycleButton;
 import com.gitlab.srcmc.rctmod.client.screens.widgets.text.AutoScaledStringWidget;
 
@@ -87,9 +90,15 @@ public class PlayerInfoWidget extends AbstractWidget {
     public static final int TRAINER_LIST_W = 112;
     public static final int TRAINER_LIST_H = 72;
 
+    public static final int PROGRESS_GRAPH_X = 186;
+    public static final int PROGRESS_GRAPH_Y = 8;
+    public static final int PROGRESS_GRAPH_W = 10;
+    public static final int PROGRESS_GRAPH_H = 16;
+    public static final Component PROGRESS_GRAPH_SYMBOL = Component.literal("»»").withStyle(ChatFormatting.BOLD);
+
     public static final int TYPE_BUTTON_X = 96;
     public static final int TYPE_BUTTON_Y = 8;
-    public static final int TYPE_BUTTON_W = 100;
+    public static final int TYPE_BUTTON_W = 90;
     public static final int TYPE_BUTTON_H = 16;
 
     public static final int CHECKBOX_X = 196;
@@ -116,6 +125,7 @@ public class PlayerInfoWidget extends AbstractWidget {
 
     private TrainerListWidget trainerList;
     private TrainerInfoWidget trainerInfo;
+    private Button openProgressGraph;
     private CycleButton<TrainerType> trainerTypeButton;
     private Button nextPageButton;
     private Button prevPageButton;
@@ -150,6 +160,14 @@ public class PlayerInfoWidget extends AbstractWidget {
         this.trainerInfo = new TrainerInfoWidget(x + TRAINER_LIST_X, y + TRAINER_LIST_Y, TRAINER_LIST_W, TRAINER_LIST_H, font);
         this.trainerTypes = new ArrayList<>();
 
+        this.openProgressGraph = Button.builder(Component.empty(), b -> {
+            var mc = Minecraft.getInstance();
+            
+            if(mc.screen instanceof TrainerCardScreen trainerCardScreen) {
+                mc.setScreen(new ProgressGraphScreen(trainerCardScreen));
+            }
+        }).bounds(x + PROGRESS_GRAPH_X, y + PROGRESS_GRAPH_Y, PROGRESS_GRAPH_W, PROGRESS_GRAPH_H).build();
+
         this.showUndefeated = CycleButton.create(
             t -> Component.literal(t), CHECKBOX_VALUES, 1,
             x + CHECKBOX_X, y + CHECKBOX_Y, CHECKBOX_W, CHECKBOX_H, true);
@@ -171,6 +189,7 @@ public class PlayerInfoWidget extends AbstractWidget {
         this.renderableWidgets = new AbstractWidget[] {
             this.trainerList,
             this.trainerInfo,
+            this.openProgressGraph,
             this.trainerTypeButton,
             this.showUndefeated,
             this.prevPageButton,
@@ -216,10 +235,13 @@ public class PlayerInfoWidget extends AbstractWidget {
                     this.initTrainerList();
                 }
 
+                this.openProgressGraph.active = this.sid != null && !this.sid.equals(SeriesManager.EMPTY_SERIES_ID) && !this.sid.equals(SeriesManager.FREEROAM_SERIES_ID);
+                this.openProgressGraph.setMessage(this.openProgressGraph.active ? PROGRESS_GRAPH_SYMBOL : Component.empty());
                 this.trainerInfo.visible = this.trainerInfo.active = false;
                 this.trainerList.visible = this.trainerList.active = true;
                 this.showUndefeated.active = true;
                 this.trainerTypeButton.active = true;
+                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : TYPE_BUTTON_W + PROGRESS_GRAPH_W);
                 this.loadingLabel.setMessage(Component.empty());
 
                 if(this.trainerListShowUndefeated != null) {
@@ -249,12 +271,15 @@ public class PlayerInfoWidget extends AbstractWidget {
                     this.showUndefeated.onPress();
                 }
 
+                this.openProgressGraph.active = this.sid != null && !this.sid.equals(SeriesManager.EMPTY_SERIES_ID) && !this.sid.equals(SeriesManager.FREEROAM_SERIES_ID);
+                this.openProgressGraph.setMessage(this.openProgressGraph.active ? PROGRESS_GRAPH_SYMBOL : Component.empty());
                 this.trainerInfo.visible = this.trainerInfo.active = true;
                 this.trainerList.visible = this.trainerList.active = false;
                 this.prevPageButton.active = false;
                 this.nextPageButton.active = false;
                 this.showUndefeated.active = false;
                 this.trainerTypeButton.active = false;
+                this.trainerTypeButton.setWidth(this.openProgressGraph.active ? TYPE_BUTTON_W : TYPE_BUTTON_W + PROGRESS_GRAPH_W);
                 this.trainerTypeButton.setMessage(this.trainerInfo.getPageContent(this.trainerInfo.getPage()).title);
                 this.loadingLabel.setMessage(Component.empty());
 
@@ -264,11 +289,14 @@ public class PlayerInfoWidget extends AbstractWidget {
                     this.showUndefeated.onPress();
                 }
 
+                this.openProgressGraph.active = false;
+                this.openProgressGraph.setMessage(Component.empty());
                 this.trainerInfo.visible = this.trainerInfo.active = false;
                 this.trainerList.visible = this.trainerList.active = true;
                 this.trainerListShowUndefeated = true;
                 this.showUndefeated.active = false;
                 this.trainerTypeButton.active = false;
+                this.trainerTypeButton.setWidth(TYPE_BUTTON_W + PROGRESS_GRAPH_W);
                 this.trainerList.setTrainerIds(List.of());
                 this.trainerList.setPage(0);
                 this.resetTrainerTypes();
