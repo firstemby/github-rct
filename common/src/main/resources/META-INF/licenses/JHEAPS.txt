@@ -1,0 +1,4 @@
+This mod includes JHeaps.
+
+- License: Apache License, Version 2.0 https://www.jheaps.org/about/
+- Project: https://www.jheaps.org/

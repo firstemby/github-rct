@@ -1,0 +1,4 @@
+This mod includes Apfloat for Java.
+
+- License: MIT
+- Project: https://www.apfloat.org/apfloat_java/
