@@ -75,6 +75,7 @@ public class GraphUtils {
     private static final String GRAPH_OUTPUT_VECTOR_FORMAT = "SVG";
     private static final Color GRAPH_OUTPUT_BG_COLOR = new Color(35, 0, 0, 100);
     private static final float GRAPH_OUTPUT_SCALE = 1;
+    private static final String HIDDEN_TRAINER_NAME = "?????";
     private static final boolean ANTI_ALIAS = true;
 
     private static final String CELL_STYLE_DEFAULT = "RCT_CELL_DEFAULT";
@@ -94,25 +95,26 @@ public class GraphUtils {
     }
 
     public static URI generate(Player player, SeriesGraph graph, Format format, boolean displayIds) throws IOException {
-        var seriesId = PlayerState.get(player).getCurrentSeries();
+        var ps = PlayerState.get(player);
+        var seriesId = ps.getCurrentSeries();
 
         if(format == Format.UML) {
             return URI.create(PlantUML.encode(player, seriesId, graph));
         }
 
-        return saveToFile(player, toJGraph(graph, seriesId, displayIds), format).toUri();
+        return saveToFile(player, toJGraph(ps, graph, seriesId, displayIds), format).toUri();
     }
 
-    public static Document generateSVG(SeriesGraph graph, String seriesId, boolean displayIds) throws IOException {
-        return mxCellRenderer.createSvgDocument(toJXGraph(graph, seriesId, displayIds), null, GRAPH_OUTPUT_SCALE, GRAPH_OUTPUT_BG_COLOR, null);
+    public static Document generateSVG(PlayerState playerState, SeriesGraph graph, String seriesId, boolean displayIds) throws IOException {
+        return mxCellRenderer.createSvgDocument(toJXGraph(playerState, graph, seriesId, displayIds), null, GRAPH_OUTPUT_SCALE, GRAPH_OUTPUT_BG_COLOR, null);
     }
 
-    public static BufferedImage generateImage(SeriesGraph graph, String seriesId, boolean displayIds) {
-        return generateImage(graph, seriesId, 1.0, displayIds);
+    public static BufferedImage generateImage(PlayerState playerState, SeriesGraph graph, String seriesId, boolean displayIds) {
+        return generateImage(playerState, graph, seriesId, 1.0, displayIds);
     }
 
-    public static BufferedImage generateImage(SeriesGraph graph, String seriesId, double scale, boolean displayIds) {
-        return generateImage(toJXGraph(graph, seriesId, displayIds), scale);
+    public static BufferedImage generateImage(PlayerState playerState, SeriesGraph graph, String seriesId, double scale, boolean displayIds) {
+        return generateImage(toJXGraph(playerState, graph, seriesId, displayIds), scale);
     }
 
     public static BufferedImage generateImage(mxGraph graph) {
@@ -143,14 +145,14 @@ public class GraphUtils {
         return (canvas != null) ? canvas.destroy() : null;
     }
 
-    public static Graph<Node, Edge> toJGraph(SeriesGraph graph, String seriesId, boolean dispalyIds) {
+    public static Graph<Node, Edge> toJGraph(PlayerState playerState, SeriesGraph graph, String seriesId, boolean dispalyIds) {
         var jGraph = new DirectedMultigraph<Node, Edge>(Edge.class);
         var nodeMap = new HashMap<TrainerNode, Node>();
         var closed = new HashSet<Node>();
 
         graph.stream().forEach(trainerNode -> {
             if(!nodeMap.containsKey(trainerNode)) {
-                jGraph.addVertex(initNode(seriesId, trainerNode, nodeMap, dispalyIds));
+                jGraph.addVertex(initNode(playerState, seriesId, trainerNode, nodeMap, dispalyIds));
             }
         });
 
@@ -176,19 +178,19 @@ public class GraphUtils {
         return jGraph;
     }
 
-    private static Node initNode(String seriesId, TrainerNode trainerNode, Map<TrainerNode, Node> nodeMap, boolean displayIds) {
-        var node = new Node(seriesId, Stream.concat(Stream.of(trainerNode), trainerNode.siblings()).toArray(n -> new TrainerNode[n]), displayIds);
+    private static Node initNode(PlayerState playerState, String seriesId, TrainerNode trainerNode, Map<TrainerNode, Node> nodeMap, boolean displayIds) {
+        var node = new Node(playerState, seriesId, Stream.concat(Stream.of(trainerNode), trainerNode.siblings()).toArray(n -> new TrainerNode[n]), displayIds);
         trainerNode.siblings().forEach(sib -> nodeMap.put(sib, node));
         nodeMap.put(trainerNode, node);
         return node;
     }
 
-    public static JGraphXAdapter<Node, Edge> toJXGraph(SeriesGraph graph, String seriesId, boolean displayIds) {
-        return toJXGraph(graph, seriesId, EMPTY_SET, displayIds);
+    public static JGraphXAdapter<Node, Edge> toJXGraph(PlayerState playerState, SeriesGraph graph, String seriesId, boolean displayIds) {
+        return toJXGraph(playerState, graph, seriesId, EMPTY_SET, displayIds);
     }
 
-    public static JGraphXAdapter<Node, Edge> toJXGraph(SeriesGraph graph, String seriesId, Set<String> defeatedTrainers, boolean displayIds) {
-        return toJXGraph(toJGraph(graph, seriesId, displayIds), seriesId, defeatedTrainers);
+    public static JGraphXAdapter<Node, Edge> toJXGraph(PlayerState playerState, SeriesGraph graph, String seriesId, Set<String> defeatedTrainers, boolean displayIds) {
+        return toJXGraph(toJGraph(playerState, graph, seriesId, displayIds), seriesId, defeatedTrainers);
     }
 
     public static JGraphXAdapter<Node, Edge> toJXGraph(Graph<Node, Edge> graph, String seriesId) {
@@ -339,12 +341,14 @@ public class GraphUtils {
         public final TrainerNode[] trainers;
         public final String name;
 
-        public Node(String seriesId, TrainerNode[] trainers) {
-            this(seriesId, trainers, false);
+        public Node(PlayerState playerState, String seriesId, TrainerNode[] trainers) {
+            this(playerState, seriesId, trainers, false);
         }
 
-        public Node(String seriesId, TrainerNode[] trainers, boolean displayIds) {
-            var tm = RCTMod.getInstance().getTrainerManager();
+        public Node(PlayerState playerState, String seriesId, TrainerNode[] trainers, boolean displayIds) {
+            var rct = RCTMod.getInstance();
+            var hide = rct.getSeriesManager().getGraph(seriesId).getMetaData().hideTrainerIdentities().get();
+            var tm = rct.getTrainerManager();
             var sb = new StringBuilder();
 
             // level cap
@@ -352,18 +356,26 @@ public class GraphUtils {
 
             // trainer ids/names
             if(displayIds) {
-                for(var trainer : trainers) {
-                    sb.append(trainer.id()).append('\n');
+                if(hide && isHidden(playerState, trainers)) {
+                    sb.append(HIDDEN_TRAINER_NAME).append('\n');
+                } else {
+                    for(var trainer : trainers) {
+                        sb.append(trainer.id()).append('\n');
+                    }
                 }
             } else {
-                var names = new HashSet<String>();
+                if(hide && isHidden(playerState, trainers)) {
+                    sb.append(HIDDEN_TRAINER_NAME).append('\n');
+                } else {
+                    var names = new HashSet<String>();
 
-                for(var trainer : trainers) {
-                    names.add(tm.getData(trainer.id()).getTrainerTeam().getName().getComponent().getString());
-                }
+                    for(var trainer : trainers) {
+                        names.add(tm.getData(trainer.id()).getTrainerTeam().getName().getComponent().getString());
+                    }
 
-                for(var name : names) {
-                    sb.append(name).append('\n');
+                    for(var name : names) {
+                        sb.append(name).append('\n');
+                    }
                 }
             }
 
@@ -374,6 +386,15 @@ public class GraphUtils {
         @Override
         public String toString() {
             return this.name;
+        }
+
+        static boolean isHidden(PlayerState playerState, TrainerNode[] trainers) {
+            return Stream.of(trainers).noneMatch(tn -> playerState.getDefeatedTrainerIds().contains(tn.id())
+                || playerState.getTrainerDefeatCount(tn.id()) > 0
+                || playerState.isKeyTrainer(tn.id())
+                || tn.successors().allMatch(succ -> Stream.concat(Stream.of(succ), succ.siblings())
+                    // .filter(succ2 -> !succ2.isOptional()) // TODO: not sure
+                    .map(sib -> sib.id()).anyMatch(playerState.getDefeatedTrainerIds()::contains)));
         }
     }
 

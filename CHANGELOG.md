@@ -2,26 +2,26 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.18.0-beta] - 2026-04-09
+## [0.18.0-beta] - 2026-04-10
 
 **Added:**
 
-- *#397* The trainer card now offers the option to view the *progress graph* of the current series ingame
-- *#396* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
-- *#395* Trainer mobs now support TBCS win commands
+- *#397* New `format=<format>` argument for the `get progress graph` command. Possible values are: (TODO)
+  - `png`: Generate an image file, saved on the client
+  - `svg`: Generate a vector graphic file, saved on the client
+  - `uml`: Generate a *PlantUML* graph, can be viewed online, old behaviour, default
+- *#396* Series property `hideTrainerIdentities`: Determines if trainer names/is are hidden in the progress graph (see *#395*) unless they are required or have been beaten before
+- *#395* The trainer card now offers the option to view the *series progress graph* ingame as vector graphic
+  - Series progress graph visualization is powered by *JGraphT* (*PlantUML* graphs can still be generated, see also *#397*)
+- *#394* Trainer mob property `requiredSeries`: Similar to `requiredDefeats` allows to define series that a player has to complete before a trainer can be challenged (shoutout to Kile for implementing this)
+- *#393* Trainer mobs now support TBCS win commands
   - An overview of the win command and selector syntax can be found in the [TBCS mod description](https://modrinth.com/mod/tbcs)
   - The TBCS mod needs to be installed **on the server side** for win commands to function (**the mod is optional for clients**)
   - The [Pack Builder tool](https://srcmc.gitlab.io/rct/docs/latest/tools/pack_builder/about/) has been updated with form fields for the new "Win Commands" property (see "Mobs")
 
 **Changed:**
 
-- *#394* Added new `format=<format>` argument to the `get progress graph` command. Possible values are: (TODO)
-  - `png`: Generate an image file, saved on the client
-  - `svg`: Generate a vector graphic file, saved on the client
-  - `uml`: Generate a *PlantUML* graph, can be viewed online, old behaviour, default
-- *#393* Update min required version of `rctapi` to `0.15.0-beta`
-- *#392* Updated Trainer Card UI with option to view current series progress graph as vector graphic ingame (added button next to checkmark)
-  - Series progress graph visualization is powered by *JGraphT* (*PlantUML* graphs can still be generated, see also *#394*)
+- *#392* Update min required version of `rctapi` to `0.15.0-beta`
 
 **Fixed:**
 

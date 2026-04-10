@@ -123,7 +123,7 @@ public class ProgressGraphScreen extends Screen {
                     prevThread.join();
                 }
 
-                this.graph = GraphUtils.toJXGraph(sg, seriesId, defeatedTrainers, this.showTrainerIds);
+                this.graph = GraphUtils.toJXGraph(ps, sg, seriesId, defeatedTrainers, this.showTrainerIds);
 
                 if(!Thread.currentThread().isInterrupted()) {
                     this.mc.execute(this::updateImage);

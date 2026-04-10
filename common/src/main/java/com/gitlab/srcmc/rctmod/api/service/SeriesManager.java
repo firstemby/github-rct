@@ -354,10 +354,16 @@ public class SeriesManager implements Serializable {
             return this.trainerId;
         }
 
+        /**
+         * Trainers earlier in progression.
+         */
         public Stream<TrainerNode> successors() {
             return this.successors.stream();
         }
 
+        /**
+         * Trainers later in progression.
+         */
         public Stream<TrainerNode> ancestors() {
             return this.ancestors.stream();
         }
