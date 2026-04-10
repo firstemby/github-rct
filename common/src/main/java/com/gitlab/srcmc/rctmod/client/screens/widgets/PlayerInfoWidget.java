@@ -228,10 +228,12 @@ public class PlayerInfoWidget extends AbstractWidget {
     }
 
     public void setDisplay(Display display) {
+        initPlayerInfo();
+
         switch(display) {
             case TRAINER_LIST:
                 if(this.currentDisplay == Display.LOADING) {
-                    this.initPlayerInfo();
+                    this.initLevelCap();
                     this.initTrainerList();
                 }
 
@@ -359,12 +361,17 @@ public class PlayerInfoWidget extends AbstractWidget {
 
     private void initPlayerInfo() {
         var mc = Minecraft.getInstance();
+        this.skinLocation = mc.player.getSkin().texture();
+        this.displayName.setMessage(Component.literal(mc.player.getDisplayName().getString()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.WHITE));
+        this.levelCapValue.setMessage(Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
+    }
+
+    private void initLevelCap() {
+        var mc = Minecraft.getInstance();
         var ps = PlayerState.get(mc.player);
         this.sid = ps.getCurrentSeries();
 
         var levelCap = ps.getLevelCap();
-        this.skinLocation = mc.player.getSkin().texture();
-        this.displayName.setMessage(Component.literal(mc.player.getDisplayName().getString()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.WHITE));
         this.levelCapValue.setMessage((levelCap >= 0 && levelCap <= 100)
             ? Component.literal(String.valueOf(levelCap)).withStyle(ChatFormatting.WHITE)
             : Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
