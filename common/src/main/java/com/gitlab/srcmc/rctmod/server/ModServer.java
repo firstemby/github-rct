@@ -93,6 +93,7 @@ public class ModServer {
     public static void init() {
         NetworkManager.registerS2CPayloadType(BatchedPayloads.PLAYER_STATE.TYPE, BatchedPayloads.PLAYER_STATE.CODEC);
         NetworkManager.registerS2CPayloadType(BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC);
+        NetworkManager.registerS2CPayloadType(BatchedPayloads.FILE_DOWNLOAD.TYPE, BatchedPayloads.FILE_DOWNLOAD.CODEC);
         NetworkManager.registerS2CPayloadType(TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC);
     }
 
