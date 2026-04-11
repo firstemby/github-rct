@@ -359,7 +359,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
     public Component getDisplayName() {
         var tmd = RCTMod.getInstance().getTrainerManager().getData(this);
         var suffix = new StringBuilder();
-        var cmp = this.getCustomName().copy();
+        var name = this.getCustomName();
+        var cmp = name != null ? name.copy() : Component.empty();
         var level = this.level();
         var showSymbols = false;
         var showColors = true;
