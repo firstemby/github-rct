@@ -274,7 +274,7 @@ public class PlayerInfoWidget extends AbstractWidget {
                     this.showUndefeated.onPress();
                 }
 
-                this.openProgressGraph.active = this.sid != null && !this.sid.equals(SeriesManager.EMPTY_SERIES_ID) && !this.sid.equals(SeriesManager.FREEROAM_SERIES_ID);
+                this.openProgressGraph.active = false;
                 this.openProgressGraph.setMessage(this.openProgressGraph.active ? PROGRESS_GRAPH_SYMBOL : Component.empty());
                 this.trainerInfo.visible = this.trainerInfo.active = true;
                 this.trainerList.visible = this.trainerList.active = false;
@@ -292,7 +292,8 @@ public class PlayerInfoWidget extends AbstractWidget {
                 if(this.isShowUndefeatedSelected()) {
                     this.showUndefeated.onPress();
                 }
-
+                
+                this.levelCapValue.setMessage(Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
                 this.openProgressGraph.active = false;
                 this.openProgressGraph.setMessage(Component.empty());
                 this.trainerInfo.visible = this.trainerInfo.active = false;
@@ -366,7 +367,6 @@ public class PlayerInfoWidget extends AbstractWidget {
         var mc = Minecraft.getInstance();
         this.skinLocation = mc.player.getSkin().texture();
         this.displayName.setMessage(Component.literal(mc.player.getDisplayName().getString()).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.WHITE));
-        this.levelCapValue.setMessage(Component.literal("000").withStyle(ChatFormatting.OBFUSCATED).withStyle(ChatFormatting.WHITE));
     }
 
     private void initLevelCap() {
