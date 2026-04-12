@@ -145,6 +145,7 @@ public class SeriesManager implements Serializable {
                             other.ancestors.add(nd);
                             tids.stream().filter(tid2 -> tid2 != tid)
                                 .map(tid2 -> sg.map.get(tid2))
+                                .filter(tn -> tn != null)
                                 .forEach(other.siblings::add);
                         }
                     });
