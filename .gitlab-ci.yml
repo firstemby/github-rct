@@ -12,7 +12,7 @@ variables:
   BOT_USERNAME: mcci # mostly a 'cosmetic' feature (only [a-zA-Z0-9_-])
   GFX_ENABLED: false # only enable this if there are runners available with GFX support (otherwise the pipeline will get stuck on client tests)
 
-.candidate_branch: &candidate_branch $CI_COMMIT_BRANCH =~ /^rc\/v\d+\.\d+\.\d+(-\w+)?$/
+.candidate_branch: &candidate_branch $CI_COMMIT_BRANCH =~ /^rc\/\d+\.\d+\.\d+(-\w+)?$/
 .release_branch: &release_branch $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 .release_branch_common: &release_branch_common $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /common/
 .release_branch_fabric: &release_branch_fabric $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /fabric/
