@@ -30,11 +30,15 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+    modRuntimeOnly "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
+    // Cobblemon
     modImplementation "com.cobblemon:fabric:$rootProject.cobblemon_version"
+    modRuntimeOnly "com.cobblemon:fabric:$rootProject.cobblemon_version"
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
     
@@ -48,11 +52,24 @@ dependencies {
     include "org.jgrapht:jgrapht-ext:$rootProject.jgrapht_version"
     include "com.github.vlsi.mxgraph:jgraphx:$rootProject.jgraphx_version"
 
+    // Forge Config Port
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcap_version}"
+    modRuntimeOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcap_version}"
 
     // Radical Cobblemon Trainers API
-    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
-    
+    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"    
+    modRuntimeOnly "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
+
+    // Fabric JUnit Loader see: https://docs.fabricmc.net/develop/automatic-testing#setting-up-fabric-loader-junit (tests only)
+    testImplementation "net.fabricmc:fabric-loader-junit:$rootProject.fabric_loader_version"
+
+    // Mod Menu (tests only)
+    modRuntimeOnly "curse.maven:modmenu-308702:${modmenu_version}"
+
+    // MaLiLib + LiteMatica (tests only)
+    modRuntimeOnly "curse.maven:malilib-303119:${malilib_version}"
+    modRuntimeOnly "curse.maven:litematica-308892:${litematica_version}"
+
     // Trainer Battle Commands (test, optional in production)
     modRuntimeOnly "curse.maven:tbcs-1172731:${tbcs_fabric_version}"
 
@@ -76,4 +93,38 @@ shadowJar {
 
 remapJar {
     input.set shadowJar.archiveFile
+}
+
+test {
+	useJUnitPlatform()
+}
+
+fabricApi {
+	configureTests {
+		createSourceSet = true
+        clearRunDirectory = false // Default is true
+        username = "Dev" // Default is Player0
+		modId = "$rootProject.mod_id"
+		enableGameTests = true // Default is true
+		enableClientGameTests = true // Default is true
+		eula = true // By setting this to true, you agree to the Minecraft EULA.
+	}
+}
+
+processGametestResources {
+    from project(":fabric").sourceSets.gametest.resources
+    
+    filesMatching(['**/*.mods.toml', 'pack.mcmeta', 'fabric.mod.json', '*.mixins.json']) {
+        expand project.properties
+    }
+}
+
+sourceSets {
+    main {
+        // resources.srcDir generatedResources
+        resources {
+            srcDirs generatedResources
+            exclude '.cache'
+        }
+    }
 }

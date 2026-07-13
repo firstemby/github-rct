@@ -1,0 +1,44 @@
+Build:
+  ./gradlew clean build -x compileTestJava -x compileTestKotlin -x compileGameTestJava -x compileGameTestKotlin -x test -x runGameTest
+Generate:
+  assets: ./scripts/generate/assets
+  textures: ./scripts/generate/textures
+  trainers: ./scripts/generate/trainers
+  DataGen: ./gradlew runData
+Test:
+  Client test: ./gradlew clean runClientGameTest
+  Game test: ./gradlew clean runGameTest
+  Unit tests: ./gradlew clean test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest
+Run:
+  Client:
+    Fabric: ./gradlew fabric:runClient
+    NeoForge: ./gradlew neoforge:runClient
+  Server:
+    Fabric: ./gradlew fabric:runServer
+    NeoForge: ./gradlew neoforge:runServer
+Copy To:
+  Fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-fabric-1.7/mods"
+  NeoForge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-neo-1.7/mods"
+Clean:
+  Gradle builds: ./gradlew clean
+  Dependencies: ./gradlew clean --refresh-dependencies
+  Ignored files: git clean -idX
+License:
+  ARR: >
+    MOD_NAME="Radical Cobblemon Trainers";
+    MOD_AUTHOR="HDainester";
+    export LICENSE_FILE="LICENSE.txt";
+    export LICENSE_FILES_OLD="LICENSE.txt LICENSE.md";
+    ./scripts/licensify arr "$MOD_NAME" "$MOD_AUTHOR" $(find . -name *.java)
+  LGPL3: >
+    MOD_NAME="Radical Cobblemon Trainers";
+    MOD_AUTHOR="HDainester";
+    export LICENSE_FILE="LICENSE.txt";
+    export LICENSE_FILES_OLD="LICENSE.txt LICENSE.md";
+    ./scripts/licensify lgpl3 "$MOD_NAME" "$MOD_AUTHOR" $(find . -name *.java)
+  MCOML: >
+    MOD_NAME="Radical Cobblemon Trainers";
+    MOD_AUTHOR="HDainester";
+    export LICENSE_FILE="LICENSE.txt";
+    export LICENSE_FILES_OLD="LICENSE.txt LICENSE.md";
+    ./scripts/licensify mcoml "$MOD_NAME" "$MOD_AUTHOR" $(find . -name *.java)

@@ -13,7 +13,7 @@ ext {
 }
 
 allprojects {
-    group = rootProject.maven_group
+    group = rootProject.group_id
     version = rootProject.mod_version
 }
 

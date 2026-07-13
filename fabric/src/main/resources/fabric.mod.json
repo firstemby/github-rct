@@ -12,13 +12,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "${maven_group}.${mod_id}.fabric.FabricCommon"
+      "${group_id}.${mod_id}.fabric.FabricCommon"
     ],
     "client": [
-      "${maven_group}.${mod_id}.fabric.client.FabricClient"
+      "${group_id}.${mod_id}.fabric.client.FabricClient"
     ],
     "server": [
-      "${maven_group}.${mod_id}.fabric.server.FabricServer"
+      "${group_id}.${mod_id}.fabric.server.FabricServer"
     ]
   },
   "mixins": [

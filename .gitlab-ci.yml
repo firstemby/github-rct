@@ -1,0 +1,149 @@
+stages:
+  - prepare
+  - build
+  - test
+  - metadata
+  - release
+  - publish
+
+variables:
+  MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.0.5
+  TARGET_PLATFORMS: fabric,neoforge # fabric, neoforge or common (fabric+neoforge)
+  BOT_USERNAME: mcci # mostly a 'cosmetic' feature (only [a-zA-Z0-9_-])
+  GFX_ENABLED: false # only enable this if there are runners available with GFX support (otherwise the pipeline will get stuck on client tests)
+
+.candidate_branch: &candidate_branch $CI_COMMIT_BRANCH =~ /^rc\/v\d+\.\d+\.\d+(-\w+)?$/
+.release_branch: &release_branch $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+.release_branch_common: &release_branch_common $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /common/
+.release_branch_fabric: &release_branch_fabric $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /fabric/
+.release_branch_neoforge: &release_branch_neoforge $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /neoforge/
+
+.defaults: &defaults
+  before_script:
+    - cd $CI_PROJECT_DIR
+    - git config user.name $BOT_USERNAME
+    - git config user.email $BOT_USERNAME@gitlab.com
+    - chmod +x gradlew
+
+release-candidate:
+  <<: *defaults
+  stage: prepare
+  image: $MCCI_IMAGE
+  script: release-candidate
+  rules:
+    - if: *candidate_branch
+
+build:
+  <<: *defaults
+  cache:
+    key: $CI_COMMIT_SHA
+    paths:
+      - .gradle/*
+      - common/.gradle/*
+      - fabric/.gradle/*
+      - neoforge/.gradle/*
+  artifacts:
+    untracked: false
+    when: on_success
+    access: developer
+    expire_in: 3d
+    paths:
+      - common/build/libs/*
+      - fabric/build/libs/*
+      - neoforge/build/libs/*
+    exclude:
+      - ./**/build/libs/*-transformProduction*.jar
+      - ./**/build/libs/*-dev-shadow.jar
+      - ./**/build/libs/*-sources.jar
+  image: $MCCI_IMAGE
+  stage: build
+  script: build-release
+
+unit-tests:
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: test
+  script: ./gradlew test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest --console=plain # excludes game test
+
+game-test:
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: test
+  script: ./gradlew runGameTest --console=plain
+
+client-test:
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: test
+  script: ./gradlew runClientGameTest --console=plain
+  rules:
+    - if: $GFX_ENABLED == true
+  tags:
+    - gfx
+
+update-metadata:
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: metadata
+  script: update-metadata
+  rules:
+    - if: *release_branch
+
+release-version:
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: release
+  script: release-version
+  rules:
+    - if: *release_branch
+
+.publish: &publish
+  <<: *defaults
+  image: $MCCI_IMAGE
+  stage: publish
+
+.publish-common: &publish-common
+  <<: *publish
+  rules:
+    - if: *release_branch_common
+
+.publish-neoforge: &publish-neoforge
+  <<: *publish
+  rules:
+    - if: *release_branch_neoforge
+
+.publish-fabric: &publish-fabric
+  <<: *publish
+  rules:
+    - if: *release_branch_fabric
+
+publish-modrinth-common:
+  <<: *publish-common
+  script: publish-modrinth common
+
+publish-modrinth-neoforge:
+  <<: *publish-neoforge
+  script: publish-modrinth neoforge
+
+publish-modrinth-fabric:
+  <<: *publish-fabric
+  script: publish-modrinth fabric
+
+publish-curseforge-common:
+  <<: *publish-common
+  script: publish-curseforge common
+
+publish-curseforge-neoforge:
+  <<: *publish-neoforge
+  script: publish-curseforge neoforge
+
+publish-curseforge-fabric:
+  <<: *publish-fabric
+  script: publish-curseforge fabric
+
+workflow:
+  rules: # Pipeline runs for commits on release-candidate or release-branches only.
+    - if: *candidate_branch
+    - if: *release_branch
+    - if: $CI_COMMIT_TAG # TODO: auto delete "forbidden" tags (maybe)
+      when: never

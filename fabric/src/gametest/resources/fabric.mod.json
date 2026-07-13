@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}-test",
+  "version": "${mod_version}",
+  "name": "${mod_name} - Test Build",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "license": "All rights reserved.",
+  "icon": "assets/${mod_id}/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "${group_id}.${mod_id}.fabric.RCTModGameTest"
+    ],
+    "fabric-client-gametest": [
+      "${group_id}.${mod_id}.fabric.client.RCTModClientGameTest"
+    ]
+  },
+  "depends": {
+    "rctmod": ">=${mod_version}"
+  }
+}

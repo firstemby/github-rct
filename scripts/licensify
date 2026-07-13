@@ -2,7 +2,7 @@
 #
 # This script prepends predefined licence headers into java source files. Existing
 # headers are recognized by the start of java block comments (/*) at the beggining
-# of file and will be replaced.
+# of files and will be replaced.
 #
 # The path to a license file to store the full license text can be defined with
 # LICENSE_FILE (no license file will be created if empty).
@@ -10,7 +10,11 @@
 # The script will initially attempt to remove existing license files specified by
 # LICENSE_FILES_OLD (no files will be removed if empty).
 #
-# usage: licensify <license> <title> <author> <files>...
+# USAGE:
+#  licensify <license> <title> <author> <files>...
+#
+# EXAMPLE: 
+#  licensify lgpl3 "Example Mod" "Joe Doe" $(find . -name *.java)
 
 # ARR (all rights reserverd)
 ARR_HEADER="/*
