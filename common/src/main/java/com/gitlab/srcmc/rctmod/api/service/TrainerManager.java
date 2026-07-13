@@ -51,6 +51,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerBattleMemory;
 import com.gitlab.srcmc.rctmod.api.data.save.TrainerPlayerData;
 import com.gitlab.srcmc.rctmod.api.utils.PathUtils;
+import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
 import com.gitlab.srcmc.rctmod.server.ModServer;
@@ -339,6 +340,12 @@ public class TrainerManager extends DataPackManager {
 
     public void loadTrainers() {
         this.forceReload(this.resourceManager);
+
+        if(TrainerBattleMemory.getVersion(this.server.overworld().getDataStorage()).isOutdated()) {
+            TrainerBattleMemory.migrate(this.server, this);
+        }
+
+        SuggestionUtils.initSuggestions();
     }
 
     protected void forceReload(ResourceManager resourceManager) {
@@ -392,10 +399,8 @@ public class TrainerManager extends DataPackManager {
 
         this.receivedUpdates = new HashSet<>();
         this.close();
-
         ModServer.syncTrainerManger(this.server.getPlayerList().getPlayers());
         this.setLoading(false);
-
         ModCommon.LOG.info(String.format("Registered %d trainers", this.trainerMobs.size()));
     }
 

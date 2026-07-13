@@ -47,7 +47,6 @@ import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.commands.PlayerCommands;
 import com.gitlab.srcmc.rctmod.commands.TrainerCommands;
-import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
 import com.gitlab.srcmc.rctmod.network.TrainerTargetPayload;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
@@ -77,7 +76,7 @@ public class ModServer {
         // architectury events
         CommandRegistrationEvent.EVENT.register(ModServer::onCommandRegistration);
         LifecycleEvent.SETUP.register(ModServer::onSetup);
-        LifecycleEvent.SERVER_STARTING.register(ModServer::onServerStarting);
+        LifecycleEvent.SERVER_STARTED.register(ModServer::onServerStarted);
         LifecycleEvent.SERVER_STOPPED.register(ModServer::onServerStopped);
         LifecycleEvent.SERVER_LEVEL_SAVE.register(ModServer::onServerLevelSave);
         LevelTick.SERVER_LEVEL_PRE.register(ModServer::onServerWorldTick);
@@ -161,12 +160,13 @@ public class ModServer {
         }
     }
 
-    static void onServerStarting(MinecraftServer server) {
+    static void onServerStarted(MinecraftServer server) {
         PLAYER_STATE_PAYLOADS.clear();
         TRAINER_MANAGER_PAYLOADS.clear();
+        RCTMod.getInstance().getTrainerManager().setServer(server);
         RCTMod.getInstance().getTrainerSpawner().init(server.overworld());
         RCTMod.getInstance().getTrainerManager().setIsReloadedAsDatapack(true);
-        RCTMod.getInstance().getTrainerManager().setServer(server);
+        RCTMod.getInstance().getTrainerManager().loadTrainers();
     }
 
     static void onServerStopped(MinecraftServer server) {
@@ -183,13 +183,8 @@ public class ModServer {
             RCTMod.getInstance().getTrainerSpawner().checkDespawns();
 
             if(tm.isReloadRequired()) {
+                ModCommon.LOG.info("=======> REOLOAD IN TICK");
                 tm.loadTrainers();
-
-                if(TrainerBattleMemory.getVersion(server.overworld().getDataStorage()).isOutdated()) {
-                    TrainerBattleMemory.migrate(server, tm);
-                }
-
-                SuggestionUtils.initSuggestions();
             }
 
             while(!TRAINER_MANAGER_PAYLOADS.isEmpty()) {
