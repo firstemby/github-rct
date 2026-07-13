@@ -1,9 +1,7 @@
-package com.gitlab.srcmc.rctmod.fabric;
+package com.gitlab.srcmc.rctmod;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.gitlab.srcmc.rctmod.ModCommon;
 
 public class RCTModTest {
     /**

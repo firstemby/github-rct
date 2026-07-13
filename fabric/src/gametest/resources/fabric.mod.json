@@ -19,6 +19,6 @@
     ]
   },
   "depends": {
-    "rctmod": ">=${mod_version}"
+    "${mod_id}": ">=${mod_version}"
   }
 }

@@ -60,9 +60,6 @@ dependencies {
     modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"    
     modRuntimeOnly "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
 
-    // Fabric JUnit Loader see: https://docs.fabricmc.net/develop/automatic-testing#setting-up-fabric-loader-junit (tests only)
-    testImplementation "net.fabricmc:fabric-loader-junit:$rootProject.fabric_loader_version"
-
     // Mod Menu (tests only)
     modRuntimeOnly "curse.maven:modmenu-308702:${modmenu_version}"
 
@@ -79,24 +76,6 @@ dependencies {
     // modRuntimeOnly "curse.maven:cobblepedia-850946:${cobblepedia_fabric_version}"
     // modRuntimeOnly "curse.maven:configured-457570:${configured_fabric_version}"
     // modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"
-}
-
-tasks.named('runClient') {
-    // Set the username here
-    args '--username', 'Dev'
-}
-
-shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
-}
-
-remapJar {
-    input.set shadowJar.archiveFile
-}
-
-test {
-	useJUnitPlatform()
 }
 
 fabricApi {
@@ -127,4 +106,18 @@ sourceSets {
             exclude '.cache'
         }
     }
+}
+
+tasks.named('runClient') {
+    // Set the username here
+    args '--username', 'Dev'
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
 }

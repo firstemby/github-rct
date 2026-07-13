@@ -38,4 +38,11 @@ dependencies {
     
     // Trainer Battle Commands (optional in production)
     modCompileOnly "curse.maven:tbcs-1172731:${tbcs_common_version}"
+
+    // Fabric JUnit Loader see: https://docs.fabricmc.net/develop/automatic-testing#setting-up-fabric-loader-junit (tests only)
+    testImplementation "net.fabricmc:fabric-loader-junit:$rootProject.fabric_loader_version"
+}
+
+test {
+	useJUnitPlatform()
 }
