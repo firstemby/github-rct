@@ -7,7 +7,7 @@ stages:
   - publish
 
 variables:
-  MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.0.9
+  MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.0.10
   TARGET_PLATFORMS: fabric,neoforge # fabric, neoforge or common (fabric+neoforge)
   BOT_USERNAME: mcci # mostly a 'cosmetic' feature (only [a-zA-Z0-9_-])
   GFX_ENABLED: false # only enable this if there are runners available with GFX support (otherwise the pipeline will get stuck on client tests)
