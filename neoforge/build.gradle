@@ -23,6 +23,7 @@ configurations {
         canBeResolved = true
         canBeConsumed = false
     }
+    
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
@@ -54,8 +55,8 @@ dependencies {
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
+    // Cobblemon
     modImplementation "com.cobblemon:neoforge:$rootProject.cobblemon_version"
-
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

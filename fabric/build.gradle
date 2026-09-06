@@ -13,6 +13,7 @@ configurations {
         canBeResolved = true
         canBeConsumed = false
     }
+    
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
@@ -36,9 +37,15 @@ dependencies {
 
     // Cobblemon
     modImplementation "com.cobblemon:fabric:$rootProject.cobblemon_version"
-
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
-    
+
+    // Cobblemon dev dependencies
+    modRuntimeOnly("org.graalvm.js:js:22.3.0")
+    modRuntimeOnly("org.graalvm.sdk:graal-sdk:22.3.0")
+    modRuntimeOnly("org.graalvm.regex:regex:22.3.0")
+    modRuntimeOnly("org.graalvm.truffle:truffle-api:22.3.0")
+    modRuntimeOnly("com.ibm.icu:icu4j:71.1")
+
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
