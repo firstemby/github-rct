@@ -1,4 +1,4 @@
-package com.gitlab.srcmc.rctmod.fabric;
+package com.gitlab.srcmc.rctmod.fabric.client;
 
 import com.gitlab.srcmc.rctmod.ModCommon;
 

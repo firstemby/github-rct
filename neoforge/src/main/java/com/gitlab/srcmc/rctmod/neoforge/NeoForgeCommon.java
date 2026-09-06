@@ -24,7 +24,7 @@
  * You should have received a copy of the MCOML along with Radical Cobblemon Trainers.
  * If not, see <https://gitlab.com/srcmc/mcoml/-/blob/main/v1/license.txt>.
  */
-package com.gitlab.srcmc.rctmod.forge;
+package com.gitlab.srcmc.rctmod.neoforge;
 
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.ModRegistries;

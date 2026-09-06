@@ -17,8 +17,8 @@ Run:
     Fabric: ./gradlew fabric:runServer
     NeoForge: ./gradlew neoforge:runServer
 Copy To:
-  Fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-fabric-1.7/mods"
-  NeoForge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-neo-1.7/mods"
+  Fabric: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "fabric/build/libs/rctmod-fabric-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-fabric-1.8/mods"
+  NeoForge: version=$(grep "mod_version" "gradle.properties"); version="${version:12}"; cp "neoforge/build/libs/rctmod-neoforge-1.21.1-$version.jar" "$HOME/.local/share/ModrinthApp/profiles/rct-cbl-neo-1.8/mods"
 Clean:
   Gradle builds: ./gradlew clean
   Dependencies: ./gradlew clean --refresh-dependencies
