@@ -4,7 +4,8 @@ stages:
   - metadata
   - build
   - release
-  - publish
+  - publish-api
+  - publish-mod
 
 variables:
   MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.2
@@ -37,7 +38,7 @@ variables:
       files:
         - "**/gradle.properties"
         - "**/build.gradle"
-      prefix: gradle-$CI_COMMIT_REF_SLUG
+      prefix: gradle
     policy: pull
     paths:
       - .gradle/
@@ -60,7 +61,7 @@ refresh-dependencies:
       files:
         - "**/gradle.properties"
         - "**/build.gradle"
-      prefix: gradle-$CI_COMMIT_REF_SLUG
+      prefix: gradle
     policy: pull-push
     paths:
       - .gradle/
@@ -68,13 +69,19 @@ refresh-dependencies:
       - fabric/.gradle/
       - neoforge/.gradle/
   script: ./gradlew --refresh-dependencies
+  rules:
+    - when: never
+    - changes:
+        - "**/gradle.properties"
+        - "**/build.gradle"
+        - "**/settings.gradle"
 
 unit-tests:
   <<: *defaults-cached
   stage: test
   script: ./gradlew test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest # excludes game test
 
-game-test:
+game-tests:
   <<: *defaults-cached
   stage: test
   script: ./gradlew runGameTest
@@ -122,42 +129,37 @@ release-version:
   rules:
     - if: *release_branch
 
-.publish: &publish
-  <<: *defaults
-  stage: publish
-
 .publish-common: &publish-common
-  <<: *publish
+  <<: *defaults
+  stage: publish-api
   rules:
     - if: *release_branch_common
 
+.publish-mod: &publish-mod
+  <<: *defaults
+  stage: publish-mod
+
 .publish-neoforge: &publish-neoforge
-  <<: *publish
+  <<: *publish-mod
   rules:
     - if: *release_branch_neoforge
 
 .publish-fabric: &publish-fabric
-  <<: *publish
+  <<: *publish-mod
   rules:
     - if: *release_branch_fabric
 
-publish-modrinth-common:
-  <<: *publish-common
-  script: publish-modrinth common
+# publish-modrinth-common:
+#   <<: *publish-common
+#   script: publish-modrinth common
 
 publish-modrinth-neoforge:
   <<: *publish-neoforge
   script: publish-modrinth neoforge
-  needs:
-    - job: publish-modrinth-common
-      optional: true
 
 publish-modrinth-fabric:
   <<: *publish-fabric
   script: publish-modrinth fabric
-  needs:
-    - job: publish-modrinth-common
-      optional: true
 
 publish-curseforge-common:
   <<: *publish-common
@@ -166,16 +168,10 @@ publish-curseforge-common:
 publish-curseforge-neoforge:
   <<: *publish-neoforge
   script: publish-curseforge neoforge
-  needs:
-    - job: publish-curseforge-common
-      optional: true
 
 publish-curseforge-fabric:
   <<: *publish-fabric
   script: publish-curseforge fabric
-  needs:
-    - job: publish-curseforge-common
-      optional: true
 
 workflow:
   rules: # Pipeline runs for commits on release-candidate or release-branches only.
