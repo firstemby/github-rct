@@ -30,15 +30,12 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
-    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
-    modRuntimeOnly "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
     // Cobblemon
     modImplementation "com.cobblemon:fabric:$rootProject.cobblemon_version"
-    modRuntimeOnly "com.cobblemon:fabric:$rootProject.cobblemon_version"
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.2.20"
     
@@ -54,11 +51,10 @@ dependencies {
 
     // Forge Config Port
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcap_version}"
-    modRuntimeOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcap_version}"
 
     // Radical Cobblemon Trainers API
-    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"    
-    modRuntimeOnly "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
+    modImplementation "curse.maven:radical-cobblemon-trainers-api-1152792:${rctapi_fabric_version}"
+    // modImplementation files("../tmp/libs/rctapi-fabric-1.21.1-${rctapi_min_version}.jar") // local test
 
     // Mod Menu (tests only)
     modRuntimeOnly "curse.maven:modmenu-308702:${modmenu_version}"
