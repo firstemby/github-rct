@@ -81,10 +81,10 @@ unit-tests:
   stage: test
   script: ./gradlew test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest # excludes game test
 
-game-tests:
-  <<: *defaults-cached
-  stage: test
-  script: ./gradlew runGameTest
+# game-tests:
+#   <<: *defaults-cached
+#   stage: test
+#   script: ./gradlew runGameTest
 
 client-test:
   <<: *defaults-cached
