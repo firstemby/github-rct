@@ -1,14 +1,15 @@
 stages:
   - prepare
-  - build
   - test
   - metadata
+  - build
   - release
   - publish
 
 variables:
-  MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.1
+  MCCI_IMAGE: registry.gitlab.com/srcmc/templates/mcci:1.2
   TARGET_PLATFORMS: fabric,neoforge # fabric, neoforge or common (fabric+neoforge)
+  TARGET_ENVIRONMENTS: Client,Server # either both or one of
   BOT_USERNAME: mcci # mostly a 'cosmetic' feature (only [a-zA-Z0-9_-])
   GFX_ENABLED: false # only enable this if there are runners available with GFX support (otherwise the pipeline will get stuck on client tests)
 
@@ -19,6 +20,9 @@ variables:
 .release_branch_neoforge: &release_branch_neoforge $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $TARGET_PLATFORMS =~ /neoforge/
 
 .defaults: &defaults
+  image: $MCCI_IMAGE
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   before_script:
     - cd $CI_PROJECT_DIR
     - git config user.name $BOT_USERNAME
@@ -26,23 +30,73 @@ variables:
     - git lfs install
     - chmod +x gradlew
 
+.defaults-cached: &defaults-cached
+  <<: *defaults
+  cache:
+    key:
+      files:
+        - "**/gradle.properties"
+        - "**/build.gradle"
+      prefix: gradle-$CI_COMMIT_REF_SLUG
+    policy: pull
+    paths:
+      - .gradle/
+      - common/.gradle/
+      - fabric/.gradle/
+      - neoforge/.gradle/
+
 release-candidate:
   <<: *defaults
   stage: prepare
-  image: $MCCI_IMAGE
   script: release-candidate
   rules:
     - if: *candidate_branch
 
-build:
+refresh-dependencies:
   <<: *defaults
+  stage: prepare
   cache:
-    key: $CI_COMMIT_SHA
+    key:
+      files:
+        - "**/gradle.properties"
+        - "**/build.gradle"
+      prefix: gradle-$CI_COMMIT_REF_SLUG
+    policy: pull-push
     paths:
-      - .gradle/*
-      - common/.gradle/*
-      - fabric/.gradle/*
-      - neoforge/.gradle/*
+      - .gradle/
+      - common/.gradle/
+      - fabric/.gradle/
+      - neoforge/.gradle/
+  script: ./gradlew --refresh-dependencies
+
+unit-tests:
+  <<: *defaults-cached
+  stage: test
+  script: ./gradlew test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest # excludes game test
+
+game-test:
+  <<: *defaults-cached
+  stage: test
+  script: ./gradlew runGameTest
+
+client-test:
+  <<: *defaults-cached
+  stage: test
+  script: ./gradlew runClientGameTest
+  rules:
+    - if: $GFX_ENABLED == true
+  tags:
+    - gfx
+
+update-metadata:
+  <<: *defaults
+  stage: metadata
+  script: update-metadata
+  rules:
+    - if: *release_branch
+
+build:
+  <<: *defaults-cached
   artifacts:
     untracked: false
     when: on_success
@@ -56,43 +110,13 @@ build:
       - ./**/build/libs/*-transformProduction*.jar
       - ./**/build/libs/*-dev-shadow.jar
       - ./**/build/libs/*-sources.jar
-  image: $MCCI_IMAGE
   stage: build
   script: build-release
-
-unit-tests:
-  <<: *defaults
-  image: $MCCI_IMAGE
-  stage: test
-  script: ./gradlew test -x compileGameTestJava -x compileGameTestKotlin -x runGameTest --console=plain # excludes game test
-
-game-test:
-  <<: *defaults
-  image: $MCCI_IMAGE
-  stage: test
-  script: ./gradlew runGameTest --console=plain
-
-client-test:
-  <<: *defaults
-  image: $MCCI_IMAGE
-  stage: test
-  script: ./gradlew runClientGameTest --console=plain
-  rules:
-    - if: $GFX_ENABLED == true
-  tags:
-    - gfx
-
-update-metadata:
-  <<: *defaults
-  image: $MCCI_IMAGE
-  stage: metadata
-  script: update-metadata
   rules:
     - if: *release_branch
 
 release-version:
   <<: *defaults
-  image: $MCCI_IMAGE
   stage: release
   script: release-version
   rules:
@@ -100,7 +124,6 @@ release-version:
 
 .publish: &publish
   <<: *defaults
-  image: $MCCI_IMAGE
   stage: publish
 
 .publish-common: &publish-common
@@ -125,10 +148,16 @@ publish-modrinth-common:
 publish-modrinth-neoforge:
   <<: *publish-neoforge
   script: publish-modrinth neoforge
+  needs:
+    - job: publish-modrinth-common
+      optional: true
 
 publish-modrinth-fabric:
   <<: *publish-fabric
   script: publish-modrinth fabric
+  needs:
+    - job: publish-modrinth-common
+      optional: true
 
 publish-curseforge-common:
   <<: *publish-common
@@ -137,10 +166,16 @@ publish-curseforge-common:
 publish-curseforge-neoforge:
   <<: *publish-neoforge
   script: publish-curseforge neoforge
+  needs:
+    - job: publish-curseforge-common
+      optional: true
 
 publish-curseforge-fabric:
   <<: *publish-fabric
   script: publish-curseforge fabric
+  needs:
+    - job: publish-curseforge-common
+      optional: true
 
 workflow:
   rules: # Pipeline runs for commits on release-candidate or release-branches only.
