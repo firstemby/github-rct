@@ -2,11 +2,15 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.18.2-beta] - 2026-09-06
+## [0.19.0-beta] - 2026-09-07
+
+**Changed:**
+
+- *#405* Update min required version of Cobblemon to `1.8`
 
 **Fixed:**
 
-- *#404* Rare issues related to attempts of trainer initialization before a server was started
+- *#404* Some issues related to attempts of trainer initialization before a server was fully started
 
 ## [0.18.1-beta] - 2026-04-12
 
