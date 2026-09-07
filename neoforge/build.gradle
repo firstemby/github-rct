@@ -99,9 +99,7 @@ dependencies {
 }
 
 tasks.named('runClient') {
-    // Set the username here
     args '--username', 'Dev'
-    // args '--username', 'Dev2'
 }
 
 shadowJar {
