@@ -70,11 +70,11 @@ refresh-dependencies:
       - neoforge/.gradle/
   script: ./gradlew --refresh-dependencies
   rules:
-    - when: never
     - changes:
         - "**/gradle.properties"
         - "**/build.gradle"
         - "**/settings.gradle"
+    - when: never
 
 unit-tests:
   <<: *defaults-cached
