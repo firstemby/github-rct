@@ -10,6 +10,11 @@
           },
           {
             "type": "minecraft:loot_table",
+            "value": "rctmod:generic/legendary/tms",
+            "weight": 1
+          },
+          {
+            "type": "minecraft:loot_table",
             "value": "rctmod:generic/legendary/berries",
             "weight": 1
           },

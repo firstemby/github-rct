@@ -25,6 +25,6 @@ rctltp -out "common/src/main/resources/data/rctmod/loot_table" \
   -sheet_url_categories "https://gitlab.com/srcmc/rct/spreadsheets/-/raw/master/spreadsheet/loot_table_categories.csv" \
   -modIds "minecraft,cobblemon" \
   -poolIds "default,masterball" \
-  -categoryIds "battle,berries,nature,fishing,medicine,pokeballs,training,evolution,archeology,diverse,masterball"
+  -categoryIds "battle,berries,nature,fishing,medicine,pokeballs,training,evolution,archeology,diverse,masterball,tms"
 
 echo "assets generated"
