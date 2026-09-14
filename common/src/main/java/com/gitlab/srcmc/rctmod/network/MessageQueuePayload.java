@@ -37,7 +37,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 public record MessageQueuePayload(int entityId, Collection<Message> messages) implements CustomPacketPayload {
-    public static final Type<MessageQueuePayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, "target_trainer"));
+    public static final Type<MessageQueuePayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, "message_queue"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MessageQueuePayload> CODEC = StreamCodec.of(
         (b, v) -> {
