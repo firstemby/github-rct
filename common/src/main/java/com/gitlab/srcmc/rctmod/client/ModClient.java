@@ -190,6 +190,7 @@ public class ModClient {
             TRAINER_MANAGER_PAYLOADS.clear();
         }
     }
+
     static void receiveFileDownload(BatchedPayload.Payload pl, PacketContext context) {
         FILE_DOWNLOAD_PAYLOADS.add(pl);
 

@@ -885,7 +885,10 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
         if(!this.messageSyncPlayers.contains(player)) {
             this.messageSyncPlayers.add(player);
-            NetworkManager.sendToPlayer(player, new MessageQueuePayload(this.getId(), this.messageQueue));
+
+            if(this.messageQueue.size() > 0) {
+                NetworkManager.sendToPlayer(player, new MessageQueuePayload(this.getId(), this.messageQueue));
+            }
         }
     }
 
@@ -898,7 +901,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
     public void addMessage(String langKey) {
         if(!this.level().isClientSide) {
             this.messageQueue.offer(new Message(langKey));
-            var players = this.level().getNearbyPlayers(TargetingConditions.DEFAULT, this, this.getBoundingBox().inflate(Message.MESSAGE_SYNC_DISTANCE));
+            var players = this.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreInvisibilityTesting(), this, this.getBoundingBox().inflate(Message.MESSAGE_SYNC_DISTANCE));
             this.messageSyncPlayers = new HashSet<>(players);
             NetworkManager.sendToPlayers(players.stream().map(p -> (ServerPlayer)p).toList(), new MessageQueuePayload(this.getId(), this.messageQueue));
         }
