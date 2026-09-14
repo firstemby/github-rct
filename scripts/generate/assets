@@ -9,11 +9,7 @@ rm -rf "common/src/main/resources/data/rctmod/series"
 rm -rf "common/src/main/resources/data/rctmod/trainer_types"
 rm -rf "common/src/main/resources/data/rctmod/loot_table/trainers/groups"
 rm -rf "common/src/main/resources/data/rctmod/loot_table/trainers/single"
-
-# the files at .../generic/* are not generated (sub-directories are)
-for dir in "common/src/main/resources/data/rctmod/loot_table/generic"/*; do
-  [ -d "$dir" ] && rm -rf "$dir"
-done
+rm -rf "common/src/main/resources/data/rctmod/loot_table/generic"
 
 # see https://gitlab.com/srcmc/rct/spreadsheets for more info
 curl -s -S "https://gitlab.com/srcmc/rct/spreadsheets/-/raw/master/jcy.all.yaml" | jcy -out "common/src/main/resources"

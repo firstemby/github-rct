@@ -1,60 +1,64 @@
 {
-    "pools": [
-      {
-        "rolls": 1,
-        "entries": [
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/battle",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/tms",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/berries",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/medicine",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/nature",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/pokeballs",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/training",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/evolution",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/archeology",
-            "weight": 1
-          },
-          {
-            "type": "minecraft:loot_table",
-            "value": "rctmod:generic/legendary/diverse",
-            "weight": 1
-          }
-        ]
-      }
-    ]
-  }
-  
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/medicine",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/nature",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/pokeballs",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/masterball",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/training",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/archeology",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/fishing",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/berries",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/evolution",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/battle",
+			"weight": 1
+	  	},	  	
+	  	{
+	  		"type": "minecraft:loot_table",
+			"value": "rctmod:generic/legendary/diverse",
+			"weight": 1
+	  	}
+	  ]
+    }
+  ]
+}
