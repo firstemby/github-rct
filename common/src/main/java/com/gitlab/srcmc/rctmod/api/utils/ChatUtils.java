@@ -67,8 +67,14 @@ public final class ChatUtils {
 
             if(messages != null) {
                 if(messages.length > 0) {
-                    var message = PlayerChatMessage.system("").withUnsignedContent(messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length].getComponent());
+                    var text = messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length];
+                    var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
                     target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
+
+                    if(source instanceof TrainerMob trainerMob) {
+                        trainerMob.addMessage(text.getTranslatable());
+                    }
+
                     return;
                 } else {
                     ModCommon.LOG.warn(String.format("Empty dialog context '%s'", context));

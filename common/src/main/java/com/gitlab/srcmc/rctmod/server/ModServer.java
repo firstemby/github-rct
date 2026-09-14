@@ -48,6 +48,7 @@ import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.commands.PlayerCommands;
 import com.gitlab.srcmc.rctmod.commands.TrainerCommands;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
+import com.gitlab.srcmc.rctmod.network.MessageQueuePayload;
 import com.gitlab.srcmc.rctmod.network.TrainerTargetPayload;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerAssociation;
 import com.mojang.brigadier.CommandDispatcher;
@@ -94,6 +95,7 @@ public class ModServer {
         NetworkManager.registerS2CPayloadType(BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC);
         NetworkManager.registerS2CPayloadType(BatchedPayloads.FILE_DOWNLOAD.TYPE, BatchedPayloads.FILE_DOWNLOAD.CODEC);
         NetworkManager.registerS2CPayloadType(TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC);
+        NetworkManager.registerS2CPayloadType(MessageQueuePayload.TYPE, MessageQueuePayload.CODEC);
     }
 
     public static void syncTrainerManger(ServerPlayer... players) {

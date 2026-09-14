@@ -48,9 +48,11 @@ import com.gitlab.srcmc.rctmod.client.screens.IScreenManager;
 import com.gitlab.srcmc.rctmod.client.screens.ScreenManager;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayloads;
+import com.gitlab.srcmc.rctmod.network.MessageQueuePayload;
 import com.gitlab.srcmc.rctmod.network.TrainerTargetPayload;
 import com.gitlab.srcmc.rctmod.network.BatchedPayload.Payload;
 import com.gitlab.srcmc.rctmod.network.utils.FileData;
+import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
@@ -98,6 +100,7 @@ public class ModClient {
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.TRAINER_MANAGER.TYPE, BatchedPayloads.TRAINER_MANAGER.CODEC, ModClient::receiveTrainerManager);
         NetworkManager.registerReceiver(Side.S2C, BatchedPayloads.FILE_DOWNLOAD.TYPE, BatchedPayloads.FILE_DOWNLOAD.CODEC, ModClient::receiveFileDownload);
         NetworkManager.registerReceiver(Side.S2C, TrainerTargetPayload.TYPE, TrainerTargetPayload.CODEC, ModClient::receiveTrainerTarget);
+        NetworkManager.registerReceiver(Side.S2C, MessageQueuePayload.TYPE, MessageQueuePayload.CODEC, ModClient::receiveMessageQueue);
     }
 
     // ClientTickEvent
@@ -201,5 +204,15 @@ public class ModClient {
 
     static void receiveTrainerTarget(TrainerTargetPayload tt, PacketContext context) {
         TargetArrowRenderer.getInstance().setTarget(context.getPlayer(), new Vec3(tt.targetX(), tt.targetY(), tt.targetZ()), tt.otherDim());
+    }
+
+    static void receiveMessageQueue(MessageQueuePayload mq, PacketContext context) {
+        var player = context.getPlayer();
+
+        if(player != null) {
+            if(player.level().getEntity(mq.entityId()) instanceof TrainerMob trainerMob) {
+                trainerMob.setMessages(mq.messages());
+            }
+        }
     }
 }

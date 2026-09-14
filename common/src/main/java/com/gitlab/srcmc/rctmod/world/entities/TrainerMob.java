@@ -27,10 +27,15 @@
 package com.gitlab.srcmc.rctmod.world.entities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
 import java.util.UUID;
 
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
@@ -42,6 +47,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.SeriesMetaData;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.network.MessageQueuePayload;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
 import com.gitlab.srcmc.rctmod.world.entities.goals.ForceIntoBattleGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.ForcedStrollAwayGoal;
@@ -54,6 +60,7 @@ import com.gitlab.srcmc.rctmod.world.entities.goals.RandomStrollThroughVillageGo
 import com.gitlab.srcmc.rctmod.world.entities.goals.RandomWaitGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.TrainerCardTemptGoal;
 
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -64,6 +71,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -137,6 +145,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private BlockPos homePos;
     private TrainerSpawnerBlockEntity homeSpawner;
     private List<PlayerTransform> nearestTransforms = new ArrayList<>();
+    private Queue<Message> messageQueue = new LinkedList<>();
+    private Set<Player> messageSyncPlayers = new HashSet<>();
     private int nearestAfkCheckCount;
     private int lastTimeSeen;
 
@@ -867,6 +877,85 @@ public class TrainerMob extends PathfinderMob implements Npc {
         }
 
         return this.level().clip(new ClipContext(vec3, vec32, Block.COLLIDER, Fluid.NONE, this)).getType() == HitResult.Type.MISS;
+    }
+
+    @Override 
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+
+        if(!this.messageSyncPlayers.contains(player)) {
+            this.messageSyncPlayers.add(player);
+            NetworkManager.sendToPlayer(player, new MessageQueuePayload(this.getId(), this.messageQueue));
+        }
+    }
+
+    public void setMessages(Collection<Message> messages) {
+        if(this.level().isClientSide) {
+            this.messageQueue = new LinkedList<>(messages);
+        }
+    }
+
+    public void addMessage(String langKey) {
+        if(!this.level().isClientSide) {
+            this.messageQueue.offer(new Message(langKey));
+            var players = this.level().getNearbyPlayers(TargetingConditions.DEFAULT, this, this.getBoundingBox().inflate(Message.MESSAGE_SYNC_DISTANCE));
+            this.messageSyncPlayers = new HashSet<>(players);
+            NetworkManager.sendToPlayers(players.stream().map(p -> (ServerPlayer)p).toList(), new MessageQueuePayload(this.getId(), this.messageQueue));
+        }
+    }
+
+    public Message getActiveMessage() {
+        Message current = null;
+
+        while(this.messageQueue.size() > 0) {
+            current = this.messageQueue.peek();
+
+            if(current.isAlive()) {
+                break;
+            }
+
+            this.messageQueue.poll();
+        }
+
+        return current;
+    }
+
+    public static class Message {
+        public static final long MESSAGE_DURATION_MS = 3000; // TODO: client config
+        public static final int MESSAGE_SYNC_DISTANCE = 32; // TODO: server config
+
+        private final String langKey;
+        private Component component;
+        private long createdAt = -1;
+        private long age;
+
+        public Message(String langKey) {
+            this(langKey, 0);
+        }
+
+        public Message(String langKey, long age) {
+            this.langKey = langKey;
+            this.age = age;
+            this.createdAt = System.currentTimeMillis();
+        }
+
+        public String langKey() {
+            return this.langKey;
+        }
+        
+        public long age() {
+            return this.age + (System.currentTimeMillis() - this.createdAt);
+        }
+
+        public Component component() {
+            return this.component == null
+                ? (this.component = Component.translatable(this.langKey))
+                : this.component;
+        }
+
+        public boolean isAlive() {
+            return this.age() < MESSAGE_DURATION_MS;
+        }
     }
 
     private class PlayerTransform {
