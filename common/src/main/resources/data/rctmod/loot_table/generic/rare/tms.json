@@ -11,7 +11,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "acidspray"
@@ -34,7 +34,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "acrobatics"
@@ -57,7 +57,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "aerialace"
@@ -80,7 +80,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "afteryou"
@@ -103,7 +103,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "agility"
@@ -126,7 +126,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "aircutter"
@@ -149,7 +149,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "airslash"
@@ -172,7 +172,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "alluringvoice"
@@ -195,7 +195,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "allyswitch"
@@ -218,7 +218,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "amnesia"
@@ -241,7 +241,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "ancientpower"
@@ -264,7 +264,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "aquatail"
@@ -287,7 +287,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "assurance"
@@ -310,7 +310,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "attract"
@@ -333,7 +333,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "aurasphere"
@@ -356,7 +356,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "auroraveil"
@@ -379,7 +379,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "avalanche"
@@ -402,7 +402,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "babydolleyes"
@@ -425,7 +425,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "batonpass"
@@ -448,7 +448,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "beatup"
@@ -471,7 +471,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bind"
@@ -494,7 +494,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "blastburn"
@@ -517,7 +517,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "blazekick"
@@ -540,7 +540,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "block"
@@ -563,7 +563,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bodypress"
@@ -586,7 +586,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bodyslam"
@@ -609,7 +609,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bounce"
@@ -632,7 +632,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bravebird"
@@ -655,7 +655,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "breakingswipe"
@@ -678,7 +678,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "brickbreak"
@@ -701,7 +701,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "brine"
@@ -724,7 +724,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "brutalswing"
@@ -747,7 +747,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bugbite"
@@ -770,7 +770,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bugbuzz"
@@ -793,7 +793,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bulkup"
@@ -816,7 +816,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bulldoze"
@@ -839,7 +839,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "bulletseed"
@@ -862,7 +862,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "burningjealousy"
@@ -885,7 +885,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "charge"
@@ -908,7 +908,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "chargebeam"
@@ -931,7 +931,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "charm"
@@ -954,7 +954,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "chillingwater"
@@ -977,7 +977,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "closecombat"
@@ -1000,7 +1000,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "coaching"
@@ -1023,7 +1023,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "confide"
@@ -1046,7 +1046,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "confuseray"
@@ -1069,7 +1069,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "corrosivegas"
@@ -1092,7 +1092,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "cosmicpower"
@@ -1115,7 +1115,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "covet"
@@ -1138,7 +1138,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "crosspoison"
@@ -1161,7 +1161,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "crunch"
@@ -1184,7 +1184,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "curse"
@@ -1207,7 +1207,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "cut"
@@ -1230,7 +1230,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "darkestlariat"
@@ -1253,7 +1253,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dazzlinggleam"
@@ -1276,7 +1276,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "defog"
@@ -1299,7 +1299,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dig"
@@ -1322,7 +1322,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "disarmingvoice"
@@ -1345,7 +1345,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dive"
@@ -1368,7 +1368,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "doubleedge"
@@ -1391,7 +1391,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "doubleteam"
@@ -1414,7 +1414,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dragoncheer"
@@ -1437,7 +1437,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dragondance"
@@ -1460,7 +1460,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dragontail"
@@ -1483,7 +1483,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "drainingkiss"
@@ -1506,7 +1506,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "drainpunch"
@@ -1529,7 +1529,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dreameater"
@@ -1552,7 +1552,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "drillrun"
@@ -1575,7 +1575,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dualchop"
@@ -1598,7 +1598,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "dualwingbeat"
@@ -1621,7 +1621,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "echoedvoice"
@@ -1644,7 +1644,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "eerieimpulse"
@@ -1667,7 +1667,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "electricterrain"
@@ -1690,7 +1690,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "electroball"
@@ -1713,7 +1713,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "electroweb"
@@ -1736,7 +1736,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "embargo"
@@ -1759,7 +1759,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "encore"
@@ -1782,7 +1782,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "endeavor"
@@ -1805,7 +1805,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "endure"
@@ -1828,7 +1828,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "expandingforce"
@@ -1851,7 +1851,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "facade"
@@ -1874,7 +1874,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "faketears"
@@ -1897,7 +1897,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "falseswipe"
@@ -1920,7 +1920,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "featherdance"
@@ -1943,7 +1943,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "firefang"
@@ -1966,7 +1966,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "firepledge"
@@ -1989,7 +1989,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "firepunch"
@@ -2012,7 +2012,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "firespin"
@@ -2035,7 +2035,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "flamecharge"
@@ -2058,7 +2058,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "flareblitz"
@@ -2081,7 +2081,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "flash"
@@ -2104,7 +2104,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "fling"
@@ -2127,7 +2127,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "flipturn"
@@ -2150,7 +2150,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "fly"
@@ -2173,7 +2173,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "focusenergy"
@@ -2196,7 +2196,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "focuspunch"
@@ -2219,7 +2219,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "foulplay"
@@ -2242,7 +2242,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "frenzyplant"
@@ -2265,7 +2265,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "frostbreath"
@@ -2288,7 +2288,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "furycutter"
@@ -2311,7 +2311,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "futuresight"
@@ -2334,7 +2334,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "gastroacid"
@@ -2357,7 +2357,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "gigadrain"
@@ -2380,7 +2380,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "grassknot"
@@ -2403,7 +2403,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "grasspledge"
@@ -2426,7 +2426,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "grassyglide"
@@ -2449,7 +2449,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "grassyterrain"
@@ -2472,7 +2472,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "gravity"
@@ -2495,7 +2495,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "guardswap"
@@ -2518,7 +2518,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "gyroball"
@@ -2541,7 +2541,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hail"
@@ -2564,7 +2564,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hardpress"
@@ -2587,7 +2587,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "haze"
@@ -2610,7 +2610,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "headbutt"
@@ -2633,7 +2633,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "healbell"
@@ -2656,7 +2656,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "heatcrash"
@@ -2679,7 +2679,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "heatwave"
@@ -2702,7 +2702,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "heavyslam"
@@ -2725,7 +2725,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "helpinghand"
@@ -2748,7 +2748,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hex"
@@ -2771,7 +2771,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "highhorsepower"
@@ -2794,7 +2794,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "honeclaws"
@@ -2817,7 +2817,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hurricane"
@@ -2840,7 +2840,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hydrocannon"
@@ -2863,7 +2863,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hydropump"
@@ -2886,7 +2886,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "hypervoice"
@@ -2909,7 +2909,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "icefang"
@@ -2932,7 +2932,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "icepunch"
@@ -2955,7 +2955,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "icespinner"
@@ -2978,7 +2978,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "iciclespear"
@@ -3001,7 +3001,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "icywind"
@@ -3024,7 +3024,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "imprison"
@@ -3047,7 +3047,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "incinerate"
@@ -3070,7 +3070,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "infestation"
@@ -3093,7 +3093,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "irondefense"
@@ -3116,7 +3116,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "irontail"
@@ -3139,7 +3139,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "knockoff"
@@ -3162,7 +3162,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "laserfocus"
@@ -3185,7 +3185,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lashout"
@@ -3208,7 +3208,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lastresort"
@@ -3231,7 +3231,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "leafblade"
@@ -3254,7 +3254,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "leafstorm"
@@ -3277,7 +3277,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "leechlife"
@@ -3300,7 +3300,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lightscreen"
@@ -3323,7 +3323,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "liquidation"
@@ -3346,7 +3346,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lowkick"
@@ -3369,7 +3369,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lowsweep"
@@ -3392,7 +3392,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "lunge"
@@ -3415,7 +3415,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "magicalleaf"
@@ -3438,7 +3438,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "magiccoat"
@@ -3461,7 +3461,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "magicroom"
@@ -3484,7 +3484,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "magnetrise"
@@ -3507,7 +3507,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "megadrain"
@@ -3530,7 +3530,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "megahorn"
@@ -3553,7 +3553,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "megakick"
@@ -3576,7 +3576,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "megapunch"
@@ -3599,7 +3599,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "metalclaw"
@@ -3622,7 +3622,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "metalsound"
@@ -3645,7 +3645,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "meteorbeam"
@@ -3668,7 +3668,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "metronome"
@@ -3691,7 +3691,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "mistyexplosion"
@@ -3714,7 +3714,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "mistyterrain"
@@ -3737,7 +3737,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "muddywater"
@@ -3760,7 +3760,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "mudshot"
@@ -3783,7 +3783,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "mudslap"
@@ -3806,7 +3806,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "mysticalfire"
@@ -3829,7 +3829,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "naturepower"
@@ -3852,7 +3852,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "nightshade"
@@ -3875,7 +3875,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "ominouswind"
@@ -3898,7 +3898,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "outrage"
@@ -3921,7 +3921,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "painsplit"
@@ -3944,7 +3944,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "payback"
@@ -3967,7 +3967,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "payday"
@@ -3990,7 +3990,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "petalblizzard"
@@ -4013,7 +4013,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "phantomforce"
@@ -4036,7 +4036,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "pinmissile"
@@ -4059,7 +4059,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "playrough"
@@ -4082,7 +4082,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "pluck"
@@ -4105,7 +4105,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "poisontail"
@@ -4128,7 +4128,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "pollenpuff"
@@ -4151,7 +4151,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "poltergeist"
@@ -4174,7 +4174,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "pounce"
@@ -4197,7 +4197,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "powergem"
@@ -4220,7 +4220,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "powerswap"
@@ -4243,7 +4243,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "poweruppunch"
@@ -4266,7 +4266,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "powerwhip"
@@ -4289,7 +4289,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "protect"
@@ -4312,7 +4312,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psybeam"
@@ -4335,7 +4335,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psychicfangs"
@@ -4358,7 +4358,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psychicnoise"
@@ -4381,7 +4381,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psychicterrain"
@@ -4404,7 +4404,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psychocut"
@@ -4427,7 +4427,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "psychup"
@@ -4450,7 +4450,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "quash"
@@ -4473,7 +4473,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "razorshell"
@@ -4496,7 +4496,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "recycle"
@@ -4519,7 +4519,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "reflect"
@@ -4542,7 +4542,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rest"
@@ -4565,7 +4565,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "retaliate"
@@ -4588,7 +4588,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "revenge"
@@ -4611,7 +4611,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "reversal"
@@ -4634,7 +4634,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "risingvoltage"
@@ -4657,7 +4657,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "roar"
@@ -4680,7 +4680,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rockblast"
@@ -4703,7 +4703,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rockclimb"
@@ -4726,7 +4726,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rockpolish"
@@ -4749,7 +4749,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rocksmash"
@@ -4772,7 +4772,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rocktomb"
@@ -4795,7 +4795,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "roleplay"
@@ -4818,7 +4818,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "rollout"
@@ -4841,7 +4841,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "round"
@@ -4864,7 +4864,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "safeguard"
@@ -4887,7 +4887,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "sandstorm"
@@ -4910,7 +4910,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "sandtomb"
@@ -4933,7 +4933,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "scald"
@@ -4956,7 +4956,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "scaleshot"
@@ -4979,7 +4979,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "scaryface"
@@ -5002,7 +5002,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "scorchingsands"
@@ -5025,7 +5025,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "screech"
@@ -5048,7 +5048,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "secretpower"
@@ -5071,7 +5071,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "seedbomb"
@@ -5094,7 +5094,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "selfdestruct"
@@ -5117,7 +5117,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "shadowclaw"
@@ -5140,7 +5140,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "shockwave"
@@ -5163,7 +5163,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "signalbeam"
@@ -5186,7 +5186,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "silverwind"
@@ -5209,7 +5209,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "skillswap"
@@ -5232,7 +5232,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "skittersmack"
@@ -5255,7 +5255,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "skyattack"
@@ -5278,7 +5278,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "skydrop"
@@ -5301,7 +5301,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "sleeptalk"
@@ -5324,7 +5324,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "sludgewave"
@@ -5347,7 +5347,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "smackdown"
@@ -5370,7 +5370,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "smartstrike"
@@ -5393,7 +5393,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "snarl"
@@ -5416,7 +5416,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "snatch"
@@ -5439,7 +5439,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "snore"
@@ -5462,7 +5462,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "snowscape"
@@ -5485,7 +5485,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "solarblade"
@@ -5508,7 +5508,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "speedswap"
@@ -5531,7 +5531,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "spikes"
@@ -5554,7 +5554,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "spite"
@@ -5577,7 +5577,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "steelbeam"
@@ -5600,7 +5600,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "steelroller"
@@ -5623,7 +5623,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "steelwing"
@@ -5646,7 +5646,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "stompingtantrum"
@@ -5669,7 +5669,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "storedpower"
@@ -5692,7 +5692,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "strength"
@@ -5715,7 +5715,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "stringshot"
@@ -5738,7 +5738,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "strugglebug"
@@ -5761,7 +5761,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "suckerpunch"
@@ -5784,7 +5784,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "sunnyday"
@@ -5807,7 +5807,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "supercellslam"
@@ -5830,7 +5830,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "superfang"
@@ -5853,7 +5853,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "superpower"
@@ -5876,7 +5876,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "surf"
@@ -5899,7 +5899,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "swagger"
@@ -5922,7 +5922,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "swift"
@@ -5945,7 +5945,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "synthesis"
@@ -5968,7 +5968,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "tailslap"
@@ -5991,7 +5991,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "tailwind"
@@ -6014,7 +6014,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "takedown"
@@ -6037,7 +6037,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "taunt"
@@ -6060,7 +6060,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "telekinesis"
@@ -6083,7 +6083,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "temperflare"
@@ -6106,7 +6106,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "terrainpulse"
@@ -6129,7 +6129,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "thief"
@@ -6152,7 +6152,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "throatchop"
@@ -6175,7 +6175,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "thunderfang"
@@ -6198,7 +6198,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "thunderpunch"
@@ -6221,7 +6221,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "torment"
@@ -6244,7 +6244,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "toxicspikes"
@@ -6267,7 +6267,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "trailblaze"
@@ -6290,7 +6290,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "triattack"
@@ -6313,7 +6313,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "trick"
@@ -6336,7 +6336,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "tripleaxel"
@@ -6359,7 +6359,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "twister"
@@ -6382,7 +6382,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "upperhand"
@@ -6405,7 +6405,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "uproar"
@@ -6428,7 +6428,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "vacuumwave"
@@ -6451,7 +6451,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "venomdrench"
@@ -6474,7 +6474,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "venoshock"
@@ -6497,7 +6497,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "waterfall"
@@ -6520,7 +6520,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "waterpledge"
@@ -6543,7 +6543,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "waterpulse"
@@ -6566,7 +6566,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "weatherball"
@@ -6589,7 +6589,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "whirlpool"
@@ -6612,7 +6612,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "wildcharge"
@@ -6635,7 +6635,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "wonderroom"
@@ -6658,7 +6658,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "workup"
@@ -6681,7 +6681,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "worryseed"
@@ -6704,7 +6704,7 @@
           "name": "cobblemon:technical_machine",
           "functions": [
             {
-              "function": "minecraft:set_component",
+              "function": "minecraft:set_components",
               "components": {
                 "cobblemon:tm_move": {
                   "move": "zenheadbutt"

@@ -105,12 +105,6 @@
           "value": "rctmod:generic/legendary/pokeballs",
           "weight": 2,
           "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
-          "weight": 2,
-          "quality": 72
         }
       ],
       "conditions": [
@@ -226,12 +220,6 @@
         {
           "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/pokeballs",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
           "weight": 2,
           "quality": 72
         }
@@ -351,12 +339,6 @@
           "value": "rctmod:generic/legendary/pokeballs",
           "weight": 2,
           "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
-          "weight": 2,
-          "quality": 72
         }
       ],
       "conditions": [
@@ -472,12 +454,6 @@
         {
           "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/pokeballs",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
           "weight": 2,
           "quality": 72
         }

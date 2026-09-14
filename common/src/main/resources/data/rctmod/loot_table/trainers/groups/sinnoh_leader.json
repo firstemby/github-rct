@@ -97,12 +97,6 @@
         },
         {
           "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/training",
           "weight": 2,
           "quality": 72
@@ -210,12 +204,6 @@
         {
           "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/diverse",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
           "weight": 2,
           "quality": 72
         },
@@ -333,12 +321,6 @@
         },
         {
           "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/training",
           "weight": 2,
           "quality": 72
@@ -446,12 +428,6 @@
         {
           "type": "minecraft:loot_table",
           "value": "rctmod:generic/legendary/diverse",
-          "weight": 2,
-          "quality": 72
-        },
-        {
-          "type": "minecraft:loot_table",
-          "value": "rctmod:generic/legendary/tms",
           "weight": 2,
           "quality": 72
         },
