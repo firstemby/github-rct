@@ -61,6 +61,7 @@ import com.gitlab.srcmc.rctmod.world.entities.goals.RandomWaitGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.TrainerCardTemptGoal;
 
 import dev.architectury.networking.NetworkManager;
+import net.minecraft.client.gui.Font;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -74,6 +75,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -125,6 +127,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
     static final int MAX_PLAYER_TRACKING_RANGE = 128;
     static final int TARGET_UPDATE_INTERVAL = 120;
     static final int BASE_BATTLE_COOLDOWN_TICKS = 400;
+    static final int MAX_MESSAGE_QUEUE = 3;
+    static final int MESSAGE_QUEUE_UPDATE_TICKS = 4;
 
     static final int AFK_CHECK_INTERVAL_TICKS = 2400;
     static final int AFK_CHECK_MAX_COUNT = 6;
@@ -147,6 +151,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
     private List<PlayerTransform> nearestTransforms = new ArrayList<>();
     private Queue<Message> messageQueue = new LinkedList<>();
     private Set<Player> messageSyncPlayers = new HashSet<>();
+    private Message activeMessage;
     private int nearestAfkCheckCount;
     private int lastTimeSeen;
 
@@ -599,6 +604,10 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 this.checkDespawnNearAfkPlayers();
             }
         }
+
+        if(this.tickCount % MESSAGE_QUEUE_UPDATE_TICKS == 0) {
+            this.updateMessageQueue(); // ensures message queue is eventually drained
+        }
     }
 
     @Override
@@ -777,7 +786,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
         if(!level.isClientSide && this.isAlive()) {
             if(this.random.nextInt(400) == 0 && this.deathTime == 0) {
-               this.heal(1.0F);
+               this.heal(1);
             }
         }
     }
@@ -790,19 +799,19 @@ public class TrainerMob extends PathfinderMob implements Npc {
         this.getNavigation().setCanFloat(true);
         this.goalSelector.addGoal(i, new FloatGoal(this));
         this.goalSelector.addGoal(i++, new PokemonBattleGoal(this));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zombie>(this, Zombie.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Evoker>(this, Evoker.class, 12.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vindicator>(this, Vindicator.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vex>(this, Vex.class, 8.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Pillager>(this, Pillager.class, 15.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Illusioner>(this, Illusioner.class, 12.0F, 0.5, 0.5));
-        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zoglin>(this, Zoglin.class, 10.0F, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zombie>(this, Zombie.class, 8, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Evoker>(this, Evoker.class, 12, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vindicator>(this, Vindicator.class, 8, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Vex>(this, Vex.class, 8, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Pillager>(this, Pillager.class, 15, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Illusioner>(this, Illusioner.class, 12, 0.5, 0.5));
+        this.goalSelector.addGoal(i, new AvoidEntityGoal<Zoglin>(this, Zoglin.class, 10, 0.5, 0.5));
         this.goalSelector.addGoal(i++, new PanicGoal(this, 0.5));
         this.goalSelector.addGoal(i++, new TrainerCardTemptGoal(this));
         this.goalSelector.addGoal(i++, new ForceIntoBattleGoal(this, Player.class));
-        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2.0F, 0.04F, 160, 600));
-        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4.0F, 0.004F, 80, 300));
-        this.goalSelector.addGoal(i++, new LookAtPlayerGoal(this, LivingEntity.class, 8.0F));
+        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2, 0.04F, 160, 600));
+        this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4, 0.004F, 80, 300));
+        this.goalSelector.addGoal(i++, new LookAtPlayerGoal(this, LivingEntity.class, 8));
         this.goalSelector.addGoal(i++, new MoveToHomePosGoal(this));
         this.goalSelector.addGoal(i++, new ForcedStrollAwayGoal(this, 0.35));
         this.goalSelector.addGoal(i++, new RandomWaitGoal(this));
@@ -895,51 +904,95 @@ public class TrainerMob extends PathfinderMob implements Npc {
     public void setMessages(Collection<Message> messages) {
         if(this.level().isClientSide) {
             this.messageQueue = new LinkedList<>(messages);
+
+            if(!this.messageQueue.isEmpty()) {
+                this.messageQueue.peek().start(); // first received message is running
+            }
         }
     }
 
-    public void addMessage(String langKey) {
+    public boolean addMessage(String langKey) {
         if(!this.level().isClientSide) {
-            this.messageQueue.offer(new Message(langKey));
-            var players = this.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreInvisibilityTesting(), this, this.getBoundingBox().inflate(Message.MESSAGE_SYNC_DISTANCE));
-            this.messageSyncPlayers = new HashSet<>(players);
-            NetworkManager.sendToPlayers(players.stream().map(p -> (ServerPlayer)p).toList(), new MessageQueuePayload(this.getId(), this.messageQueue));
+            var updated = false;
+
+            if(this.messageQueue.size() < MAX_MESSAGE_QUEUE) {
+                this.messageQueue.forEach(Message::speedUp);
+                this.messageQueue.offer(new Message(langKey));
+                this.updateMessageQueue(); // (potentially) starts message on server now
+                updated = true;
+            } else if(this.messageQueue.size() > 1) {
+                this.messageQueue.stream()
+                    .limit(this.messageQueue.size() - 1)
+                    .forEach(Message::speedUp);
+            }
+
+            if(updated) {
+                var players = this.level().getNearbyPlayers(TargetingConditions.forNonCombat().ignoreInvisibilityTesting(), this, this.getBoundingBox().inflate(Message.SYNC_DISTANCE));
+                this.messageSyncPlayers = new HashSet<>(players);
+                NetworkManager.sendToPlayers(players.stream().map(p -> (ServerPlayer)p).toList(), new MessageQueuePayload(this.getId(), this.messageQueue));
+                return true;
+            }
         }
+
+        return false;
     }
 
-    public Message getActiveMessage() {
-        Message current = null;
+    public void updateMessageQueue() {
+        Message active = null;
+        
+        while(!this.messageQueue.isEmpty()) {
+            active = this.messageQueue.peek().start();
 
-        while(this.messageQueue.size() > 0) {
-            current = this.messageQueue.peek();
-
-            if(current.isAlive()) {
+            if(active.isAlive()) {
                 break;
             }
 
             this.messageQueue.poll();
         }
 
-        return current;
+        this.activeMessage = active;
+    }
+
+    public Message getActiveMessage() {
+        return this.activeMessage;
     }
 
     public static class Message {
-        public static final long MESSAGE_DURATION_MS = 3000; // TODO: client config
-        public static final int MESSAGE_SYNC_DISTANCE = 32; // TODO: server config
+        public static final int SYNC_DISTANCE = 32; // how far away players can be to receive/see a message (TODO: server config)
+        public static final int MS_PER_WORD = 300; // messages stay alive depending on how long they are
+        public static final int MS_FADE = 2500; // time for a message to fade in and out (fade out time is added to total duration)
 
         private final String langKey;
+        private SpeechBubble bubble;
         private Component component;
         private long createdAt = -1;
+        private int speed = 1;
+        private long maxAge;
         private long age;
 
         public Message(String langKey) {
-            this(langKey, 0);
+            this(langKey, 0, 1);
         }
 
-        public Message(String langKey, long age) {
+        public Message(String langKey, long age, int speed) {
             this.langKey = langKey;
+            this.maxAge = Component.translatable(langKey).getString().split("\\s+").length * MS_PER_WORD; // only an estimate on server (default language)
             this.age = age;
-            this.createdAt = System.currentTimeMillis();
+            this.speed = speed;
+        }
+
+        public Message start() {
+            if(this.createdAt < 0) {
+                this.createdAt = System.currentTimeMillis();
+            }
+
+            return this;
+        }
+
+        public Message copy(Message origin) {
+            this.speed = origin.speed;
+            this.age = origin.age;
+            return this;
         }
 
         public String langKey() {
@@ -947,7 +1000,23 @@ public class TrainerMob extends PathfinderMob implements Npc {
         }
         
         public long age() {
-            return this.age + (System.currentTimeMillis() - this.createdAt);
+            return this.createdAt < 0 ? 0 : (this.age + (System.currentTimeMillis() - this.createdAt));
+        }
+
+        public long maxAge() {
+            return this.maxAge / this.speed;
+        }
+
+        public boolean isAlive() {
+            return this.age() < (this.maxAge() + MS_FADE / this.speed);
+        }
+
+        public int speed() {
+            return this.speed;
+        }
+
+        public void speedUp() {
+            this.speed++;
         }
 
         public Component component() {
@@ -956,8 +1025,52 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 : this.component;
         }
 
-        public boolean isAlive() {
-            return this.age() < MESSAGE_DURATION_MS;
+        public SpeechBubble bubble(Font font) {
+            if(this.bubble == null) {
+                this.bubble = new SpeechBubble(font);
+            }
+
+            return this.bubble;
+        }
+
+        public class SpeechBubble {
+            public static final int MAX_WIDTH = 128; // TODO: client config
+            public static final int PADDING = 4; // TODO: client config
+            
+            public final float top, left, width, height;
+            public final List<FormattedCharSequence> full;
+            public final String text;
+            public final long createdAt;
+            public final Font font;
+
+            public SpeechBubble(Font font) {
+                this.full = font.split(component(), MAX_WIDTH);
+                this.text = component().getString();
+                this.width = full.stream().map(l -> font.width(l)).max(Integer::compare).orElse(0) + PADDING * 2;
+                this.height = full.size() * font.lineHeight + PADDING * 2;
+                this.left = -this.width / 2;
+                this.top = -this.height;
+                this.font = font;
+                this.createdAt = System.currentTimeMillis();
+            }
+
+            public float alpha() {
+                var fade = (float)(MS_FADE / speed());
+                return fade > 0 ? Math.max(1f, this.createdAt / fade) * Math.clamp(1f - (age() - maxAge()) / fade, 0f, 1f) : 1f; // fade in * fade out
+            }
+
+            public List<FormattedCharSequence> lines() {
+                var max = (float)maxAge();
+                var ageProgress = max > 0 ? Math.min(1f, age() / max) : 1f;
+                var current = Component.literal(this.text.chars()
+                    .limit((int)(this.text.length() * ageProgress))
+                    .collect(StringBuilder::new,
+                        StringBuilder::appendCodePoint,
+                        StringBuilder::append)
+                    .toString());
+
+                return font.split(current, MAX_WIDTH);
+            }
         }
     }
 

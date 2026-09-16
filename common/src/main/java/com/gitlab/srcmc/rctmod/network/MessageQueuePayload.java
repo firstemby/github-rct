@@ -47,6 +47,7 @@ public record MessageQueuePayload(int entityId, Collection<Message> messages) im
             for(var message : v.messages) {
                 b.writeUtf(message.langKey());
                 b.writeLong(message.age());
+                b.writeInt(message.speed());
             }
         },
         b -> {
@@ -55,7 +56,7 @@ public record MessageQueuePayload(int entityId, Collection<Message> messages) im
             var messages = new ArrayList<Message>(count);
 
             for(int i = 0; i < count; i++) {
-                messages.add(new Message(b.readUtf(), b.readLong()));
+                messages.add(new Message(b.readUtf(), b.readLong(), b.readInt()));
             }
 
             return new MessageQueuePayload(entityId, messages);

@@ -67,12 +67,13 @@ public final class ChatUtils {
 
             if(messages != null) {
                 if(messages.length > 0) {
-                    var text = messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length];
-                    var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
-                    target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
-
                     if(source instanceof TrainerMob trainerMob) {
-                        trainerMob.addMessage(text.getTranslatable());
+                        var text = messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length];
+                        
+                        if(trainerMob.addMessage(text.getTranslatable())) {
+                            var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
+                            target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
+                        }
                     }
 
                     return;
