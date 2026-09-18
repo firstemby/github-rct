@@ -130,7 +130,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
     static final int MAX_PLAYER_TRACKING_RANGE = 128;
     static final int TARGET_UPDATE_INTERVAL = 120;
     static final int BASE_BATTLE_COOLDOWN_TICKS = 400;
-    static final int MAX_MESSAGE_QUEUE = 3;
+    static final int MAX_MESSAGE_QUEUE = 2;
     static final int MESSAGE_QUEUE_UPDATE_TICKS = 4;
 
     static final int AFK_CHECK_INTERVAL_TICKS = 2400;
@@ -963,9 +963,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
     public static class Message {
         public static final int SYNC_DISTANCE = 32; // how far away players can be to receive/see a message (TODO: server config)
-        public static final int MS_PER_WORD = 300; // messages stay alive depending on how long they are (TODO: server config?)
-        public static final int MS_FADE = 6000; // time for a message to fade in and out (fade out time is added to total duration) (TODO: server config?)
+        public static final int MS_PER_WORD = 200; // this determines the total time required to print a message. Messages stay alive depending on how long they are (TODO: server config?)
+        public static final int MS_ACTIVE = 2500; // time a fully printed message will stay visible before starting to fade out. (TODO: server config)
+        public static final int MS_FADE = 1500; // time for a message to fade in and out (fade in time is clamped to 1/3 of the time required to print the full message, fade out time is added to total duration) (TODO: server config?)
 
+        private static final float FADE_IN_RATIO = 3f; // of maxAge() (see MS_FADE)
         private static final String RESOURCE_CONTEXT = "speech_bubbles"; // see DataPackManager
         private static final ResourceLocation FALLBACK_TEXTURE = ResourceLocation.parse("textures/block/red_stained_glass.png");
 
@@ -996,12 +998,6 @@ public class TrainerMob extends PathfinderMob implements Npc {
             return this;
         }
 
-        public Message copy(Message origin) {
-            this.speed = origin.speed;
-            this.age = origin.age;
-            return this;
-        }
-
         public String langKey() {
             return this.langKey;
         }
@@ -1015,7 +1011,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         }
 
         public boolean isAlive() {
-            return this.age() < (this.maxAge() + MS_FADE / this.speed);
+            return this.age() < (this.maxAge() + (MS_ACTIVE + MS_FADE) / this.speed);
         }
 
         public int speed() {
@@ -1048,11 +1044,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
             private static final int DEFAULT_TEXTURE_WIDTH = 160;
             private static final int DEFAULT_TEXTURE_HEIGHT = 92;
             private static final int DEFAULT_PADDING = 16; // availale space in texture for borders and to round up edges (TODO: text seems slightly taller than expected with PADDING = 16)
-            private static final float MIN_FADE_IN_RATIO = 3f; // of maxAge()
             
             public final float top, left, width, height;
             public final float hPadding, vPadding;
             public final float xOff, yOff;
+            public final float maxTextWidth;
             public final List<FormattedCharSequence> full;
             public final String text;
             public final ResourceLocation texture;
@@ -1078,6 +1074,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 var hScaledPadding = 2 * DEFAULT_PADDING * (textureWidth / (float)DEFAULT_TEXTURE_WIDTH);
                 var vScaledPadding = 2 * DEFAULT_PADDING * (textureHeight / (float)DEFAULT_TEXTURE_HEIGHT);
 
+                this.maxTextWidth = textWidth;
                 this.width = hScaledPadding < textureWidth ? textWidth * textureWidth / (textureWidth - hScaledPadding) : 0;
                 this.height = vScaledPadding < textureHeight ? textHeight * textureHeight / (textureHeight - vScaledPadding) : 0;
                 this.hPadding = (this.width - textWidth) / 2f;
@@ -1091,11 +1088,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 var duration = (float)(MS_FADE / speed());
 
                 if(duration > 0) {
-                    var durIn = Math.min(duration, maxAge() / MIN_FADE_IN_RATIO);
+                    var durIn = Math.min(duration, maxAge() / FADE_IN_RATIO);
 
                     if(durIn > 0) {
                         var fadeIn = Math.clamp(age() / durIn, 0f, 1f);
-                        var fadeOut = Math.clamp(1f - (age() - maxAge()) / duration, 0f, 1f);
+                        var fadeOut = Math.clamp(1f - (age() - (maxAge() + MS_ACTIVE)) / duration, 0f, 1f);
                         return fadeIn * fadeOut;
                     }
                 }
@@ -1106,9 +1103,11 @@ public class TrainerMob extends PathfinderMob implements Npc {
             public List<FormattedCharSequence> lines() {
                 var max = (float)maxAge();
                 var ageProgress = max > 0 ? Math.min(1f, age() / max) : 1f;
-                var current = Component.literal(this.text.chars()
-                    .limit((int)(this.text.length() * ageProgress))
-                    .collect(StringBuilder::new,
+                var count = this.text.codePointCount(0, this.text.length());
+                var current = Component.literal(this.text.codePoints()
+                    .limit((int)(count * ageProgress))
+                    .collect(
+                        StringBuilder::new,
                         StringBuilder::appendCodePoint,
                         StringBuilder::append)
                     .toString());

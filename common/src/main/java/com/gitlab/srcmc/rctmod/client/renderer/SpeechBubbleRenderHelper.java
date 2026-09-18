@@ -61,8 +61,21 @@ public class SpeechBubbleRenderHelper {
                 var textY = bubble.yOff + bubble.top + bubble.vPadding;
 
                 for(var line : bubble.lines()) {
-                    var textX = bubble.xOff - mc.font.width(line) / 2f; // centered
-                    mc.font.drawInBatch(line, textX, textY, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                    var lineWidth = mc.font.width(line);
+                    var textX = bubble.xOff - lineWidth / 2f; // centered
+
+                    if(lineWidth > 0 && lineWidth > bubble.maxTextWidth)  {
+                        // this is for edge case where intermediate states of the text may produce lines
+                        // with widths greater than the width of the full text (adjusted by scaling down).
+                        poseStack.pushPose();
+                        poseStack.translate(0, textY, 0);
+                        poseStack.scale(bubble.maxTextWidth / lineWidth, 1f, 1f);
+                        mc.font.drawInBatch(line, -lineWidth / 2f, 0, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                        poseStack.popPose();
+                    } else {
+                        mc.font.drawInBatch(line, textX, textY, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                    }
+
                     textY += mc.font.lineHeight;
                 }
 
