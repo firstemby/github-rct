@@ -959,8 +959,8 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
     public static class Message {
         public static final int SYNC_DISTANCE = 32; // how far away players can be to receive/see a message (TODO: server config)
-        public static final int MS_PER_WORD = 300; // messages stay alive depending on how long they are
-        public static final int MS_FADE = 2500; // time for a message to fade in and out (fade out time is added to total duration)
+        public static final int MS_PER_WORD = 300; // messages stay alive depending on how long they are (TODO: server config?)
+        public static final int MS_FADE = 6000; // time for a message to fade in and out (fade out time is added to total duration) (TODO: server config?)
 
         private final String langKey;
         private SpeechBubble bubble;
@@ -1034,29 +1034,66 @@ public class TrainerMob extends PathfinderMob implements Npc {
         }
 
         public class SpeechBubble {
-            public static final int MAX_WIDTH = 128; // TODO: client config
-            public static final int PADDING = 4; // TODO: client config
+            public static final int MAX_WIDTH = 140; // TODO: client config?
+            public static final int MIN_WIDTH = 64; // TODO: client config?
+            public static final int MIN_HEIGHT = 32; // TODO: client config?
+
+            private static final int PADDING = 20; // availale space in texture for borders and to round up edges (TODO: text seems slightly taller than expected with PADDING = 16)
+            private static final float MIN_FADE_IN_RATIO = 3f; // of maxAge()
             
             public final float top, left, width, height;
+            public final float hPadding, vPadding;
+            public final float xOff;
+            public final float yOff;
             public final List<FormattedCharSequence> full;
             public final String text;
-            public final long createdAt;
             public final Font font;
+            public final long createdAt;
 
             public SpeechBubble(Font font) {
+                this.font = font;
                 this.full = font.split(component(), MAX_WIDTH);
                 this.text = component().getString();
-                this.width = full.stream().map(l -> font.width(l)).max(Integer::compare).orElse(0) + PADDING * 2;
-                this.height = full.size() * font.lineHeight + PADDING * 2;
+
+                var width = full.stream().map(l -> font.width(l)).max(Integer::compare).orElse(0);
+                var height = full.size() * font.lineHeight;
+
+                this.xOff = Math.max(0, MIN_WIDTH - width) / 2f;
+                this.yOff = Math.max(0, MIN_HEIGHT - height) / 2f;
+                width = Math.max(MIN_WIDTH, width);
+                height = Math.max(MIN_HEIGHT, height);
+
+                if(width > height) {
+                    this.hPadding = PADDING;
+                    this.vPadding = PADDING * height / width;
+                } else if(height > width) {
+                    this.hPadding = PADDING * width / height;
+                    this.vPadding = PADDING;
+                } else {
+                    this.hPadding = this.vPadding = PADDING;
+                }
+
+                this.width = width + this.hPadding * 2;
+                this.height = height + this.vPadding * 2;
                 this.left = -this.width / 2;
                 this.top = -this.height;
-                this.font = font;
                 this.createdAt = System.currentTimeMillis();
             }
 
             public float alpha() {
-                var fade = (float)(MS_FADE / speed());
-                return fade > 0 ? Math.max(1f, this.createdAt / fade) * Math.clamp(1f - (age() - maxAge()) / fade, 0f, 1f) : 1f; // fade in * fade out
+                var duration = (float)(MS_FADE / speed());
+
+                if(duration > 0) {
+                    var durIn = Math.min(duration, maxAge() / MIN_FADE_IN_RATIO);
+
+                    if(durIn > 0) {
+                        var fadeIn = Math.clamp(age() / durIn, 0f, 1f);
+                        var fadeOut = Math.clamp(1f - (age() - maxAge()) / duration, 0f, 1f);
+                        return fadeIn * fadeOut;
+                    }
+                }
+
+                return 1f;
             }
 
             public List<FormattedCharSequence> lines() {
@@ -1069,7 +1106,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                         StringBuilder::append)
                     .toString());
 
-                return font.split(current, MAX_WIDTH);
+                return this.font.split(current, MAX_WIDTH);
             }
         }
     }

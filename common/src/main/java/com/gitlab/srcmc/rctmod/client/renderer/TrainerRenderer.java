@@ -29,7 +29,6 @@ package com.gitlab.srcmc.rctmod.client.renderer;
 import com.gitlab.srcmc.rctmod.client.ModClient;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -61,5 +60,6 @@ public class TrainerRenderer extends HumanoidMobRenderer<TrainerMob, PlayerModel
     @Override
     public void render(TrainerMob pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+        SpeechBubbleRenderHelper.render(pEntity, pEntity.getActiveMessage(), pPoseStack, pBuffer, pPackedLight);
     }
 }

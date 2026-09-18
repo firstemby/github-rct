@@ -50,9 +50,9 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 public class DataPackManager extends SimpleJsonResourceReloadListener implements AutoCloseable {
-    public static final String PATH_GROUPS = "trainers/groups";
-    public static final String PATH_SINGLE = "trainers/single";
-    public static final String PATH_DEFAULT = "trainers/default";
+    public static final String PATH_GROUPS = "groups";
+    public static final String PATH_SINGLE = "single";
+    public static final String PATH_DEFAULT = "default";
     public static final String PATH_TRAINERS = "trainers";
     public static final String PATH_TRAINER_TYPES = "trainer_types";
     public static final String PATH_SERIES = "series";
@@ -74,7 +74,16 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
         Map.entry("mobs", new DataLocator(PackType.SERVER_DATA, ".json")),
         Map.entry("dialogs", new DataLocator(PackType.SERVER_DATA, ".json")),
         Map.entry("loot_table", new DataLocator(PackType.SERVER_DATA, ".json")),
-        Map.entry("textures", new DataLocator(PackType.CLIENT_RESOURCES, ".png"))
+        Map.entry("textures", new DataLocator(PackType.CLIENT_RESOURCES, ".png")),
+        Map.entry("speech_bubbles", new DataLocator(PackType.CLIENT_RESOURCES, ".png"))
+    );
+
+    private final Map<String, String> contextPaths = Map.ofEntries(
+        Map.entry("mobs", "mobs/trainers"),
+        Map.entry("dialogs", "dialogs/trainers"),
+        Map.entry("loot_table", "loot_table/trainers"),
+        Map.entry("textures", "textures/trainers"),
+        Map.entry("speech_bubbles", "textures/speech_bubbles")
     );
 
     // trainer teams and type as well as series are not layered (in
@@ -158,7 +167,7 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
             return Optional.empty();
         }
 
-        var singlePath = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, context + "/" + PATH_SINGLE + "/" + trainerId + dl.fileSuffix);
+        var singlePath = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, this.contextPaths.getOrDefault(context, context) + "/" + PATH_SINGLE + "/" + trainerId + dl.fileSuffix);
 
         if(dl.singleData.containsKey(singlePath)) {
             return Optional.of(singlePath);
@@ -258,7 +267,7 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
 
     public <T> void loadResource(String trainerId, String context, Consumer<T> consumer, TypeToken<T> type) {
         var dl = contextMap.get(context);
-        var singlePath = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, context + "/" + PATH_SINGLE + "/" + trainerId + dl.fileSuffix);
+        var singlePath = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, this.contextPaths.getOrDefault(context, context) + "/" + PATH_SINGLE + "/" + trainerId + dl.fileSuffix);
         T obj;
 
         try {
@@ -317,15 +326,15 @@ public class DataPackManager extends SimpleJsonResourceReloadListener implements
     }
 
     private void scanDataPack(PackResources dataPack, String context, DataLocator dl) {
-        dataPack.listResources(dl.packType, ModCommon.MOD_ID, context + "/" + PATH_GROUPS, (rl, io) -> {
+        dataPack.listResources(dl.packType, ModCommon.MOD_ID, this.contextPaths.getOrDefault(context, context) + "/" + PATH_GROUPS, (rl, io) -> {
             dl.groupData.put(rl, dataPack);
         });
 
-        dataPack.listResources(dl.packType, ModCommon.MOD_ID, context + "/" + PATH_SINGLE, (rl, io) -> {
+        dataPack.listResources(dl.packType, ModCommon.MOD_ID, this.contextPaths.getOrDefault(context, context) + "/" + PATH_SINGLE, (rl, io) -> {
             dl.singleData.put(rl, dataPack);
         });
 
-        var defaultRl = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, context + "/" + PATH_DEFAULT + dl.fileSuffix);
+        var defaultRl = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, this.contextPaths.getOrDefault(context, context) + "/" + PATH_DEFAULT + dl.fileSuffix);
         var defaultData = dataPack.getResource(dl.packType, defaultRl);
 
         if(defaultData != null) {
