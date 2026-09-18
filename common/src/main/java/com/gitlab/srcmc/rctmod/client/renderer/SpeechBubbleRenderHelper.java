@@ -26,7 +26,6 @@
  */
 package com.gitlab.srcmc.rctmod.client.renderer;
 
-import com.gitlab.srcmc.rctmod.client.ModClient;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob.Message;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,7 +34,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 
 public class SpeechBubbleRenderHelper {
     private static final double HEIGHT_OFFSET = 0.55;
@@ -45,15 +43,12 @@ public class SpeechBubbleRenderHelper {
     private static final int TEXT_FOREGROUND = 0xFF444444; // TODO
     private static final int TEXT_BACKGROUND = 0x00000000;
     private static final float BACKGROUND_Z = -0.01f;
-    private static final String RESOURCE_CONTEXT = "speech_bubbles"; // see DataPackManager
     private static final Font.DisplayMode TEXT_DISPLAY_MODE = Font.DisplayMode.SEE_THROUGH;
-    private static final ResourceLocation FALLBACK_TEXTURE = ResourceLocation.parse("textures/block/red_stained_glass.png");
 
     public static void render(TrainerMob entity, Message message, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if(message != null) {
             var mc = Minecraft.getInstance();
-            var font = mc.font;
-            var bubble = message.bubble(font);
+            var bubble = message.bubble(entity, mc.font);
             var alpha = bubble.alpha();
 
             if(alpha > 0f) {
@@ -62,14 +57,13 @@ public class SpeechBubbleRenderHelper {
                 poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
                 poseStack.scale(TEXT_SCALE, -TEXT_SCALE, TEXT_SCALE);
 
-                renderBackground(RenderType.text(ModClient.RESOURCE_MANAGER.findResource(entity.getTrainerId(), RESOURCE_CONTEXT).orElse(FALLBACK_TEXTURE)), bubble.left, bubble.top, bubble.width, bubble.height, poseStack, buffer, alpha);
-                int i = 0;
+                renderBackground(RenderType.text(bubble.texture), bubble.left, bubble.top, bubble.width, bubble.height, poseStack, buffer, alpha);
+                var textY = bubble.yOff + bubble.top + bubble.vPadding;
 
                 for(var line : bubble.lines()) {
-                    var textX = bubble.xOff - font.width(line) / 2f; // centered
-                    var textY = bubble.yOff + bubble.top + bubble.vPadding + i * font.lineHeight;
-                    font.drawInBatch(line, textX, textY, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
-                    i++;
+                    var textX = bubble.xOff - mc.font.width(line) / 2f; // centered
+                    mc.font.drawInBatch(line, textX, textY, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                    textY += mc.font.lineHeight;
                 }
 
                 poseStack.popPose();

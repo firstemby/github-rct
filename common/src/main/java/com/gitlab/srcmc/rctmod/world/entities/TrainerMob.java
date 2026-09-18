@@ -47,6 +47,8 @@ import com.gitlab.srcmc.rctmod.api.data.pack.SeriesMetaData;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.ChatUtils;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.client.ModClient;
+import com.gitlab.srcmc.rctmod.client.utils.TextureInfo;
 import com.gitlab.srcmc.rctmod.network.MessageQueuePayload;
 import com.gitlab.srcmc.rctmod.world.blocks.entities.TrainerSpawnerBlockEntity;
 import com.gitlab.srcmc.rctmod.world.entities.goals.ForceIntoBattleGoal;
@@ -58,6 +60,7 @@ import com.gitlab.srcmc.rctmod.world.entities.goals.PokemonBattleGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.RandomStrollAwayGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.RandomStrollThroughVillageGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.RandomWaitGoal;
+import com.gitlab.srcmc.rctmod.world.entities.goals.TalkingGoal;
 import com.gitlab.srcmc.rctmod.world.entities.goals.TrainerCardTemptGoal;
 
 import dev.architectury.networking.NetworkManager;
@@ -812,6 +815,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 2, 0.04F, 160, 600));
         this.goalSelector.addGoal(i, new LookAtPlayerAndWaitGoal(this, LivingEntity.class, 4, 0.004F, 80, 300));
         this.goalSelector.addGoal(i++, new LookAtPlayerGoal(this, LivingEntity.class, 8));
+        this.goalSelector.addGoal(i++, new TalkingGoal(this));
         this.goalSelector.addGoal(i++, new MoveToHomePosGoal(this));
         this.goalSelector.addGoal(i++, new ForcedStrollAwayGoal(this, 0.35));
         this.goalSelector.addGoal(i++, new RandomWaitGoal(this));
@@ -962,6 +966,9 @@ public class TrainerMob extends PathfinderMob implements Npc {
         public static final int MS_PER_WORD = 300; // messages stay alive depending on how long they are (TODO: server config?)
         public static final int MS_FADE = 6000; // time for a message to fade in and out (fade out time is added to total duration) (TODO: server config?)
 
+        private static final String RESOURCE_CONTEXT = "speech_bubbles"; // see DataPackManager
+        private static final ResourceLocation FALLBACK_TEXTURE = ResourceLocation.parse("textures/block/red_stained_glass.png");
+
         private final String langKey;
         private SpeechBubble bubble;
         private Component component;
@@ -1025,9 +1032,9 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 : this.component;
         }
 
-        public SpeechBubble bubble(Font font) {
+        public SpeechBubble bubble(TrainerMob mob, Font font) {
             if(this.bubble == null) {
-                this.bubble = new SpeechBubble(font);
+                this.bubble = new SpeechBubble(font, ModClient.RESOURCE_MANAGER.findResource(mob.getTrainerId(), RESOURCE_CONTEXT).orElse(FALLBACK_TEXTURE));
             }
 
             return this.bubble;
@@ -1035,46 +1042,46 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
         public class SpeechBubble {
             public static final int MAX_WIDTH = 140; // TODO: client config?
-            public static final int MIN_WIDTH = 64; // TODO: client config?
-            public static final int MIN_HEIGHT = 32; // TODO: client config?
+            public static final int MIN_WIDTH = 48; // TODO: client config?
+            public static final int MIN_HEIGHT = 24; // TODO: client config?
 
-            private static final int PADDING = 20; // availale space in texture for borders and to round up edges (TODO: text seems slightly taller than expected with PADDING = 16)
+            private static final int DEFAULT_TEXTURE_WIDTH = 160;
+            private static final int DEFAULT_TEXTURE_HEIGHT = 92;
+            private static final int DEFAULT_PADDING = 16; // availale space in texture for borders and to round up edges (TODO: text seems slightly taller than expected with PADDING = 16)
             private static final float MIN_FADE_IN_RATIO = 3f; // of maxAge()
             
             public final float top, left, width, height;
             public final float hPadding, vPadding;
-            public final float xOff;
-            public final float yOff;
+            public final float xOff, yOff;
             public final List<FormattedCharSequence> full;
             public final String text;
+            public final ResourceLocation texture;
             public final Font font;
             public final long createdAt;
 
-            public SpeechBubble(Font font) {
+            public SpeechBubble(Font font, ResourceLocation texture) {
                 this.font = font;
+                this.texture = texture;
                 this.full = font.split(component(), MAX_WIDTH);
                 this.text = component().getString();
 
-                var width = full.stream().map(l -> font.width(l)).max(Integer::compare).orElse(0);
-                var height = full.size() * font.lineHeight;
+                float textWidth = full.stream().map(l -> font.width(l)).max(Integer::compare).orElse(0);
+                float textHeight = full.size() * font.lineHeight;
+                this.xOff = Math.max(0, MIN_WIDTH - textWidth) / 2f;
+                this.yOff = Math.max(0, MIN_HEIGHT - textHeight) / 2f;
+                textWidth = Math.max(MIN_WIDTH, textWidth);
+                textHeight = Math.max(MIN_HEIGHT, textHeight);
 
-                this.xOff = Math.max(0, MIN_WIDTH - width) / 2f;
-                this.yOff = Math.max(0, MIN_HEIGHT - height) / 2f;
-                width = Math.max(MIN_WIDTH, width);
-                height = Math.max(MIN_HEIGHT, height);
+                var textureInfo = TextureInfo.get(texture);
+                var textureWidth = textureInfo.width();
+                var textureHeight = textureInfo.height();
+                var hScaledPadding = 2 * DEFAULT_PADDING * (textureWidth / (float)DEFAULT_TEXTURE_WIDTH);
+                var vScaledPadding = 2 * DEFAULT_PADDING * (textureHeight / (float)DEFAULT_TEXTURE_HEIGHT);
 
-                if(width > height) {
-                    this.hPadding = PADDING;
-                    this.vPadding = PADDING * height / width;
-                } else if(height > width) {
-                    this.hPadding = PADDING * width / height;
-                    this.vPadding = PADDING;
-                } else {
-                    this.hPadding = this.vPadding = PADDING;
-                }
-
-                this.width = width + this.hPadding * 2;
-                this.height = height + this.vPadding * 2;
+                this.width = hScaledPadding < textureWidth ? textWidth * textureWidth / (textureWidth - hScaledPadding) : 0;
+                this.height = vScaledPadding < textureHeight ? textHeight * textureHeight / (textureHeight - vScaledPadding) : 0;
+                this.hPadding = (this.width - textWidth) / 2f;
+                this.vPadding = (this.height - textHeight) / 2f;
                 this.left = -this.width / 2;
                 this.top = -this.height;
                 this.createdAt = System.currentTimeMillis();
