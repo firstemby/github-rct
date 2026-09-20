@@ -330,7 +330,7 @@ public class ServerConfig implements IServerConfig {
         this.updateCache();
 
         if(!this.showMessagesAsSpeechBubble() && !this.showMessagesInChat()) {
-            ModCommon.LOG.warn("Both 'showMessagesAsSpeechBubble' and 'showMessagesInChat' are disabled. Trainers messages will not be visible!");
+            ModCommon.LOG.warn("Both 'showMessagesAsSpeechBubble' and 'showMessagesInChat' are disabled. Trainer messages will not be visible!");
         }
     }
 
