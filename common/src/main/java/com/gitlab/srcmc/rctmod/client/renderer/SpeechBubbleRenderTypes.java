@@ -50,8 +50,8 @@ public class SpeechBubbleRenderTypes {
                 .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(RenderStateShard.LIGHTMAP)
-                .setDepthTestState(RenderStateShard.NO_DEPTH_TEST)
-                .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
                 .setOutputState(RenderStateShard.OUTLINE_TARGET) // pretty much on top of everything
                 .createCompositeState(false)
         ));
@@ -67,8 +67,8 @@ public class SpeechBubbleRenderTypes {
                 .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(RenderStateShard.LIGHTMAP)
-                .setDepthTestState(RenderStateShard.NO_DEPTH_TEST)
-                .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
                 .setOutputState(RenderStateShard.OUTLINE_TARGET)
                 .createCompositeState(false)
         ));
