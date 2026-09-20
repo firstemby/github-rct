@@ -73,8 +73,10 @@ public final class ChatUtils {
                         var text = messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length];
                         
                         if((config.showMessagesAsSpeechBubble() && trainerMob.addMessage(text.getTranslatable()) || config.showMessagesInChat())) {
-                            var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
-                            target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
+                            if(config.showMessagesInChat()) {
+                                var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
+                                target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
+                            }
                         }
                     }
 
