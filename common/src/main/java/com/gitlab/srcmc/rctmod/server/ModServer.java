@@ -185,7 +185,6 @@ public class ModServer {
             RCTMod.getInstance().getTrainerSpawner().checkDespawns();
 
             if(tm.isReloadRequired()) {
-                ModCommon.LOG.info("=======> REOLOAD IN TICK");
                 tm.loadTrainers();
             }
 
