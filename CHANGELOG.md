@@ -2,10 +2,13 @@
 
 As of version `0.18.0-beta`, Radical Cobblemon Trainers may only be redistributed under the terms of the [MCOML License](https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/LICENSE.txt?ref_type=heads).
 
-## [0.19.1-beta] - 2026-09-12
+## [0.19.1-beta] - 2026-09-20
 
 **Changed:**
 
+- *#407* Trainer messages are now displayed as speech bubbles above their head (chat messages are still available but optional)
+  - Added a few related client and server config options (TODO)
+  - Speech bubble texture(s) can be changed with a resource pack (`assets/rctmod/textures/speech_bubbles`) and use the same pattern as other assets to allow to assign them to all trainers (`default.png`), groups of trainers (`groups/`) or single trainers (`singles/`). The default texture is `160x90`px with `16`px space for borders (other dimensions are possible, the border scales accordingly)
 - *#406* Updated trainer loot tables to include Cobblemon TMs
 
 ## [0.19.0-beta] - 2026-09-07

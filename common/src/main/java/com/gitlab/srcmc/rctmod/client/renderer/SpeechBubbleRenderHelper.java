@@ -29,21 +29,19 @@ package com.gitlab.srcmc.rctmod.client.renderer;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob.Message;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
 public class SpeechBubbleRenderHelper {
-    private static final double HEIGHT_OFFSET = 0.55;
-    private static final int FULL_BRIGHT_LIGHT = 240;
+    private static final double HEIGHT_OFFSET = 0.55; // sligthly above nametag
     private static final float TEXT_SCALE = 0.02f; // nametags are scaled to 0.025f
     private static final boolean TEXT_DROP_SHADOW = false;
-    private static final int TEXT_FOREGROUND = 0xFF444444; // TODO
     private static final int TEXT_BACKGROUND = 0x00000000;
+    private static final Font.DisplayMode TEXT_DISPLAY_MODE = null; // Font.DisplayMode.NORMAL; // rendered to 'outline' target
+    private static final int FULL_BRIGHT_LIGHT = 240;
     private static final float BACKGROUND_Z = -0.01f;
-    private static final Font.DisplayMode TEXT_DISPLAY_MODE = Font.DisplayMode.SEE_THROUGH;
 
     public static void render(TrainerMob entity, Message message, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if(message != null) {
@@ -57,7 +55,7 @@ public class SpeechBubbleRenderHelper {
                 poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
                 poseStack.scale(TEXT_SCALE, -TEXT_SCALE, TEXT_SCALE);
 
-                renderBackground(RenderType.text(bubble.texture), bubble.left, bubble.top, bubble.width, bubble.height, poseStack, buffer, alpha);
+                renderBackground(SpeechBubbleRenderTypes.background(bubble.texture), bubble.left, bubble.top, bubble.width, bubble.height, poseStack, buffer, alpha);
                 var textY = bubble.yOff + bubble.top + bubble.vPadding;
 
                 for(var line : bubble.lines()) {
@@ -65,15 +63,15 @@ public class SpeechBubbleRenderHelper {
                     var textX = bubble.xOff - lineWidth / 2f; // centered
 
                     if(lineWidth > 0 && lineWidth > bubble.maxTextWidth)  {
-                        // this is for edge case where intermediate states of the text may produce lines
+                        // this is for edge cases where intermediate states of the text may produce lines
                         // with widths greater than the width of the full text (adjusted by scaling down).
                         poseStack.pushPose();
                         poseStack.translate(0, textY, 0);
                         poseStack.scale(bubble.maxTextWidth / lineWidth, 1f, 1f);
-                        mc.font.drawInBatch(line, -lineWidth / 2f, 0, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                        mc.font.drawInBatch(line, -lineWidth / 2f, 0, scaleAlpha(bubble.textureInfo.complement(), alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
                         poseStack.popPose();
                     } else {
-                        mc.font.drawInBatch(line, textX, textY, scaleAlpha(TEXT_FOREGROUND, alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
+                        mc.font.drawInBatch(line, textX, textY, scaleAlpha(bubble.textureInfo.complement(), alpha), TEXT_DROP_SHADOW, poseStack.last().pose(), buffer, TEXT_DISPLAY_MODE, scaleAlpha(TEXT_BACKGROUND, alpha), packedLight);
                     }
 
                     textY += mc.font.lineHeight;

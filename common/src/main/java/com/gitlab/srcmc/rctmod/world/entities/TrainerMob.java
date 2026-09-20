@@ -1052,6 +1052,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             public final List<FormattedCharSequence> full;
             public final String text;
             public final ResourceLocation texture;
+            public final TextureInfo textureInfo;
             public final Font font;
             public final long createdAt;
 
@@ -1068,7 +1069,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 textWidth = Math.max(MIN_WIDTH, textWidth);
                 textHeight = Math.max(MIN_HEIGHT, textHeight);
 
-                var textureInfo = TextureInfo.get(texture);
+                this.textureInfo = TextureInfo.get(texture);
                 var textureWidth = textureInfo.width();
                 var textureHeight = textureInfo.height();
                 var hScaledPadding = 2 * DEFAULT_PADDING * (textureWidth / (float)DEFAULT_TEXTURE_WIDTH);

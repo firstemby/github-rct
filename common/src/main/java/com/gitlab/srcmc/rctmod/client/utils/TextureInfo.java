@@ -36,9 +36,9 @@ import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
-public record TextureInfo(int width, int height) {
+public record TextureInfo(int width, int height, int complement) {
     private static final Map<ResourceLocation, TextureInfo> CACHE = new HashMap<>();
-    private static final TextureInfo EMPTY = new TextureInfo(0, 0);
+    private static final TextureInfo EMPTY = new TextureInfo(0, 0, 0);
     
     public static TextureInfo get(ResourceLocation location) {
         var info = CACHE.get(location);
@@ -57,7 +57,7 @@ public record TextureInfo(int width, int height) {
 
                 try (var input = resource.open();
                     var image = NativeImage.read(input)) {
-                    info = new TextureInfo(image.getWidth(), image.getHeight());
+                    info = new TextureInfo(image.getWidth(), image.getHeight(), findComplementColor(image));
                     CACHE.put(location, info);
                 }
             }
@@ -66,5 +66,40 @@ public record TextureInfo(int width, int height) {
         }
         
         return info;
+    }
+
+    // inverted average color (TODO: calc scaled padding to ignore borders)
+    private static int findComplementColor(NativeImage image) {
+        var red = 0L;
+        var green = 0L;
+        var blue = 0L;
+        var alpha = 0L;
+
+        for(int x, y = 0; y < image.getHeight(); y++) {
+            for(x = 0; x < image.getWidth(); x++) {
+                int pixel = image.getPixelRGBA(x, y);
+                int pixelAlpha = pixel >>> 24;
+
+                if(pixelAlpha != 0) {
+                    red += (pixel & 0xFF) * (long)pixelAlpha;
+                    green += ((pixel >>> 8) & 0xFF) * (long)pixelAlpha;
+                    blue += ((pixel >>> 16) & 0xFF) * (long)pixelAlpha;
+                    alpha += pixelAlpha;
+                }
+            }
+        }
+
+        if(alpha == 0) {
+            return 0xFFFFFFFF;
+        }
+
+        int averageRed = (int)(red / alpha);
+        int averageGreen = (int)(green / alpha);
+        int averageBlue = (int)(blue / alpha);
+
+        return 0xFF000000
+            | (255 - averageRed) << 16
+            | (255 - averageGreen) << 8
+            | (255 - averageBlue);
     }
 }
