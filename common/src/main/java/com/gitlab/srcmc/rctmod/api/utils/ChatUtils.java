@@ -62,6 +62,8 @@ public final class ChatUtils {
     }
 
     private static void reply(LivingEntity source, Player target, Function<String, Text[]> messagesFunc, String... contexts) {
+        var config = RCTMod.getInstance().getServerConfig();
+
         for(var context : contexts) {
             var messages = messagesFunc.apply(context);
 
@@ -70,7 +72,7 @@ public final class ChatUtils {
                     if(source instanceof TrainerMob trainerMob) {
                         var text = messages[(target.getRandom().nextInt() & Integer.MAX_VALUE) % messages.length];
                         
-                        if(trainerMob.addMessage(text.getTranslatable())) {
+                        if((config.showMessagesAsSpeechBubble() && trainerMob.addMessage(text.getTranslatable()) || config.showMessagesInChat())) {
                             var message = PlayerChatMessage.system("").withUnsignedContent(text.getComponent());
                             target.createCommandSourceStack().sendChatMessage(OutgoingChatMessage.create(message), false, ChatType.bind(ChatType.CHAT, source));
                         }

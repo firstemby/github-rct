@@ -27,6 +27,8 @@
 package com.gitlab.srcmc.rctmod.config;
 
 import java.util.List;
+
+import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -77,11 +79,15 @@ public class ServerConfig implements IServerConfig {
     private final ConfigValue<Double> forceBattleMaxDistanceValue;
     private final ConfigValue<Integer> forceBattleLookTicksValue;
     private final ConfigValue<Integer> forceBattleMaxLevelDiffValue;
+    private final ConfigValue<Boolean> showMessagesAsSpeechBubbleValue;
+    private final ConfigValue<Boolean> showMessagesInChatValue;
 
     private boolean forceBattleOnSightCached;
     private float forceBattleMaxDistanceCached;
     private int forceBattleLookTicksCached;
     private int forceBattleMaxLevelDiffCached;
+    private boolean showMessagesAsSpeechBubbleCached;
+    private boolean showMessagesInChatCached;
 
     // players
     private final ConfigValue<Integer> initialLevelCapValue;
@@ -256,6 +262,16 @@ public class ServerConfig implements IServerConfig {
                 "allow the trainer to force a battle.")
             .defineInRange("forceBattleMaxLevelDiff", IServerConfig.super.forceBattleMaxLevelDiff(), 0, Integer.MAX_VALUE - 1);
 
+        this.showMessagesAsSpeechBubbleValue = builder
+            .comment(SEPARATOR,
+                "If enabled trainer messages are displayed as speech bubbles above their head.")
+            .define("showMessagesAsSpeechBubble", IServerConfig.super.showMessagesAsSpeechBubble());
+
+        this.showMessagesInChatValue = builder
+            .comment(SEPARATOR,
+                "If enabled trainer messages are displayed in the chat.")
+            .define("showMessagesInChat", IServerConfig.super.showMessagesInChat());
+
         builder.pop();
         builder.push("Players");
 
@@ -293,7 +309,6 @@ public class ServerConfig implements IServerConfig {
         this.allowOverLevelingValue = builder
             .comment(SEPARATOR,
                 "If enabled the level cap of a players will not prevent their pokemon from gaining experience and leveling up.")
-                /*"Trainers will still refuse to battle players that carry pokemon above their level cap!")*/ // deprecated
             .define("allowOverLeveling", IServerConfig.super.allowOverLeveling());
 
         builder.pop();
@@ -313,6 +328,10 @@ public class ServerConfig implements IServerConfig {
     @Override
     public void reload() {
         this.updateCache();
+
+        if(!this.showMessagesAsSpeechBubble() && !this.showMessagesInChat()) {
+            ModCommon.LOG.warn("Both 'showMessagesAsSpeechBubble' and 'showMessagesInChat' are disabled. Trainers messages will not be visible!");
+        }
     }
 
     private void updateCache() {
@@ -338,6 +357,8 @@ public class ServerConfig implements IServerConfig {
         this.forceBattleMaxDistanceCached = this.forceBattleMaxDistanceValue.get().floatValue();
         this.forceBattleLookTicksCached = this.forceBattleLookTicksValue.get();
         this.forceBattleMaxLevelDiffCached = this.forceBattleMaxLevelDiffValue.get();
+        this.showMessagesAsSpeechBubbleCached = this.showMessagesAsSpeechBubbleValue.get();
+        this.showMessagesInChatCached = this.showMessagesInChatValue.get();
         this.initialLevelCapCached = this.initialLevelCapValue.get();
         this.relativeLevelCapCached = this.relativeLevelCapValue.get();
         this.initialSeriesCached = this.initialSeriesValue.get();
@@ -460,6 +481,16 @@ public class ServerConfig implements IServerConfig {
     @Override
     public int forceBattleMaxLevelDiff() {
         return this.forceBattleMaxLevelDiffCached;
+    }
+
+    @Override 
+    public boolean showMessagesAsSpeechBubble() {
+        return this.showMessagesAsSpeechBubbleCached;
+    }
+
+    @Override 
+    public boolean showMessagesInChat() {
+        return this.showMessagesInChatCached;
     }
 
     @Override

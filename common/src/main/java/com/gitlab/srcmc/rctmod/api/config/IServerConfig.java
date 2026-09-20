@@ -253,6 +253,20 @@ public interface IServerConfig extends IModConfig {
     default int forceBattleMaxLevelDiff() { return 16; }
 
     /**
+     * If enabled trainer messages are displayed as speech bubbles above their head.
+     * 
+     * default: true
+     */
+    default boolean showMessagesAsSpeechBubble() { return true; }
+
+    /**
+     * If enabled trainer messages are displayed in the chat.
+     * 
+     * default: false
+     */
+    default boolean showMessagesInChat() { return false; }
+
+    /**
      * Initial level cap of players. Pokemon will not gain any experience if at or
      * above the level cap. This value will be capped to not go below the level cap
      * for the first trainer of a series (you may use 'relativeLevelCap' for that).
