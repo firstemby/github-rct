@@ -1040,6 +1040,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             public static final int MAX_WIDTH = 140; // TODO: client config?
             public static final int MIN_WIDTH = 48; // TODO: client config?
             public static final int MIN_HEIGHT = 24; // TODO: client config?
+            public static final ResourceLocation FONT = ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, "speech_bubble");
 
             private static final int DEFAULT_TEXTURE_WIDTH = 160;
             private static final int DEFAULT_TEXTURE_HEIGHT = 92;
@@ -1111,7 +1112,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                         StringBuilder::new,
                         StringBuilder::appendCodePoint,
                         StringBuilder::append)
-                    .toString());
+                    .toString()).withStyle(s -> s.withFont(FONT));
 
                 return this.font.split(current, MAX_WIDTH);
             }

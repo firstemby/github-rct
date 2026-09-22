@@ -27,17 +27,14 @@
 package com.gitlab.srcmc.rctmod.mixins.client;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.client.renderer.SpeechBubbleRenderTypes;
+import com.gitlab.srcmc.rctmod.world.entities.TrainerMob.Message.SpeechBubble;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.GlyphRenderTypes;
@@ -46,36 +43,25 @@ import net.minecraft.resources.ResourceLocation;
 
 @Mixin(GlyphRenderTypes.class)
 public class GlyphRenderTypesMixin {
-    private static final Map<GlyphRenderTypes, RenderType> GLYPH_RENDER_TYPES = new HashMap<>();
-    private static final Set<Object> ERROR_LOGGED = new HashSet<>();
-    private GlyphRenderTypes self;
+    private static final Map<Object, RenderType> GLYPH_RENDER_TYPES = new HashMap<>();
 
-    // selects custom render type for glyphs (displayMode == null)
+    // selects custom render type for glyphs of speech_bubble font
     @Inject(method = "select", at = @At("HEAD"), cancellable = true, remap = true)
     public void select(Font.DisplayMode displayMode, CallbackInfoReturnable<RenderType> cir) {
-        if(displayMode == null) { // TODO: until a better solution comes up (e.g. custom enum value with mixins) -> method would throw NPE by default
-            if(this.self == null) {
-                this.self = (GlyphRenderTypes)(Object)this;
-            }
-
-            var renderType = GLYPH_RENDER_TYPES.get(this.self);
+        if(displayMode == Font.DisplayMode.NORMAL) {
+            var renderType = GLYPH_RENDER_TYPES.get(this);
 
             if(renderType != null) {
                 cir.setReturnValue(renderType);
-            } else {
-                if(!ERROR_LOGGED.contains(this.self)) {
-                    ModCommon.LOG.error("No render type available for displayMode == null, falling back to textBackground");
-                    ERROR_LOGGED.add(this.self);
-                }
-
-                cir.setReturnValue(RenderType.textBackground());
             }
         }
     }
 
-    // registers custom render type for glyphs (displayMode == null)
+    // registers custom render type for glyphs of speech_bubble font
     @Inject(method = "createForColorTexture", at = @At("RETURN"), cancellable = true, remap = true)
     private static void inject$createForColorTexture(ResourceLocation resourceLocation, CallbackInfoReturnable<GlyphRenderTypes> cir) {
-        GLYPH_RENDER_TYPES.put(cir.getReturnValue(), SpeechBubbleRenderTypes.text(resourceLocation));
+        if(resourceLocation.toString().startsWith(SpeechBubble.FONT.toString())) {
+            GLYPH_RENDER_TYPES.put(cir.getReturnValue(), SpeechBubbleRenderTypes.text(resourceLocation));
+        }
     }
 }

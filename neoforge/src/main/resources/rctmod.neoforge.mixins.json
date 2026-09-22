@@ -5,6 +5,7 @@
   "package": "${group_id}.${mod_id}.mixins",
   "mixins": [
     "client.ItemRendererMixin",
+    "client.GlyphRenderTypesMixin",
     "MerchantResultSlotMixin",
     "DefendOwnerSensorMixin"
   ],

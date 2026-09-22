@@ -29,6 +29,7 @@ package com.gitlab.srcmc.rctmod.client.renderer;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob.Message;
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,7 +40,7 @@ public class SpeechBubbleRenderHelper {
     private static final float TEXT_SCALE = 0.02f; // nametags are scaled to 0.025f
     private static final boolean TEXT_DROP_SHADOW = false;
     private static final int TEXT_BACKGROUND = 0x00000000;
-    private static final Font.DisplayMode TEXT_DISPLAY_MODE = null; // Font.DisplayMode.NORMAL; // rendered to 'outline' target
+    private static final Font.DisplayMode TEXT_DISPLAY_MODE = Font.DisplayMode.NORMAL; // custom render type for speech_bubble font
     private static final int FULL_BRIGHT_LIGHT = 240;
     private static final float BACKGROUND_Z = -0.01f;
 

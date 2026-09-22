@@ -1,12 +1,23 @@
 # Changelog
 
+## [0.19.2-beta] - 2026-09-23
+
+**Added:**
+
+- *#410* Dedicated speech bubble font asset at `assets/rctmod/font/speech_bubble.json`
+
+**Fixed:**
+
+- *#409* Client crashes due to incompatibilies of speech bubble text (e.g. with Sodium)
+- *#408* Speech bubble text rendering behind the background on neoforge
+
 ## [0.19.1-beta] - 2026-09-20
 
 **Changed:**
 
 - *#407* Trainer messages are now displayed as speech bubbles above their head (chat messages are still available but optional)
-  - Slightly adjsuted trainer entity AI so they will stand still while talking
   - Added related server config options (`showMessageAsSpeechBubble` and `showMessagesInChat`)
+  - Slightly adjsuted trainer entity AI so they will stand still while talking
   - Speech bubble texture(s) can be changed with a resource pack (`assets/rctmod/textures/speech_bubbles`) and use the same pattern as other assets to allow to assign them to all trainers (`default.png`), groups of trainers (`groups/`) or single trainers (`singles/`). The default texture is `160x90`px with `16`px space for borders (other dimensions are possible, the border scales accordingly)
 - *#406* Updated trainer loot tables to include Cobblemon TMs
 
