@@ -168,7 +168,7 @@ public class TrainerInfoWidget extends TrainerDataWidget {
         var tm = RCTMod.getInstance().getTrainerManager();
         var first = new boolean[]{true};
 
-        this.trainer.getMissingRequirements(Set.of()).map(tm::getData).filter(tmd -> tmd.isOfSeries(curSeries)).sorted((tmd1, tmd2) -> {
+        this.trainer.getMissingRequirements(curSeries, Set.of()).map(tm::getData).filter(tmd -> tmd.isOfSeries(curSeries)).sorted((tmd1, tmd2) -> {
             var c = Integer.compare(tmd1.getRequiredLevelCap(player), tmd2.getRequiredLevelCap(player));
             return c == 0 ? tmd1.getTrainerTeam().getName().compareTo(tmd2.getTrainerTeam().getName()) : c;
         }).forEach(tmd -> {

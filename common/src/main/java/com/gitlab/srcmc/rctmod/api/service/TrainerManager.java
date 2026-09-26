@@ -372,27 +372,13 @@ public class TrainerManager extends DataPackManager {
             }, TrainerMobData.class);
         });
 
-        newTrainerMobs.forEach((trainerId, tmd) -> {
-            tmd.getMissingRequirements(Set.of(), true).forEach(tid -> {
-                var tmd2 = newTrainerMobs.get(tid);
-
-                if(tmd2 != null) {
-                    if(tmd.getSeries().findAny().isEmpty() || tmd.getSeries().anyMatch(tmd2::isOfSeries)) {
-                        tmd2.addFollowedBy(trainerId);
-                    } else {
-                        ModCommon.LOG.warn(String.format("Trainer '%s' may not depend on '%s': different series", trainerId, tid));
-                    }
-                }
-            });
-        });
-
         this.trainerMobs = newTrainerMobs;
         this.seriesManager.onLoad(this);
 
         newTrainerMobs.forEach((trainerId, tmd) -> {
             tmd.getRequiredSeries().forEach(set -> set.forEach(sid -> {
                 if(this.seriesManager.getGraph(sid) == this.seriesManager.UNKNOWN_SERIES) {
-                    ModCommon.LOG.warn(String.format("Trainer '%s' has requiredSeries with unknown series '%s' - this requirement will never be satisfied", trainerId, sid));
+                    ModCommon.LOG.warn(String.format("Trainer '%s' has requiredSeries with unknown series id '%s'", trainerId, sid));
                 }
             }));
         });

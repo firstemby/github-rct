@@ -47,8 +47,8 @@ public class Collection2dDeserializer<T, CInner extends Collection<T>, COuter ex
     private static final Gson GSON = new Gson();
     
     private final TypeToken<T> TT = new TypeToken<>() {};
-    private Supplier<CInner> ctorInner;
-    private Supplier<COuter> ctorOuter;
+    private final Supplier<CInner> ctorInner;
+    private final Supplier<COuter> ctorOuter;
 
     public Collection2dDeserializer(Supplier<CInner> ctorInner, Supplier<COuter> ctorOuter) {
         this.ctorInner = ctorInner;

@@ -31,6 +31,7 @@ import java.util.Set;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
+import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.mojang.brigadier.CommandDispatcher;
@@ -114,7 +115,9 @@ public class TrainerCommands {
                     .then(Commands.literal("required_defeats")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
-                            .executes(TrainerCommands::mob_get_required_defeats)))
+                            .then(Commands.argument("seriesId", TokenArgumentType.token())
+                                .suggests(SuggestionUtils::get_series_suggestions)
+                                .executes(TrainerCommands::mob_get_required_defeats))))
                     .then(Commands.literal("required_series")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("trainer", StringArgumentType.string())
                             .suggests(SuggestionUtils::get_trainer_suggestions)
@@ -265,7 +268,11 @@ public class TrainerCommands {
     }
 
     private static int mob_get_required_defeats(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        var it = RCTMod.getInstance().getTrainerManager().getData(context.getArgument("trainer", String.class)).getMissingRequirements(Set.of()).iterator();
+        var seriesid = StringArgumentType.getString(context, "seriesId");
+        var it = RCTMod.getInstance().getTrainerManager()
+            .getData(context.getArgument("trainer", String.class))
+            .getMissingRequirements(seriesid, Set.of()).iterator();
+
         var sb = new StringBuilder();
         sb.append('[');
         

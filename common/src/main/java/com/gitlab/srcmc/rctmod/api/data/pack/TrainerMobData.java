@@ -48,6 +48,7 @@ import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonExclude;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
+import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetListMap;
 import com.gitlab.srcmc.rctmod.compat.TBCSCompat.WinCommandsDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -60,7 +61,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
     private String type = "normal";
     private String signatureItem = "";
-    private StringSetList requiredDefeats = new StringSetList();
+    private StringSetListMap requiredDefeats = new StringSetListMap();
     private StringSetList requiredSeries = new StringSetList();
     private Set<String> series = new HashSet<>();
     private Set<String> substitutes = new HashSet<>();
@@ -83,7 +84,6 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     @JsonAdapter(WinCommandsDeserializer.class)
     private Map<Integer, ?> winCommands;
 
-    @JsonExclude private Set<String> followdBy = new HashSet<>();
     @JsonExclude private Map<String, Text[]> dialog = new HashMap<>();
     @JsonExclude private TrainerTeam trainerTeam;
     @JsonExclude private RLWrapper textureResource;
@@ -104,9 +104,8 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.signatureItem = origin.signatureItem;
         this.winCommands = origin.winCommands != null ? Map.copyOf(origin.winCommands) : null;
         this.relativeLevelCap = origin.relativeLevelCap;
-        this.requiredDefeats = origin.requiredDefeats != null ? new StringSetList(origin.requiredDefeats) : null;
+        this.requiredDefeats = origin.requiredDefeats != null ? new StringSetListMap(origin.requiredDefeats) : null;
         this.requiredSeries = origin.requiredSeries != null ? new StringSetList(origin.requiredSeries) : null;
-        this.followdBy = origin.followdBy != null ? Set.copyOf(origin.followdBy) : null;
         this.optional = origin.optional;
         this.maxTrainerWins = origin.maxTrainerWins;
         this.maxTrainerDefeats = origin.maxTrainerDefeats;
@@ -157,12 +156,15 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     public int getRewardLevelCap(Player player) {
         var tm = RCTMod.getInstance().getTrainerManager();
         var sid = PlayerState.get(player).getCurrentSeries();
+        var sm = RCTMod.getInstance().getSeriesManager();
+        var tpd = tm.getData(player);
         var rlc = this.getRequiredLevelCap(player);
 
-        return this.getFollowedBy()
-            .stream().map(tm::getData)
-            .filter(tmd -> !tmd.isOptional())
-            .filter(tmd -> tmd.isOfSeries(sid))
+        return sm.getGraph(sid)
+            .getNext(tpd.getDefeatedTrainerIds())
+            .stream()
+            .map(g -> g.id())
+            .map(tm::getData)
             .map(tmd -> tmd.getRequiredLevelCap(player))
             .filter(lc -> lc > rlc)
             .min(Integer::compare)
@@ -198,7 +200,8 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public List<Set<String>> getRequiredDefeats(String seriesId) {
-        return Collections.unmodifiableList(this.requiredDefeats);
+        var list = this.requiredDefeats.get(seriesId);
+        return list != null ? list : this.requiredDefeats.getDefault();
     }
 
     public List<Set<String>> getRequiredSeries() {
@@ -226,12 +229,12 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         return Collections.unmodifiableSet(this.substitutes);
     }
 
-    public Stream<String> getMissingRequirements(Set<String> defeatedTrainerIds) {
-        return this.getMissingRequirements(defeatedTrainerIds, false);
+    public Stream<String> getMissingRequirements(String seriesId, Set<String> defeatedTrainerIds) {
+        return this.getMissingRequirements(seriesId, defeatedTrainerIds, false);
     }
 
-    public Stream<String> getMissingRequirements(Set<String> defeatedTrainerIds, boolean includeAlternatives) {
-        return this.requiredDefeats.stream().mapMulti((set, cons) -> {
+    public Stream<String> getMissingRequirements(String seriesId, Set<String> defeatedTrainerIds, boolean includeAlternatives) {
+        return this.getRequiredDefeats(seriesId).stream().mapMulti((set, cons) -> {
             if(includeAlternatives) {
                 if(set.stream().noneMatch(defeatedTrainerIds::contains)) {
                     set.stream().forEach(cons);
@@ -314,22 +317,6 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         }
 
         return this.forceBattleMaxLevelDiff;
-    }
-
-    public Set<String> getFollowedBy() {
-        return Collections.unmodifiableSet(this.followdBy);
-    }
-    
-    public boolean addFollowedBy(String trainerId) {
-        return this.followdBy.add(trainerId);
-    }
-
-    public boolean removeFollowdBy(String trainerId) {
-        return this.followdBy.remove(trainerId);
-    }
-
-    public void clearFollowedBy(String trainerId) {
-        this.followdBy.clear();
     }
 
     public Map<String, Text[]> getDialog() {

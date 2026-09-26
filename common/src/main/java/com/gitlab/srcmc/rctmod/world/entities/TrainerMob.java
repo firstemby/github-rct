@@ -189,7 +189,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 // && tpd.getLevelCap() >= tmd.getRequiredLevelCap(player) // deprecated
                 && tm.getPlayerLevel(player) <= tpd.getLevelCap()
                 && tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()
-                && tmd.getMissingRequirements(tm.getData(player).getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty()
+                && tmd.getMissingRequirements(tpd.getCurrentSeries(), tm.getData(player).getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty()
                 && (tmd.isOfSeries(tpd.getCurrentSeries()) || bm.getDefeatByCount(this.getTrainerId(), player) > 0)
                 && this.couldBattleAgainst(e);
         }
@@ -259,7 +259,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         var tm = RCTMod.getInstance().getTrainerManager();
         var tmd = tm.getData(this);
         var tpd = tm.getData(player);
-        var msr = tmd.getMissingRequirements(tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst();
+        var msr = tmd.getMissingRequirements(tpd.getCurrentSeries(), tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst();
         var missingSeries = tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst();
         var bm = tm.getBattleMemory(this);
 
@@ -833,7 +833,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
             return !tpd.getDefeatedTrainerIds().contains(this.getTrainerId())
                 && tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()
-                && tmd.getMissingRequirements(tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty();
+                && tmd.getMissingRequirements(tpd.getCurrentSeries(), tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty();
         }
 
         return false;

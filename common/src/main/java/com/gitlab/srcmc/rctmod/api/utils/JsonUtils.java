@@ -43,6 +43,7 @@ import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringList2d;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSet2d;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
+import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetListMap;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -59,6 +60,7 @@ public final class JsonUtils<T> {
         .registerTypeAdapter(StringSet2d.class, StringSet2d.createDeserializer())
         .registerTypeAdapter(StringList2d.class, StringList2d.createDeserializer())
         .registerTypeAdapter(StringSetList.class, StringSetList.createDeserializer())
+        .registerTypeAdapter(StringSetListMap.class, StringSetListMap.createDeserializer())
         .addSerializationExclusionStrategy(new AnnotationExclusionStrategy())
         .addDeserializationExclusionStrategy(new AnnotationExclusionStrategy())
         .setPrettyPrinting()

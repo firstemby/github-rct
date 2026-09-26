@@ -281,15 +281,20 @@ public class PlayerState implements Serializable {
     }
 
     public boolean canBattle(String trainerId) {
+        if(this.player == null) {
+            return false;
+        }
+        
         var tm = RCTMod.getInstance().getTrainerManager();
         var tmd = tm.getData(trainerId);
+        var tpd = tm.getData(this.player);
 
-        if(!tmd.getMissingSeriesRequirements(this.player != null ? tm.getData(this.player).getCompletedSeries() : Map.of()).findFirst().isEmpty()) {
+        if(!tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()) {
             return false;
         }
         
         // this.getLevelCap() >= tmd.getRequiredLevelCap(this.player) && // deprecated
-        return tmd.getMissingRequirements(this.defeatedTrainerIds).filter(tid -> tm.getData(tid).isOfSeries(this.getCurrentSeries())).findFirst().isEmpty();
+        return tmd.getMissingRequirements(tpd.getCurrentSeries(), this.defeatedTrainerIds).filter(tid -> tm.getData(tid).isOfSeries(this.getCurrentSeries())).findFirst().isEmpty();
     }
 
     protected Map<String, Integer> getTrainerDefeatCounts() {
