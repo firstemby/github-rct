@@ -45,6 +45,7 @@ import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
+import com.gitlab.srcmc.rctmod.api.service.SeriesManager.TrainerNode;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonExclude;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
@@ -64,7 +65,7 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     private StringSetListMap requiredDefeats = new StringSetListMap();
     private StringSetList requiredSeries = new StringSetList();
     private Set<String> series = new HashSet<>();
-    private Set<String> substitutes = new HashSet<>();
+    // private Set<String> substitutes = new HashSet<>();
     private boolean optional;
 
     private int maxTrainerWins = 3;
@@ -106,10 +107,13 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         this.relativeLevelCap = origin.relativeLevelCap;
         this.requiredDefeats = origin.requiredDefeats != null ? new StringSetListMap(origin.requiredDefeats) : null;
         this.requiredSeries = origin.requiredSeries != null ? new StringSetList(origin.requiredSeries) : null;
+        this.series = origin.series != null ? Set.copyOf(origin.series) : null;
+        // this.substitutes = origin.substitutes != null ? Set.copyOf(origin.substitutes) : null;
         this.optional = origin.optional;
         this.maxTrainerWins = origin.maxTrainerWins;
         this.maxTrainerDefeats = origin.maxTrainerDefeats;
         this.battleCooldownTicks = origin.battleCooldownTicks;
+        this.spawnWeightFactor = origin.spawnWeightFactor;
         this.biomeTagBlacklist = origin.biomeTagBlacklist != null ? Set.copyOf(origin.biomeTagBlacklist) : null;
         this.biomeTagWhitelist = origin.biomeTagWhitelist != null ? Set.copyOf(origin.biomeTagWhitelist) : null;
         this.forceBattleOnSight = origin.forceBattleOnSight;
@@ -154,18 +158,15 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public int getRewardLevelCap(Player player) {
-        var tm = RCTMod.getInstance().getTrainerManager();
-        var sid = PlayerState.get(player).getCurrentSeries();
+        var ps = PlayerState.get(player);
+        var sid = ps.getCurrentSeries();
         var sm = RCTMod.getInstance().getSeriesManager();
-        var tpd = tm.getData(player);
         var rlc = this.getRequiredLevelCap(player);
 
         return sm.getGraph(sid)
-            .getNext(tpd.getDefeatedTrainerIds())
-            .stream()
-            .map(g -> g.id())
-            .map(tm::getData)
-            .map(tmd -> tmd.getRequiredLevelCap(player))
+            .getNext(Set.of(this.trainerId))
+            .stream().map(TrainerNode::id)
+            .map(tid -> LevelUtils.levelCap(sid, tid))
             .filter(lc -> lc > rlc)
             .min(Integer::compare)
             .orElse(rlc);
@@ -192,15 +193,29 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public boolean isOfSeries(String seriesId) {
-        return this.series.isEmpty() || this.series.contains(seriesId);
+        return this.series.isEmpty() || this.series.contains(seriesId)
+            || RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().progression().keySet().contains(this.trainerId);
     }
 
     public Stream<String> getSeries() {
-        return this.series.stream();
+        var sm = RCTMod.getInstance().getSeriesManager();
+
+        return Stream.concat(
+            sm.getSeriesIds().stream().filter(sid -> sm.getGraph(sid).getMetaData().progression().containsKey(this.trainerId)),
+            this.series.stream()).distinct();
     }
 
     public List<Set<String>> getRequiredDefeats(String seriesId) {
         var list = this.requiredDefeats.get(seriesId);
+
+        if(list == null) {
+            var node = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().progression().get(this.trainerId);
+
+            if(node != null) {
+                list = node.requiredDefeats();
+            }
+        }
+
         return list != null ? list : this.requiredDefeats.getDefault();
     }
 
@@ -225,9 +240,9 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         });
     }
 
-    public Set<String> getSubstitutes() {
-        return Collections.unmodifiableSet(this.substitutes);
-    }
+    // public Set<String> getSubstitutes() {
+    //     return Collections.unmodifiableSet(this.substitutes);
+    // }
 
     public Stream<String> getMissingRequirements(String seriesId, Set<String> defeatedTrainerIds) {
         return this.getMissingRequirements(seriesId, defeatedTrainerIds, false);

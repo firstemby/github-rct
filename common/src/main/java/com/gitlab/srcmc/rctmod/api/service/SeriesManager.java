@@ -104,6 +104,8 @@ public class SeriesManager implements Serializable {
         });
 
         // gather series ids and create trainer nodes
+        this.seriesGraphs = seriesGraphs; // trainers require access at this point
+
         tm.getAllData().forEach(e -> {
             e.getValue().getSeries().forEach(sid -> {
                 var sg = seriesGraphs.computeIfAbsent(sid, SeriesGraph::new);
@@ -124,17 +126,17 @@ public class SeriesManager implements Serializable {
 
             seriesIds.forEach(sid -> {
                 var sg = seriesGraphs.get(sid);
-                var st = e.getValue().getSubstitutes();
+                // var st = e.getValue().getSubstitutes();
                 var rd = e.getValue().getRequiredDefeats(sid);
                 var nd = sg.map.get(e.getKey());
 
-                st.forEach(tid -> {
-                    var other = sg.map.get(tid);
+                // st.forEach(tid -> {
+                //     var other = sg.map.get(tid);
 
-                    if(other != null) {
-                        nd.siblings.add(other);
-                    }
-                });
+                //     if(other != null) {
+                //         nd.siblings.add(other);
+                //     }
+                // });
 
                 rd.forEach(tids -> {
                     tids.forEach(tid -> {

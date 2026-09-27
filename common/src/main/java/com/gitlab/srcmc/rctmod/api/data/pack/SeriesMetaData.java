@@ -27,12 +27,14 @@
 package com.gitlab.srcmc.rctmod.api.data.pack;
 
 import java.io.Serializable;
+import java.util.Map;
+
 import com.gitlab.srcmc.rctapi.api.util.Text;
 import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringList2d;
 
-public record SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, Optional<Boolean> hideTrainerIdentities, StringList2d requiredSeries) implements Comparable<SeriesMetaData>, Serializable {
+public record SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, Optional<Boolean> hideTrainerIdentities, StringList2d requiredSeries, Map<String, SeriesProgressNode> progression) implements Comparable<SeriesMetaData>, Serializable {
     private static final long serialVersionUID = 0L;
     public static final int MIN_DIFFICULTY = 1;
     public static final int MAX_DIFFICULTY = 10;
@@ -60,15 +62,20 @@ public record SeriesMetaData(Text title, Text description, int difficulty, Optio
     public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, Optional<Boolean> hideTrainerIdentities) {
         this(title, description, difficulty, initialLevelCap, relativeLevelCap, hideTrainerIdentities, new StringList2d());
     }
-
+    
     public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, Optional<Boolean> hideTrainerIdentities, StringList2d requiredSeries) {
+        this(title, description, difficulty, initialLevelCap, relativeLevelCap, hideTrainerIdentities, requiredSeries, Map.of());
+    }
+
+    public SeriesMetaData(Text title, Text description, int difficulty, Optional<Integer> initialLevelCap, Optional<Integer> relativeLevelCap, Optional<Boolean> hideTrainerIdentities, StringList2d requiredSeries, Map<String, SeriesProgressNode> progression) {
         this.title = title == null ? Text.empty() : title;
         this.description = description == null ? Text.empty() : description;
         this.difficulty = Math.max(MIN_DIFFICULTY, Math.min(MAX_DIFFICULTY, difficulty));
         this.initialLevelCap = initialLevelCap == null ? Optional.empty() : initialLevelCap;
         this.relativeLevelCap = relativeLevelCap == null ? Optional.empty() : relativeLevelCap;
         this.hideTrainerIdentities = hideTrainerIdentities == null ? Optional.of(true) : hideTrainerIdentities;
-        this.requiredSeries = requiredSeries;
+        this.requiredSeries = requiredSeries == null ? new StringList2d() : requiredSeries;
+        this.progression = progression == null ? Map.of() : progression;
     }
 
     @Override
