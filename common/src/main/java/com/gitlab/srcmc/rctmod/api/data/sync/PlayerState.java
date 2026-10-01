@@ -190,7 +190,7 @@ public class PlayerState implements Serializable {
 
     public void addDefeat(String trainerId) {
         var tm = RCTMod.getInstance().getTrainerManager();
-        var tt = tm.getData(trainerId).getType();
+        var tt = tm.getData(trainerId).getType(this.getCurrentSeries());
 
         if(!this.trainerDefeatCounts.containsKey(trainerId)) {
             this.trainerDefeatCounts.put(trainerId, 1);
@@ -211,7 +211,7 @@ public class PlayerState implements Serializable {
 
         if(defeats != currentDefeats) {
             var tm = RCTMod.getInstance().getTrainerManager();
-            var tt = tm.getData(trainerId).getType();
+            var tt = tm.getData(trainerId).getType(this.getCurrentSeries());
             var typeDefeats = this.typeDefeatCounts.getOrDefault(tt, 0);
             var newTypeDefeats = typeDefeats + (defeats - currentDefeats);
             
@@ -289,7 +289,7 @@ public class PlayerState implements Serializable {
         var tmd = tm.getData(trainerId);
         var tpd = tm.getData(this.player);
 
-        if(!tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()) {
+        if(!tmd.getMissingSeriesRequirements(this.getCurrentSeries(), tpd.getCompletedSeries()).findFirst().isEmpty()) {
             return false;
         }
         
@@ -320,9 +320,10 @@ public class PlayerState implements Serializable {
 
     private void update(PlayerState updated) {
         var tm = RCTMod.getInstance().getTrainerManager();
+        var sid = this.getCurrentSeries();
 
         updated.trainerDefeatCounts.forEach((trainerId, count) -> {
-            var tt = tm.getData(trainerId).getType();
+            var tt = tm.getData(trainerId).getType(sid);
 
             if(count == 0) {
                 if(this.trainerDefeatCounts.remove(trainerId) != null) {

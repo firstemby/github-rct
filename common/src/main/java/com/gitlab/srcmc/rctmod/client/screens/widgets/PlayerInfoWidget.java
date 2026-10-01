@@ -398,7 +398,7 @@ public class PlayerInfoWidget extends AbstractWidget {
         this.trainerTypes.add(new TrainerType(sg.getMetaData().title()));
 
         while(it.hasNext() && !open.isEmpty()) {
-            var tt = tm.getData(it.next().id()).getType();
+            var tt = tm.getData(it.next().id()).getType(sid);
             var it2 = open.iterator();
 
             while(it2.hasNext()) {

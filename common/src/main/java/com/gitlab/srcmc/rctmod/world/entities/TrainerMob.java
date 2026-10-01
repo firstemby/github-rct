@@ -188,7 +188,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
                 && tm.getActivePokemon(player) > 0
                 // && tpd.getLevelCap() >= tmd.getRequiredLevelCap(player) // deprecated
                 && tm.getPlayerLevel(player) <= tpd.getLevelCap()
-                && tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()
+                && tmd.getMissingSeriesRequirements(tpd.getCurrentSeries(), tpd.getCompletedSeries()).findFirst().isEmpty()
                 && tmd.getMissingRequirements(tpd.getCurrentSeries(), tm.getData(player).getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty()
                 && (tmd.isOfSeries(tpd.getCurrentSeries()) || bm.getDefeatByCount(this.getTrainerId(), player) > 0)
                 && this.couldBattleAgainst(e);
@@ -260,7 +260,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         var tmd = tm.getData(this);
         var tpd = tm.getData(player);
         var msr = tmd.getMissingRequirements(tpd.getCurrentSeries(), tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst();
-        var missingSeries = tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst();
+        var missingSeries = tmd.getMissingSeriesRequirements(tpd.getCurrentSeries(), tpd.getCompletedSeries()).findFirst();
         var bm = tm.getBattleMemory(this);
 
         if(this.isInBattle()) {
@@ -278,7 +278,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         } else if(missingSeries.isPresent()) {
             ChatUtils.reply(this, player, "missing_required_series");
         } else if(msr.isPresent()) {
-            ChatUtils.reply(this, player, "missing_required_trainer_"  + tm.getData(msr.get()).getType().id(), "missing_required_trainer");
+            ChatUtils.reply(this, player, "missing_required_trainer_"  + tm.getData(msr.get()).getType(tpd.getCurrentSeries()).id(), "missing_required_trainer");
         // } else if(tpd.getLevelCap() < tmd.getRequiredLevelCap(player)) { // deprecated
         //     ChatUtils.reply(this, player, "low_level_cap");
         } else if(tm.getPlayerLevel(player) > tpd.getLevelCap()) {
@@ -326,46 +326,16 @@ public class TrainerMob extends PathfinderMob implements Npc {
 
     public boolean wasDefeatedBy(UUID opponentUUID) {
         var wd = this.winsAndDefeats.get(opponentUUID);
-        var md =  RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerDefeats();
+        var pl = this.level().getServer().getPlayerList().getPlayer(opponentUUID);
+        var md =  RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerDefeats(pl != null ? PlayerState.get(pl).getCurrentSeries() : null);
         return md >= 0 && wd != null && wd[1] >= md;
     }
 
     public boolean wasVictoriousAgainst(UUID opponentUUID) {
         var wd = this.winsAndDefeats.get(opponentUUID);
-        var mw = RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerWins();
+        var pl = this.level().getServer().getPlayerList().getPlayer(opponentUUID);
+        var mw = RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerWins(pl != null ? PlayerState.get(pl).getCurrentSeries() : null);
         return mw >= 0 && wd != null && wd[0] >= mw;
-    }
-
-    public boolean wasDefeated() {
-        var maxDefeats = RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerDefeats();
-
-        if(maxDefeats > 0) {
-            for(var wd : this.winsAndDefeats.values()) {
-                if(wd[1] >= maxDefeats) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean wasVictorious() {
-        var maxWins = RCTMod.getInstance().getTrainerManager().getData(this).getMaxTrainerWins();
-
-        if(maxWins > 0) {
-            for(var wd : this.winsAndDefeats.values()) {
-                if(wd[0] >= maxWins) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean wasExhausted() {
-        return !this.isPersistenceRequired() && (this.wasDefeated() || this.wasVictorious());
     }
 
     private void udpateCustomName() {
@@ -383,21 +353,23 @@ public class TrainerMob extends PathfinderMob implements Npc {
         var showSymbols = false;
         var showColors = true;
         var showItalic = false;
+        String playerSeries = null;
 
         if(level.isClientSide) {
             var cfg = RCTMod.getInstance().getClientConfig();
             var ps = PlayerState.get(ModCommon.localPlayer());
             showSymbols = cfg.showTrainerTypeSymbols();
             showColors = cfg.showTrainerTypeColors();
+            playerSeries = ps.getCurrentSeries();
 
             // TODO: PlayerState only keeps track of defeated trainers from the current series
             // of a player, hence it would be necessary to fetch the defeat counts of trainers
             // from different series (which would introduce some significant overhead).
-            showItalic = tmd.isOfSeries(ps.getCurrentSeries()) && ps.getTrainerDefeatCount(this.getTrainerId()) == 0;
+            showItalic = tmd.isOfSeries(playerSeries) && ps.getTrainerDefeatCount(this.getTrainerId()) == 0;
         }
 
         if(showSymbols) {
-            var sym = tmd.getType().symbol();
+            var sym = tmd.getType(playerSeries).symbol();
             
             if(sym.length() > 0) {
                 suffix.append(' ').append(sym);
@@ -405,7 +377,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         }
 
         if(showColors) {
-            cmp.setStyle(cmp.getStyle().withColor(tmd.getType().color()));
+            cmp.setStyle(cmp.getStyle().withColor(tmd.getType(playerSeries).color()));
         }
 
         if(showItalic) {
@@ -482,7 +454,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             var mobTr = RCTMod.getInstance().getTrainerManager().getData(this);
             var opponent = this.getOpponent();
 
-            this.cooldown = mobTr.getBattleCooldownTicks() + this.extraCooldown;
+            this.cooldown = mobTr.getBattleCooldownTicks(PlayerState.get(opponent).getCurrentSeries()) + this.extraCooldown;
             this.extraCooldown += this.cooldown;
             this.setOpponent(null);
             this.setTarget(null);
@@ -820,7 +792,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
         this.goalSelector.addGoal(i++, new ForcedStrollAwayGoal(this, 0.35));
         this.goalSelector.addGoal(i++, new RandomWaitGoal(this));
         this.goalSelector.addGoal(i++, new MoveCloseToTargetGoal(this, 0.35, maxTrackingDistance));
-        this.goalSelector.addGoal(i++, new RandomStrollThroughVillageGoal(this, 0.35f, p -> this.wasExhausted() ? p * 0.25f : p * 0.75f));
+        this.goalSelector.addGoal(i++, new RandomStrollThroughVillageGoal(this, 0.35f, 0.75f));
         this.goalSelector.addGoal(i++, new RandomStrollAwayGoal(this, 0.35));
         this.goalSelector.addGoal(i++, new WaterAvoidingRandomStrollGoal(this, 0.35));
     }
@@ -832,7 +804,7 @@ public class TrainerMob extends PathfinderMob implements Npc {
             var tpd = tm.getData(player);
 
             return !tpd.getDefeatedTrainerIds().contains(this.getTrainerId())
-                && tmd.getMissingSeriesRequirements(tpd.getCompletedSeries()).findFirst().isEmpty()
+                && tmd.getMissingSeriesRequirements(tpd.getCurrentSeries(), tpd.getCompletedSeries()).findFirst().isEmpty()
                 && tmd.getMissingRequirements(tpd.getCurrentSeries(), tpd.getDefeatedTrainerIds()).filter(tid -> tm.getData(tid).isOfSeries(tpd.getCurrentSeries())).findFirst().isEmpty();
         }
 

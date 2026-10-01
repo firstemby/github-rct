@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.Set;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.utils.LangKeys;
 import com.gitlab.srcmc.rctmod.commands.arguments.TokenArgumentType;
 import com.gitlab.srcmc.rctmod.commands.utils.SuggestionUtils;
@@ -223,27 +224,57 @@ public class TrainerCommands {
     }
 
     private static int mob_get_type(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        String seriesId = null;
+
+        if(context.getSource().isPlayer()) {
+            var p = context.getSource().getPlayer();
+
+            if(p != null) {
+                seriesId = PlayerState.get(p).getCurrentSeries();
+            }
+        }
+        
         var type = RCTMod.getInstance().getTrainerManager()
             .getData(context.getArgument("trainer", String.class))
-            .getType().name();
+            .getType(seriesId).name();
 
         context.getSource().sendSuccess(() -> type.getComponent(), false);
         return 0;
     }
 
     private static int mob_get_max_trainer_wins(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        String seriesId = null;
+
+        if(context.getSource().isPlayer()) {
+            var p = context.getSource().getPlayer();
+
+            if(p != null) {
+                seriesId = PlayerState.get(p).getCurrentSeries();
+            }
+        }
+
         var max_trainer_wins = RCTMod.getInstance().getTrainerManager()
             .getData(context.getArgument("trainer", String.class))
-            .getMaxTrainerWins();
+            .getMaxTrainerWins(seriesId);
 
         context.getSource().sendSuccess(() -> Component.literal(String.valueOf(max_trainer_wins)), false);
         return max_trainer_wins;
     }
 
     private static int mob_get_max_trainer_defeats(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        String seriesId = null;
+
+        if(context.getSource().isPlayer()) {
+            var p = context.getSource().getPlayer();
+
+            if(p != null) {
+                seriesId = PlayerState.get(p).getCurrentSeries();
+            }
+        }
+
         var max_trainer_defeats = RCTMod.getInstance().getTrainerManager()
             .getData(context.getArgument("trainer", String.class))
-            .getMaxTrainerDefeats();
+            .getMaxTrainerDefeats(seriesId);
 
         context.getSource().sendSuccess(() -> Component.literal(String.valueOf(max_trainer_defeats)), false);
         return max_trainer_defeats;
@@ -290,7 +321,17 @@ public class TrainerCommands {
     }
 
     private static int mob_get_required_series(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        var it = RCTMod.getInstance().getTrainerManager().getData(context.getArgument("trainer", String.class)).getMissingSeriesRequirements(Collections.emptyMap()).iterator();
+        String seriesId = null;
+
+        if(context.getSource().isPlayer()) {
+            var p = context.getSource().getPlayer();
+
+            if(p != null) {
+                seriesId = PlayerState.get(p).getCurrentSeries();
+            }
+        }
+        
+        var it = RCTMod.getInstance().getTrainerManager().getData(context.getArgument("trainer", String.class)).getMissingSeriesRequirements(seriesId, Collections.emptyMap()).iterator();
         var sb = new StringBuilder();
         sb.append('[');
 

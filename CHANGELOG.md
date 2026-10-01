@@ -1,5 +1,29 @@
 # Changelog
 
+The latest version introduces multiple changes to the syntax of data pack objects for this mod. Whilte the *old* syntax is still supported the jump to version `0.20` provides pack creators the opportunity to better communicate the minimum required mod version if they decide to use the new features.
+
+## [0.20.0-beta] - 2026-10-01
+
+**Changed:**
+
+- *#414* Adjusted how the progression of series from this mod is configured in trainer mobs (decentralized per `series`, see *#412*). This allows to use trainers from this mod in other series without running into conflicts (TODO)
+- *#413* Updated to JSON structure of series metadata
+  - Added (optional) `progression` property (JSON object) that allows to **define complete trainer progression chains in a single file**
+  - Fields of `progression` represent trainer mob properties (with the key designating the trainer id) that will take precedence over properties that have been configured directly in the trainer mob file itself (i.e. allowing to overwrite values for certain series)
+  - Mob properties from `progression` **will only be used for players that are in the corresponding series** (otherwise the global trainer mob properties are used, see *#412*)
+  - Series metadata JSON files from earlier versions are still supported (i.e. `progression` is optional)
+- *#412* Updates to JSON structure of trainer mobs
+  - *Global properties* refers to the properties directly defined in the trainer mob file (as per usual). Most of these can now be overwritten using either the `series` property or `progression` of series metadata (see *#413*). This **excludes:** `signatureItem`, `forceBattleOnSight`, `forceBattleMaxDistance`, `forceBattleLookTicks`, `forceBattleMaxLevelDiff`
+  - A `series` property **can** now be defined as JSON object (instead of an array), giving **the option to define individual setups for trainer mobs per series**
+  - If `series` is an array (*old* syntax) no properties are overwritten for the corresponding series (i.e. the global properties will always be used, this is equivalent to setting the value of each nested properties object to `null` or `{}` in the case of `series` being an object)
+  - If `series` is an object every field may define a nested object with custom mob properties that will be active for players in the corresponding series (the name of the field)
+  - Mob properties from series objects take precedence over the global properties (i.e. allowing to overwrite values for certain series)
+  - Note: It is **highly recommended** to use the dedicated configuration for a series when defining a progression chain (i.e. `requiredDefeats` of trainers). This has the benefit that it allows to reuse multiple trainer mobs in different series with completely different setups without them conflicting with eachother (including the trainers provided by this mod). That is, use `progression` in series metadata if a centralized setup is preferred, or `series` in mob configs for a decentralized setup (or both if you know what you are doing)
+
+**Fixed:**
+
+- *#411* Typo in trainer type `ligh_of_ruin` changed to `light_of_ruin` (TODO)
+
 ## [0.19.2-beta] - 2026-09-23
 
 **Added:**
@@ -17,7 +41,7 @@
 
 - *#407* Trainer messages are now displayed as speech bubbles above their head (chat messages are still available but optional)
   - Added related server config options (`showMessageAsSpeechBubble` and `showMessagesInChat`)
-  - Slightly adjsuted trainer entity AI so they will stand still while talking
+  - Slightly adjusted trainer entity AI so they will stand still while talking
   - Speech bubble texture(s) can be changed with a resource pack (`assets/rctmod/textures/speech_bubbles`) and use the same pattern as other assets to allow to assign them to all trainers (`default.png`), groups of trainers (`groups/`) or single trainers (`singles/`). The default texture is `160x90`px with `16`px space for borders (other dimensions are possible, the border scales accordingly)
 - *#406* Updated trainer loot tables to include Cobblemon TMs
 

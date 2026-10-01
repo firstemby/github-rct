@@ -27,14 +27,16 @@
 package com.gitlab.srcmc.rctmod.world.entities.goals;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiManager.Occupancy;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +45,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class RandomStrollThroughVillageGoal extends RandomStrollGoal {
     private static final int SECTION_SCAN_RADIUS = 6;
+    private static final int PLAYER_SCAN_RADIUS = 64;
     private static final int MAX_IDLE_TIME = 400;
     private static final int MIN_IDLE_TIME = 20;
     private static final int MAX_STROLL_TIME = 800;
@@ -55,25 +58,15 @@ public class RandomStrollThroughVillageGoal extends RandomStrollGoal {
     private int prevMobTickCount;
     private SectionPos prevSection;
     private float probability;
-    private Function<Float, Float> probabilityTransform;
 
     public RandomStrollThroughVillageGoal(PathfinderMob pathfinderMob, double d) {
-        this(pathfinderMob, d, v -> v);
-    }
-
-    public RandomStrollThroughVillageGoal(PathfinderMob pathfinderMob, double d, Function<Float, Float> probabilityTransform) {
-        this(pathfinderMob, d, 0.5f);
+        this(pathfinderMob, d, 1f);
     }
 
     public RandomStrollThroughVillageGoal(PathfinderMob pathfinderMob, double d, float p) {
-        this(pathfinderMob, d, p, v -> v);
-    }
-
-    public RandomStrollThroughVillageGoal(PathfinderMob pathfinderMob, double d, float p, Function<Float, Float> probabilityTransform) {
         super(pathfinderMob, d, 1, false);
         this.mob = pathfinderMob;
         this.probability = p;
-        this.probabilityTransform = probabilityTransform;
     }
 
     @Override
@@ -90,18 +83,24 @@ public class RandomStrollThroughVillageGoal extends RandomStrollGoal {
     @Override
     public boolean canUse() {
         this.trigger(); // prevents cancel due to 'interval'
-        var can = this.mob.getRandom().nextFloat() < this.probability && this.tryTargetInRandomSection() && super.canUse();
-
-        if(can && !this.mob.isPersistenceRequired()) {
-            this.probability = this.probabilityTransform.apply(this.probability);
-        }
-
-        return can;
+        return this.mob.getRandom().nextFloat() < this.probability && this.tryTargetInRandomSection() && super.canUse();
     }
 
     @Override
     public boolean canContinueToUse() {
         if(!this.mob.isInWater() && !this.mob.isInLava() && this.mob.getRandom().nextInt(600) == 0) {
+            if(!this.mob.isPersistenceRequired()) {
+                this.probability /= 2;
+            }
+
+            return false;
+        }
+
+        if(this.mob.getRandom().nextInt(100) == 0 && !this.playerToBattleNearby()) {
+            if(!this.mob.isPersistenceRequired()) {
+                this.probability /= 2;
+            }
+
             return false;
         }
 
@@ -131,6 +130,16 @@ public class RandomStrollThroughVillageGoal extends RandomStrollGoal {
         }
 
         this.prevMobTickCount = this.mob.tickCount;
+        return true;
+    }
+
+    public boolean playerToBattleNearby() {
+        if(this.mob instanceof TrainerMob trainerMob) {
+            return this.mob.level().getNearbyPlayers(TargetingConditions.DEFAULT, this.mob, this.mob.getBoundingBox().inflate(PLAYER_SCAN_RADIUS))
+                .stream().filter(trainerMob::canBattleAgainst)
+                .findFirst().isPresent();
+        }
+
         return true;
     }
 

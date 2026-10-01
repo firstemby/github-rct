@@ -376,11 +376,15 @@ public class TrainerManager extends DataPackManager {
         this.seriesManager.onLoad(this);
 
         newTrainerMobs.forEach((trainerId, tmd) -> {
-            tmd.getRequiredSeries().forEach(set -> set.forEach(sid -> {
-                if(this.seriesManager.getGraph(sid) == this.seriesManager.UNKNOWN_SERIES) {
-                    ModCommon.LOG.warn(String.format("Trainer '%s' has requiredSeries with unknown series id '%s'", trainerId, sid));
-                }
-            }));
+            this.seriesManager.getSeriesIds().forEach(seriesId -> {
+                var sg = this.seriesManager.getGraph(seriesId);
+
+                tmd.getRequiredSeries(seriesId).forEach(set -> set.forEach(sid -> {
+                    if(sg == this.seriesManager.UNKNOWN_SERIES) {
+                        ModCommon.LOG.warn(String.format("Trainer '%s' has requiredSeries with unknown series id '%s'", trainerId, sid));
+                    }
+                }));
+            });
         });
 
         this.receivedUpdates = new HashSet<>();

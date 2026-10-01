@@ -39,6 +39,7 @@ import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
+import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData;
 import com.gitlab.srcmc.rctmod.api.data.pack.TrainerType;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringList2d;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSet2d;
@@ -61,6 +62,8 @@ public final class JsonUtils<T> {
         .registerTypeAdapter(StringList2d.class, StringList2d.createDeserializer())
         .registerTypeAdapter(StringSetList.class, StringSetList.createDeserializer())
         .registerTypeAdapter(StringSetListMap.class, StringSetListMap.createDeserializer())
+        .registerTypeAdapter(TrainerMobData.class, new TrainerMobData.TrainerModDataDeserializer())
+        .registerTypeAdapter(TrainerMobData.SeriesProperties.MapView.class, new TrainerMobData.MapViewDeserializer())
         .addSerializationExclusionStrategy(new AnnotationExclusionStrategy())
         .addDeserializationExclusionStrategy(new AnnotationExclusionStrategy())
         .setPrettyPrinting()

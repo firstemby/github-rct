@@ -28,8 +28,8 @@ package com.gitlab.srcmc.rctmod.api.data.pack;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,13 +44,17 @@ import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
 import com.gitlab.srcmc.rctmod.api.data.Optional;
+import com.gitlab.srcmc.rctmod.api.data.pack.TrainerMobData.SeriesProperties.MapView;
 import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager.TrainerNode;
 import com.gitlab.srcmc.rctmod.api.utils.LevelUtils;
 import com.gitlab.srcmc.rctmod.api.utils.JsonUtils.JsonExclude;
 import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetList;
-import com.gitlab.srcmc.rctmod.api.utils.collections.StringSetListMap;
 import com.gitlab.srcmc.rctmod.compat.TBCSCompat.WinCommandsDeserializer;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 
@@ -59,102 +63,283 @@ import net.minecraft.world.entity.player.Player;
 
 public class TrainerMobData implements IDataPackObject, Serializable {
     private static final long serialVersionUID = 0L;
-
-    private String type = "normal";
-    private String signatureItem = "";
-    private StringSetListMap requiredDefeats = new StringSetListMap();
-    private StringSetList requiredSeries = new StringSetList();
-    private Set<String> series = new HashSet<>();
-    // private Set<String> substitutes = new HashSet<>();
-    private boolean optional;
-
-    private int maxTrainerWins = 3;
-    private int maxTrainerDefeats = 1;
-    private int battleCooldownTicks = 240;
-    private Optional<Integer> relativeLevelCap = Optional.empty();
     
-    private float spawnWeightFactor = 1F; // >= 0
-    private Set<String> biomeTagBlacklist = new HashSet<>();
-    private Set<String> biomeTagWhitelist = new HashSet<>();
-    
-    private Optional<Boolean> forceBattleOnSight = Optional.empty();
-    private Optional<Float> forceBattleMaxDistance = Optional.empty();
-    private Optional<Integer> forceBattleLookTicks = Optional.empty();
-    private Optional<Integer> forceBattleMaxLevelDiff = Optional.empty();
+    public static class SeriesProperties implements Serializable {
+        private static final long serialVersionUID = 0L;
 
-    @JsonAdapter(WinCommandsDeserializer.class)
-    private Map<Integer, ?> winCommands;
+        public static class MapView extends HashMap<String, Object> {}
 
+        private String type = "normal";
+        private StringSetList requiredDefeats = new StringSetList();
+        private StringSetList requiredSeries = new StringSetList();
+        // private Set<String> substitutes = new HashSet<>();
+        private boolean optional;
+
+        private int maxTrainerWins = 3;
+        private int maxTrainerDefeats = 1;
+        private int battleCooldownTicks = 240;
+        private Optional<Integer> relativeLevelCap = Optional.empty();
+
+        private float spawnWeightFactor = 1F; // >= 0
+        private Set<String> biomeTagBlacklist = new HashSet<>();
+        private Set<String> biomeTagWhitelist = new HashSet<>();
+
+        @JsonAdapter(WinCommandsDeserializer.class)
+        private Map<Integer, ?> winCommands;
+
+        private transient TrainerType typeCache;
+
+        public SeriesProperties() {
+        }
+
+        public SeriesProperties(SeriesProperties template) {
+            this(template, Map.of());
+        }
+
+        public SeriesProperties(SeriesProperties template, Map<String, Object> fields) {
+            this.clone(template);
+            this.clone(fields);
+        }
+
+        public TrainerType getType() {
+            if(this.typeCache == null) {
+                this.typeCache = TrainerType.valueOf(this.type.toLowerCase().trim());
+            }
+
+            return this.typeCache;
+        }
+
+        public void clone(SeriesProperties template) {
+            this.type = template.type;
+            this.requiredDefeats = template.requiredDefeats;
+            this.requiredSeries = template.requiredSeries;
+            // this.substitutes = template.substitutes;
+            this.optional = template.optional;
+            this.maxTrainerWins = template.maxTrainerWins;
+            this.maxTrainerDefeats = template.maxTrainerDefeats;
+            this.battleCooldownTicks = template.battleCooldownTicks;
+            this.relativeLevelCap = template.relativeLevelCap;
+            this.spawnWeightFactor = template.spawnWeightFactor;
+            this.biomeTagBlacklist = template.biomeTagBlacklist;
+            this.biomeTagWhitelist = template.biomeTagWhitelist;
+            this.winCommands = template.winCommands;
+        }
+
+        public void clone(Map<String, Object> fields) {
+            for(var key : fields.keySet()) {
+                if("type".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof String value2) {
+                        this.type = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, String.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("requiredDefeats".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof StringSetList value2) {
+                        this.requiredDefeats = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, StringSetList.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("requiredSeries".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof StringSetList value2) {
+                        this.requiredSeries = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, StringSetList.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                // } else if("substitutes".equals(key)) {
+                //     var value = fields.get(key);
+
+                //     if(value instanceof Set value2) {
+                //         this.substitutes = copySet(value2, String.class);
+                //     } else {
+                //         ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Set.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                //     }
+                } else if("optional".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Boolean value2) {
+                        this.optional = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Boolean.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("maxTrainerWins".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Integer value2) {
+                        this.maxTrainerWins = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Integer.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("maxTrainerDefeats".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Integer value2) {
+                        this.maxTrainerDefeats = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Integer.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("battleCooldownTicks".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Integer value2) {
+                        this.battleCooldownTicks = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Integer.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("relativeLevelCap".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Optional value2 && value2.has() && value2.get() instanceof Integer value3) {
+                        this.relativeLevelCap = Optional.of(value3);
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Integer.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("spawnWeightFactor".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Float value2) {
+                        this.spawnWeightFactor = value2;
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Float.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("biomeTagBlacklist".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Set value2) {
+                        this.biomeTagBlacklist = copySet(value2, String.class);
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Set.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("biomeTagWhitelist".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Set value2) {
+                        this.biomeTagWhitelist = copySet(value2, String.class);
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Set.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else if("winCommands".equals(key)) {
+                    var value = fields.get(key);
+
+                    if(value instanceof Map value2) {
+                        this.winCommands = copyMap(value2, Integer.class, Object.class);
+                    } else {
+                        ModCommon.LOG.warn(String.format("Wrong value type in trainer mob at '%s': Expected %s, got %s", key, Set.class.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName()));
+                    }
+                } else {
+                    ModCommon.LOG.warn(String.format("Unknown property for trainer mob: '%s'", key));
+                }
+            }
+        }
+
+        @SuppressWarnings("unused")
+        private void defaultReadObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+            ois.defaultReadObject();
+            this.typeCache = null;
+        }
+
+        static <T> Set<T> copySet(Set<?> source, Class<T> valueType) {
+            var copy = new HashSet<T>();
+            var it = source.iterator();
+
+            while(it.hasNext()) {
+                var value = it.next();
+
+                if(value == null || valueType.isInstance(value)) {
+                    copy.add(valueType.cast(value));
+                } else {
+                    ModCommon.LOG.warn("Wrong value type in set: Expected %s, got %s", valueType.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName());
+                }
+            }
+
+            return Collections.unmodifiableSet(copy);
+        }
+
+        static <T, V> Map<T, V> copyMap(Map<?, ?> source, Class<T> keyType, Class<V> valueType) {
+            var copy = new HashMap<T, V>();
+            var sameKeyType = false;
+
+            if(!source.isEmpty()) {
+                var someKey = source.keySet().iterator().next();
+                sameKeyType = keyType.isInstance(someKey);
+
+                if(!sameKeyType) {
+                    ModCommon.LOG.warn("Wrong value type in map: Expected %s, got %s", valueType.getSimpleName(), someKey != null ? someKey.getClass().getSimpleName() : "null");
+                }
+            }
+
+            if(sameKeyType) {
+                source.keySet().forEach(key -> {
+                    var value = source.get(key);
+
+                    if(value == null || valueType.isInstance(value)) {
+                        copy.put(keyType.cast(key), valueType.cast(value));
+                    } else {
+                        ModCommon.LOG.warn("Wrong value type in map: Expected %s, got %s", valueType.getSimpleName(), value == null ? "null" : value.getClass().getSimpleName());
+                    }
+                });
+            }
+
+            return Collections.unmodifiableMap(copy);
+        }
+    }
+
+    static class GlobalProperties extends SeriesProperties {
+        private static final long serialVersionUID = 0L;
+
+        private String signatureItem = "";
+        private Optional<Boolean> forceBattleOnSight = Optional.empty();
+        private Optional<Float> forceBattleMaxDistance = Optional.empty();
+        private Optional<Integer> forceBattleLookTicks = Optional.empty();
+        private Optional<Integer> forceBattleMaxLevelDiff = Optional.empty();
+    }
+
+    // global
+    private Map<String, SeriesProperties> series = Map.of();
+    private GlobalProperties properties = new GlobalProperties();
+
+    // data pack and registry
     @JsonExclude private Map<String, Text[]> dialog = new HashMap<>();
     @JsonExclude private TrainerTeam trainerTeam;
     @JsonExclude private RLWrapper textureResource;
     @JsonExclude private RLWrapper lootTableResource;
     @JsonExclude private String trainerId = "";
 
-    private transient Supplier<TrainerType> lazyType;
-
     public TrainerMobData() {
         this.textureResource = new RLWrapper(ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, "textures/" + DataPackManager.PATH_DEFAULT + ".png"));
         this.lootTableResource = new RLWrapper(ResourceLocation.fromNamespaceAndPath(ModCommon.MOD_ID, DataPackManager.PATH_DEFAULT));
         this.trainerTeam = new TrainerTeam();
-        this.init();
     }
 
-    public TrainerMobData(TrainerMobData origin) {
-        this.type = origin.type;
-        this.signatureItem = origin.signatureItem;
-        this.winCommands = origin.winCommands != null ? Map.copyOf(origin.winCommands) : null;
-        this.relativeLevelCap = origin.relativeLevelCap;
-        this.requiredDefeats = origin.requiredDefeats != null ? new StringSetListMap(origin.requiredDefeats) : null;
-        this.requiredSeries = origin.requiredSeries != null ? new StringSetList(origin.requiredSeries) : null;
-        this.series = origin.series != null ? Set.copyOf(origin.series) : null;
-        // this.substitutes = origin.substitutes != null ? Set.copyOf(origin.substitutes) : null;
-        this.optional = origin.optional;
-        this.maxTrainerWins = origin.maxTrainerWins;
-        this.maxTrainerDefeats = origin.maxTrainerDefeats;
-        this.battleCooldownTicks = origin.battleCooldownTicks;
-        this.spawnWeightFactor = origin.spawnWeightFactor;
-        this.biomeTagBlacklist = origin.biomeTagBlacklist != null ? Set.copyOf(origin.biomeTagBlacklist) : null;
-        this.biomeTagWhitelist = origin.biomeTagWhitelist != null ? Set.copyOf(origin.biomeTagWhitelist) : null;
-        this.forceBattleOnSight = origin.forceBattleOnSight;
-        this.forceBattleMaxDistance = origin.forceBattleMaxDistance;
-        this.forceBattleLookTicks = origin.forceBattleLookTicks;
-        this.forceBattleMaxLevelDiff = origin.forceBattleMaxLevelDiff;
-        this.dialog = origin.dialog != null ? Map.copyOf(origin.dialog) : null;
-        this.textureResource = origin.textureResource;
-        this.lootTableResource = origin.lootTableResource;
-        this.trainerTeam = origin.trainerTeam; // no need for deep copy since immutable
-        this.trainerId = origin.trainerId;
-        this.init();
+    public void updateSeriesProperties(String seriesId, SeriesMetaData seriesMeta) {
+        var metaProperties = seriesMeta.progression().get(this.trainerId);
+
+        if(metaProperties != null) {
+            var seriesProperties = this.series.get(seriesId);
+            var series = new HashMap<String, SeriesProperties>(this.series);
+
+            if(seriesProperties == null) {
+                series.put(seriesId, new SeriesProperties(this.properties, metaProperties));
+            } else {
+                series.put(seriesId, new SeriesProperties(seriesProperties, metaProperties));
+            }
+
+            this.series = Collections.unmodifiableMap(series);
+        }
     }
 
-    private void init() {
-        this.lazyType = () -> {
-            var type = TrainerType.valueOf(this.type.toLowerCase());
-            this.lazyType = () -> type;
-            return type;
-        };
+    protected SeriesProperties properties(String seriesId) {
+        var properties = this.series.get(seriesId);
+        return properties != null ? properties : this.properties;
     }
 
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        // Since the type of win commands depends on a different library it
-        // is unsafe to include these during serialization (transient will
-        // prevent GSON from parsing the property, hence this workaround).
-        var winCommands = this.winCommands;
-        this.winCommands = null;
-        oos.defaultWriteObject();
-        this.winCommands = winCommands;
-        oos.writeObject(this.getType());
-    }
-
-    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-        ois.defaultReadObject();
-        var type = TrainerType.registerOrGet(this.type, (TrainerType)ois.readObject());
-        this.lazyType = () -> type;
-    }
-
-    public TrainerType getType() {
-        return this.lazyType.get();
+    public TrainerType getType(String seriesId) {
+        return this.properties(seriesId).getType();
     }
 
     public int getRewardLevelCap(Player player) {
@@ -176,24 +361,26 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         return LevelUtils.levelCap(PlayerState.get(player).getCurrentSeries(), this.trainerId);
     }
 
-    public Optional<Integer> getRelativeLevelCap() {
-        if(this.relativeLevelCap.has()) {
-            var v = this.relativeLevelCap.get();
+    public Optional<Integer> getRelativeLevelCap(String seriesId) {
+        var relativeLevelCap = this.properties(seriesId).relativeLevelCap;
+
+        if(relativeLevelCap.has()) {
+            var v = relativeLevelCap.get();
 
             if(v < IServerConfig.MIN_RELATIVE_LEVEL_CAP) {
                 ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, IServerConfig.MIN_RELATIVE_LEVEL_CAP, IServerConfig.MAX_RELATIVE_LEVEL_CAP, v));
-                this.relativeLevelCap = Optional.of(IServerConfig.MIN_RELATIVE_LEVEL_CAP);
+                relativeLevelCap = Optional.of(IServerConfig.MIN_RELATIVE_LEVEL_CAP);
             } else if(v > IServerConfig.MAX_RELATIVE_LEVEL_CAP) {
                 ModCommon.LOG.warn(String.format("invalid relativeLevelCap for '%s': expected range is [%d, %d] got %d", this.trainerId, IServerConfig.MIN_RELATIVE_LEVEL_CAP, IServerConfig.MAX_RELATIVE_LEVEL_CAP, v));
-                this.relativeLevelCap = Optional.of(IServerConfig.MAX_RELATIVE_LEVEL_CAP);
+                relativeLevelCap = Optional.of(IServerConfig.MAX_RELATIVE_LEVEL_CAP);
             }
         }
 
-        return this.relativeLevelCap;
+        return relativeLevelCap;
     }
 
     public boolean isOfSeries(String seriesId) {
-        return this.series.isEmpty() || this.series.contains(seriesId)
+        return this.series.isEmpty() || this.series.containsKey(seriesId)
             || RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().progression().keySet().contains(this.trainerId);
     }
 
@@ -202,33 +389,23 @@ public class TrainerMobData implements IDataPackObject, Serializable {
 
         return Stream.concat(
             sm.getSeriesIds().stream().filter(sid -> sm.getGraph(sid).getMetaData().progression().containsKey(this.trainerId)),
-            this.series.stream()).distinct();
+            this.series.keySet().stream()).distinct();
     }
 
     public List<Set<String>> getRequiredDefeats(String seriesId) {
-        var list = this.requiredDefeats.get(seriesId);
-
-        if(list == null) {
-            var node = RCTMod.getInstance().getSeriesManager().getGraph(seriesId).getMetaData().progression().get(this.trainerId);
-
-            if(node != null) {
-                list = node.requiredDefeats();
-            }
-        }
-
-        return list != null ? list : this.requiredDefeats.getDefault();
+        return this.properties(seriesId).requiredDefeats;
     }
 
-    public List<Set<String>> getRequiredSeries() {
-        return Collections.unmodifiableList(this.requiredSeries);
+    public List<Set<String>> getRequiredSeries(String seriesId) {
+        return this.properties(seriesId).requiredSeries;
     }
 
-    public Stream<String> getMissingSeriesRequirements(Map<String, Integer> completedSeries) {
-        return this.getMissingSeriesRequirements(completedSeries, false);
+    public Stream<String> getMissingSeriesRequirements(String seriesId, Map<String, Integer> completedSeries) {
+        return this.getMissingSeriesRequirements(seriesId, completedSeries, false);
     }
 
-    public Stream<String> getMissingSeriesRequirements(Map<String, Integer> completedSeries, boolean includeAlternatives) {
-        return this.requiredSeries.stream().mapMulti((set, cons) -> {
+    public Stream<String> getMissingSeriesRequirements(String seriesId, Map<String, Integer> completedSeries, boolean includeAlternatives) {
+        return this.properties(seriesId).requiredSeries.stream().mapMulti((set, cons) -> {
             var satisfied = set.stream().anyMatch(sid -> completedSeries.getOrDefault(sid, 0) >= 1);
             if(!satisfied && !set.isEmpty()) {
                 if(includeAlternatives) {
@@ -240,8 +417,8 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         });
     }
 
-    // public Set<String> getSubstitutes() {
-    //     return Collections.unmodifiableSet(this.substitutes);
+    // public Set<String> getSubstitutes(String seriesId) {
+    //     return this.properties(seriesId).substitutes;
     // }
 
     public Stream<String> getMissingRequirements(String seriesId, Set<String> defeatedTrainerIds) {
@@ -260,82 +437,82 @@ public class TrainerMobData implements IDataPackObject, Serializable {
         });
     }
 
-    public boolean isOptional() {
-        return this.optional;
+    public boolean isOptional(String seriesId) {
+        return this.properties(seriesId).optional;
     }
 
-    public int getMaxTrainerWins() {
-        return this.maxTrainerWins;
+    public int getMaxTrainerWins(String seriesId) {
+        return this.properties(seriesId).maxTrainerWins;
     }
 
-    public int getMaxTrainerDefeats() {
-        return this.maxTrainerDefeats;
+    public int getMaxTrainerDefeats(String seriesId) {
+        return this.properties(seriesId).maxTrainerDefeats;
     }
 
-    public int getBattleCooldownTicks() {
-        return this.battleCooldownTicks;
+    public int getBattleCooldownTicks(String seriesId) {
+        return this.properties(seriesId).battleCooldownTicks;
     }
 
-    public float getSpawnWeightFactor() {
-        return this.spawnWeightFactor;
+    public float getSpawnWeightFactor(String seriesId) {
+        return this.properties(seriesId).spawnWeightFactor;
     }
 
-    public Set<String> getBiomeTagBlacklist() {
-        return Collections.unmodifiableSet(this.biomeTagBlacklist);
+    public Set<String> getBiomeTagBlacklist(String seriesId) {
+        return this.properties(seriesId).biomeTagBlacklist;
     }
 
-    public Set<String> getBiomeTagWhitelist() {
-        return Collections.unmodifiableSet(this.biomeTagWhitelist);
+    public Set<String> getBiomeTagWhitelist(String seriesId) {
+        return this.properties(seriesId).biomeTagWhitelist;
     }
 
     public Optional<Boolean> getForceBattleOnSight() {
-        return this.forceBattleOnSight;
+        return this.properties.forceBattleOnSight;
     }
 
     public Optional<Float> getForceBattleMaxDistance() {
-        if(this.forceBattleMaxDistance.has()) {
-            var v = this.forceBattleMaxDistance.get();
+        if(this.properties.forceBattleMaxDistance.has()) {
+            var v = this.properties.forceBattleMaxDistance.get();
 
             if(v < IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE) {
                 ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE, IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE, v));
-                this.forceBattleMaxDistance = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE);
-            } else if(v > 32) {
+                this.properties.forceBattleMaxDistance = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE);
+            } else if(v > IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE) {
                 ModCommon.LOG.warn(String.format("invalid forceBattleMaxDistance for '%s': expected range is [%.2f, %.2f] got %.2f", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_DISTANCE, IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE, v));
-                this.forceBattleMaxDistance = Optional.of(IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE);
+                this.properties.forceBattleMaxDistance = Optional.of(IServerConfig.MAX_FORCE_BATTLE_MAX_DISTANCE);
             }
         }
 
-        return this.forceBattleMaxDistance;
+        return this.properties.forceBattleMaxDistance;
     }
 
     public Optional<Integer> getForceBattleLookTicks() {
-        if(this.forceBattleLookTicks.has()) {
-            var v = this.forceBattleLookTicks.get();
+        if(this.properties.forceBattleLookTicks.has()) {
+            var v = this.properties.forceBattleLookTicks.get();
 
             if(v < IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS) {
                 ModCommon.LOG.warn(String.format("invalid forceBattleLookTicks for '%s': expected range is [%d, inf) got %d", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS, v));
-                this.forceBattleLookTicks = Optional.of(IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS);
+                this.properties.forceBattleLookTicks = Optional.of(IServerConfig.MIN_FORCE_BATTLE_LOOK_TICKS);
             }
         }
 
-        return this.forceBattleLookTicks;
+        return this.properties.forceBattleLookTicks;
     }
 
     public Optional<Integer> getForceBattleMaxLevelDiff() {
-        if(this.forceBattleMaxLevelDiff.has()) {
-            var v = this.forceBattleMaxLevelDiff.get();
+        if(this.properties.forceBattleMaxLevelDiff.has()) {
+            var v = this.properties.forceBattleMaxLevelDiff.get();
 
             if(v < IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF) {
                 ModCommon.LOG.warn(String.format("invalid forceBattleMaxLevelDiff for '%s': expected range is [%d, inf) got %d", this.trainerId, IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF, v));
-                this.forceBattleMaxLevelDiff = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF);
+                this.properties.forceBattleMaxLevelDiff = Optional.of(IServerConfig.MIN_FORCE_BATTLE_MAX_LEVEL_DIFF);
             }
         }
 
-        return this.forceBattleMaxLevelDiff;
+        return this.properties.forceBattleMaxLevelDiff;
     }
 
     public Map<String, Text[]> getDialog() {
-        return Collections.unmodifiableMap(this.dialog);
+        return this.dialog;
     }
 
     public ResourceLocation getTextureResource() {
@@ -351,11 +528,11 @@ public class TrainerMobData implements IDataPackObject, Serializable {
     }
 
     public String getSignatureItem() {
-        return this.signatureItem;
+        return this.properties.signatureItem;
     }
 
-    public Map<Integer, ?> getWinCommands() {
-        return this.winCommands;
+    public Map<Integer, ?> getWinCommands(String seriesId) {
+        return this.properties(seriesId).winCommands;
     }
 
     @Override
@@ -431,6 +608,66 @@ public class TrainerMobData implements IDataPackObject, Serializable {
                 this.rlSup = () -> this.rl;
                 return this.rl;
             };
+        }
+    }
+
+    public static class MapViewDeserializer implements JsonDeserializer<MapView> {
+        @Override
+        public MapView deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return deserialize(json, context);
+        }
+
+        public static MapView deserialize(JsonElement json, JsonDeserializationContext context) throws JsonParseException {
+            var map = new MapView();
+
+            if(json.isJsonObject()) {
+                var jobj = json.getAsJsonObject();
+
+                jobj.entrySet().forEach(e -> {
+                    var key = e.getKey();
+                    var value = e.getValue();
+                    var parsed = switch(key) {
+                        case "requiredSeries" -> context.deserialize(value, StringSetList.class);
+                        case "requiredDefeats" -> context.deserialize(value, StringSetList.class);
+                        default -> context.deserialize(value, Object.class);
+                    };
+
+                    map.put(key, parsed);
+                });
+            }
+
+            return map;
+        }
+    }
+
+    public static class TrainerModDataDeserializer implements JsonDeserializer<TrainerMobData> {
+        @Override
+        public TrainerMobData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            var tmd = new TrainerMobData();
+
+            if(json.isJsonObject()) {
+                var jobj = json.getAsJsonObject();
+                tmd.properties = context.deserialize(json, GlobalProperties.class); // ignores "series"
+                tmd.series = this.deserializeSeriesMap(tmd.properties, jobj.get("series"), context);
+            }
+
+            return tmd;
+        }
+
+        public Map<String, SeriesProperties> deserializeSeriesMap(GlobalProperties global, JsonElement json, JsonDeserializationContext context) throws JsonParseException {
+            var map = new HashMap<String, SeriesProperties>();
+
+            if(json.isJsonArray()) {
+                json.getAsJsonArray().forEach(e -> {
+                    var key = e.getAsString();
+                    map.put(key, new SeriesProperties(global));
+                });
+            } else if(json.isJsonObject()) {
+                var jobj = json.getAsJsonObject();
+                jobj.keySet().forEach(key -> map.put(key, new SeriesProperties(global, MapViewDeserializer.deserialize(jobj.get(key), context))));
+            }
+
+            return Collections.unmodifiableMap(map);
         }
     }
 }

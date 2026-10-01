@@ -49,7 +49,7 @@ public class LevelUtils {
 
     public static int relativeLevelCap(String seriesId, String trainerId) {
         if(trainerId != null) {
-            var rlc = RCTMod.getInstance().getTrainerManager().getData(trainerId).getRelativeLevelCap();
+            var rlc = RCTMod.getInstance().getTrainerManager().getData(trainerId).getRelativeLevelCap(seriesId);
 
             if(rlc.has()) {
                 return rlc.get();

@@ -156,7 +156,7 @@ public class TrainerInfoWidget extends TrainerDataWidget {
         this.y = 0;
 
         pc.renderables.add(new StringWidget(8, this.y += this.h, this.w, this.h, toComponent(String.format("%s: ", Component.translatable(LangKeys.GUI_TRAINER_CARD_TYPE).getString())), this.font).alignLeft());
-        pc.renderables.add(new StringWidget(8, this.y, (int)(this.w*0.9), this.h, toComponent(this.trainer.getType().name().getComponent().getString()), this.font).alignRight());
+        pc.renderables.add(new StringWidget(8, this.y, (int)(this.w*0.9), this.h, toComponent(this.trainer.getType(curSeries).name().getComponent().getString()), this.font).alignRight());
 
         var player = Minecraft.getInstance().player;
         var reqCap = this.trainer.getRequiredLevelCap(player);
@@ -182,7 +182,7 @@ public class TrainerInfoWidget extends TrainerDataWidget {
 
         var firstSeries = new boolean[]{true};
         var sm = RCTMod.getInstance().getSeriesManager();
-        this.trainer.getMissingSeriesRequirements(Collections.emptyMap()).forEach(sid -> {
+        this.trainer.getMissingSeriesRequirements(curSeries, Collections.emptyMap()).forEach(sid -> {
             if(firstSeries[0]) {
                 pc.renderables.add(new StringWidget(8, this.y += this.h, this.w, this.h, toComponent(Component.translatable(LangKeys.GUI_TRAINER_CARD_REQUIRED_SERIES).getString()), this.font).alignLeft());
                 firstSeries[0] = false;
@@ -198,6 +198,7 @@ public class TrainerInfoWidget extends TrainerDataWidget {
     private PageContent initSpawningPage() {
         var pc = initPage(Component.translatable(LangKeys.GUI_TRAINER_CARD_SPAWNING));
         var mc = Minecraft.getInstance();
+        var curSeries = PlayerState.get(mc.player).getCurrentSeries();
         var reg = mc.level.registryAccess().registryOrThrow(Registries.BIOME);
         var config = RCTMod.getInstance().getServerConfig();
         var biomes = new PriorityQueue<ResourceLocation>((r1, r2) -> {
@@ -226,9 +227,9 @@ public class TrainerInfoWidget extends TrainerDataWidget {
                 .forEach(t -> tags.add(t));
 
             if(config.biomeTagBlacklist().stream().noneMatch(tags::contains)
-                && this.trainer.getBiomeTagBlacklist().stream().noneMatch(tags::contains)
+                && this.trainer.getBiomeTagBlacklist(curSeries).stream().noneMatch(tags::contains)
                 && (config.biomeTagWhitelist().isEmpty() || config.biomeTagWhitelist().stream().anyMatch(tags::contains))
-                && (this.trainer.getBiomeTagWhitelist().isEmpty() || this.trainer.getBiomeTagWhitelist().stream().anyMatch(tags::contains)))
+                && (this.trainer.getBiomeTagWhitelist(curSeries).isEmpty() || this.trainer.getBiomeTagWhitelist(curSeries).stream().anyMatch(tags::contains)))
             {
                 // see DebugScreenOverlay#printBiome
                 biomes.offer((ResourceLocation)holder.unwrap().map(

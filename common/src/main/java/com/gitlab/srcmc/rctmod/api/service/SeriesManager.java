@@ -86,7 +86,7 @@ public class SeriesManager implements Serializable {
         seriesGraphs.put(EMPTY_SERIES_ID, EMPTY_SERIES);
         seriesGraphs.put(FREEROAM_SERIES_ID, FREEROAM_SERIES);
 
-        // gather series ids
+        // gather series ids and load metadata
         tm.listSeries((rl, io) -> {
             var sid = PathUtils.filename(rl.getPath());
 
@@ -103,20 +103,25 @@ public class SeriesManager implements Serializable {
             }
         });
 
-        // gather series ids and create trainer nodes
-        this.seriesGraphs = seriesGraphs; // trainers require access at this point
-
+        // update trainer series properties
+        seriesGraphs.entrySet().forEach(e1 -> {
+            var sid = e1.getKey();
+            var sg = e1.getValue();
+            tm.getAllData().forEach(e2 -> e2.getValue().updateSeriesProperties(sid, sg.getMetaData()));
+        });
+        
+        // create trainer nodes for key trainers
         tm.getAllData().forEach(e -> {
             e.getValue().getSeries().forEach(sid -> {
                 var sg = seriesGraphs.computeIfAbsent(sid, SeriesGraph::new);
-                sg.map.put(e.getKey(), new TrainerNode(e.getKey(), e.getValue().isOptional()));
+                sg.map.put(e.getKey(), new TrainerNode(e.getKey(), e.getValue().isOptional(sid)));
             });
         });
 
         // create nodes for trainers that belong to all series
         tm.getAllData()
             .filter(e -> e.getValue().getSeries().findFirst().isEmpty())
-            .forEach(e -> seriesGraphs.values().stream().forEach(sd -> sd.map.put(e.getKey(), new TrainerNode(e.getKey(), e.getValue().isOptional()))));
+            .forEach(e -> seriesGraphs.values().stream().forEach(sd -> sd.map.put(e.getKey(), new TrainerNode(e.getKey(), e.getValue().isOptional(e.getKey())))));
 
         // build graph
         tm.getAllData().forEach(e -> {

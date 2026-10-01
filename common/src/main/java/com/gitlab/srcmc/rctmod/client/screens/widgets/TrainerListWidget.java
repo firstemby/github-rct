@@ -132,7 +132,7 @@ public class TrainerListWidget extends TrainerDataWidget {
                 var trainerId = trainerIds.get(this.i);
                 var trMob = this.tdm.getData(trainerId);
 
-                if(showAllTypes || trMob.getType().equals(trainerType)) {
+                if(showAllTypes || trMob.getType(playerState.getCurrentSeries()).equals(trainerType)) {
                     var count = this.playerState.getTrainerDefeatCount(trainerId);
                     var isNextKeyTrainer = playerState.isKeyTrainer(trainerId);
 

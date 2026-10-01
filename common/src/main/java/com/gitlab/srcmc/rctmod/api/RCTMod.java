@@ -37,6 +37,7 @@ import com.gitlab.srcmc.rctapi.api.trainer.TrainerPlayer;
 import com.gitlab.srcmc.rctmod.ModCommon;
 import com.gitlab.srcmc.rctmod.api.config.IClientConfig;
 import com.gitlab.srcmc.rctmod.api.config.IServerConfig;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.api.service.SeriesManager;
 import com.gitlab.srcmc.rctmod.api.service.TrainerManager;
 import com.gitlab.srcmc.rctmod.api.service.TrainerSpawner;
@@ -113,7 +114,7 @@ public final class RCTMod {
                 var battleId = ModCommon.RCT.getBattleManager().startBattle(List.of(trPlayer), List.of(trNPC), (BattleFormatProvider)team.getBattleFormat(), team.getBattleRules());
 
                 if(battleId != null) {
-                    TBCSCompat.registerWinCommands(trMob.getWinCommands(), player.getServer(), Map.of(trPlayer, player, trNPC, mob), battleId);
+                    TBCSCompat.registerWinCommands(trMob.getWinCommands(PlayerState.get(player).getCurrentSeries()), player.getServer(), Map.of(trPlayer, player, trNPC, mob), battleId);
                     return true;
                 }
 

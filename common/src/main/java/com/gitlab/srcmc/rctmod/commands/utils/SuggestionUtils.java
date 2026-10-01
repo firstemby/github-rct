@@ -50,7 +50,7 @@ public final class SuggestionUtils {
     public static final String BULK_TYPE = "/type";
     public static final String BULK_SERIES = "/series";
 
-    private static final Map<String, Supplier<Stream<Map.Entry<String, TrainerMobData>>>> typeSuggestions = new HashMap<>();
+    private static final Map<String, Supplier<Stream<Map.Entry<String, TrainerMobData>>>> typeSuggestions = new HashMap<>(); // TODO: Map per series
     private static final Map<String, Supplier<Stream<Map.Entry<String, TrainerMobData>>>> seriesSuggestions = new HashMap<>();
 
     public static void initSuggestions() {
@@ -64,9 +64,11 @@ public final class SuggestionUtils {
             String.format("%s/%s", BULK_SERIES, s),
             () -> tm.getAllData().filter(e -> e.getValue().isOfSeries(s))));
         
-        tm.getAllData()
-            .map(e -> e.getValue().getType()).distinct()
-            .forEach(t -> typeSuggestions.put(String.format("%s/%s", BULK_TYPE, t.id()), () -> tm.getAllData().filter(e -> e.getValue().getType().equals(t))));
+        sm.getSeriesIds().forEach(seriesId -> {
+            tm.getAllData()
+                .map(e -> e.getValue().getType(seriesId)).distinct()
+                .forEach(t -> typeSuggestions.put(String.format("%s/%s", BULK_TYPE, t.id()), () -> tm.getAllData().filter(e -> e.getValue().getType(seriesId).equals(t))));
+        });
     }
 
     public static boolean executeBulk(String arg, Consumer<Stream<Map.Entry<String, TrainerMobData>>> consumer) {

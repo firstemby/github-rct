@@ -492,7 +492,7 @@ public final class PlayerCommands {
                 var level = (ServerLevel)player.level();
                 var type = TrainerType.valueOf(context.getArgument("type", String.class));
                 var tm = RCTMod.getInstance().getTrainerManager();
-                var count = tm.getAllData().filter(e -> e.getValue().getType().equals(type))
+                var count = tm.getAllData().filter(e -> e.getValue().getType(PlayerState.get(player).getCurrentSeries()).equals(type))
                     .map(e -> tm.getBattleMemory(level, e.getKey()).getDefeatByCount(e.getKey(), player))
                     .reduce(0, (a, b) -> a + b);
 
@@ -514,7 +514,7 @@ public final class PlayerCommands {
             var player = EntityArgument.getPlayer(context, "target");
             var level = (ServerLevel)player.level();
             var tm = RCTMod.getInstance().getTrainerManager();
-            var count = tm.getAllData().filter(e -> e.getValue().getType().equals(type))
+            var count = tm.getAllData().filter(e -> e.getValue().getType(PlayerState.get(player).getCurrentSeries()).equals(type))
                 .map(e -> tm.getBattleMemory(level, e.getKey()).getDefeatByCount(e.getKey(), player))
                 .reduce(0, (a, b) -> a + b);
 

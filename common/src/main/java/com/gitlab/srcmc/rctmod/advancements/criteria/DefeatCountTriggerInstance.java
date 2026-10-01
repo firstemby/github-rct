@@ -29,6 +29,7 @@ package com.gitlab.srcmc.rctmod.advancements.criteria;
 import java.util.List;
 import java.util.Optional;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.api.data.sync.PlayerState;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -48,8 +49,10 @@ public record DefeatCountTriggerInstance(List<String> trainerIds, String trainer
             return battleMem.getDefeatByCount(mob.getTrainerId(), player) >= this.count;
         }
 
-        if(!this.trainerType.isEmpty() && this.trainerType.equals(mobTr.getType().id())) {
-            var trainers = tm.getAllData().filter(e -> e.getValue().getType().id().equals(this.trainerType));
+        var seriesId = PlayerState.get(player).getCurrentSeries();
+
+        if(!this.trainerType.isEmpty() && this.trainerType.equals(mobTr.getType(seriesId).id())) {
+            var trainers = tm.getAllData().filter(e -> e.getValue().getType(seriesId).id().equals(this.trainerType));
             var level = player.getServer().overworld();
 
             if(this.count >= 0) {

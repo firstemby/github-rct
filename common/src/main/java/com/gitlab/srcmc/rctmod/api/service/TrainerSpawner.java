@@ -626,13 +626,14 @@ public class TrainerSpawner {
         if(!dimensionBlacklisted && dimensionWhitelisted
         && config.biomeTagBlacklist().stream().noneMatch(tags::contains)
         && (config.biomeTagWhitelist().isEmpty() || config.biomeTagWhitelist().stream().anyMatch(tags::contains))) {
+            var seriesId = PlayerState.get(player).getCurrentSeries();
 
-            RCTMod.getInstance().getTrainerManager().getAllData(PlayerState.get(player).getCurrentSeries())
+            RCTMod.getInstance().getTrainerManager().getAllData(seriesId)
                 .filter(e -> this.isUnique(e.getValue().getTrainerTeam().getIdentity(), level, pos)
-                    && e.getValue().getBiomeTagBlacklist().stream().noneMatch(tags::contains)
-                    && (e.getValue().getBiomeTagWhitelist().isEmpty() || e.getValue().getBiomeTagWhitelist().stream().anyMatch(tags::contains)))
+                    && e.getValue().getBiomeTagBlacklist(seriesId).stream().noneMatch(tags::contains)
+                    && (e.getValue().getBiomeTagWhitelist(seriesId).isEmpty() || e.getValue().getBiomeTagWhitelist(seriesId).stream().anyMatch(tags::contains)))
                 .forEach(e -> {
-                    var weight = this.computeWeight(player, e.getKey(), e.getValue());
+                    var weight = this.computeWeight(player, seriesId, e.getKey(), e.getValue());
 
                     if (weight > 0) {
                         candidates.add(new SpawnCandidate(e.getKey(), weight));
@@ -680,7 +681,7 @@ public class TrainerSpawner {
         return chance * e * e;
     }
 
-    private double computeWeight(Player player, String trainerId, TrainerMobData mobTr) {
+    private double computeWeight(Player player, String seriesId, String trainerId, TrainerMobData mobTr) {
         var ps = PlayerState.get(player);
 
         if(!ps.canBattle(trainerId)) {
@@ -705,6 +706,6 @@ public class TrainerSpawner {
         }
 
         var diff = Math.abs(playerLevel - trainerLevel);
-        return diff > maxDiff ? 0 : ((maxDiff + 1) - diff)*mobTr.getSpawnWeightFactor()*keyTrainerFactor;
+        return diff > maxDiff ? 0 : ((maxDiff + 1) - diff)*mobTr.getSpawnWeightFactor(seriesId)*keyTrainerFactor;
     }
 }
